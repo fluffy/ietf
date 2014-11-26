@@ -66,7 +66,7 @@
 <!ENTITY RFC7273 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7273.xml">
 <!ENTITY I-D.ietf-mmusic-sdp-bundle-negotiation SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-mmusic-sdp-bundle-negotiation.xml">
 <!ENTITY I.D-draft-ietf-dart-dscp-rtp SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I.D-draft-ietf-dart-dscp-rtp.xml">
-<!ENTITY RFC7226 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7226.xml">
+<!ENTITY RFC7266 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7266.xml">
 ]>
 <?xml-stylesheet type="text/xsl" href="rfc2629.xslt" ?>
 
@@ -79,7 +79,7 @@
 <?rfc rfcedstyle="no" ?>
 <?rfc tocdepth="4"?>
 
-<rfc category="std" docName="draft-ietf-mmusic-sdp-mux-attributes-04"
+<rfc category="std" docName="draft-ietf-mmusic-sdp-mux-attributes-05"
      ipr="pre5378Trust200902">
   <front>
     <title abbrev="SDP Attribute Multiplexing">A Framework for SDP Attributes
@@ -105,7 +105,7 @@
       </address>
     </author>
 
-    <date day="24" month="October" year="2014" />
+    <date day="26" month="November" year="2014" />
 
     <area>MMUSIC</area>
 
@@ -114,7 +114,7 @@
         The Session Description Protocol (SDP) provides mechanisms to
         describe attributes of multimedia sessions and of individual
         media streams (e.g., Real-time Transport Protocol (RTP)
-        sessions) within a multimedia session. In the RTCWeb WG, there
+        sessions) within a multimedia session. In the RTCWEB WG, there
         is a need to use a single 5-tuple for sending and receiving
         media associated with multiple media descriptions ("m="
         lines). Such a requirement has raised concerns over the
@@ -134,7 +134,7 @@
   <middle>
     <section title="Introduction" anchor="sec-intro">
       <t>
-        Real-Time Communication Web (RTCWeb) framework requires
+        Real-Time Communication in WEB-browsers (Rtcweb) framework requires
         Real-time Transport Protocol (RTP) as the media transport
         protocol and Session Description Protocol (SDP) <xref
         target="RFC4566"/> for describing and negotiating multi-media
@@ -190,9 +190,9 @@
         further restrictions on applicability of these SDP attributes
         as they are defined today. </t>
        <t>The specific problem is that there are attribute combinations
-        which make sense when specified on independent "m= "lines -- as
+        which make sense when specified on independent "m= " lines -- as
         with classical SDP -- that do not make sense when those
-        "m="" lines are then multiplexed over the same transport. To give
+        "m=" lines are then multiplexed over the same transport. To give
         an obvious example, ICE permits each "m=" line to have an
         independently specified ice-ufrag attribute. However, if the
         media from multiple "m=" lines is multiplexed over the same ICE
@@ -286,8 +286,8 @@
          <t>&nbsp;</t>
          <t>Attributes such as rtcp-mux fall into this category.  Since
           RTCP reporting is done per RTP Session, RTCP Multiplexing
-          MUST to enabled for both the audio and video m=lines in the
-          example below if they are transported over a single 5-tuple.</t> 
+          MUST be enabled for both the audio and video m=lines if
+          they are transported over a single 5-tuple.</t>
          <figure>
            <artwork align="left" alt="" height="" name="" type="" width=""
                    xml:space="preserve"><![CDATA[
@@ -421,7 +421,11 @@
       <section title="Category: IDENTICAL-PER-PT">
         <t> Attributes that define the RTP payload configuration on per
         Payload Type basis and MUST have identical values across all the
-        media descriptions for a given RTP Payload Type when repeated.</t>
+        media descriptions for a given RTP Payload Type when repeated.
+        These Payload Types identify the same codec configuration
+        as defined in the Section 10.1.2 of
+        <xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref>
+        under this context.</t>
         <t>&nbsp;</t>
         <t>In the SDP example below, Payload Types 96 and 97 are repeated
          across all the video m= lines and all the payload specific
@@ -472,8 +476,9 @@
     </section>
     <section title="Analysis of Existing Attributes" anchor="sec-cur-analysis" >
       <t>This section analyzes attributes listed in <xref
-      target="IANA"/> grouped under the IETF document that
-      defines them. The "Level" column indicates whether the attribute
+      target="IANA"/>, grouped under the IETF document that
+      defines them.</t>
+      <t>The "Level" column indicates whether the attribute
       is currently specified as:</t>
       <t>
         <list style="symbols">
@@ -483,6 +488,10 @@
           <t>SR -- Source-level (for a single SSRC)</t>
         </list>
       </t>
+      <t>The "Mux Category" column identifies multiplexing category assigned
+      per attribute and the "Notes" column captures additional
+      informative details regarding the assigned category, wherever
+      necessary.</t>
      <section title="RFC4566 - SDP: Session Description Protocol">
      <t><xref target="RFC4566"/> defines the Session
       Description Protocol (SDP) that is intended for describing
@@ -494,7 +503,7 @@
         <ttcol align='left'>Attr Name</ttcol>
         <ttcol align='left'>Notes</ttcol>
         <ttcol align='left'>Level</ttcol>
-        <ttcol align='left'>Category</ttcol>
+        <ttcol align='left'>Mux Category</ttcol>
 
         <c>sendrecv&nbsp;</c><c>Not impacted&nbsp;</c><c>B&nbsp;</c>
         <c>NORMAL&nbsp;</c>
@@ -607,7 +616,7 @@
         <ttcol align='left'>Attr Name</ttcol>
         <ttcol align='left'>Notes</ttcol>
         <ttcol align='left'>Level</ttcol>
-        <ttcol align='left'>Category</ttcol>
+        <ttcol align='left'>Mux Category</ttcol>
         <c>rtcp-fb&nbsp;</c><c>Since RTCP feedback attributes are Payload Type
         (PT) scoped, their values MUST be identical for a given PT across
         the multiplexed m=lines.</c><c>M</c><c>IDENTICAL-PER-PT&nbsp;</c>
@@ -627,7 +636,7 @@
           <ttcol align='left'>Name</ttcol>
           <ttcol align='left'>Notes</ttcol>
           <ttcol align='left'>Level</ttcol>
-          <ttcol align='left'>Category</ttcol>
+          <ttcol align='left'>Mux Category</ttcol>
 
           <c>rtcp-mux&nbsp;</c><c>RTP and RTCP Multiplexing affects the
           entire RTP Session&nbsp;</c>
@@ -649,7 +658,7 @@
           <ttcol align='left'>Name</ttcol>
           <ttcol align='left'>Notes</ttcol>
           <ttcol align='left'>Level</ttcol>
-          <ttcol align='left'>Category</ttcol>
+          <ttcol align='left'>Mux Category</ttcol>
 
           <c>des&nbsp;</c><c>Refer to notes below&nbsp;</c>
           <c>M&nbsp;</c><c>NOT RECOMMENDED&nbsp;</c>
@@ -665,9 +674,9 @@
 
         </texttable>
         <t hangText="Note">
-         A mismatched set of Preconditions across media descriptions
+         A mismatched set of preconditions across media descriptions
          results in Session establishment failures due to inability
-         to meet the right resource reservations requested.
+         in meeting the right resource reservations requested.
         </t>
       </section>
 
@@ -684,7 +693,7 @@
           <ttcol align='left'>Name</ttcol>
           <ttcol align='left'>Notes</ttcol>
           <ttcol align='left'>Level</ttcol>
-          <ttcol align='left'>Category</ttcol>
+          <ttcol align='left'>Mux Category</ttcol>
 
           <c>label&nbsp;</c><c>Not Impacted&nbsp;</c><c>M</c><c>NORMAL&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
@@ -700,7 +709,7 @@
           <ttcol align='left'>Name</ttcol>
           <ttcol align='left'>Notes</ttcol>
           <ttcol align='left'>Level</ttcol>
-          <ttcol align='left'>Category</ttcol>
+          <ttcol align='left'>Mux Category</ttcol>
 
           <c>qos-mech-send&nbsp;</c>
           <c> Refer to notes below &nbsp;</c>
@@ -716,10 +725,11 @@
         <t hangText="Note">
           A single DSCP code point per flow being multiplexed
           doesn't impact multiplexing since QOS mechanisms are
-          signaled/scoped per flow.For scenarios that involves having 
-          different DSCP for packets being transmitted over the 
-          same 5-tuple, has issues as discussed in 
-          <xref target="I.D-draft-ietf-dart-dscp-rtp"/>
+          signaled/scoped per flow. For scenarios that involves having
+          different DSCP code points for packets being transmitted over
+          the same 5-tuple, issues as discussed in
+          <xref target="I.D-draft-ietf-dart-dscp-rtp"/> needs to be
+          taken into consideration.
         </t>
       </section>
 
@@ -734,7 +744,7 @@
           <ttcol align='left'>Name</ttcol>
           <ttcol align='left'>Notes</ttcol>
           <ttcol align='left'>Level</ttcol>
-          <ttcol align='left'>Category</ttcol>
+          <ttcol align='left'>Mux Category</ttcol>
 
           <c>crypto&nbsp;</c><c>crypto attribute must be the one that corresponds 
           to the "m=" line chosen for setting up the underlying transport flow </c>
@@ -757,7 +767,7 @@
           <ttcol align='left'>Name</ttcol>
           <ttcol align='left'>Notes</ttcol>
           <ttcol align='left'>Current</ttcol>
-          <ttcol align='left'>Category</ttcol>
+          <ttcol align='left'>Mux Category</ttcol>
 
           <c>dccp-service-code&nbsp;</c><c> If RFC6773 is not being
           used in addition to RFC5762, the port in the "m=" line is a
@@ -791,7 +801,7 @@
           <ttcol align='left'>Name</ttcol>
           <ttcol align='left'>Notes</ttcol>
           <ttcol align='left'>Level</ttcol>
-          <ttcol align='left'>Category</ttcol>
+          <ttcol align='left'>Mux Category</ttcol>
 
           <c>dccp-port&nbsp;</c><c> Multiplexing MUST NOT be performed
           due to potential conflict between the port used for DCCP
@@ -825,7 +835,7 @@
           <ttcol align='left'>Name</ttcol>
           <ttcol align='left'>Notes</ttcol>
           <ttcol align='left'>Level</ttcol>
-          <ttcol align='left'>Category</ttcol>
+          <ttcol align='left'>Mux Category</ttcol>
 
           <c>rtcp-rsize&nbsp;</c><c>Reduced size RTCP affects the
           entire RTP Session&nbsp;</c>
@@ -857,7 +867,7 @@
           <ttcol align='left'>Name</ttcol>
           <ttcol align='left'>Notes</ttcol>
           <ttcol align='left'>Level</ttcol>
-          <ttcol align='left'>Category</ttcol>
+          <ttcol align='left'>Mux Category</ttcol>
 
           <c>resource&nbsp;</c><c>Not Impacted&nbsp;</c><c>M&nbsp;</c>
           <c>NORMAL&nbsp;</c>
@@ -889,7 +899,7 @@
           <ttcol align='left'>Name</ttcol>
           <ttcol align='left'>Notes</ttcol>
           <ttcol align='left'>Level</ttcol>
-          <ttcol align='left'>Category</ttcol>
+          <ttcol align='left'>Mux Category</ttcol>
 
           <c>ice-lite&nbsp;</c><c>Not Impacted&nbsp;</c>
           <c>S</c><c>NORMAL&nbsp;</c>
@@ -943,7 +953,7 @@
           <ttcol align='left'>Name</ttcol>
           <ttcol align='left'>Notes</ttcol>
           <ttcol align='left'>Level</ttcol>
-          <ttcol align='left'>Category</ttcol>
+          <ttcol align='left'>Mux Category</ttcol>
 
           <c>extmap&nbsp;</c><c>Specific RTP extension document MUST
           be referred&nbsp;</c> <c>B</c><c>SPECIAL&nbsp;</c>
@@ -961,7 +971,7 @@
           <ttcol align='left'>Name</ttcol>
           <ttcol align='left'>Notes</ttcol>
           <ttcol align='left'>Level</ttcol>
-          <ttcol align='left'>Category</ttcol>
+          <ttcol align='left'>Mux Category</ttcol>
 
           <c>rtcp&nbsp;</c><c>Identical attribute value 
           MUST be used since the RTCP port affects
@@ -984,7 +994,7 @@
           <ttcol align='left'>Name</ttcol>
           <ttcol align='left'>Notes</ttcol>
           <ttcol align='left'>Level</ttcol>
-          <ttcol align='left'>Category</ttcol>
+          <ttcol align='left'>Mux Category</ttcol>
 
           <c>ssrc&nbsp;</c><c>Refer to Notes
           below&nbsp;</c><c>M</c><c>NORMAL&nbsp;</c>
@@ -1024,7 +1034,7 @@
           <ttcol align='left'>Name</ttcol>
           <ttcol align='left'>Notes</ttcol>
           <ttcol align='left'>Level</ttcol>
-          <ttcol align='left'>Category</ttcol>
+          <ttcol align='left'>Mux Category</ttcol>
 
           <c>ts-refclk&nbsp;</c><c>Not Impacted&nbsp;</c>
           <c>B</c><c>NORMAL&nbsp;</c>
@@ -1051,7 +1061,7 @@
           <ttcol align='left'>Name</ttcol>
           <ttcol align='left'>Notes</ttcol>
           <ttcol align='left'>Level</ttcol>
-          <ttcol align='left'>Category</ttcol>
+          <ttcol align='left'>Mux Category</ttcol>
 
           <c>imageattr&nbsp;</c><c>The attribute value must be same
           for a given codec configuration&nbsp;</c><c>M&nbsp;</c>
@@ -1070,7 +1080,7 @@
           <ttcol align='left'>Name</ttcol>
           <ttcol align='left'>Notes</ttcol>
           <ttcol align='left'>Level</ttcol>
-          <ttcol align='left'>Category</ttcol>
+          <ttcol align='left'>Mux Category</ttcol>
 
           <c>duplication-delay&nbsp;</c><c>Not Impacted&nbsp;</c><c>B&nbsp;</c>
           <c>NORMAL&nbsp;</c>
@@ -1079,17 +1089,17 @@
         </texttable>
       </section>
 
-      <section title="RFC7226 -  RTCP XR Blocks for MOS Metric Reporting">
-        <t><xref target="RFC7226"/> defines an RTP Control Protocol (RTCP) 
+      <section title="RFC7266 -  RTCP XR Blocks for MOS Metric Reporting">
+        <t><xref target="RFC7266"/> defines an RTP Control Protocol (RTCP) 
         Extended Report (XR) Block including two new segment types and 
         associated Session Description Protocol (SDP) parameters that allow 
         the reporting of mean opinion score (MOS) Metrics for use in a 
         range of RTP applications.</t>
-        <texttable title="RFC7226 Attribute Analysis">
+        <texttable title="RFC7266 Attribute Analysis">
           <ttcol align='left'>Name</ttcol>
           <ttcol align='left'>Notes</ttcol>
           <ttcol align='left'>Level</ttcol>
-          <ttcol align='left'>Category</ttcol>
+          <ttcol align='left'>Mux Category</ttcol>
 
           <c>calgextmap&nbsp;</c><c>Not Impacted&nbsp;</c><c>B&nbsp;</c>
           <c>NORMAL&nbsp;</c>
@@ -1114,7 +1124,7 @@
           <ttcol align='left'>Name</ttcol>
           <ttcol align='left'>Notes</ttcol>
           <ttcol align='left'>Level</ttcol>
-          <ttcol align='left'>Category</ttcol>
+          <ttcol align='left'>Mux Category</ttcol>
 
           <c>rams-updates&nbsp;</c><c>Not recommended
           &nbsp;</c><c>M&nbsp;</c><c>NOT RECOMMENDED&nbsp;</c>
@@ -1138,7 +1148,7 @@
           <ttcol align='left'>Name</ttcol>
           <ttcol align='left'>Notes</ttcol>
           <ttcol align='left'>Level</ttcol>
-          <ttcol align='left'>Category</ttcol>
+          <ttcol align='left'>Mux Category</ttcol>
 
           <c>cfw-id&nbsp;</c><c>Not Applicable&nbsp;</c><c>M&nbsp;</c><c>NORMAL&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
@@ -1160,7 +1170,7 @@
           <ttcol align='left'>Name</ttcol>
           <ttcol align='left'>Notes</ttcol>
           <ttcol align='left'>Level</ttcol>
-          <ttcol align='left'>Category</ttcol>
+          <ttcol align='left'>Mux Category</ttcol>
 
           <c>fec-source-flow&nbsp;</c><c>Specific FEC scheme document needs 
           to be referred&nbsp;</c><c>M&nbsp;</c>
@@ -1194,7 +1204,7 @@
           <ttcol align='left'>Name</ttcol>
           <ttcol align='left'>Notes</ttcol>
           <ttcol align='left'>Level</ttcol>
-          <ttcol align='left'>Category</ttcol>
+          <ttcol align='left'>Mux Category</ttcol>
 
           <c>content&nbsp;</c><c>Not
           Impacted&nbsp;</c><c>M&nbsp;</c><c>NORMAL&nbsp;</c>
@@ -1212,7 +1222,7 @@
           <ttcol align='left'>Name</ttcol>
           <ttcol align='left'>Notes</ttcol>
           <ttcol align='left'>Level</ttcol>
-          <ttcol align='left'>Category</ttcol>
+          <ttcol align='left'>Mux Category</ttcol>
 
           <c>sqn&nbsp;</c><c>Not Impacted&nbsp;</c>
           <c>B</c><c>NORMAL&nbsp;</c>
@@ -1253,7 +1263,7 @@
           <ttcol align='left'>Name</ttcol>
           <ttcol align='left'>Notes</ttcol>
           <ttcol align='left'>Level</ttcol>
-          <ttcol align='left'>Category</ttcol>
+          <ttcol align='left'>Mux Category</ttcol>
 
           <c>portmapping-req&nbsp;</c><c>Not recommended, if port mapping is
           required by the application&nbsp;</c><c>M&nbsp;</c>
@@ -1279,7 +1289,7 @@
           <ttcol align='left'>Name</ttcol>
           <ttcol align='left'>Notes</ttcol>
           <ttcol align='left'>Level</ttcol>
-          <ttcol align='left'>Category</ttcol>
+          <ttcol align='left'>Mux Category</ttcol>
 
           <c>msrp-cema&nbsp;</c><c>Not Impacted&nbsp;</c><c>M&nbsp;</c>
           <c>NORMAL&nbsp;</c>
@@ -1299,7 +1309,7 @@
           <ttcol align='left'>Name</ttcol>
           <ttcol align='left'>Notes</ttcol>
           <ttcol align='left'>Level</ttcol>
-          <ttcol align='left'>Category</ttcol>
+          <ttcol align='left'>Mux Category</ttcol>
 
           <c>floorctrl&nbsp;</c>
           <c>Must be repeated across all the multiplexed
@@ -1331,7 +1341,7 @@
           <ttcol align='left'>Name</ttcol>
           <ttcol align='left'>Notes</ttcol>
           <ttcol align='left'>Level</ttcol>
-          <ttcol align='left'>Category</ttcol>
+          <ttcol align='left'>Mux Category</ttcol>
 
           <c>file-selector&nbsp;</c><c>Not Impacted&nbsp;</c>
           <c>M</c><c>NORMAL&nbsp;</c>
@@ -1368,7 +1378,7 @@
           <ttcol align='left'>Name</ttcol>
           <ttcol align='left'>Notes</ttcol>
           <ttcol align='left'>Level</ttcol>
-          <ttcol align='left'>Category</ttcol>
+          <ttcol align='left'>Mux Category</ttcol>
 
           <c>loopback rtp-pkt-loopback&nbsp;</c><c>Not Impacted &nbsp;</c>
           <c>M</c><c>NORMAL&nbsp;</c>
@@ -1401,7 +1411,7 @@
           <ttcol align='left'>Name</ttcol>
           <ttcol align='left'>Notes</ttcol>
           <ttcol align='left'>Level</ttcol>
-          <ttcol align='left'>Category</ttcol>
+          <ttcol align='left'>Mux Category</ttcol>
 
           <c>rtcp-unicast&nbsp;</c><c>The attribute MUST be reported
           across all m=lines
@@ -1421,7 +1431,7 @@
           <ttcol align='left'>Name</ttcol>
           <ttcol align='left'>Notes</ttcol>
           <ttcol align='left'>Level</ttcol>
-          <ttcol align='left'>Category</ttcol>
+          <ttcol align='left'>Mux Category</ttcol>
 
           <c>rtcp-xr&nbsp;</c><c>Not Impacted&nbsp;</c><c>B</c><c>NORMAL&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
@@ -1440,7 +1450,7 @@
           <ttcol align='left'>Name</ttcol>
           <ttcol align='left'>Notes</ttcol>
           <ttcol align='left'>Level</ttcol>
-          <ttcol align='left'>Category</ttcol>
+          <ttcol align='left'>Mux Category</ttcol>
 
           <c>pcfg&nbsp;</c>
           <c>Refer to Section <xref target="sec-encap"/> &nbsp;</c>
@@ -1489,7 +1499,7 @@
           <ttcol align='left'>Name</ttcol>
           <ttcol align='left'>Notes</ttcol>
           <ttcol align='left'>Level</ttcol>
-          <ttcol align='left'>Category</ttcol>
+          <ttcol align='left'>Mux Category</ttcol>
 
           <c>rmcap&nbsp;</c>
           <c>Refer to Section <xref target="sec-encap"/>&nbsp;</c>
@@ -1516,7 +1526,7 @@
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
           <c>sescap&nbsp;</c>
-          <c>Refer to Section <xref target="sec-encap"/>&nbsp;</c>
+          <c>Refer to notes below&nbsp;</c>
           <c>S</c><c>NOT RECOMMENDED&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
@@ -1528,10 +1538,10 @@
         <t hangText="Note"> The "sescap" attribute is NOT RECOMMENDED 
           for use with multiplexing. The reason is that it requires the 
           use of unique configuration numbers across the entire SDP 
-          (per <xref target="RFC6871"/> as opposed to within a media 
+          (per <xref target="RFC6871"/>) as opposed to within a media
           description only (per <xref target="RFC5939"/>). As described in 
           <xref target="sec-encap"/>, the use of identical configuration 
-          numbers between multiplxed (bundled) media descriptions is the 
+          numbers between multiplexed (bundled) media descriptions is the
           default way of indicating compatible configurations in a bundle. 
         </t>
       </section>
@@ -1546,7 +1556,7 @@
           <ttcol align='left'>Name</ttcol>
           <ttcol align='left'>Notes</ttcol>
           <ttcol align='left'>Level</ttcol>
-          <ttcol align='left'>Category</ttcol>
+          <ttcol align='left'>Mux Category</ttcol>
 
           <c>bcap&nbsp;</c>
           <c>Inherit the category SUM as 
@@ -1593,7 +1603,7 @@
           <ttcol align='left'>Name</ttcol>
           <ttcol align='left'>Notes</ttcol>
           <ttcol align='left'>Level</ttcol>
-          <ttcol align='left'>Category</ttcol>
+          <ttcol align='left'>Mux Category</ttcol>
 
           <c>key-mgmt&nbsp;</c><c>Key management protocol MUST be
           identical across all the m=lines&nbsp;</c><c>B</c>
@@ -1623,9 +1633,9 @@
           <ttcol align='left'>Name</ttcol>
           <ttcol align='left'>Notes</ttcol>
           <ttcol align='left'>Level</ttcol>
-          <ttcol align='left'>Category</ttcol>
+          <ttcol align='left'>Mux Category</ttcol>
 
-          <c>fingerprint&nbsp;</c><c>Fingerprint value from the m=line
+          <c>fingerprint&nbsp;</c><c>fingerprint value from the m=line
           defining the underlying transport is
           chosen&nbsp;</c><c>B</c><c>TRANSPORT&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
@@ -1648,7 +1658,7 @@
           <ttcol align='left'>Name</ttcol>
           <ttcol align='left'>Notes</ttcol>
           <ttcol align='left'>Level</ttcol>
-          <ttcol align='left'>Category</ttcol>
+          <ttcol align='left'>Mux Category</ttcol>
 
           <c>source-filter&nbsp;</c><c>The attribute MUST be repeated
           across all m=lines
@@ -1675,7 +1685,7 @@
           <ttcol align='left'>Name</ttcol>
           <ttcol align='left'>Notes</ttcol>
           <ttcol align='left'>Level</ttcol>
-          <ttcol align='left'>Category</ttcol>
+          <ttcol align='left'>Mux Category</ttcol>
 
           <c>multicast-rtcp&nbsp;</c><c>Multicast RTCP port MUST be
           identical across all the
@@ -1695,7 +1705,7 @@
           <ttcol align='left'>Name</ttcol>
           <ttcol align='left'>Notes</ttcol>
           <ttcol align='left'>Level</ttcol>
-          <ttcol align='left'>Category</ttcol>
+          <ttcol align='left'>Mux Category</ttcol>
 
           <c>zrtp-hash&nbsp;</c><c>Complicates if all the m=lines are
           not authenticated as given in the example
@@ -1704,30 +1714,6 @@
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
         </texttable>
-        <t>
-          Example: Multiplexing media descriptions having attribute
-          zrtp-hash defined with the media descriptions lacking it,
-          would either complicate the handling of multiplexed stream
-          or fail multiplexing.
-          <figure>
-            <artwork align="left" alt="" height="" name="" type="" width=""
-                   xml:space="preserve"><![CDATA[
-     v=0
-     o=bob 2890844527 2890844527 IN IP4 client.biloxi.example.com
-     s=
-     c=IN IP4 client.biloxi.example.com
-     t=0 0
-     m=audio 3456 RTP/AVP 97
-     a=rtpmap:97 iLBC/8000
-     <allOneLine>
-     a=zrtp-hash:1.10 fe30efd02423cb054e50efd0248742ac7a52c8f91bc2
-     df881ae642c371ba46df
-     </allOneLine>
-     m=video 34567 RTP/AVP 31
-     a=rtpmap:31 H261/90000
-            ]]></artwork>
-          </figure>
-        </t>
       </section>
 
       <section title="RFC4145 - Connection-Oriented Media ">
@@ -1742,7 +1728,7 @@
           <ttcol align='left'>Name</ttcol>
           <ttcol align='left'>Notes</ttcol>
           <ttcol align='left'>Level</ttcol>
-          <ttcol align='left'>Category</ttcol>
+          <ttcol align='left'>Mux Category</ttcol>
 
           <c>setup&nbsp;</c>
           <c>MUST be identical across all m=lines&nbsp;</c>
@@ -1768,7 +1754,7 @@
           <ttcol align='left'>Name</ttcol>
           <ttcol align='left'>Notes</ttcol>
           <ttcol align='left'>Level</ttcol>
-          <ttcol align='left'>Category</ttcol>
+          <ttcol align='left'>Mux Category</ttcol>
 
           <c>altc&nbsp;</c><c>The IP Address and port must be the one 
           that corresponds to the m=line chosen for setting up the 
@@ -1790,7 +1776,7 @@
           <ttcol align='left'>Name</ttcol>
           <ttcol align='left'>Notes</ttcol>
           <ttcol align='left'>Level</ttcol>
-          <ttcol align='left'>Category</ttcol>
+          <ttcol align='left'>Mux Category</ttcol>
 
           <c>cs-correlation:callerid&nbsp;</c>
           <c>Not Impacted.&nbsp;</c>
@@ -1824,7 +1810,7 @@
           <ttcol align='left'>Name</ttcol>
           <ttcol align='left'>Notes</ttcol>
           <ttcol align='left'>Level</ttcol>
-          <ttcol align='left'>Category</ttcol>
+          <ttcol align='left'>Mux Category</ttcol>
 
           <c>rtcp-idms&nbsp;</c><c>Not Impacted.&nbsp;</c>
           <c>M</c><c>NORMAL&nbsp;</c>
@@ -1841,7 +1827,7 @@
           <ttcol align='left'>Name</ttcol>
           <ttcol align='left'>Notes</ttcol>
           <ttcol align='left'>Level</ttcol>
-          <ttcol align='left'>Category</ttcol>
+          <ttcol align='left'>Mux Category</ttcol>
 
           <c>bcastversion&nbsp;</c><c>Not Impacted&nbsp;</c>
           <c>S</c><c>NORMAL&nbsp;</c>
@@ -1875,7 +1861,7 @@
           <ttcol align='left'>Name</ttcol>
           <ttcol align='left'>Notes</ttcol>
           <ttcol align='left'>Level</ttcol>
-          <ttcol align='left'>Category</ttcol>
+          <ttcol align='left'>Mux Category</ttcol>
 
           <c>ike-setup&nbsp;</c><c>Attribute MUST be identical
             across all the m=lines&nbsp;</c><c>B</c><c>IDENTICAL&nbsp;</c>
@@ -1910,7 +1896,7 @@
           <ttcol align='left'>Name</ttcol>
           <ttcol align='left'>Notes</ttcol>
           <ttcol align='left'>Level</ttcol>
-          <ttcol align='left'>Category</ttcol>
+          <ttcol align='left'>Mux Category</ttcol>
 
           <c>etag&nbsp;</c><c>RTSP is not supported for RTP Stream
           multiplexing&nbsp;</c><c>B</c><c>NOT RECOMMENDED&nbsp;</c>
@@ -1943,7 +1929,7 @@
           <ttcol align='left'>Name</ttcol>
           <ttcol align='left'>Notes</ttcol>
           <ttcol align='left'>Level</ttcol>
-          <ttcol align='left'>Category</ttcol>
+          <ttcol align='left'>Mux Category</ttcol>
 
           <c>X-predecbufsize&nbsp;</c>
           <c>Refer to notes below&nbsp;</c>
@@ -2009,7 +1995,7 @@
           <c>NOT RECOMMENDED&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
-          <c>3GPP-Asset-Informatio&nbsp;</c>
+          <c>3GPP-Asset-Information&nbsp;</c>
           <c>Refer to notes below&nbsp;</c><c>B</c>
           <c>NOT RECOMMENDED&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
@@ -2027,6 +2013,11 @@
           <c>mbms-repair&nbsp;</c>
           <c>Refer to notes below&nbsp;</c><c>B</c>
           <c>NOT RECOMMENDED&nbsp;</c>
+          <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
+
+          <c>3GPP-QoE-Metrics&nbsp;</c>
+          <c>Refer to notes below&nbsp;</c>
+          <c>M</c><c>NOT RECOMMENDED&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
           <c>3GPP-QoE-Metrics:Corruption duration&nbsp;</c>
@@ -2064,7 +2055,7 @@
           <c>B</c><c>NOT RECOMMENDED&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
-          <c>3GPP-QoE-Metrics:Average Codec Bitrat&nbsp;</c>
+          <c>3GPP-QoE-Metrics:Average Codec Bitrate&nbsp;</c>
           <c>Refer to notes below&nbsp;</c>
           <c>M</c><c>NOT RECOMMENDED&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
@@ -2098,7 +2089,7 @@
           <ttcol align='left'>Name</ttcol>
           <ttcol align='left'>Notes</ttcol>
           <ttcol align='left'>Level</ttcol>
-          <ttcol align='left'>Category</ttcol>
+          <ttcol align='left'>Mux Category</ttcol>
 
           <c>aalType&nbsp;</c><c>Not Impacted</c>
           <c>B&nbsp;</c><c>NORMAL&nbsp;</c>
@@ -2185,7 +2176,7 @@
           <c>B&nbsp;</c><c>NORMAL&nbsp;</c>
           <c>isup_usi&nbsp;</c><c>Not Impacted</c>
           <c>B&nbsp;</c><c>NORMAL&nbsp;</c>
-          <c>isup_usi&nbsp;</c><c>Not Impacted</c>
+          <c>uiLayer1_Prot&nbsp;</c><c>Not Impacted</c>
           <c>B&nbsp;</c><c>NORMAL&nbsp;</c>
           <c>chain&nbsp;</c><c>Not Impacted</c>
           <c>B&nbsp;</c><c>NORMAL&nbsp;</c>
@@ -2218,7 +2209,7 @@
           <ttcol align='left'>Name</ttcol>
           <ttcol align='left'>Notes</ttcol>
           <ttcol align='left'>Level</ttcol>
-          <ttcol align='left'>Category</ttcol>
+          <ttcol align='left'>Mux Category</ttcol>
 
           <c>3gpp_sync_info&nbsp;</c>
           <c>Usage defined for the IP Multimedia Subsystem&nbsp;</c>
@@ -2241,22 +2232,22 @@
           <ttcol align='left'>Name</ttcol>
           <ttcol align='left'>Notes</ttcol>
           <ttcol align='left'>Level</ttcol>
-          <ttcol align='left'>Category</ttcol>
+          <ttcol align='left'>Mux Category</ttcol>
 
           <c>PSCid&nbsp;</c><c>Not Impacted&nbsp;</c>
-          <c>Not-ApplIcable</c><c>NORMAL&nbsp;</c>
+          <c>Not-Applicable</c><c>NORMAL&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
           <c>bc_service&nbsp;</c><c>Not Impacted&nbsp;</c>
-          <c>Not-AppIlcable</c><c>NORMAL&nbsp;</c>
+          <c>Not-Applicable</c><c>NORMAL&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
           <c>bc_program&nbsp;</c><c>Not Impacted&nbsp;</c>
-          <c>Not-AppIlcable</c><c>NORMAL&nbsp;</c>
+          <c>Not-Applicable</c><c>NORMAL&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
           <c>bc_service_package&nbsp;</c><c>Not Impacted&nbsp;</c>
-          <c>Not-Appilcable</c><c>NORMAL&nbsp;</c>
+          <c>Not-Applicable</c><c>NORMAL&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
         </texttable>
       </section>
@@ -2270,7 +2261,7 @@
           <ttcol align='left'>Name</ttcol>
           <ttcol align='left'>Notes</ttcol>
           <ttcol align='left'>Level</ttcol>
-          <ttcol align='left'>Category</ttcol>
+          <ttcol align='left'>Mux Category</ttcol>
 
           <c>g.3gpp.cat&nbsp;</c>
           <c>Usage defined for the IP Multimedia Subsystem&nbsp;</c>
@@ -2289,7 +2280,7 @@
           <ttcol align='left'>Name</ttcol>
           <ttcol align='left'>Notes</ttcol>
           <ttcol align='left'>Level</ttcol>
-          <ttcol align='left'>Category</ttcol>
+          <ttcol align='left'>Mux Category</ttcol>
 
           <c>g.3gpp.crs&nbsp;</c>
           <c>Usage defined for the IP Multimedia Subsystem&nbsp;</c>
@@ -2309,17 +2300,19 @@
           <ttcol align='left'>Name</ttcol>
           <ttcol align='left'>Notes</ttcol>
           <ttcol align='left'>Level</ttcol>
-          <ttcol align='left'>Category</ttcol>
+          <ttcol align='left'>Mux Category</ttcol>
 
           <c>secondary-realm&nbsp;</c>
-          <c>Per media-level attribute MUST be used per
-          underlying transport&nbsp;</c><c>M</c>
+          <c>secondary-realm  must be the one that corresponds
+          to the m=line chosen for setting up the underlying
+          transport flow.&nbsp;</c><c>M</c>
           <c>TRANSPORT&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
           <c>visited-realm&nbsp;</c>
-          <c>Per media-level attribute MUST be used per
-          underlying transport&nbsp;</c><c>M</c>
+          <c>visited-realm  must be the one that corresponds
+          to the m=line chosen for setting up the underlying
+          transport flow.&nbsp;</c><c>M</c>
           <c>TRANSPORT&nbsp;</c><c>&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
@@ -2335,15 +2328,15 @@
           <c>M</c><c>NORMAL&nbsp;</c><c>&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
-          <c>omr-s-bw&nbsp;</c><c>Not Impacted&nbsp;</c>
+          <c>omr-s-att&nbsp;</c><c>Not Impacted&nbsp;</c>
+          <c>M</c><c>NORMAL&nbsp;</c><c>&nbsp;</c>
+          <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
+
+          <c>omr-m-bw&nbsp;</c><c>Not Impacted&nbsp;</c>
           <c>M</c><c>NORMAL&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
           <c>omr-s-bw&nbsp;</c><c>Not Impacted&nbsp;</c>
-          <c>M</c><c>NORMAL&nbsp;</c>
-          <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
-
-          <c>omr-m-att&nbsp;</c><c>Not Impacted&nbsp;</c>
           <c>M</c><c>NORMAL&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
@@ -2362,7 +2355,7 @@
           <ttcol align='left'>Name</ttcol>
           <ttcol align='left'>Notes</ttcol>
           <ttcol align='left'>Level</ttcol>
-          <ttcol align='left'>Category</ttcol>
+          <ttcol align='left'>Mux Category</ttcol>
 
           <c>T38FaxVersion&nbsp;</c><c>Not Impacted&nbsp;</c>
           <c>S</c><c>NORMAL&nbsp;</c>
@@ -2415,6 +2408,10 @@
           <c>T38ModemType&nbsp;</c><c>Not Impacted&nbsp;</c>
           <c>S</c><c>NORMAL&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
+          
+          <c>T38VendorInfo&nbsp;</c><c>Not Impacted&nbsp;</c>
+          <c>S</c><c>NORMAL&nbsp;</c>
+          <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
         </texttable>
          <t hangText="Note"> The ITU T.38 attributes are clearly unaffected 
@@ -2431,7 +2428,7 @@
           <ttcol align='left'>Name</ttcol>
           <ttcol align='left'>Notes</ttcol>
           <ttcol align='left'>Level</ttcol>
-          <ttcol align='left'>Category</ttcol>
+          <ttcol align='left'>Mux Category</ttcol>
 
         <c>ipbcp&nbsp;</c><c>Not Impacted&nbsp;</c>
           <c>S</c><c>NORMAL&nbsp;</c>
@@ -2448,9 +2445,9 @@
           <ttcol align='left'>Name</ttcol>
           <ttcol align='left'>Notes</ttcol>
           <ttcol align='left'>Level</ttcol>
-          <ttcol align='left'>Category</ttcol>
+          <ttcol align='left'>Mux Category</ttcol>
 
-          <c>h248item&nbsp;</c><c>It is also only applicable for
+          <c>h248item&nbsp;</c><c>It is only applicable for
           signaling the inclusion of H.248 extension packages to a
           gateway via the local and remote descriptors.  The attribute
           itself is unaffected by multiplexing, but the packaged
@@ -2478,7 +2475,7 @@
           <ttcol align='left'>Name</ttcol>
           <ttcol align='left'>Notes</ttcol>
           <ttcol align='left'>Level</ttcol>
-          <ttcol align='left'>Category</ttcol>
+          <ttcol align='left'>Mux Category</ttcol>
 
           <c>accept-types&nbsp;</c><c>Not Impacted&nbsp;</c>
           <c>M&nbsp;</c><c>NORMAL&nbsp;</c>
@@ -2499,27 +2496,6 @@
         </texttable>
       </section>
 
-      <section title="RFC4574 - SDP Label Attribute ">
-        <t><xref target="RFC4574"/> defines a new Session
-        Description Protocol (SDP) media-level attribute: "label".
-        The "label" attribute carries a pointer to a media stream in
-        the context of an arbitrary network application that uses
-        SDP.  The sender of the SDP document can attach the "label"
-        attribute to a particular media stream or streams.  The
-        application can then use the provided pointer to refer to
-        each particular media stream in its context.</t>
-        <texttable title="RFC4574 Attribute Analysis">
-          <ttcol align='left'>Name</ttcol>
-          <ttcol align='left'>Notes</ttcol>
-          <ttcol align='left'>Level</ttcol>
-          <ttcol align='left'>Category</ttcol>
-
-          <c>label&nbsp;</c><c>Not Impacted&nbsp;</c><c>M</c><c>NORMAL&nbsp;</c>
-          <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
-
-        </texttable>
-      </section>
-
       <section title="Historical Attributes">
         <t>
           This section specifies analysis for the attributes that are
@@ -2530,7 +2506,7 @@
           <ttcol align='left'>Name</ttcol>
           <ttcol align='left'>Notes</ttcol>
           <ttcol align='left'>Level</ttcol>
-          <ttcol align='left'>Category</ttcol>
+          <ttcol align='left'>Mux Category</ttcol>
 
           <c>rtpred1&nbsp;</c><c>Historic attributes.&nbsp;</c>
           <c>Not-Applicable</c><c>NOT RECOMMENDED&nbsp;</c>
@@ -2551,20 +2527,12 @@
          <ttcol align='left'>Name</ttcol>
          <ttcol align='left'>Notes</ttcol>
          <ttcol align='left'>Level</ttcol>
-         <ttcol align='left'>Category</ttcol>
+         <ttcol align='left'>Mux Category</ttcol>
 
          <c>bwtype:CT&nbsp;</c><c>Not Impacted&nbsp;</c>
          <c>S</c><c>NORMAL&nbsp;</c>
          <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
-         <c>bwtype:AS&nbsp;</c><c> As a session attribute, it
-         specifies the session aggregate unless media-level b=RR
-         and/or b=RS attributes are used.  Under this interpretation
-         the multiplexing scheme has no impact and thus NORMAL
-         category applies.&nbsp;</c>
-
-         <c>B</c><c>NORMAL&nbsp;</c>
-         <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
          <c>bwtype:AS&nbsp;</c><c> For the media level usage,
 	        the aggregate of individual bandwidth values is considered.&nbsp;</c>
           <c>B</c>
@@ -2583,18 +2551,18 @@
          <ttcol align='left'>Name</ttcol>
          <ttcol align='left'>Notes</ttcol>
          <ttcol align='left'>Level</ttcol>
-         <ttcol align='left'>Category</ttcol>
+         <ttcol align='left'>Mux Category</ttcol>
 
          <c>bwtype:RS&nbsp;</c><c>Session level usage represents
          session aggregate and media level usage indicates SUM of the
          individual values while multiplexing&nbsp;</c>
-         <c>B</c><c>NORMAL</c>
+         <c>B</c><c>SUM</c>
          <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
          <c>bwtype:RR&nbsp;</c><c>Session level usage represents
          session aggregate and media level usage indicates SUM of the
          individual values while multiplexing&nbsp;</c>
-         <c>B</c><c>NORMAL&nbsp;</c>
+         <c>B</c><c>SUM&nbsp;</c>
          <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
        </texttable>
@@ -2612,7 +2580,7 @@
          <ttcol align='left'>Name</ttcol>
          <ttcol align='left'>Notes</ttcol>
          <ttcol align='left'>Level</ttcol>
-         <ttcol align='left'>Category</ttcol>
+         <ttcol align='left'>Mux Category</ttcol>
 
          <c>bwtype:TIAS&nbsp;</c><c>The usage of TIAS is not clearly
          defined Offer/Answer
@@ -2631,10 +2599,7 @@
        across m=lines and multiplying the computed sum with maxprate
        and the per-packet overhead would inflate the value
        significantly. Instead performing multiplication and adding the
-       individual values is a more appropriate usage. This still
-       ignores the fact that this is a send side declaration, and not
-       intended for receiver negotiation.
-       </t>
+       individual values is a more appropriate usage.</t>
      </section>
    </section>
    <section title="rtcp-fb Attribute Analysis" anchor="SecrtcpfbAnalysis">
@@ -2652,7 +2617,7 @@
          <ttcol align='left'>Attr Name</ttcol>
          <ttcol align='left'>Notes</ttcol>
          <ttcol align='left'>Level</ttcol>
-         <ttcol align='left'>Category</ttcol>
+         <ttcol align='left'>Mux Category</ttcol>
 
          <c>ack rpsi&nbsp;</c><c>The attribute value must be same
          for a given codec configuration</c>
@@ -2710,7 +2675,7 @@
          <ttcol align='left'>Attr Name</ttcol>
          <ttcol align='left'>Notes</ttcol>
          <ttcol align='left'>Level</ttcol>
-         <ttcol align='left'>Category</ttcol>
+         <ttcol align='left'>Mux Category</ttcol>
 
          <c>ccm&nbsp;</c><c>The attribute value must be same
         for a given codec configuration</c>
@@ -2724,7 +2689,7 @@
          <ttcol align='left'>Name</ttcol>
          <ttcol align='left'>Notes</ttcol>
          <ttcol align='left'>Level</ttcol>
-         <ttcol align='left'>Category</ttcol>
+         <ttcol align='left'>Mux Category</ttcol>
 
          <c>nack rai&nbsp;</c><c>The attribute value must be same
          for a given codec configuration&nbsp;</c>
@@ -2748,7 +2713,7 @@
          <ttcol align='left'>Name</ttcol>
          <ttcol align='left'>Notes</ttcol>
          <ttcol align='left'>Level</ttcol>
-         <ttcol align='left'>Category</ttcol>
+         <ttcol align='left'>Mux Category</ttcol>
 
          <c>ecn-capable-rtp&nbsp;</c><c>ECN markup are enabled at the
          RTP Session level&nbsp;</c>
@@ -2780,7 +2745,7 @@
          <ttcol align='left'>Name</ttcol>
          <ttcol align='left'>Notes</ttcol>
          <ttcol align='left'>Level</ttcol>
-         <ttcol align='left'>Category</ttcol>
+         <ttcol align='left'>Mux Category</ttcol>
 
          <c>nack tllei&nbsp;</c><c>The attribute value must be same
          for a given codec configuration&nbsp;</c>
@@ -2801,7 +2766,7 @@
          <ttcol align='left'>Attr Name</ttcol>
          <ttcol align='left'>Notes</ttcol>
          <ttcol align='left'>Level</ttcol>
-         <ttcol align='left'>Category</ttcol>
+         <ttcol align='left'>Mux Category</ttcol>
 
          <c>ccm fir&nbsp;</c><c>The attribute value must be same
          for a given codec configuration</c>
@@ -2840,7 +2805,7 @@
          <ttcol align='left'>Name</ttcol>
          <ttcol align='left'>Notes</ttcol>
          <ttcol align='left'>Level</ttcol>
-         <ttcol align='left'>Category</ttcol>
+         <ttcol align='left'>Mux Category</ttcol>
 
          <c>group:LS&nbsp;</c><c>Not Impacted&nbsp;</c>
          <c>S&nbsp;</c><c>NORMAL&nbsp;</c>
@@ -2864,7 +2829,7 @@
          <ttcol align='left'>Name</ttcol>
          <ttcol align='left'>Notes</ttcol>
          <ttcol align='left'>Level</ttcol>
-         <ttcol align='left'>Category</ttcol>
+         <ttcol align='left'>Mux Category</ttcol>
 
          <c>group:SRF&nbsp;</c><c>Not Impacted&nbsp;</c>
          <c>S&nbsp;</c><c>NORMAL&nbsp;</c>
@@ -2885,7 +2850,7 @@
          <ttcol align='left'>Name</ttcol>
          <ttcol align='left'>Notes</ttcol>
          <ttcol align='left'>Level</ttcol>
-         <ttcol align='left'>Category</ttcol>
+         <ttcol align='left'>Mux Category</ttcol>
 
          <c>group:ANAT&nbsp;</c><c>ANAT semantics is obseleted&nbsp;</c>
          <c>S&nbsp;</c>
@@ -2912,7 +2877,7 @@
          <ttcol align='left'>Name</ttcol>
          <ttcol align='left'>Notes</ttcol>
          <ttcol align='left'>Level</ttcol>
-         <ttcol align='left'>Category</ttcol>
+         <ttcol align='left'>Mux Category</ttcol>
 
          <c>group:FEC-FR&nbsp;</c><c>Not Impacted&nbsp;</c><c>S&nbsp;</c>
          <c>NORMAL&nbsp;</c>
@@ -2932,7 +2897,7 @@
          <ttcol align='left'>Name</ttcol>
          <ttcol align='left'>Notes</ttcol>
          <ttcol align='left'>Level</ttcol>
-         <ttcol align='left'>Category</ttcol>
+         <ttcol align='left'>Mux Category</ttcol>
 
          <c>depend lay&nbsp;</c><c>The attribute value must be same
          for a given codec configuration &nbsp;</c><c>M</c>
@@ -2956,7 +2921,7 @@
          <ttcol align='left'>Name</ttcol>
          <ttcol align='left'>Notes</ttcol>
          <ttcol align='left'>Level</ttcol>
-         <ttcol align='left'>Category</ttcol>
+         <ttcol align='left'>Mux Category</ttcol>
 
          <c>group:DUP&nbsp;</c><c>Not Impacted&nbsp;</c><c>S&nbsp;</c>
          <c>NORMAL&nbsp;</c>
@@ -2974,7 +2939,7 @@
          <ttcol align='left'>Name</ttcol>
          <ttcol align='left'>Notes</ttcol>
          <ttcol align='left'>Level</ttcol>
-         <ttcol align='left'>Category</ttcol>
+         <ttcol align='left'>Mux Category</ttcol>
 
          <c>ssrc-group:FID&nbsp;</c><c>Not Impacted&nbsp;</c>
          <c>SR</c><c>NORMAL&nbsp;</c>
@@ -2995,7 +2960,7 @@
          <ttcol align='left'>Name</ttcol>
          <ttcol align='left'>Notes</ttcol>
          <ttcol align='left'>Level</ttcol>
-         <ttcol align='left'>Category</ttcol>
+         <ttcol align='left'>Mux Category</ttcol>
 
          <c>ssrc-group:DUP&nbsp;</c><c>Not Impacted&nbsp;</c>
          <c>SR</c>
@@ -3014,7 +2979,7 @@
           <ttcol align='left'>Name</ttcol>
           <ttcol align='left'>Notes</ttcol>
           <ttcol align='left'>Level</ttcol>
-          <ttcol align='left'>Category</ttcol>
+          <ttcol align='left'>Mux Category</ttcol>
 
           <c>rsvp&nbsp;</c><c>Not Impacted, since QOS mechanisms are
           applied per flow.&nbsp;</c>
@@ -3034,7 +2999,7 @@
           <ttcol align='left'>Name</ttcol>
           <ttcol align='left'>Notes</ttcol>
           <ttcol align='left'>Level</ttcol>
-          <ttcol align='left'>Category</ttcol>
+          <ttcol align='left'>Mux Category</ttcol>
 
           <c>k=&nbsp;</c>
           <c>It is NOT recommended to use this attribute&nbsp;</c><c>S</c>
@@ -3050,7 +3015,7 @@
           <ttcol align='left'>Name</ttcol>
           <ttcol align='left'>Notes</ttcol>
           <ttcol align='left'>Level</ttcol>
-          <ttcol align='left'>Category</ttcol>
+          <ttcol align='left'>Mux Category</ttcol>
 
          <c>content:slides&nbsp;</c><c>Not Impacted&nbsp;</c>
          <c>M&nbsp;</c><c>NORMAL&nbsp;</c>
@@ -3094,7 +3059,7 @@
           <ttcol align='left'>Name</ttcol>
           <ttcol align='left'>Notes</ttcol>
           <ttcol align='left'>Level</ttcol>
-          <ttcol align='left'>Category</ttcol>
+          <ttcol align='left'>Mux Category</ttcol>
 
           <c>audio/ulpfec&nbsp;</c>
           <c>Not recommended for multiplexing due to reuse of SSRCs&nbsp;</c>
@@ -3246,7 +3211,7 @@
                 limited to each media description. To make it simple for the 
                 answerer to chose valid combinations of potential configurations 
                 across media descriptions in a given bundle group, we provide a 
-                simple rule for constructiong potential configurations:-
+                simple rule for constructing potential configurations:-
                   <list style="symbols">
                     <t> Let m-bundle be the set of media descriptions that form 
                     a given bundle .</t>
@@ -3423,10 +3388,10 @@ a=pcfg:4 m=5 pt=5:101
       <t>[RFC EDITOR NOTE: Please replace RFCXXXX with the RFC number 
         of this document.]</t>
       <t>The IANA is requested to add a new column named "Mux Category"
-       to all several of the subregistries in the "Session Description Protocol
+       to several of the subregistries in the "Session Description Protocol
        (SDP) Parameters" registry. <xref target="sec-mux-cat-iana"/>
        defines a new subregistry for identifying the initial registrations
-       for various multiplexing categories applicable as proposed
+       for various multiplexing categories applicable, as proposed
        in this document.</t>
        <t>The tables in <xref target="sec-mux-cat-values-iana"/>
        identify name of an entry in the existing subregistry and specify the value
@@ -3439,9 +3404,9 @@ a=pcfg:4 m=5 pt=5:101
           <t>A new sub-registry needs to be defined called  the
           "Multiplexing Categories", with the following registrations
           created initially: "NORMAL", "NOT RECOMMENDED",
-          "IDENTICAL", "TRANSPORT", "IDENTICAL-PER-PT", "SPECIAL"
+          "IDENTICAL", "TRANSPORT", "SUM", "INHERIT", "IDENTICAL-PER-PT", "SPECIAL"
           and "TBD" as defined in this document.</t>
-          <t>Initial value registration for "Mux Category".</t>
+          <t>Initial value registration for "Multiplexing Categories".</t>
 
           <texttable align="left">
             <ttcol align='left'>Multiplexing Categories</ttcol>
@@ -3450,6 +3415,8 @@ a=pcfg:4 m=5 pt=5:101
               <c>NOT RECOMMENDED&nbsp;</c><c> RFCXXXX</c>
               <c>IDENTICAL&nbsp;</c><c> RFCXXXX</c>
               <c>TRANSPORT&nbsp;</c><c> RFCXXXX</c>
+              <c>SUM&nbsp;</c><c> RFCXXXX</c>
+              <c>INHERIT&nbsp;</c><c> RFCXXXX</c>
               <c>IDENTICAL-PER-PT&nbsp;</c><c> RFCXXXX</c>
               <c>SPECIAL&nbsp;</c><c> RFCXXXX</c>
               <c>TBD&nbsp;</c><c> RFCXXXX</c>
@@ -3480,15 +3447,15 @@ a=pcfg:4 m=5 pt=5:101
           <ttcol align='left'>Mux Category</ttcol>
           <c>CT&nbsp;</c><c>NORMAL&nbsp;</c>
           <c>AS&nbsp;</c><c>SUM&nbsp;</c>
-          <c>RS&nbsp;</c><c>NORMAL&nbsp;</c>
-          <c>RR&nbsp;</c><c>NORMAL&nbsp;</c>
+          <c>RS&nbsp;</c><c>SUM&nbsp;</c>
+          <c>RR&nbsp;</c><c>SUM&nbsp;</c>
           <c>TIAS&nbsp;</c><c>SPECIAL&nbsp;</c>
         </texttable>
     	</section>
 
       <section title="Table: att-field (session level)">
         <t>The following values are to be added to the "att-field (session level)"
-        subregistry in the "Session Description Protocol (SDP) Parameters registry. 
+        subregistry in the "Session Description Protocol (SDP) Parameters" registry.
         The references should be updated to point at this RFC as well as the previous
         references.</t>
         <texttable align="left">
@@ -3524,7 +3491,7 @@ a=pcfg:4 m=5 pt=5:101
       <section title="Table: att-field (both session and media level)">
         <t> The following values are to be added to the "att-field (both session
         and media level)" subregistry in the "Session Description Protocol (SDP)
-        Parameters registry. The references should be updated to point at this RFC 
+        Parameters" registry. The references should be updated to point at this RFC
         as well as the previous references. </t>
 
         <texttable align="left">
@@ -3557,6 +3524,7 @@ a=pcfg:4 m=5 pt=5:101
           <c>ice-pwd&nbsp;</c><c>TRANSPORT&nbsp;</c>
           <c>ice-ufrag&nbsp;</c><c>TRANSPORT&nbsp;</c>
           <c>stkmstream&nbsp;</c><c>NORMAL&nbsp;</c>
+          <c>extmap&nbsp;</c><c>SPECIAL&nbsp;</c>
           <c>qos-mech-send&nbsp;</c><c>NORMAL&nbsp;</c>
           <c>qos-mech-recv&nbsp;</c><c>NORMAL&nbsp;</c>
           <c>csup&nbsp;</c><c>NORMAL&nbsp;</c>
@@ -3574,6 +3542,7 @@ a=pcfg:4 m=5 pt=5:101
           <c>omcap&nbsp;</c><c>NORMAL&nbsp;</c>
           <c>mfcap&nbsp;</c><c>IDENTICAL-PER-PT&nbsp;</c>
           <c>mscap&nbsp;</c><c>INHERIT&nbsp;</c>
+          <c>3gpp.iut.replication&nbsp;</c><c>TBD&nbsp;</c>
           <c>bcap&nbsp;</c><c>INHERIT&nbsp;</c>
           <c>ccap&nbsp;</c><c>IDENTICAL&nbsp;</c>
           <c>icap&nbsp;</c><c>NORMAL&nbsp;</c>
@@ -3591,8 +3560,8 @@ a=pcfg:4 m=5 pt=5:101
       </section>
       <section title="Table: att-field (media level only)">
         <t> The following values are to be added to the 
-        "att-field (media level only" registry in the
-        "Session Description Protocol (SDP) Parameters registry. 
+        "att-field (media level only)" registry in the
+        "Session Description Protocol (SDP) Parameters" registry.
         The references should be updated to point at this RFC as 
         well as the previous references. </t>
 
@@ -3612,7 +3581,7 @@ a=pcfg:4 m=5 pt=5:101
           <c>rtpred2&nbsp;</c><c>NOT RECOMMENDED&nbsp;</c>
           <c>T38FaxVersion&nbsp;</c><c>NORMAL&nbsp;</c>
           <c>T38MaxBitRate&nbsp;</c><c>NORMAL&nbsp;</c>
-          <c>T38MaxBitRate&nbsp;</c><c>NORMAL&nbsp;</c>
+          <c>T38FaxFillBitRemoval&nbsp;</c><c>NORMAL&nbsp;</c>
           <c>T38FaxTranscodingMMR&nbsp;</c><c>NORMAL&nbsp;</c>
           <c>T38FaxTranscodingJBIG&nbsp;</c><c>NORMAL&nbsp;</c>
           <c>T38FaxRateManagement&nbsp;</c><c>NORMAL&nbsp;</c>
@@ -3637,7 +3606,7 @@ a=pcfg:4 m=5 pt=5:101
           <c>stc&nbsp;</c><c>NORMAL&nbsp;</c>
           <c>upcc&nbsp;</c><c>NORMAL&nbsp;</c>
           <c>atmQOSparms&nbsp;</c><c>NORMAL&nbsp;</c>
-          <c>atmQOSparms&nbsp;</c><c>NORMAL&nbsp;</c>
+          <c>atmTrfcDesc&nbsp;</c><c>NORMAL&nbsp;</c>
           <c>abrParms&nbsp;</c><c>NORMAL&nbsp;</c>
           <c>abrSetup&nbsp;</c><c>NORMAL&nbsp;</c>
           <c>bearerType&nbsp;</c><c>NORMAL&nbsp;</c>
@@ -3677,7 +3646,6 @@ a=pcfg:4 m=5 pt=5:101
           <c>userid&nbsp;</c><c>NORMAL&nbsp;</c>
           <c>floorid&nbsp;</c><c>NORMAL&nbsp;</c>
           <c>FEC&nbsp;</c><c>NORMAL&nbsp;</c>
-          <c>profileDesc&nbsp;</c><c>NORMAL&nbsp;</c>
           <c>accept-types&nbsp;</c><c>NORMAL&nbsp;</c>
           <c>accept-wrapped-types&nbsp;</c><c>NORMAL&nbsp;</c>
           <c>max-size&nbsp;</c><c>NORMAL&nbsp;</c>
@@ -3729,11 +3697,11 @@ a=pcfg:4 m=5 pt=5:101
           <c>omr-s-cksum&nbsp;</c><c>NORMAL&nbsp;</c>
           <c>omr-m-cksum&nbsp;</c><c>NORMAL&nbsp;</c>
           <c>omr-codecs&nbsp;</c><c>NORMAL&nbsp;</c>
-          <c>omr-codecs&nbsp;</c><c>NORMAL&nbsp;</c>
           <c>omr-m-att&nbsp;</c><c>NORMAL&nbsp;</c>
+          <c>omr-s-att&nbsp;</c><c>NORMAL&nbsp;</c>
           <c>omr-m-bw&nbsp;</c><c>NORMAL&nbsp;</c>
           <c>omr-s-bw&nbsp;</c><c>NORMAL&nbsp;</c>
-          <c>msrcp-cema&nbsp;</c><c>NORMAL&nbsp;</c>
+          <c>msrp-cema&nbsp;</c><c>NORMAL&nbsp;</c>
           <c>dccp-port&nbsp;</c><c>NOT RECOMMENDED&nbsp;</c>
           <c>resource&nbsp;</c><c>NORMAL&nbsp;</c>
           <c>channel&nbsp;</c><c>NORMAL&nbsp;</c>
@@ -3750,13 +3718,13 @@ a=pcfg:4 m=5 pt=5:101
           <c>T38FaxUdpFECMaxSpan&nbsp;</c><c>NORMAL&nbsp;</c>
           <c>T38ModemType&nbsp;</c><c>NORMAL&nbsp;</c>
           <c>cs-correlation&nbsp;</c><c>NORMAL&nbsp;</c>
-          <c>rtcpidms&nbsp;</c><c>NORMAL&nbsp;</c>
+          <c>rtcp-idms&nbsp;</c><c>NORMAL&nbsp;</c>
           </texttable>
       </section>
       <section title="Table: att-field (source level)">
         <t>The following values are to be added to the 
         "att-field (source level)" registry in the
-        "Session Description Protocol (SDP) Parameters registry. 
+        "Session Description Protocol (SDP) Parameters" registry.
         The references should be updated to point at this RFC as 
         well as the previous references. </t>
 
@@ -3773,7 +3741,7 @@ a=pcfg:4 m=5 pt=5:101
       <section title="Table: content SDP Parameters">
          <t>The following values are to be added to the 
          "content SDP Parameters" subregistry in the
-         "Session Description Protocol (SDP) Parameters registry. 
+         "Session Description Protocol (SDP) Parameters" registry.
          The references should be updated to point at this RFC 
          as well as  the previous references. </t>
 
@@ -3790,7 +3758,7 @@ a=pcfg:4 m=5 pt=5:101
       <section title="Table: Semantics for the 'group' SDP Attribute">
         <t>The following values are to be added to the 
          "Semantics for the "group" SDP Attribute" subregistry in the
-         "Session Description Protocol (SDP) Parameters registry. 
+         "Session Description Protocol (SDP) Parameters" registry.
          The references should be updated to point at this RFC as well as 
          the previous references.</t>
 
@@ -3811,7 +3779,7 @@ a=pcfg:4 m=5 pt=5:101
       <section title="Table: 'rtcp-fb' Attribute Values">
         <t>The following values are to be added to the 
          " 'rtcp-fb' Attribute Values" subregistry in the
-         "Session Description Protocol (SDP) Parameters registry. 
+         "Session Description Protocol (SDP) Parameters" registry.
          The references should be updated to point at this RFC as well as 
          the previous references.</t>
 
@@ -3838,7 +3806,7 @@ a=pcfg:4 m=5 pt=5:101
           <c>sli&nbsp;</c><c>IDENTICAL-PER-PT&nbsp;</c>
           <c>pli&nbsp;</c><c>IDENTICAL-PER-PT&nbsp;</c>
           <c>rpsi&nbsp;</c><c>IDENTICAL-PER-PT&nbsp;</c>
-          <c>app&nbsp;</c><c>IDENTICAL-PER-PT&nbsp;</c>
+          <c>app&nbsp;</c><c>SPECIAL&nbsp;</c>
           <c>rai&nbsp;</c><c>IDENTICAL-PER-PT&nbsp;</c>
           <c>tllei&nbsp;</c><c>IDENTICAL-PER-PT&nbsp;</c>
           <c>pslei&nbsp;</c><c>IDENTICAL-PER-PT&nbsp;</c>
@@ -3849,7 +3817,7 @@ a=pcfg:4 m=5 pt=5:101
 
         <t> The following values are to be added to the 
          " 'depend' SDP Attribute Values" subregistry in the 
-         "Session Description Protocol (SDP) Parameters registry. 
+         "Session Description Protocol (SDP) Parameters" registry.
          The references should be updated to point at this RFC 
          as well as the previous references. </t>
 
@@ -3864,7 +3832,7 @@ a=pcfg:4 m=5 pt=5:101
 
         <t> The following values are to be added to the 
          " "cs-correlation" Attribute Values" subregistry in the
-         "Session Description Protocol (SDP) Parameters registry. 
+         "Session Description Protocol (SDP) Parameters" registry.
          The references should be updated to point at this RFC 
          as well as the previous references. </t>
 
@@ -3882,7 +3850,7 @@ a=pcfg:4 m=5 pt=5:101
 
         <t> The following values are to be added to the 
          Semantics for the "Semantics for the "ssrc-group" SDP Attribute"
-         subregistry in the  "Session Description Protocol (SDP) Parameters 
+         subregistry in the  "Session Description Protocol (SDP) Parameters"
          registry. The references should be updated to point at this RFC 
          as well as the previous references. </t>
 
@@ -3898,7 +3866,7 @@ a=pcfg:4 m=5 pt=5:101
       <section title="Table: SDP/RTSP key management protocol identifiers">
         <t>The following values are to be added to the 
         "SDP/RTSP key management protocol identifiers" subregistry
-        in the  "Session Description Protocol (SDP) Parameters registry. 
+        in the  "Session Description Protocol (SDP) Parameters" registry.
         The references should be updated to point at this RFC as well as 
         the previous references.</t>
 
@@ -3911,7 +3879,7 @@ a=pcfg:4 m=5 pt=5:101
       <section title="Table: Codec Control Messages">
         <t> The following values are to be added to the 
          "Codec Control Messages" subregistry in the  
-         "Session Description Protocol (SDP) Parameters registry. 
+         "Session Description Protocol (SDP) Parameters" registry.
          The references should be updated to point at this RFC 
          as well as the previous references. </t>
 
@@ -3927,7 +3895,7 @@ a=pcfg:4 m=5 pt=5:101
       <section title="Table: QoS Mechanism Tokens">
         <t> The following values are to be added to the 
          "QoS Mechanism Tokens" subregistry in the  
-         "Session Description Protocol (SDP) Parameters registry. 
+         "Session Description Protocol (SDP) Parameters" registry.
          The references should be updated to point at this RFC 
          as well as the previous references. </t>
 
@@ -3941,7 +3909,7 @@ a=pcfg:4 m=5 pt=5:101
       <section title="Table: SDP Capability Negotiation Option Tags">
         <t> The following values are to be added to the 
          "SDP Capability Negotiation Option Tags" subregistry 
-         in the "Session Description Protocol (SDP) Parameters registry. 
+         in the "Session Description Protocol (SDP) Parameters" registry.
          The references should be updated to point at this RFC 
          as well as the previous references. </t>
 
@@ -3958,7 +3926,7 @@ a=pcfg:4 m=5 pt=5:101
       <section title="Table: Timestamp Reference Clock Source Parameters">
         <t> The following values are to be added to the 
          "Timestamp Reference Clock Source Parameters" subregistry 
-         in the "Session Description Protocol (SDP) Parameters registry. 
+         in the "Session Description Protocol (SDP) Parameters" registry.
          The references should be updated to point at this RFC as well as 
          the previous references. </t>
 
@@ -3977,7 +3945,7 @@ a=pcfg:4 m=5 pt=5:101
       <section title="Table: Media Clock Source Parameters">
         <t> The following values are to be added to the 
          "Media Clock Source Parameters" subegistry 
-         in the "Session Description Protocol (SDP) Parameters
+         in the "Session Description Protocol (SDP) Parameters"
          registry. The references should be updated to point at 
          this RFC as well as the previous references. </t>
 
@@ -4004,30 +3972,44 @@ a=pcfg:4 m=5 pt=5:101
       </section>
       <section title="Acknowledgments">
        <t>
-       	I would like to thank Cullen Jennings and Flemming Andreasen for
-        suggesting the categories, contributing text and reviewing the draft.
-        I would also link to thank Magnus Westerlund, Christer Holmberg,
-        Jonathan Lennox, Bo Burman, and Dan on suggesting structural
-        changes helping improve the document readability.
+       	I would like to thank Cullen Jennings, Flemming Andreasen
+        for suggesting the categories, contributing text and reviewing
+        the draft. I would also link to thank Magnus Westerlund,
+        Christer Holmberg, Jonathan Lennox, Bo Burman, and Dan Wing on
+        suggesting structural changes helping improve the document readability.
        </t>
        <t>
        	I would like also to thank following experts on their inputs and
-        reviews as listed - Flemming Andreasen(5.20,5.28,5.29,14), Rohan Mahy(5.45),
-        Eric Burger(5.22),Christian Huitema(5.13), Christer Holmberg(5.17,5.22,5.40,5.41),
-        Richard Ejzak (5.36,5.42,5.43,5.44), Colin Perkins(5.7,5.8),
-        Magnus westerlund(5.2,5.3,5.9,5.26, 5.27,6.1,6.2,6.3,8.3,7),
-        Roni Evens(5.12,5.27,8.4), Subha Dhesikan(5.5,12.1,14),
-        Dan Wing(5.6,5.11,5.30,5.34,5.37),
-        Ali C Begen(5.1,5.16,5.18,5.21,5.33,8.2,8.4,13.1),
-        Bo Burman (7.2,7.6), Charles Eckel(5.14,5.23,5.24,9.1,8.5),
-        Paul Kyzivat(5.24), Ian Johansson(5.15), Saravanan Shanmugham(5.10),
-        Paul E Jones(5.25), Rajesh Kumar(5.39), Jonathan Lennox(5.31,5,14,11.1),
-        Mo Zanaty(5.4,5.19,8.1,8.3,8.5,12.1), Christian Huitema (5.13),
-        Qin Wu (5.38 PM-Dir review).
+        reviews as listed - Flemming Andreasen(5.24,5.32,5.33,14), Rohan Mahy(5.57),
+        Eric Burger(5.26),Christian Huitema(5.14), Christer Holmberg(5.21,5.26,5.51,5.52),
+        Richard Ejzak (5.44,5.53,5.54), Colin Perkins(5.7,5.8,5.9,5.58),
+        Magnus westerlund(5.2,5.3,5.9,5.27,5.47,6.1,6.2,6.3,8.3,7),
+        Roni Evens(5.12,5.27,8.4), Subha Dhesikan(5.6,10),
+        Dan Wing(5.7,5.12,5.35,5.39,5.45), Cullen Jennings (5.40),
+        Ali C Begen(5.1,5.20,5.22,5.25,5.38,7.3,8.2,8.4,8.6,9.2,13.1),
+        Bo Burman (7.2,7.6), Charles Eckel(5.15,5.27,5.28,9.1,8.5),
+        Paul Kyzivat(5.24), Ian Johansson(5.15), Saravanan Shanmugham(5.11),
+        Paul E Jones(5.30), Rajesh Kumar(5.48), Jonathan Lennox(5.36,5,15,9.1,11.1),
+        Mo Zanaty(5.4,5.5,5.23,8.1,8.3,8.5,12.1), Christian Huitema (5.14),
+        Qin Wu (5.47 PM-Dir review), Hans Stokking(5.43,5.16).
       </t>
     </section>
     <section title="Change Log">
       <t>[RFC EDITOR NOTE: Please remove this section when publishing]</t>
+      <t>Changes from draft-ietf-mmusic-sdp-mux-attributes-04
+          <list style="symbols">
+              <t>
+                  Fixed minor nits overall.
+              </t>
+              <t>
+                 Updated Acknowledgement Sections
+              </t>
+              <t>
+                  Last Call Version.
+              </t>
+          </list>
+      </t>
+
       <t>Changes from draft-ietf-mmusic-sdp-mux-attributes-03
           <list style="symbols">
               <t>
@@ -4276,7 +4258,7 @@ a=pcfg:4 m=5 pt=5:101
       &RFC7197;
       &RFC7272;
       &RFC7273;
-      &RFC7226;
+      &RFC7266;
       &I-D.ietf-mmusic-sdp-bundle-negotiation;
 
       <reference anchor='IANA' 
