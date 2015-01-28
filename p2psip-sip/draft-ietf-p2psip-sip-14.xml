@@ -188,23 +188,23 @@
 
       <t>For example, Bob registers his AOR, "bob@dht.example.com", for his
       Node-ID "1234". When Alice wants to call Bob, she queries the overlay
-      for "bob@dht.example.com" and receives Node-ID 1234 in return. She then
-      uses the overlay routing to establish a direct connection with Bob and
-      can directly transmit a standard SIP INVITE. In detail, this works along
-      the following steps.</t>
+      for "bob@dht.example.com" and receives Node-ID "1234" in return. She
+      then uses the overlay routing to establish a direct connection with Bob
+      and can directly transmit a standard SIP INVITE. In detail, this works
+      along the following steps.</t>
 
       <t><list style="numbers">
-          <t>Bob, operating Node-ID 1234, stores a mapping from his AOR to his
-          Node-ID in the overlay by applying a Store request for
+          <t>Bob, operating Node-ID "1234", stores a mapping from his AOR to
+          his Node-ID in the overlay by applying a Store request for
           "bob@dht.example.com -&gt; 1234".</t>
 
-          <t>Alice, operating Node-ID 5678, decides to call Bob. She retrieves
-          Node-ID "1234" by performing a Fetch request on
+          <t>Alice, operating Node-ID "5678", decides to call Bob. She
+          retrieves Node-ID "1234" by performing a Fetch request on
           "bob@dht.example.com".</t>
 
           <t>Alice uses the overlay to route an AppAttach message to Bob's
-          peer (ID 1234). Bob responds with his own AppAttach and they set up
-          a direct connection, as shown in <xref
+          peer (ID "1234"). Bob responds with his own AppAttach and they set
+          up a direct connection, as shown in <xref
           target="fig-connection"></xref>. Note that mutual ICE checks are
           invoked automatically from AppAttach message exchange.</t>
         </list></t>
@@ -292,7 +292,7 @@ ACK -------------------------------------------->
       apply to this memo. The term AOR is the SIP "Address of Record" used to
       identify a user in SIP. For example, alice@example.com could be the AOR
       for Alice. For the purposes of this specification, an AOR is considered
-      not to include the scheme (e.g sip:) as the AOR needs to match the
+      not to include the scheme (e.g. sip:) as the AOR needs to match the
       rfc822Name in the X509v3 certificates. It is worth noting that SIP and
       SIPS are distinguished in P2PSIP by the Application-ID.</t>
     </section>
@@ -306,11 +306,15 @@ ACK -------------------------------------------->
         overlay as a whole. To register its location, a RELOAD peer stores a
         SipRegistration Resource Record under its own AOR using the
         SIP-REGISTRATION Kind, which is formally defined in <xref
-        target="sec.sip-reg-kind"></xref>. A RELOAD overlay MAY restrict the
-        storage of AORs. Namespaces (i.e., the right hand side of the AOR)
-        that are supported for registration and lookup can be configured for
-        each RELOAD deployment as described in <xref
-        target="sec-ocde"></xref>.</t>
+        target="sec.sip-reg-kind"></xref>. Note that the registration lifetime
+        known from the regular SIP REGISTER method is inherited from the
+        lifetime attribute of the basic RELOAD StoredData structure (see
+        Section 7 in <xref target="RFC6940"></xref>).</t>
+
+        <t>A RELOAD overlay MAY restrict the storage of AORs. Namespaces
+        (i.e., the right hand side of the AOR) that are supported for
+        registration and lookup can be configured for each RELOAD deployment
+        as described in <xref target="sec-ocde"></xref>.</t>
 
         <t>As a simple example, consider Alice with AOR
         "alice@dht.example.org" at Node-ID "1234". She might store the mapping
@@ -394,7 +398,8 @@ ACK -------------------------------------------->
 
         <t><list style="symbols">
             <t>If the registration is of type "sip_registration_uri", then the
-            contents are an opaque string containing the URI.</t>
+            contents are an opaque string containing the AOR as specified in
+            Setion 2.</t>
 
             <t>If the registration is of type "sip_registration_route", then
             the contents are an opaque string containing the callee's contact
@@ -493,6 +498,9 @@ ACK -------------------------------------------->
             <t>The certificate contains a Node-ID that is the same as the
             dictionary key it is being stored at.</t>
           </list></t>
+
+        <t>If any of these checks fail, the request MUST be rejected with an
+        Error_Forbidden error.</t>
 
         <t>Note that these rules permit Alice to forward calls to Bob without
         his permission. However, they do not permit Alice to forward Bob's
@@ -628,11 +636,11 @@ Kind-parameter &= element sip:domain-restriction {
         those peers. The "application" field MUST be either 5060 to indicate
         SIP or 5061 for using SIPS. If certificate-based authentication is in
         use, the responding peer MUST present a certificate with a Node-ID
-        matching the terminal entry in the route list. Note that it is
-        possible that the peers already have a RELOAD connection mutually
-        established. This MUST NOT be used for SIP messages unless it is a SIP
-        connection. A previously established SIP connection MAY be used for a
-        new call.</t>
+        matching the terminal entry in the destination list. Otherwise, the
+        connection MUST NOT be used and closed. Note that it is possible that
+        the peers already have a RELOAD connection mutually established. This
+        MUST NOT be used for SIP messages unless it is a SIP connection. A
+        previously established SIP connection MAY be used for a new call.</t>
 
         <t>Once the AppAttach succeeds, the peer sends plain or (D)TLS
         encrypted SIP messages over the connection as in normal SIP. A caller
@@ -642,7 +650,18 @@ Kind-parameter &= element sip:domain-restriction {
         choose to listen on both SIP and SIPS ports and accept calls from
         either SIP scheme, or select a single one. However, a callee that
         decides to accept SIPS calls, only, SHOULD indicate its choice by
-        setting the corresponding attribute in its contact_prefs.</t>
+        setting the corresponding attribute in its contact_prefs. It is
+        noteworthy that according to <xref target="RFC6940"></xref> all
+        overlay links are built on (D)TLS secured transport. While hop-wise
+        encrypted paths do not prevent the use of plain SIP, SIPS requires
+        end-to-end protection that may include client links and endpoint
+        certificates.</t>
+
+        <t>SIP messages carry the SIP URIs of actual overlay endpoints (e.g.,
+        "sip:alice@dht.example.com") in the Via and Contact headers, while the
+        communication continues via the RELOAD connection. However, a UA can
+        redirect its communication path by setting an alternate Contact header
+        field like in ordinary SIP.</t>
       </section>
 
       <section anchor="sec-keepalive" title="Keeping a Connection Alive">
@@ -653,7 +672,7 @@ Kind-parameter &= element sip:domain-restriction {
         Firewall states present and the connection alive. Keepalives are a
         mandatory component of ICE (see Section 10 of <xref
         target="RFC5245"></xref>) and no further operations are required.
-        Applications that want to assure maintanance of sessions individually
+        Applications that want to assure maintenance of sessions individually
         need to follow regular SIP means. Accordingly, a SIP Peer MAY apply
         keep-alive techniques in agreement with its transport binding as
         defined in Section 3.5 of <xref target="RFC5626"></xref>.</t>
@@ -703,9 +722,9 @@ alice@example.com;gr=MDEyMzQ1Njc4OTAxMjM0NTY3ODk~
           <t></t>
 
           <t hangText="Kind IDs">The Resource Name for the SIP-REGISTRATION
-          Kind-ID is the AOR of the user. The data stored is a
-          SipRegistration, which can contain either another URI or a
-          destination list to the peer which is acting for the user.</t>
+          Kind-ID is the AOR of the user as specified in Section 2. The data
+          stored is a SipRegistration, which can contain either another URI or
+          a destination list to the peer which is acting for the user.</t>
 
           <t></t>
 
@@ -728,7 +747,7 @@ alice@example.com;gr=MDEyMzQ1Njc4OTAxMjM0NTY3ODk~
 
           <t hangText="sip_registration_uri "></t>
 
-          <t>a URI which the user can be reached at.</t>
+          <t>a URI which the user can be reached at. </t>
 
           <t></t>
 
@@ -846,8 +865,8 @@ alice@example.com;gr=MDEyMzQ1Njc4OTAxMjM0NTY3ODk~
       and Marcia Zangrilli, which is gratefully acknowledged.</t>
 
       <t>Additional thanks go to all those who helped with ideas, discussions,
-      and reviews, in particular (in alphabetical order) Michael Chen, Marc
-      Petit-Huguenin, Brian Rosen, and Matthias Waehlisch.</t>
+      and reviews, in particular (in alphabetical order) Roland Bless, Michael
+      Chen, Marc Petit-Huguenin, Brian Rosen, and Matthias Waehlisch.</t>
     </section>
   </middle>
 
