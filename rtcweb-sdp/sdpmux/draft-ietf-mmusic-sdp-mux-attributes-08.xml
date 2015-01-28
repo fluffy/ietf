@@ -80,7 +80,7 @@
 <?rfc rfcedstyle="no" ?>
 <?rfc tocdepth="4"?>
 
-<rfc category="std" docName="draft-ietf-mmusic-sdp-mux-attributes-06"
+<rfc category="std" docName="draft-ietf-mmusic-sdp-mux-attributes-08"
      ipr="pre5378Trust200902">
   <front>
     <title abbrev="SDP Attribute Multiplexing">A Framework for SDP Attributes
@@ -106,21 +106,22 @@
       </address>
     </author>
 
-    <date day="11" month="December" year="2014" />
+    <date day="20" month="January" year="2015" />
 
     <area>MMUSIC</area>
 
     <abstract>
-      <t> The Session Description Protocol (SDP) provides mechanisms to
+      <t>The Session Description Protocol (SDP) provides mechanisms to
        describe attributes of multimedia sessions and of individual media
        streams (e.g., Real-time Transport Protocol (RTP) sessions) within a
-       multimedia session. <xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/> 
-       provides SDP extensions to negotiate the usage of single 5-tuple for 
-       sending and receiving media associated with multiple media descriptions 
-       ("m=" lines). Such a mechanism has made it necessary to 
-       understand the semantic implications of the SDP attributes
-       associated with the RTP Media Streams multiplexed over a single
-       underlying transport layer flow.</t>
+       multimedia session. Typically media associated with individual 
+       media descriptions ("m=" lines) represent seperate RTP Sessions
+       and are thus carried over individual underlying transport layer flows. 
+       For scenarios where SDP is used to negotiate the usage of single 5-tuple 
+       for sending and receiving media associated with multiple media descriptions, 
+       it is required to understand the semantic implications of the SDP 
+       attributes associated with the RTP Media Streams multiplexed over a 
+       single underlying transport layer flow.</t>
       <t>The purpose of this specification is to provide a 
        framework for analyzing the multiplexing characteristics of SDP
        attributes. This specification also categorizes the existing
@@ -303,7 +304,7 @@
           aggregate Application Specific (AS) bandwidth value from the
           individual media descriptions to determine the AS value for
           the multiplexed session. Thus the calculated AS value would
-          be 256+64 bytes for the given example.
+          be 256+64 kilobits per second for the given example.
          </t> 
          <figure>
            <artwork align="left" alt="" height="" name="" type="" width=""
@@ -373,9 +374,9 @@
        <xref target="RFC5939"/> for example, this occurs when a capability 
        (encapsulating attribute) is used as part of a configuration; the 
        configuration inherits the multiplexing category of each of its 
-       constituent (encapsulated) attributes and parameters. This in turn may 
+       constituent (encapsulated) attributes and parameters. This in turn MAY 
        place constraints on what constitutes a valid configuration from a
-       multiplexing point of view, e.g. because some attributes must be IDENTICAL 
+       multiplexing point of view, e.g. because some attributes MUST be IDENTICAL 
        (see <xref target="sec-encap"/> for further details).</t> 
        <t>&nbsp;</t>
        <figure>
@@ -409,7 +410,7 @@
         media descriptions for a given RTP Payload Type when repeated.
         These Payload Types identify the same codec configuration
         as defined in the Section 10.1.2 of
-        <xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref>
+        <xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/>
         under this context.</t>
         <t>&nbsp;</t>
         <t>In the SDP example below, Payload Types 96 and 97 are repeated
@@ -447,9 +448,9 @@
     </section>
     <section title="Category: SPECIAL">
       <t>Attributes where the text in the specification defining the
-      attribute must be consulted for further handling when multiplexed. </t>
+      attribute MUST be consulted for further handling when multiplexed. </t>
       <t>As an example, for the attribute extmap, the specification
-      defining the extension must be referred to understand the
+      defining the extension needs to be referred to understand the
       multiplexing implications.</t>
     </section>
     <section title="Category: TBD">
@@ -510,12 +511,12 @@
         <c>NORMAL&nbsp;</c>
         <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
-        <c>ptime&nbsp;</c><c> The attribute value must be same
+        <c>ptime&nbsp;</c><c> The attribute value MUST be same
         for a given codec configuration&nbsp;</c>
         <c>M&nbsp;</c><c>IDENTICAL-PER-PT</c>
         <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
-        <c>maxptime&nbsp;</c><c>The attribute value must be same
+        <c>maxptime&nbsp;</c><c>The attribute value MUST be same
         for a given codec configuration&nbsp;</c>
         <c>M&nbsp;</c><c>IDENTICAL-PER-PT</c>
         <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
@@ -524,7 +525,7 @@
           &nbsp;</c><c>M&nbsp;</c><c>NORMAL</c>
         <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
-        <c>framerate&nbsp;</c><c>The attribute value must be same
+        <c>framerate&nbsp;</c><c>The attribute value MUST be same
         for a given codec configuration&nbsp;</c><c>M&nbsp;</c>
         <c>IDENTICAL-PER-PT&nbsp;</c>
         <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
@@ -533,12 +534,12 @@
         &nbsp;</c><c>M&nbsp;</c><c>NORMAL</c>
         <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
-        <c>rtpmap&nbsp;</c><c>The attribute value must be same
+        <c>rtpmap&nbsp;</c><c>The attribute value MUST be same
         for a given codec configuration&nbsp;</c><c>M&nbsp;</c>
         <c>IDENTICAL-PER-PT</c>
         <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
-        <c>fmtp&nbsp;</c><c>The attribute value must be same
+        <c>fmtp&nbsp;</c><c>The attribute value MUST be same
         for a given codec configuration&nbsp;</c><c>M&nbsp;</c>
         <c>IDENTICAL-PER-PT</c>
         <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
@@ -731,7 +732,7 @@
           <ttcol align='left'>Level</ttcol>
           <ttcol align='left'>Mux Category</ttcol>
 
-          <c>crypto&nbsp;</c><c>crypto attribute must be the one that corresponds 
+          <c>crypto&nbsp;</c><c>crypto attribute MUST be the one that corresponds 
           to the "m=" line chosen for setting up the underlying transport flow </c>
           <c>M&nbsp;</c><c>TRANSPORT&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
@@ -770,7 +771,7 @@
          DCCP flow, given each uses a different DCCP port. Although
          doing so might conflict with the media type of the "m="
          line. None of this is standardized yet and it wouldn't work
-         as explained. Hence multiplexing must not be performed even
+         as explained. Hence multiplexing MUST not be performed even
          in this alternate scenario.
         </t>
       </section>
@@ -788,7 +789,7 @@
           <ttcol align='left'>Level</ttcol>
           <ttcol align='left'>Mux Category</ttcol>
 
-          <c>dccp-port&nbsp;</c><c> Multiplexing must not be performed
+          <c>dccp-port&nbsp;</c><c> Multiplexing MUST not be performed
           due to potential conflict between the port used for DCCP
           en/decapsulation and the RTP&nbsp;</c> <c>M&nbsp;</c><c>NOT
           RECOMMENDED&nbsp;</c>
@@ -799,7 +800,7 @@
          RFC6773 is about tunneling DCCP in UDP, with the UDP
          port being the port of the DCCP en-/de-capsulation
          service. This encapsulation allows arbitrary DCCP packets to
-         be encapsulated and the DCCP port chosen may conflict with
+         be encapsulated and the DCCP port chosen MAY conflict with
          the port chosen for the RTP traffic.
         </t>
         <t>
@@ -898,25 +899,25 @@
           <c>S</c><c>NORMAL&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
-          <c>ice-pwd&nbsp;</c><c>ice-pwd must be the one that
+          <c>ice-pwd&nbsp;</c><c>ice-pwd MUST be the one that
           corresponds to the "m=" line chosen for setting up the
           underlying transport flow&nbsp;</c>
           <c>B</c><c>TRANSPORT&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
-          <c>ice-ufrag&nbsp;</c><c>ice-ufrag must be the one that
+          <c>ice-ufrag&nbsp;</c><c>ice-ufrag MUST be the one that
           corresponds to the "m=" line chosen for setting up the
           underlying transport flow&nbsp;</c>
           <c>B</c><c>TRANSPORT&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
-          <c>candidate&nbsp;</c><c>ice candidate must be the one that
+          <c>candidate&nbsp;</c><c>ice candidate MUST be the one that
           corresponds to the "m=" line chosen for setting up the
           underlying transport
           flow&nbsp;</c><c>M</c><c>TRANSPORT&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
-          <c>remote-candidates&nbsp;</c><c>ice remote candidate must
+          <c>remote-candidates&nbsp;</c><c>ice remote candidate MUST
           be the one that corresponds to the "m=" line chosen for setting
           up the underlying transport
           flow&nbsp;</c><c>M</c><c>TRANSPORT&nbsp;</c>
@@ -940,7 +941,7 @@
           <ttcol align='left'>Level</ttcol>
           <ttcol align='left'>Mux Category</ttcol>
 
-          <c>extmap&nbsp;</c><c>Specific RTP extension document must
+          <c>extmap&nbsp;</c><c>Specific RTP extension document MUST
           be referred&nbsp;</c> <c>B</c><c>SPECIAL&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
@@ -958,10 +959,10 @@
           <ttcol align='left'>Level</ttcol>
           <ttcol align='left'>Mux Category</ttcol>
 
-          <c>rtcp&nbsp;</c><c>Identical attribute value 
-          must be used since the RTCP port affects
-          the entire RTP session.&nbsp;</c><c>M</c>
-          <c>IDENTICAL&nbsp;</c>
+          <c>rtcp&nbsp;</c><c>RTCP Port MUST be the one 
+          that corresponds to the "m=" line chosen for 
+          setting up the underlying transport flow.&nbsp;</c>
+          <c>M</c><c>TRANSPORT&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
         </texttable>
@@ -999,14 +1000,14 @@
           <c>Refer to notes below&nbsp;</c><c>SR</c><c>NORMAL&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
-          <c>fmtp&nbsp;</c><c>The attribute value must be same for a
+          <c>fmtp&nbsp;</c><c>The attribute value MUST be same for a
           given codec configuration&nbsp;</c><c>SR</c>
           <c>IDENTICAL-PER-PT&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
         </texttable>
         <t hangText="Note">
          If SSRCs are repeated across "m=" lines being multiplexed, they
-         must all represent the same underlying RTP Source.
+         MUST all represent the same underlying RTP Source.
         </t>
       </section>
 
@@ -1048,7 +1049,7 @@
           <ttcol align='left'>Level</ttcol>
           <ttcol align='left'>Mux Category</ttcol>
 
-          <c>imageattr&nbsp;</c><c>The attribute value must be same
+          <c>imageattr&nbsp;</c><c>The attribute value MUST be same
           for a given codec configuration&nbsp;</c><c>M&nbsp;</c>
           <c>IDENTICAL-PER-PT&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
@@ -1298,7 +1299,7 @@
           <ttcol align='left'>Mux Category</ttcol>
 
           <c>floorctrl&nbsp;</c>
-          <c>must be repeated across all the multiplexed
+          <c>The attribute MUST be repeated across all the multiplexed
           "m=" lines&nbsp;</c>
           <c>M&nbsp;</c><c>IDENTICAL&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c>
@@ -1399,7 +1400,7 @@
           <ttcol align='left'>Level</ttcol>
           <ttcol align='left'>Mux Category</ttcol>
 
-          <c>rtcp-unicast&nbsp;</c><c>The attribute must be reported
+          <c>rtcp-unicast&nbsp;</c><c>The attribute MUST be reported
           across all "m=" lines
           multiplexed&nbsp;</c><c>M</c><c>IDENTICAL&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
@@ -1555,8 +1556,8 @@
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
           <c>ccap&nbsp;</c><c>The connection address type 
-          must be identical across
-          all the multiplexed "m=" lines&nbsp;</c>
+          MUST be identical across all the multiplexed 
+          "m=" lines&nbsp;</c>
           <c>B</c><c>IDENTICAL&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
@@ -1591,12 +1592,12 @@
           <ttcol align='left'>Level</ttcol>
           <ttcol align='left'>Mux Category</ttcol>
 
-          <c>key-mgmt&nbsp;</c><c>Key management protocol must be
+          <c>key-mgmt&nbsp;</c><c>Key management protocol MUST be
           identical across all the "m=" lines&nbsp;</c><c>B</c>
           <c>IDENTICAL&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
-          <c>mikey&nbsp;</c><c>Key management protocol must be
+          <c>mikey&nbsp;</c><c>Key management protocol MUST be
           identical across all the "m=" lines&nbsp;</c><c>B</c>
           <c>IDENTICAL&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
@@ -1646,7 +1647,7 @@
           <ttcol align='left'>Level</ttcol>
           <ttcol align='left'>Mux Category</ttcol>
 
-          <c>source-filter&nbsp;</c><c>The attribute must be repeated
+          <c>source-filter&nbsp;</c><c>The attribute MUST be repeated
           across all "m=" lines
           multiplexed&nbsp;</c><c>B</c><c>IDENTICAL&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
@@ -1673,7 +1674,7 @@
           <ttcol align='left'>Level</ttcol>
           <ttcol align='left'>Mux Category</ttcol>
 
-          <c>multicast-rtcp&nbsp;</c><c>Multicast RTCP port must be
+          <c>multicast-rtcp&nbsp;</c><c>Multicast RTCP port MUST be
           identical across all the
           "m=" lines&nbsp;</c><c>B</c><c>IDENTICAL&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
@@ -1716,12 +1717,12 @@
           <ttcol align='left'>Mux Category</ttcol>
 
           <c>setup&nbsp;</c>
-          <c>must be identical across all "m=" lines&nbsp;</c>
+          <c>The attribute MUST be identical across all "m=" lines&nbsp;</c>
           <c>B</c><c>IDENTICAL&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
           <c>connection&nbsp;</c>
-          <c>must be identical across all "m=" lines&nbsp;</c>
+          <c>Thee attribute MUST be identical across all "m=" lines&nbsp;</c>
           <c>B</c><c>IDENTICAL&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
@@ -1741,7 +1742,7 @@
           <ttcol align='left'>Level</ttcol>
           <ttcol align='left'>Mux Category</ttcol>
 
-          <c>altc&nbsp;</c><c>The IP Address and port must be the one 
+          <c>altc&nbsp;</c><c>The IP Address and port MUST be the one 
           that corresponds to the "m=" line chosen for setting up the 
           underlying transport flow&nbsp;</c>
           <c>M</c><c>TRANSPORT&nbsp;</c>
@@ -1848,19 +1849,19 @@
           <ttcol align='left'>Level</ttcol>
           <ttcol align='left'>Mux Category</ttcol>
 
-          <c>ike-setup&nbsp;</c><c>Attribute must be identical
+          <c>ike-setup&nbsp;</c><c>Attribute MUST be identical
             across all the "m=" lines&nbsp;</c><c>B</c><c>IDENTICAL&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
-          <c>psk-fingerprint&nbsp;</c><c>Attribute must be identical
+          <c>psk-fingerprint&nbsp;</c><c>Attribute MUST be identical
           across all the "m=" lines&nbsp;</c><c>B</c><c>IDENTICAL&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
-          <c>ike-esp&nbsp;</c><c>Attribute must be identical
+          <c>ike-esp&nbsp;</c><c>Attribute MUST be identical
           across all the "m=" lines&nbsp;</c><c>B</c><c>IDENTICAL&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
-          <c>ike-esp-udpencap&nbsp;</c><c>Attribute must be identical
+          <c>ike-esp-udpencap&nbsp;</c><c>Attribute MUST be identical
           across all the "m=" lines&nbsp;</c><c>B</c><c>IDENTICAL&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
@@ -2177,14 +2178,14 @@
         bearer connections using an AAL1, AAL2 or AAL5 adaptation
         layers. For AAL1, AAL2 and AAL5, bearer connections can be
         used to transport single media streams. In addition, for AAL1
-        and AAL2, multiple media streams may be multiplexed into a
+        and AAL2, multiple media streams MAY be multiplexed into a
         bearer connection. For all adaptation types (AAL1, AAL2 and
-        AAL5), bearer connections may be bundled into a single media
+        AAL5), bearer connections MAY be bundled into a single media
         group. In all cases addressed by RFC3108, a real-time media
         stream (voice, video, voiceband data, pseudo-wire and others)
         or a multiplex of media streams is mapped directly into an ATM
         connection. RFC3108 does not address cases where ATM serves
-        as a low-level transport pipe for IP packets which in turn may
+        as a low-level transport pipe for IP packets which in turn MAY
         carry one or more real-time (e.g. VoIP) media sessions with a
         life-cycle different from that of the underlying ATM
         transport.
@@ -2295,14 +2296,14 @@
           <ttcol align='left'>Mux Category</ttcol>
 
           <c>secondary-realm&nbsp;</c>
-          <c>secondary-realm  must be the one that corresponds
+          <c>secondary-realm  MUST be the one that corresponds
           to the "m=" line chosen for setting up the underlying
           transport flow&nbsp;</c><c>M</c>
           <c>TRANSPORT&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
           <c>visited-realm&nbsp;</c>
-          <c>visited-realm  must be the one that corresponds
+          <c>visited-realm MUST be the one that corresponds
           to the "m=" line chosen for setting up the underlying
           transport flow&nbsp;</c><c>M</c>
           <c>TRANSPORT&nbsp;</c><c>&nbsp;</c>
@@ -2583,11 +2584,12 @@
          <ttcol align='left'>Mux Category</ttcol>
 
          <c>bwtype:TIAS&nbsp;</c><c>The usage of TIAS is not clearly
-         defined Offer/Answer
-         usage.&nbsp;</c><c>B</c><c>SPECIAL&nbsp;</c>
+         defined Offer/Answer usage.&nbsp;</c>
+         <c>B</c><c>SPECIAL&nbsp;</c>
          <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c> 
-         <c>bwtype:maxprate&nbsp;</c><c>The usage of TIAS and maxprate is not 
-         well defined under multiplexing&nbsp;</c><c>B</c><c>SPECIAL&nbsp;</c>
+         <c>bwtype:maxprate&nbsp;</c><c>The usage of TIAS and maxprate 
+         is not well defined under multiplexing&nbsp;</c>
+         <c>B</c><c>SPECIAL&nbsp;</c>
          <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
        </texttable>
@@ -2619,44 +2621,44 @@
          <ttcol align='left'>Level</ttcol>
          <ttcol align='left'>Mux Category</ttcol>
 
-         <c>ack rpsi&nbsp;</c><c>The attribute value must be same
+         <c>ack rpsi&nbsp;</c><c>The attribute value MUST be same
          for a given codec configuration</c>
          <c>M</c><c>IDENTICAL-PER-PT&nbsp;</c>
          <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
          <c>ack app&nbsp;</c>
-         <c>Feedback parameters must be handled in the app specific
+         <c>Feedback parameters MUST be handled in the app specific
          way when multiplexed</c>
          <c>M</c><c>SPECIAL&nbsp;</c>
          <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
-         <c>nack&nbsp;</c><c>The attribute value must be same
+         <c>nack&nbsp;</c><c>The attribute value MUST be same
          for a given codec configuration</c>
          <c>M</c><c>IDENTICAL-PER-PT&nbsp;</c>
          <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
-         <c>nack pli&nbsp;</c><c>The attribute value must be same
+         <c>nack pli&nbsp;</c><c>The attribute value MUST be same
          for a given codec configuration</c>
          <c>M</c><c>IDENTICAL-PER-PT&nbsp;</c>
          <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
-         <c>nack sli&nbsp;</c><c>The attribute value must be same
+         <c>nack sli&nbsp;</c><c>The attribute value MUST be same
          for a given codec configuration</c>
          <c>M</c><c>IDENTICAL-PER-PT&nbsp;</c>
          <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
-         <c>nack rpsi&nbsp;</c><c>The attribute value must be same
+         <c>nack rpsi&nbsp;</c><c>The attribute value MUST be same
          for a given codec configuration </c>
          <c>M</c><c>IDENTICAL-PER-PT&nbsp;</c>
          <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
          <c>nack app&nbsp;</c>
-         <c>Feedback parameters must be handled in the app specific
+         <c>Feedback parameters MUST be handled in the app specific
          way when multiplexed</c>
          <c>M</c><c>SPECIAL&nbsp;</c>
          <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
-         <c>trr-int&nbsp;</c><c>The attribute value must be same
+         <c>trr-int&nbsp;</c><c>The attribute value MUST be same
          for a given codec configuration</c>
          <c>M</c><c>IDENTICAL-PER-PT&nbsp;</c>
          <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
@@ -2677,7 +2679,7 @@
          <ttcol align='left'>Level</ttcol>
          <ttcol align='left'>Mux Category</ttcol>
 
-         <c>ccm&nbsp;</c><c>The attribute value must be same
+         <c>ccm&nbsp;</c><c>The attribute value MUST be same
         for a given codec configuration</c>
          <c>M</c><c>IDENTICAL-PER-PT&nbsp;</c>
          <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
@@ -2701,7 +2703,7 @@
          <ttcol align='left'>Level</ttcol>
          <ttcol align='left'>Mux Category</ttcol>
 
-         <c>nack rai&nbsp;</c><c>The attribute value must be same
+         <c>nack rai&nbsp;</c><c>The attribute value MUST be same
          for a given codec configuration&nbsp;</c>
          <c>M&nbsp;</c><c>IDENTICAL-PER-PT&nbsp;</c>
          <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
@@ -2757,13 +2759,13 @@
          <ttcol align='left'>Level</ttcol>
          <ttcol align='left'>Mux Category</ttcol>
 
-         <c>nack tllei&nbsp;</c><c>The attribute value must be same
+         <c>nack tllei&nbsp;</c><c>The attribute value MUST be same
          for a given codec configuration&nbsp;</c>
          <c>M&nbsp;</c>
          <c>IDENTICAL-PER-PT&nbsp;</c>
          <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
-         <c>nack pslei&nbsp;</c><c>The attribute value must be same
+         <c>nack pslei&nbsp;</c><c>The attribute value MUST be same
          for a given codec configuration&nbsp;</c>
          <c>M&nbsp;</c>
          <c>IDENTICAL-PER-PT&nbsp;</c>
@@ -2785,22 +2787,22 @@
          <ttcol align='left'>Level</ttcol>
          <ttcol align='left'>Mux Category</ttcol>
 
-         <c>ccm fir&nbsp;</c><c>The attribute value must be same
+         <c>ccm fir&nbsp;</c><c>The attribute value MUST be same
          for a given codec configuration</c>
          <c>M</c><c>IDENTICAL-PER-PT&nbsp;</c>
          <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
-         <c>ccm tmmbr&nbsp;</c><c>The attribute value must be same
+         <c>ccm tmmbr&nbsp;</c><c>The attribute value MUST be same
          for a given codec configuration</c>
          <c>M</c><c>IDENTICAL-PER-PT&nbsp;</c>
          <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
-         <c>ccm tstr&nbsp;</c><c>The attribute value must be same
+         <c>ccm tstr&nbsp;</c><c>The attribute value MUST be same
          for a given codec configuration</c>
          <c>M</c><c>IDENTICAL-PER-PT&nbsp;</c>
          <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
-         <c>ccm vbcm&nbsp;</c><c>The attribute value must be same
+         <c>ccm vbcm&nbsp;</c><c>The attribute value MUST be same
          for a given codec configuration</c>
          <c>M</c><c>IDENTICAL-PER-PT&nbsp;</c>
          <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
@@ -2916,12 +2918,12 @@
          <ttcol align='left'>Level</ttcol>
          <ttcol align='left'>Mux Category</ttcol>
 
-         <c>depend lay&nbsp;</c><c>The attribute value must be same
+         <c>depend lay&nbsp;</c><c>The attribute value MUST be same
          for a given codec configuration &nbsp;</c><c>M</c>
          <c>IDENTICAL-PER-PT&nbsp;</c>
          <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
-         <c>depend mdc&nbsp;</c><c>The attribute value must be same
+         <c>depend mdc&nbsp;</c><c>The attribute value MUST be same
          for a given codec configuration&nbsp;</c><c>M</c>
          <c>IDENTICAL-PER-PT&nbsp;</c>
          <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
@@ -3200,9 +3202,9 @@
                     capabilities can be used for the session and its 
                     associated media stream components. Potential
                     configurations are not ready for use until fully 
-                    negotiated. They provide an alternative that may
+                    negotiated. They provide an alternative that MAY
                     be used, subject to SDP capability negotiation 
-                    procedures. In particular the answerer may choose 
+                    procedures. In particular the answerer MAY choose 
                     one of the potential configurations for use as part 
                     of the current Offer/Answer exchange.</t>
                     <t>An actual configuration ("a=acfg") for the session 
@@ -3238,7 +3240,7 @@
                 <t>A potential configuration selects a set of attributes 
                 and parameters that become part of the media description 
                 when negotiated. When multiplexing media descriptions with 
-                potential configurations specified, there may be a need 
+                potential configurations specified, there MAY be a need 
                 for coordinating this selection between multiplexed media 
                 descriptions ensuring right multiplexing behavior.</t>
                 <t> Although it is possible to analyze the various potential 
@@ -3257,7 +3259,7 @@
                     a given bundle .</t>
                     <t> Let m-bundle-pcfg be the set of media descriptions in 
                     m-bundle that include one or more potential configurations.</t>
-                    <t> Each media description in m-bundle-pcfg must have at 
+                    <t> Each media description in m-bundle-pcfg MUST have at 
                     least one potential configuration with the same configuration 
                     number (e.g. "1").</t>
                     <t> For each potential configuration with configuration number x 
@@ -3355,7 +3357,7 @@ a=pcfg:2 a=2
           media descriptions in a bundle. There are rules for the usage of 
           identical Payload Type values across multiplexed "m=" lines as 
           described in <xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref>, 
-          which must be followed here as well. As described in
+          which MUST be followed here as well. As described in
           <xref target="sec-cap-neg-proc"/>, the use of identical
           configuration numbers for compatible configurations in
           different media descriptions that are part of the bundle provides
@@ -3400,7 +3402,7 @@ a=pcfg:4 m=5 pt=5:101
             number "1" is repeated when referring to media and media
             format capability used for the Payload Type 97. This
             implies that both the media capability 2 and 4 along
-            with their media format capabilities must refer to the
+            with their media format capabilities MUST refer to the
             same codec configuration, as per the definition of
             IDENTICAL-PER-PT.</t>
           </section> 
@@ -3465,7 +3467,7 @@ a=pcfg:4 m=5 pt=5:101
         <t> Further entries may be registered on a first-come first-serve basis.
         Each registration needs to indicate the multiplexing category value to be
         added to the "Multiplexing Categories" subregistry as defined in this section.</t>
-        <t> Such a registration must also indicate the applicability of the
+        <t> Such a registration MUST also indicate the applicability of the
          newly defined multiplexing category value to various subregistries defined at
          "Session Description Protocol (SDP) Parameters".</t>
         <t>The general registration procedures of <xref target="RFC4566"/> apply.</t>
@@ -3633,7 +3635,7 @@ a=pcfg:4 m=5 pt=5:101
           <c>curr&nbsp;</c><c>NOT RECOMMENDED&nbsp;</c>
           <c>conf&nbsp;</c><c>NOT RECOMMENDED&nbsp;</c>
           <c>mid&nbsp;</c><c>NORMAL&nbsp;</c>
-          <c>rtcp&nbsp;</c><c>IDENTICAL&nbsp;</c>
+          <c>rtcp&nbsp;</c><c>TRANSPORT&nbsp;</c>
           <c>rtcp-fb&nbsp;</c><c>IDENTICAL-PER-PT&nbsp;</c>
           <c>label&nbsp;</c><c>NORMAL&nbsp;</c>
           <c>T38VendorInfo&nbsp;</c><c>NORMAL&nbsp;</c>
@@ -4033,11 +4035,23 @@ a=pcfg:4 m=5 pt=5:101
         Paul E Jones(5.30), Rajesh Kumar(5.48), Jonathan Lennox(5.36,5,15,9.1,11.1),
         Mo Zanaty(5.4,5.5,5.23,8.1,8.3,8.5,12.1), Christian Huitema (5.14),
         Qin Wu (5.47 PM-Dir review), Hans Stokking(5.43,5.16), 
-        Christian Groves (5.48,5.55)
+        Christian Groves (5.48,5.55), Thomas Stach.
       </t>
     </section>
     <section title="Change Log">
       <t>[RFC EDITOR NOTE: Please remove this section when publishing]</t>
+      <t>Changes from draft-ietf-mmusic-sdp-mux-attributes-06
+          <list style="symbols">
+              <t>
+                Incorporated last call review comments from Thomas Stach and
+                Ari Keranen.
+              </t>
+              <t>
+                Fixed more nits to prep for the LastCall.
+              </t>
+          </list>
+      </t>
+
       <t>Changes from draft-ietf-mmusic-sdp-mux-attributes-05
           <list style="symbols">
               <t>
@@ -4203,6 +4217,7 @@ a=pcfg:4 m=5 pt=5:101
   <back>
     <references title="Normative References">
       &RFC4566;
+      &I-D.ietf-mmusic-sdp-bundle-negotiation;
 
       <reference anchor="RFC2119">
         <front>
@@ -4314,7 +4329,6 @@ a=pcfg:4 m=5 pt=5:101
       &RFC7272;
       &RFC7273;
       &RFC7266;
-      &I-D.ietf-mmusic-sdp-bundle-negotiation;
 
       <reference anchor='IANA' 
         target="http://www.iana.org/assignments/sdp-parameters/sdp-parameters.xml">
