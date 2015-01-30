@@ -116,7 +116,7 @@
       Session Description protocol (SDP) <xref target="RFC4566"></xref> is 
       used for negotiating session capabilities between the peers. Such a 
       negotiation happens based on the SDP Offer/Answer exchange mechanism 
-      described in the RFC 3264 <xref target="RFC3264"></xref>.</t>
+      described in <xref target="RFC3264"></xref>.</t>
       <t> This document provides an informational reference in describing 
       the role of SDP and the Offer/Answer exchange mechanism for the most 
       common WebRTC use-cases.</t>
@@ -349,8 +349,7 @@
            <t> RTP header extension indicating audio-levels from client to the 
            	mixer</t>
          </list>
-        For more details, readers are recommended to refer to the 
-        Javascript Session Exchange Protocol(JSEP) <xref target="I-D.ietf-rtcweb-jsep"></xref>
+        For more details, readers are recommended to refer to <xref target="I-D.ietf-rtcweb-jsep"></xref>
         specification.</t>
         <t>The term "Session" is used rather loosely in this document to refer to
         either a "Communication Session" or a "RTP Session" or a "RTP Stream"
@@ -371,10 +370,10 @@
       </t>
       </section>
       <section title="Basic Examples">
-      	<section anchor="sec.2way.audio" title="Two-Way Audio Only Session">
-        	<t>This common scenario shows SDP for secure Two-way audio session 
+      	<section anchor="sec.2way.audio" title="Audio Only Session">
+        	<t>This common scenario shows SDP for secure two-way audio session
         	with Alice offering Opus, PCMU, PCMA and Bob accepting all the 
-        	audio codecs offered.</t>
+        	offered audio codecs.</t>
         	<figure>
           <artwork alt="Successful-Session 2 Way Audio SAVPF"
               type="call-flow" align="left"><![CDATA[
@@ -546,8 +545,8 @@ Alice                                Bob
         </texttable>
       	</section>
       	<section anchor="sec.2way.av"
-        	title="Two-Way Audio/Video Session">
-        	<t>Alice and Bob establish an audio and video session with 
+        	title="Audio/Video Session">
+        	<t>Alice and Bob establish an two-way audio and video session with
         	Opus as the audio codec and H.264 as the video codec.</t>
         	<figure>
            <artwork alt="Successful-Session 2 Way SAVPF">
@@ -831,7 +830,7 @@ Alice                                       Bob
         </texttable>
       	</section>
       	<section 
-        	title="Two-Way Data Only Session">
+        	title="Data Only Session">
         	<t>This scenario illustrates SDP negotiated to setup a data-only 
             session based on SCTP Data Channel, thus enabling use-cases such 
             as file-transfer for example.</t>
@@ -1106,11 +1105,11 @@ Alice                             Bob
       	<section anchor="sec.audio.dtmf"
         	title="Audio with DTMF Session">
         	<t>In this example, Alice wishes to establish two separate 
-            audio streams,one for normal audio and the other for 
+            audio streams, one for normal audio and the other for
             telephone-events. Alice offers first audio stream with three 
             codecs and the other with <xref target="RFC2833"/> tones (for DTMF).  
             Bob accepts both the audio streams by choosing Opus as the 
-            audio codec and the telephone-event for the other stream.</t>
+            audio codec and telephone-event for the other stream.</t>
         	<figure>
             <artwork alt="Audio With DTMF">
 <![CDATA[
@@ -2210,8 +2209,8 @@ Alice                                       Bob
 |    Answer(Audio:Opus,Video:VP8 Data)       |
 |<-------------------------------------------|
 |                                            |
-|                                            |Bob does the same
-|                                            |
+|                                            |Bob does
+|                                            |the same
 |    Two-way Audio,Video, Data multiplexed   |
 |............................................|
 |                                            |
@@ -2926,9 +2925,9 @@ Alice                                                 Bob
         </texttable>
       </section>
        <section anchor="av-d-not-bundle"
-        title="Audio, Video BUNDLED but Data(Not BUNDLED)">
+        title="Audio, Video BUNDLED, but Data(Not BUNDLED)">
         <t>This example show-cases SDP for negotiating a session with Audio, Video
-        and data streams between Alice and Bob but with data stream not part of
+        and data streams between Alice and Bob with data stream not being part of
         the BUNDLE group. This is shown by assigning unique port for data media
         sections.
         </t>
@@ -3217,7 +3216,7 @@ Alice                                                 Bob
         </texttable>
    </section>
    <section anchor="a-video-add"
-        title="Audio Only then Add Video and BUNDLE">
+        title="Audio Only, Add Video and BUNDLE">
         <t>This example involves 2 Offer/Answer exchanges. First one setting up
         Audio-only session followed by an updated Offer/Answer exchange to add
         video stream to the ongoing session. Also the newly added video stream
@@ -3240,17 +3239,15 @@ Alice                                                 Bob
 |                                                      |BUNDLE
 |                Answer(Audio:Opus)                    |
 |<-----------------------------------------------------|
-|                                                      |
-|                                                      |
-|        Updated Offer(Audio:Opus, Video:VP8)          |
+|                                                      |Alice adds
+|                                                      |video stream
+|        Updated Offer(Audio:Opus, Video:VP8)          |to BUNDLE
 |----------------------------------------------------->|
 |                                                      |
-|     Alice adds video stream to BUNDLE with Audio     |
-|                                                      |
+|                                                      |Bob accepts
 |        Updated Answer(Audio:Opus, Video:VP8)         |
 |<-----------------------------------------------------|
 |                                                      |
-|       Bob accepts the updated offer                  |
 |   2Way Call with Audio and Video Multiplexed         |
 |......................................................|
 |                                                      |
@@ -3597,7 +3594,7 @@ Alice                                                 Bob
      could be envisioned in the above basic scenarios as well.</t>
       	 <section anchor="sec.successful-session-simulcast"
         title="Sendonly Simulcast w/2 cameras and 2 encodings per camera">
-        <t>This SDP below shows Offer/Answer exchange with an audio and two 
+        <t>The SDP below shows Offer/Answer exchange with one audio and two
         video sources. Each of the video source can be sent at two different 
         resolutions.</t>
         <t>One video source corresponds to VP8 encoding, while the other 
