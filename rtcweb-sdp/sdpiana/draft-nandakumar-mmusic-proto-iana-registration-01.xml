@@ -9,9 +9,12 @@
 <!ENTITY RFC3550 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.3550.xml">
 <!ENTITY RFC3264 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.3264.xml">
 <!ENTITY RFC4585 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.4585.xml">
-<!ENTITY RFC4347 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.4347.xml">
 <!ENTITY RFC5246 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.5246.xml">
 <!ENTITY RFC4145 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.4145.xml">
+<!ENTITY RFC5764 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.5764.xml">
+<!ENTITY RFC6544 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.6544.xml">
+<!ENTITY RFC5245 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.5245.xml">
+
 ]>
 
 <?xml-stylesheet type="text/xsl" href="rfc2629.xslt" ?>
@@ -22,9 +25,8 @@
 <?rfc sortrefs="yes" ?>
 <?rfc colonspace="yes" ?>
 <?rfc rfcedstyle="no" ?>
-<!-- Don't change this. It breaks stuff -->
 <?rfc tocdepth="4"?>
-<rfc category="std" docName="draft-nandakumar-mmusic-proto-iana-registration-00"
+<rfc category="std" docName="draft-nandakumar-mmusic-proto-iana-registration-01"
      ipr="pre5378Trust200902">
   <front>
     <title abbrev="SDP Proto Registrations">IANA registrations of SDP 'proto'
@@ -33,43 +35,36 @@
 
     <author fullname="Suhas Nandakumar" initials="S." surname="Nandakumar">
       <organization>Cisco Systems Inc</organization>
-
       <address>
         <postal>
           <street>707 Tasman Drive</street>
-
           <city>San Jose</city>
-
           <region>CA</region>
-
           <code>95134</code>
-
           <country>USA</country>
         </postal>
-
         <email>snandaku@cisco.com</email>
       </address>
     </author>
 
     <date day="1" month="February" year="2015" />
-
     <area>RAI</area>
-
     <workgroup>MMUSIC</workgroup>
-
+    
     <abstract>
-      <t>RTP provides end-to-end network transport functions suitable for
-   		applications transmitting real-time data, such as audio, video or
-   		simulation data, over multicast or unicast network services. The data
-   		transport is augmented by a control protocol (RTCP) to allow monitoring
-   		of the data delivery in a manner scalable to large multicast networks,
-   		and to provide minimal control and identification functionality.</t>
-   	  <t>This document describes how to express RTP media transport over TCP
-       in Session Description Protocol (SDP) under various configurations.
-       This document defines 'TCP/RTP/AVPF', 'TCP/RTP/SAVP', 'TCP/RTP/SAVPF',
-       'TCP/DTLS/RTP/SAVP', 'TCP/DTLS/RTP/SAVPF', 'TCP/TLS/RTP/AVP',
-       'TCP/TLS/RTP/AVPF', 'TCP/TLS/RTP/SAVP','TCP/TLS/RTP/SAVPF' SDP Media
-       Description (proto values) identifier.</t>
+    <t>RTP provides end-to-end network transport functions suitable for
+   	 applications transmitting real-time data such as audio, video or
+   	 simulation data, over multicast or unicast network services. The data
+   	 transport is augmented by a control protocol (RTCP) to allow monitoring
+   	 of the data delivery in a manner scalable to large multicast networks,
+   	 and to provide minimal control and identification functionality.</t>
+     <t>The RTP specification <xref target="RFC3550"/> establishes a registry of
+     profile names for use by higher-level control protocols, such as the
+     SDP, to refer to the transport methods. This specification describes the
+     following new SDP transport protocol identifiers for transporting
+     RTP Media over TCP: 'TCP/RTP/AVPF',  'TCP/RTP/SAVP',  'TCP/RTP/SAVPF',
+     'TCP/DTLS/RTP/SAVP',  'TCP/DTLS/RTP/SAVPF',  'TCP/TLS/RTP/AVP',
+     'TCP/TLS/RTP/AVPF',  'TCP/TLS/RTP/SAVP', 'TCP/TLS/RTP/SAVPF'.</t>
     </abstract>
   </front>
 
@@ -79,20 +74,58 @@
       <t>SDP <xref target="RFC4566"/> provides a general-purpose format for
       describing multimedia sessions in announcements or invitations.
       <xref target="RFC4145"/> specifies a general mechanism for
-      describing establishing media transport over TCP using SDP with
+      describing media transport over TCP using SDP with
       <xref target="RFC4571"/> defining a method for framing
       Real-time Transport Protocol (RTP) and RTP Control Protocol (RTCP)
       packets onto a connection-oriented transport (such as TCP) .
       <xref target="RFC4572"/> extends <xref target="RFC4145"/> for describing
       TCP-based media streams that are protected using TLS
       <xref target="RFC5246"/>.</t>
-      <t>The RTP specification <xref target="RFC3550"/> establishes a registry of
-      profile names for use by higher-level control protocols, such as the
-      SDP, to refer to transport methods. This specification describes the
-      following new SDP transport protocol identifiers for transporting
-      RTP Media over TCP:'TCP/RTP/AVPF',  'TCP/RTP/SAVP',  'TCP/RTP/SAVPF',
-      'TCP/DTLS/RTP/SAVP',  'TCP/DTLS/RTP/SAVPF',  'TCP/TLS/RTP/AVP',
-      'TCP/TLS/RTP/AVPF',  'TCP/TLS/RTP/SAVP', 'TCP/TLS/RTP/SAVPF'.</t>
+
+      <t>This specification describes the following new SDP transport protocol
+      identifiers for transporting RTP Media over TCP:</t>
+      <t>
+        TCP/RTP/AVPF: to describe RTP Media with RTCP-based Feedback
+        <xref target="RFC4585"/> over TCP, as defined in
+        <xref target="sec.tcp.rtp.avpf"/>.
+      </t>
+      <t>
+        TCP/RTP/SAVP: to describe Secure RTP Media <xref target="RFC3711"/>
+        over TCP, as defined in <xref target="sec.tcp.rtp.savp"/>.
+      </t>
+      <t>
+        TCP/RTP/SAVPF: to describe Secure RTP Media with RTCP-based Feedback
+        <xref target="RFC5124"/> over TCP, as defined in
+        <xref target="sec.tcp.rtp.savpf"/>.
+      </t>
+      <t>
+        TCP/DTLS/RTP/SAVP: to describe Secure RTP Media <xref target="RFC3711"/>
+        using DTLS-SRTP <xref target="RFC5764"/> over TCP, as defined in
+        <xref target="sec.tcp.dtls.rtp.savp"/>.
+      </t>
+      <t>
+        TCP/DTLS/RTP/SAVPF: to describe Secure RTP Media with RTCP-based
+        Feedback <xref target="RFC5124"/> using DTLS-SRTP over TCP, as
+        defined in <xref target="sec.tcp.dtls.rtp.savpf"/>.
+      </t>
+      <t>
+          TCP/TLS/RTP/AVP: to describe RTP Media on top of TLS over TCP, as
+          defined in <xref target="sec.tcp.tls.rtp.avp"/>.
+      </t>
+      <t>
+        TCP/TLS/RTP/AVPF: to describe RTP Media with RTCP-based
+        Feedback <xref target="RFC5124"/> on top of TLS over TCP, as
+        defined in <xref target="sec.tcp.tls.rtp.avpf"/>.
+      </t>
+      <t>
+        TCP/TLS/RTP/SAVP: to describe Secure RTP Media on top of TLS over TCP,
+        as defined in <xref target="sec.tcp.tls.rtp.savp"/>.
+      </t>
+      <t>
+        TCP/TLS/RTP/SAVPF: to describe Secure RTP Media with RTCP-based
+        Feedback <xref target="RFC5124"/> on top of TLS over TCP, as
+        defined in <xref target="sec.tcp.tls.rtp.savpf"/>.
+      </t>
     </section>
 
     <section anchor="sec-term" title="Terminology">
@@ -104,83 +137,208 @@
       </t>
     </section>
 
-    <section title="Protocol Identifier" anchor="sec.proto-identifiers">
+    <section title="Protocol Identifiers" anchor="sec.proto-identifiers">
       <t>The 'm=' line in SDP specifies, among other items, the transport
       protocol to be used for the media in the session.  See the "Media
       Descriptions" section of SDP <xref target="RFC4566"/> for a discussion
       on transport protocol identifiers.</t>
-        <t>TCP/RTP/AVPF: to describe RTP Media with RTCP-based Feedback
-        <xref target="RFC4585"/> over TCP.</t>
-        <t>TCP/RTP/SAVP: to describe Secure RTP Media <xref target="RFC3711"/>
-        over TCP.</t>
-        <t>TCP/RTP/SAVPF: to describe Secure RTP Media with RTCP-based Feedback
-        <xref target="RFC5124"/> over TCP.</t>
+      <t>The following is the format for an 'm=' line, as specified in
+      <xref target="RFC4566"/>:</t>
+      <figure>
+        <artwork><![CDATA[
+          m=<media> <port> <proto> <fmt> ...
+        ]]></artwork>
+      </figure>
+      <t>An 'm' line that specifies these new proto identifiers MUST further
+      qualify the application-layer protocol using an fmt identifier.</t>
+      <section title="TCP/RTP/AVPF Transport Realization"
+          anchor="sec.tcp.rtp.avpf">
+        <t>The TCP/RTP/AVPF is realized as described below:</t>
         <t>
-            TCP/DTLS/RTP/SAVP: to describe Secure RTP Media <xref target="RFC3711"/>
-            on top of TLS <xref target="RFC5246"/> over TCP.
-        </t>
-        <t>
-            TCP/DTLS/RTP/SAVPF: to describe Secure RTP Media with RTCP-based
-            Feedback <xref target="RFC5124"/> on top of TLS over TCP.
-        </t>
-        <t>
-            TCP/TLS/RTP/AVP: to describe Secure RTP Media with RTCP-based
-            Feedback <xref target="RFC5124"/> on top of TLS over TCP.
-        </t>
-        <t>
-            TCP/TLS/RTP/AVPF: to describe Secure RTP Media with RTCP-based
-            Feedback <xref target="RFC5124"/> on top of TLS over TCP.
-        </t>
-        <t>
-            TCP/TLS/RTP/SAVP: to describe Secure RTP Media with RTCP-based
-            Feedback <xref target="RFC5124"/> on top of TLS over TCP.
-        </t>
-        <t>
-            TCP/TLS/RTP/SAVPF: to describe Secure RTP Media with RTCP-based
-            Feedback <xref target="RFC5124"/> on top of TLS over TCP.
-        </t>
-        <t>
-            This specification defines new protocol identifiers 'TCP/RTP/AVPF',
-            'TCP/RTP/SAVP', 'TCP/RTP/SAVPF', 'TCP/TLS/RTP/SAVP',
-            'TCP/TLS/RTP/SAVPF' which indicates that the media described will
-            use TCP as the transport protocol.
-            <list style="" >
+            <list style="symbols">
                 <t>
-                    When a RTP/AVPF stream is transported over the TCP transport,
-                    the proto identifier SHALL be 'TCP/RTP/AVPF'.
-                </t>
-                <t>
-                    When a RTP/SAVP stream is transported over the TCP transport,
-                    the proto identifier SHALL be  'TCP/RTP/SAVP'.
-                </t>
-                <t>
-                    When a RTP/SAVPF stream is transported over the TCP transport,
-                    the proto identifier SHALL be  'TCP/RTP/SAVPF'.
-                </t>
-                <t>
-                    When RTP/SAVP stream is transport over TLS with TCP transport,
-                    the proto identifier SHALL be 'TCP/TLS/RTP/SAVP'.
-                </t>
-                <t>
-                    When RTP/SAVPF stream is transport over TLS with TCP transport,
-                    the proto identifier SHALL be 'TCP/TLS/RTP/SAVPF'.
+                    RTP/AVPF stream over the TCP transport is realized using
+                    the framing method defined in <xref target="RFC4571"/>.
                 </t>
             </list>
         </t>
+      </section>
+      <section title="TCP/RTP/SAVP Transport Realization"
+          anchor="sec.tcp.rtp.savp">
+        <t>The TCP/RTP/SAVP is realized as described below:</t>
         <t>
-            An 'm' line that specifies these new proto identifiers MUST further qualify
-            the application-layer protocol using an fmt identifier.
+            <list style="symbols">
+                <t>
+                    RTP/SAVP stream over the TCP transport is realized using
+                    the framing method defined in <xref target="RFC4571"/>.
+                </t>
+            </list>
         </t>
       </section>
-      <section title="IANA Considerations">
+      <section title="TCP/RTP/SAVPF Transport Realization"
+          anchor="sec.tcp.rtp.savpf">
+        <t>The TCP/RTP/SAVPF is realized as described below:</t>
         <t>
-            This document describes five new proto values: 'TCP/RTP/AVPF', 'TCP/RTP/SAVP',
-            'TCP/RTP/SAVPF', 'TCP/TLS/RTP/SAVP', 'TCP/TLS/RTP/SAVPF' as defined in the
-            section <xref target="sec.proto-identifiers"/>. These proto
-            values should be registered by the IANA under "Session Description
-            Protocol (SDP) Parameters" under "proto".
+            <list style="symbols">
+                <t>
+                    RTP/SAVPF stream over the TCP transport is realized using
+                    the framing method defined in <xref target="RFC4571"/>.
+                </t>
+            </list>
         </t>
-       </section>
+      </section>
+      <section title="TCP/DTLS/RTP/SAVP Transport Realization"
+          anchor="sec.tcp.dtls.rtp.savp">
+        <t>The TCP/DTLS/RTP/SAVP is realized as described below:</t>
+        <t>
+            <list style="symbols">
+                <t>
+                    RTP/SAVP on top of DTLS is realized according to the
+                    procedures defined in <xref target="RFC5764"/>; and
+                </t>
+                <t>
+                    <xref target="RFC4571"/> framing is used to transport
+                    DTLS-SRTP packets over TCP.
+                </t>
+            </list>
+        </t>
+      </section>
+      <section title="TCP/DTLS/RTP/SAVPF Transport Realization"
+          anchor="sec.tcp.dtls.rtp.savpf">
+        <t>The TCP/DTLS/RTP/SAVPF is realized as described below:</t>
+        <t>
+            <list style="symbols">
+                <t>
+                    RTP/SAVPF on top of DTLS is realized according to the procedures
+                    defined in <xref target="RFC5764"/>; and
+                </t>
+                <t>
+                    <xref target="RFC4571"/> framing is used to transport DTLS-SRTP
+                    packets over TCP.
+                </t>
+            </list>
+            </t>
+        </section>
+        <section title="TCP/TLS/RTP/AVP Transport Realization"
+            anchor="sec.tcp.tls.rtp.avp">
+          <t>The TCP/TLS/RTP/AVP is realized as described below:</t>
+          <t>
+              <list style="symbols">
+                  <t>
+                      RTP/AVP packets are framed using the procedures from
+                      <xref target="RFC4571"/>; and
+                  </t>
+                  <t>
+                      <xref target="RFC4571"/> framed RTP/AVP packets are transported
+                      as Application data messages over the TLS association setup using
+                      the procedures from <xref target="RFC4572"/>.
+                  </t>
+              </list>
+          </t>
+        </section>
+        <section title="TCP/TLS/RTP/AVPF Transport Realization"
+            anchor="sec.tcp.tls.rtp.avpf">
+          <t>The TCP/TLS/RTP/AVPF is realized as described below:</t>
+          <t>
+              <list style="symbols">
+                  <t>
+                      RTP/AVPF packets are framed using the procedures from
+                      <xref target="RFC4571"/>; and
+                  </t>
+                  <t>
+                      <xref target="RFC4571"/> framed RTP/AVPF packets are transported
+                      as Application data messages over the TLS association setup using
+                      the procedures from <xref target="RFC4572"/>.
+                  </t>
+              </list>
+          </t>
+        </section>
+        <section title="TCP/TLS/RTP/SAVP Transport Realization"
+            anchor="sec.tcp.tls.rtp.savp">
+            <t>The TCP/TLS/RTP/SAVP is realized as described below:</t>
+            <t>
+                <list style="symbols">
+                    <t>
+                        <xref target="RFC4572"/> procedures are followed for setting up
+                        TLS association(s) between the peers. However, the cryptographic
+                        mechanism used to generate the certificate fingerprint presented in
+                        the SDP MUST be chosen from the SRTPProtectionProfiles as described
+                        in <xref target="RFC5764"/>; and
+                    </t>
+                    <t>
+                        RTP/SAVP packets are framed according to the procedures from
+                        <xref target="RFC4571"/>; and
+                    </t>
+                    <t>
+                        <xref target="RFC4571"/> framed RTP/SAVP packets are transported
+                        as Application data messages over the TLS association setup using
+                        the procedures from <xref target="RFC4572"/>.
+                    </t>
+                </list>
+            </t>
+        </section>
+        <section title="TCP/TLS/RTP/SAVPF Transport Realization"
+            anchor="sec.tcp.tls.rtp.savpf">
+            <t>The TCP/TLS/RTP/SAVPF is realized as described below:</t>
+            <t>
+                <list style="symbols">
+                    <t>
+                        <xref target="RFC4572"/> procedures are followed for setting up
+                        TLS association(s) between the peers. However, the cryptographic
+                        mechanism used to generate the certificate fingerprint presented in
+                        the SDP MUST be chosen from the SRTPProtectionProfiles as described
+                        in <xref target="RFC5764"/>; and
+                    </t>
+                    <t>
+                        RTP/SAVPF packets are framed according to the procedures from
+                        <xref target="RFC4571"/>; and
+                    </t>
+                    <t>
+                        <xref target="RFC4571"/> framed RTP/SAVPF packets are transported
+                        as Application data messages over the TLS association setup using
+                        the procedures from <xref target="RFC4572"/>.
+                    </t>
+                </list>
+            </t>
+        </section>
+    </section>
+    <section title="ICE Considerations" anchor="sec.ice.considerations">
+        <t>
+            When procedures from <xref target="RFC6544"/> are used to setup ICE
+            <xref target="RFC5245"/> candidates for a TCP transport,
+            the framing mechanism from <xref target="RFC4571"/>
+            is used for STUN  keep-alive packets as well, as defined in
+            section 3 of <xref target="RFC6544"/>.
+        </t>
+    </section>
+    <section title="IANA Considerations">
+        <t>
+          This specification describes the following new SDP transport protocol
+          identifiers :'TCP/RTP/AVPF',  'TCP/RTP/SAVP',  'TCP/RTP/SAVPF',
+          'TCP/DTLS/RTP/SAVP',  'TCP/DTLS/RTP/SAVPF',  'TCP/TLS/RTP/AVP',
+          'TCP/TLS/RTP/AVPF',  'TCP/TLS/RTP/SAVP', 'TCP/TLS/RTP/SAVPF' as
+          defined in the <xref target="sec.proto-identifiers"/>.
+          These proto values should be registered by the IANA under the:
+        </t>
+        <t>
+          <list style="symbols">
+            <t> "proto" subregistery in the "Session Description Protocol (SDP) Parameters"
+                registry; and
+            </t>
+            <t>"RTP Profile Names" registry subregistry on the
+                "Real-Time Transport Protocol (RTP) Parameters" registry.
+            </t>
+           </list>
+        </t>
+        <t>
+          Additionally the  following proto values described in
+          <xref target="RFC5764"/> should be registered under the
+          "RTP Profile Names" subregistry under the
+          "Real-Time Transport Protocol (RTP) Parameters" registry:
+          'UDP/TLS/RTP/SAVP' , 'DCCP/TLS/RTP/SAVP', 'UDP/TLS/RTP/SAVPF',
+          'DCCP/TLS/RTP/SAVPF'.
+        </t>
+      </section>
 
    <section title="Security Considerations" anchor="sec.security">
      	<t>
@@ -196,8 +354,8 @@
 
     <section title="Acknowledgements">
       <t>
-        Author would like to thank Cullen Jennings and Alissa Cooper for their early reviews
-        and suggested improvements.
+        Author would like to thank Cullen Jennings, Alissa Cooper, Justin Uberti and
+        Christer Holmberg for early reviews and suggested improvements.
       </t>
     </section>
   </middle>
@@ -209,6 +367,9 @@
       &RFC4571;
    	  &RFC4572;
       &RFC4566;
+      &RFC6544;
+      &RFC5245;
+      &RFC5764;
     </references>
    <references title="Informative References">
    	  &RFC4145;
@@ -218,7 +379,6 @@
    	  &RFC5124;
    	  &RFC3264;
    	  &RFC4585;
-   	  &RFC4347;
     </references>
   </back>
 </rfc>
