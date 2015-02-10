@@ -104,7 +104,7 @@
       </address>
     </author>
 
-    <date day="30" month="January" year="2015" />
+    <date day="9" month="February" year="2015" />
 
     <area>RAI</area>
 
@@ -129,13 +129,13 @@
   <middle>
     <section title="Introduction">
       <t>Javascript Session Exchange Protocol(JSEP)
-			<xref target="I-D.ietf-rtcweb-jsep"></xref> specifies a generic protocol
-			needed to generate <xref target="RFC3264"></xref> Offers and Answers
-			negotiated between the WebRTC peers for setting up, updating and tearing
-			down a WebRTC session. For this purpose, SDP is used to construct
-			<xref target="RFC3264"></xref> Offers/Answers for describing (media and
-			non-media) streams as appropriate for the recipients of the session
-			description to participate in the session.</t>
+	  <xref target="I-D.ietf-rtcweb-jsep"></xref> specifies a generic protocol
+	  needed to generate <xref target="RFC3264"></xref> Offers and Answers
+	  negotiated between the WebRTC peers for setting up, updating and tearing
+	  down a WebRTC session. For this purpose, SDP is used to construct
+	  <xref target="RFC3264"></xref> Offers/Answers for describing (media and
+	  non-media) streams as appropriate for the recipients of the session
+	  description to participate in the session.</t>
       <t>The remainder of this document is organized as follows: Sections
       3 and 4 provides an overview of SDP and the Offer/Answer exchange
       mechanism. Section 5 provides sample SDP generated for the most common
@@ -145,7 +145,7 @@
       <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHOULD", "SHOULD NOT",
         "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be
         interpreted as described in <xref target="RFC2119"></xref>.</t>
-      </section>
+    </section>
     <section title="SDP and the WebRTC">
       <t> The purpose of this section is to provide a general overview of SDP and
       its components. For a more in-depth understanding, the readers are
@@ -252,11 +252,11 @@
     </section>
     <section title="Offer/Answer and the WebRTC">
     <t>This section introduces SDP Offer/Answer Exchange mechanism mandated by
-     WebRTC for negotiating session capabilities while setting up, updating and
-     tearing down a WebRTC session. This section is intentionally brief in
-     nature and interested readers are recommended to refer
-     <xref target="RFC3264"></xref> for specific details on the protocol
-     operation.</t>
+    WebRTC for negotiating session capabilities while setting up, updating and
+    tearing down a WebRTC session. This section is intentionally brief in
+    nature and interested readers are recommended to refer
+    <xref target="RFC3264"></xref> for specific details on the protocol
+    operation.</t>
     <t>The Offer/Answer <xref target="RFC3264"></xref> model specifies rule for
     the bilateral exchange of Session Description Protocol (SDP) messages for
     creation of multimedia streams. It defines protocol with involved
@@ -298,8 +298,8 @@
      </t>
       <section title="Some Conventions">
       <t>
-        The examples given in this document follow the conventions listed
-        below:
+      The examples given in this document follow the conventions listed
+      below:
       </t>
       <t>
       <list style="symbols">
