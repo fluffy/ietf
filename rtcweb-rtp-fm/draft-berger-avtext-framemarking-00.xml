@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd"[
+<!ENTITY RFC3550 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.3550.xml">
+<!ENTITY RFC3711 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.3711.xml">
+<!ENTITY RFC5104 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.5104.xml">
+<!ENTITY RFC5117 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.5117.xml">
+<!ENTITY RFC5285 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.5285.xml">
+<!ENTITY RFC6184 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.6184.xml">
+]>
+<?rfc compact="yes"?>
+<?rfc subcompact="yes"?>
+<?rfc iprnotified="no" ?>
+<?rfc strict="yes"?>
+<?rfc symrefs="yes"?>
+<?rfc toc="yes"?>
+<?rfc tocdepth="4"?>
+
+<rfc category="std" docName="draft-berger-avtext-framemarking-00" ipr="trust200902">
+
+  <front>
+    <title abbrev="Frame marking">Frame marking for RTP packets</title>
+
+    <author initials="E." surname="Berger" fullname="Espen Berger">
+      <organization>Cisco Systems</organization>
+      <address>
+        <phone>+47 98228179</phone>
+        <email>espeberg@cisco.com</email>
+      </address>
+    </author>
+
+    <author fullname="Suhas Nandakumar" initials="S" surname="Nandakumar">
+      <organization>Cisco Systems</organization>
+      <address>
+        <postal>
+          <street>170 West Tasman Drive</street>
+          <city>San Jose</city>
+          <region>CA</region>
+          <code>95134</code>
+          <country>US</country>
+        </postal>
+        <email>snandaku@cisco.com</email>
+      </address>
+    </author>
+
+	<author fullname="Mo Zanaty" initials="M" surname="Zanaty">
+      <organization>Cisco Systems</organization>
+      <address>
+        <postal>
+          <street>170 West Tasman Drive</street>
+          <city>San Jose</city>
+          <region>CA</region>
+          <code>95134</code>
+          <country>US</country>
+        </postal>
+        <email>mzanaty@cisco.com</email>
+      </address>
+    </author>
+
+    <date month="March" day="5" year="2015"/>
+
+    <area>Applications</area>
+    <keyword>Internet-Draft</keyword>
+
+    <abstract>
+      <t>This document describes a mechanisms to provide frame markings to 
+      allow RTP switches to perform stream operations on encrypted payload. 
+      The mechanisms support extensions to allow for codec specific information.</t>
+    </abstract>
+  </front>
+
+  <middle>
+
+    <section title="Introduction" anchor="intro">
+      <t>It is common practice in modern voice and video conferencing systems to 
+      implement a centralized component that acts as a RTP switch. It receives voice 
+      and video streams from each participant, which may be encrypted using 
+      SRTP <xref target="RFC3711" />. The goal is to provide a set of streams back to 
+      the participants which enable them to render the right media content. In a 
+      simple video configuration, for example, the goal will be that each participant 
+      sees and hears just the active speaker. In that case, the goal of the switch is to 
+      receive the voice and video streams from each participant, determine the active 
+      speaker based on energy in the voice packets, and select the corresponding video 
+      stream for transmission to participants, see <xref target="rtpswitch" /></t>
+
+      <t>In this document, an "RTP switch" is used as a common short term for the terms 
+      "switching RTP mixer", "source projecting middlebox", and "video switching MCU" as 
+      discussed in <xref target="I-D.ietf-avtcore-rtp-topologies-update" />.</t>
+
+      <figure title="RTP switch" anchor="rtpswitch"><artwork><![CDATA[
+         +---+      +------------+      +---+
+         | A |<---->|            |<---->| B |
+         +---+      |            |      +---+
+                    |   RTP      |
+         +---+      |  Switch    |      +---+
+         | C |<---->|            |<---->| D |
+         +---+      +------------+      +---+
+]]>
+    </artwork></figure>
+
+    <t>In order to properly support switching of video streams, the RTP switch typically needs 
+    information in order to do a proper job:
+      <list style="symbols">
+        <t>Because of inter-frame dependencies, it should ideally switch video streams at a point 
+        where the first frame from the new speaker  can be decoded by recipients without prior 
+        frames, e.g switch on an intra-frame.  </t>
+        <t>In many cases, the switch may need to drop frames in order to realize congestion control 
+        techniques, and needs to know which frames can be dropped with minimal impact to video quality</t>
+        <t>Furthermore, it is highly desirable to do this in a way which is not specific to the 
+        video codec. Nearly all modern video codecs share common concepts around I, P, B frames.</t>
+        <t>It is also desirable to be able to do this for SRTP without requiring the video switch to 
+        decrypt the packets. SRTP will encrypt the RTP payload format contents and consequently this 
+        data is not usable for the switching function.</t>
+      </list>
+     </t>
+
+      <t>By providing meta-information about the RTP streams outside the encrypted media payload a 
+      RTP switch can do selective forwarding without decrypting the payload. This document provides a 
+      solution to this problem.</t>
+    </section>
+
+    <section title="Solution">
+      <t>The solution uses RTP header extensions as defined in <xref target="RFC5285" />. A subset of 
+      meta-information from the  video stream is provided as an header extension to allow a RTP switch 
+      to do generic video switching handling of video streams encoded with different video codecs.</t>
+
+      <section title="Mandatory Extension" anchor="mandatory">
+      	<t>The following information are extracted from the media payload:
+         	<list style='symbols'>
+          		<t>Discardable (1 bit) - The flag must be true for packets that can be dropped, 
+          		and still provide a decodable media stream. </t>
+          		<t>Independent Frame  (1 bit) - The flag must be true for RTP packets in a frame that 
+          		can be used as a switcing point. A switching point is the first packet where a new 
+          		receiver can start decoding a video stream without prior frames, e.g an IDR frame 
+          		from <xref target="RFC6184" />. </t>
+          		<t>S/E (2 bits) - These flags identify the first and last packet in a frame within
+          		a layer. </t>
+          		<t>Temporal ID (3 bits) - The base temporal quality starts with 0, and increases 
+          		with 1 for each temporal layer. </t>
+          		<t>Layer Sync (1 bit) -  This flag provides information on the sync relationship
+          		between the layers</t>
+         	</list>
+      	</t>
+      	<t>The values of frame information can be carried as RTP header extensions encoded 
+      	using the one-byte header as described in <xref target="RFC5285" /> as shown below.</t>
+      	<figure>
+          <artwork><![CDATA[
+  0                   1
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|  ID=2 |  L=0  |D|I|S|E|TID  |Y|
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+]]></artwork></figure>
+
+  	</section>
+  	<section title="Optional Extensions">
+      <t>Optinally, video codec specific information can be provided as an extension 
+      in addition to the mandatory extensions as defined in the 
+      <xref target="mandatory"/></t>
+      <t>The frame marking can be extended with codec specific information 
+  	   using a longer length value in the one-byte header. The codec specific 
+  	   information included in the header extension MUST match the SDP negotiated 
+  	   payload format for the RTP stream.</t>
+      <figure>
+          <artwork><![CDATA[
+  0                   1                   2                   3
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|  ID=2 |  L=2  |D|I|S|E|TID  |Y| video codec specific information |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+]]></artwork></figure>
+
+    </section> 
+    <section title="Examples">
+    	<t> The following example shows H265 LayerID included as video codec 
+  		specific information. The length field is 1 to add another 1 byte of 
+  		data, the H265 LayerId is a 6-bit field and a 2-bit PADding at the end.</t>
+      <figure>
+          <artwork><![CDATA[
+  0                   1                   2
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|  ID=2 |  L=1  |D|I|S|E|TID  |Y|H265-LayerId |PAD|
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+]]></artwork></figure>
+
+		<t>The following example shows VP8 15-bit running index of the frames 
+		(pictureID)  for representing the VP8 temporal layrer information.</t>
+      <figure>
+          <artwork><![CDATA[
+  0                   1                   2                   3
+  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+ +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ |  ID=3 | L=2   |D|I|S|E|TID  |Y|          PictureID         |PAD|
+ +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+]]></artwork></figure>
+
+    </section>
+
+    <section title="Signaling information">
+      <t>The URI for declaring this header extension in an extmap attribute is 
+      "urn:ietf:params:rtp-hdrext:framemarkinginfo". It does not contain any 
+      extension attributes. </t>
+      <t>An example attribute line in SDP:</t>
+      <figure>
+          <artwork><![CDATA[
+   a=extmap:3 urn:ietf:params:rtp-hdrext:framemarkinginfo
+]]></artwork></figure>
+
+    </section>
+
+    <section title="Considerations on use">
+      <t>The header extension values MUST represent what is already in the RTP payload.</t>
+      <t> When a RTP switch needs to discard a received video frame due to congestion control considerations, 
+      it is RECOMMENDED that it preferably drop frames marked with the "discardable" bit.</t>
+      <t> When a RTP switch want to forward a new video stream to a receiver, its RECOMMENDED to forward the 
+      new video stream from the first switching point and forward. A RTP switch can request a media source to 
+      generate a switching point for H264 by sending Full Intra Request (RTCP FIR) as defined in <xref target="RFC5104" />. </t>
+    </section>
+  </section>
+
+    <section title="Security Considerations"  >
+      <t>In the Secure Real-Time Transport Protocol (SRTP) <xref target="RFC3711" />, RTP  header extensions are 
+      authenticated but not encrypted. When header extensions are used  some of the payload type information are 
+      exposed and is visible to middle boxes. The encrypted media data is not exposed, so this is not seen as a 
+      high risk exposure. </t>
+    </section>
+
+    <section title="IANA Considerations">
+      <t>This document defines a new extension URI to the RTP Compact HeaderExtensions sub-registry of the 
+      	Real-Time Transport Protocol (RTP) Parameters registry, according to the following data:</t>
+   <t>Extension URI:  urn:ietf:params:rtp-hdrext:framemarkinginfo<vspace />
+   Description: Frame marking information for video streams<vspace />
+   Contact: espeberg@cisco.com<vspace />
+   Reference: RFC XXXX</t>
+
+   <t>Note to RFC Editor: please replace RFC XXXX with the number of this
+   RFC.</t>
+    </section>
+
+  </middle>
+
+  <back>
+
+    <references title="Normative References">
+
+
+<reference anchor='KEYWORDS'>
+<front>
+<title abbrev='RFC Key Words'>Key words for use in RFCs to Indicate Requirement Levels</title>
+<author initials='S.' surname='Bradner' fullname='Scott Bradner'>
+<organization>Harvard University</organization>
+<address>
+<postal>
+<street>1350 Mass.  Ave.</street>
+<street>Cambridge</street>
+<street>MA 02138</street></postal>
+<phone>- +1 617 495 3864</phone>
+<email>sob@harvard.edu</email></address></author>
+<date month='March' year='1997' />
+<area>General</area>
+<keyword>keyword</keyword>
+<abstract>
+<t>
+   In many standards track documents several words are used to signify
+   the requirements in the specification.  These words are often
+   capitalized.  This document defines these words as they should be
+   interpreted in IETF documents.  Authors who follow these guidelines
+   should incorporate this phrase near the beginning of their document:
+
+<list>
+<t>
+      The key words &quot;MUST&quot;, &quot;MUST NOT&quot;, &quot;REQUIRED&quot;, &quot;SHALL&quot;, &quot;SHALL
+      NOT&quot;, &quot;SHOULD&quot;, &quot;SHOULD NOT&quot;, &quot;RECOMMENDED&quot;,  &quot;MAY&quot;, and
+      &quot;OPTIONAL&quot; in this document are to be interpreted as described in
+      RFC 2119.
+</t></list></t>
+<t>
+   Note that the force of these words is modified by the requirement
+   level of the document in which they are used.
+</t></abstract></front>
+<seriesInfo name='BCP' value='14' />
+<seriesInfo name='RFC' value='2119' />
+<format type='TXT' octets='4723' target='ftp://ftp.isi.edu/in-notes/rfc2119.txt' />
+<format type='HTML' octets='14486' target='http://xml.resource.org/public/rfc/html/rfc2119.html' />
+<format type='XML' octets='5661' target='http://xml.resource.org/public/rfc/xml/rfc2119.xml' />
+</reference>
+
+    </references>
+<references title="Informative References">
+     <!-- Here we use entities that we defined at the beginning. -->
+<reference anchor='I-D.ietf-avtcore-rtp-topologies-update'>
+<front>
+<title abbrev='RTP Topologies'>RTP Topologies</title>
+<author initials='M.' surname='Westerlund' fullname='M. Westerlund'>
+<organization>Ericsson</organization></author>
+<author initials='S.' surname='Wenger' fullname='S. Wenger'>
+<organization>Vidyo</organization></author>
+
+<date year='2013' day='22' month='April' /></front>
+<seriesInfo name='Internet-Draft' value='draft-ietf-avtcore-rtp-topologies-update' />
+<format type='HTML' target='http://tools.ietf.org/html/draft-ietf-avtcore-rtp-topologies-update-00' />
+</reference>
+     &RFC3550;
+     &RFC3711;
+     &RFC5104;
+     &RFC5285;
+     &RFC6184;
+
+</references>
+  </back>
+</rfc>
