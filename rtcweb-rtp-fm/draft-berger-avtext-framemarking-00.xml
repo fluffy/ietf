@@ -18,7 +18,7 @@
 <rfc category="std" docName="draft-berger-avtext-framemarking-00" ipr="trust200902">
 
   <front>
-    <title abbrev="Frame marking">Frame marking for RTP packets</title>
+    <title abbrev="Frame Marking">Frame Marking RTP Header Extension</title>
 
     <author initials="E." surname="Berger" fullname="Espen Berger">
       <organization>Cisco Systems</organization>
@@ -62,28 +62,36 @@
     <keyword>Internet-Draft</keyword>
 
     <abstract>
-      <t>This document describes a mechanisms to provide frame markings to 
-      allow RTP switches to perform stream operations on encrypted payload. 
-      The mechanisms support extensions to allow for codec specific information.</t>
+      <t>This document describes a Frame Marking RTP header extension used to
+      convey information about video frames that is critical for error recovery
+      and packet forwarding in RTP middleboxes or network nodes. It is most
+      useful when media is encrypted, and essential when the middlebox or node
+      has no access to the media encryption keys. It is also useful for
+      codec-agnostic processing of encrypted or unencrypted media, while it also
+      supports extensions for codec-specific information.</t>
     </abstract>
   </front>
 
   <middle>
 
     <section title="Introduction" anchor="intro">
-      <t>It is common practice in modern voice and video conferencing systems to 
-      implement a centralized component that acts as a RTP switch. It receives voice 
-      and video streams from each participant, which may be encrypted using 
-      SRTP <xref target="RFC3711" />. The goal is to provide a set of streams back to 
+      <t>Many widely deployed RTP topologies used in modern voice and video
+      conferencing systems include a centralized component that acts as an RTP switch.
+      It receives voice and video streams from each participant, which may be encrypted using
+      SRTP <xref target="RFC3711" />, or extensions that provide participants with
+      private media via end-to-end encryption that excludes the switch.
+      The goal is to provide a set of streams back to
       the participants which enable them to render the right media content. In a 
       simple video configuration, for example, the goal will be that each participant 
       sees and hears just the active speaker. In that case, the goal of the switch is to 
       receive the voice and video streams from each participant, determine the active 
-      speaker based on energy in the voice packets, and select the corresponding video 
-      stream for transmission to participants, see <xref target="rtpswitch" /></t>
+      speaker based on energy in the voice packets, possibly using the client-to-mixer
+      audio level RTP header extension, and select the corresponding video
+        stream for transmission to participants; see <xref target="rtpswitch" />.</t>
 
       <t>In this document, an "RTP switch" is used as a common short term for the terms 
-      "switching RTP mixer", "source projecting middlebox", and "video switching MCU" as 
+      "switching RTP mixer", "source projecting middlebox",
+      "source forwarding unit/middlebox" and "video switching MCU" as
       discussed in <xref target="I-D.ietf-avtcore-rtp-topologies-update" />.</t>
 
       <figure title="RTP switch" anchor="rtpswitch"><artwork><![CDATA[
@@ -98,46 +106,48 @@
     </artwork></figure>
 
     <t>In order to properly support switching of video streams, the RTP switch typically needs 
-    information in order to do a proper job:
+    some critical information about video frames in order to start and stop forwarding streams.
       <list style="symbols">
         <t>Because of inter-frame dependencies, it should ideally switch video streams at a point 
         where the first frame from the new speaker  can be decoded by recipients without prior 
         frames, e.g switch on an intra-frame.  </t>
         <t>In many cases, the switch may need to drop frames in order to realize congestion control 
-        techniques, and needs to know which frames can be dropped with minimal impact to video quality</t>
+        techniques, and needs to know which frames can be dropped with minimal impact to video quality.</t>
         <t>Furthermore, it is highly desirable to do this in a way which is not specific to the 
-        video codec. Nearly all modern video codecs share common concepts around I, P, B frames.</t>
+        video codec. Nearly all modern video codecs share common concepts around frame types.</t>
         <t>It is also desirable to be able to do this for SRTP without requiring the video switch to 
         decrypt the packets. SRTP will encrypt the RTP payload format contents and consequently this 
-        data is not usable for the switching function.</t>
+        data is not usable for the switching function without decryption, which may not even
+        be possible in the case of end-to-end encryption of private media.</t>
       </list>
      </t>
 
-      <t>By providing meta-information about the RTP streams outside the encrypted media payload a 
+      <t>By providing meta-information about the RTP streams outside the encrypted media payload an
       RTP switch can do selective forwarding without decrypting the payload. This document provides a 
       solution to this problem.</t>
     </section>
 
     <section title="Solution">
       <t>The solution uses RTP header extensions as defined in <xref target="RFC5285" />. A subset of 
-      meta-information from the  video stream is provided as an header extension to allow a RTP switch 
+      meta-information from the  video stream is provided as an RTP header extension to allow a RTP switch
       to do generic video switching handling of video streams encoded with different video codecs.</t>
 
       <section title="Mandatory Extension" anchor="mandatory">
       	<t>The following information are extracted from the media payload:
          	<list style='symbols'>
-          		<t>Discardable (1 bit) - The flag must be true for packets that can be dropped, 
-          		and still provide a decodable media stream. </t>
-          		<t>Independent Frame  (1 bit) - The flag must be true for RTP packets in a frame that 
-          		can be used as a switcing point. A switching point is the first packet where a new 
-          		receiver can start decoding a video stream without prior frames, e.g an IDR frame 
-          		from <xref target="RFC6184" />. </t>
-          		<t>S/E (2 bits) - These flags identify the first and last packet in a frame within
-          		a layer. </t>
-          		<t>Temporal ID (3 bits) - The base temporal quality starts with 0, and increases 
-          		with 1 for each temporal layer. </t>
-          		<t>Layer Sync (1 bit) -  This flag provides information on the sync relationship
-          		between the layers</t>
+            <t>S: Start of Frame (1 bit) - MUST be 1 in the first packet in a frame
+                within a layer; otherwise MUST be 0.</t>
+            <t>E: End of Frame (1 bit) - MUST be 1 in the last packet in a frame
+                within a layer; otherwise MUST be 0. </t>
+          		<t>I: Independent Frame  (1 bit) - MUST be 1 for frames that can be
+              decoded indepedent of prior frames, e.g. intra-frame, VPx keyframe,
+              H.264 IDR <xref target="RFC6184" />, H.265 CRA/BLA; otherwise MUST be 0.</t>
+              <t>D: Discardable Frame (1 bit) - MUST be 1 for frames that can be dropped,
+                and still provide a decodable media stream; otherwise MUST be 0. </t>
+              <t>B: Base Layer Sync (1 bit) - MUST be 1 if this frame only depends
+                on the base layer; otherwise MUST be 0.</t>
+              <t>TID: Temporal ID (3 bits) - The base temporal quality starts with 0, and increases
+          		with 1 for each temporal layer/sub-layer. </t>
          	</list>
       	</t>
       	<t>The values of frame information can be carried as RTP header extensions encoded 
@@ -147,13 +157,13 @@
   0                   1
  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|  ID=2 |  L=0  |D|I|S|E|TID  |Y|
+|  ID=2 |  L=0  |S|E|I|D|B| TID |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ]]></artwork></figure>
 
   	</section>
   	<section title="Optional Extensions">
-      <t>Optinally, video codec specific information can be provided as an extension 
+      <t>Optionally, video codec specific information can be provided as an extension
       in addition to the mandatory extensions as defined in the 
       <xref target="mandatory"/></t>
       <t>The frame marking can be extended with codec specific information 
@@ -165,7 +175,7 @@
   0                   1                   2                   3
  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|  ID=2 |  L=2  |D|I|S|E|TID  |Y| video codec specific information |
+|  ID=2 |  L=2  |S|E|I|D|B| TID | video codec specific information|
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ]]></artwork></figure>
 
@@ -179,7 +189,7 @@
   0                   1                   2
  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|  ID=2 |  L=1  |D|I|S|E|TID  |Y|H265-LayerId |PAD|
+|  ID=2 |  L=1  |S|E|I|D|B| TID |H265-LayerId |PAD|
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ]]></artwork></figure>
 
@@ -190,7 +200,7 @@
   0                   1                   2                   3
   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
- |  ID=3 | L=2   |D|I|S|E|TID  |Y|          PictureID         |PAD|
+ |  ID=3 | L=2   |S|E|I|D|B| TID |          PictureID        |PAD|
  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ]]></artwork></figure>
 
