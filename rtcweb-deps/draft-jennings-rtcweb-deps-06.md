@@ -1,8 +1,8 @@
 ---
 title: "WebRTC Dependencies"
 abbrev: WebRTC Dependencies
-docname: draft-jennings-rtcweb-deps-05
-date: 2014-11-10
+docname: draft-jennings-rtcweb-deps-06
+date: 2015-03-19
 category: info
 ipr: trust200902
 
@@ -22,7 +22,13 @@ author:
 
 
 normative:
+  I-D.ietf-rtcweb-fec:
+  I-D.singh-payload-rtp-1d2d-parity-scheme:
+  I-D.ietf-mmusic-trickle-ice:
   I-D.grange-vp9-bitstream:
+  I-D.uberti-payload-vp9:
+  I-D.lennox-avtext-lrr:
+  I-D.nandakumar-mmusic-proto-iana-registration:
   I-D.ietf-avtcore-6222bis:
   I-D.ietf-avtcore-avp-codecs:
   I-D.ietf-avtcore-multi-media-rtp-session:
@@ -32,7 +38,6 @@ normative:
   I-D.ietf-avtcore-srtp-encrypted-header-ext:
   I-D.ietf-avtext-multiple-clock-rates:
   I-D.ietf-httpbis-header-compression:
-  I-D.ietf-httpbis-http2:
   I-D.ietf-httpbis-tunnel-protocol:
   I-D.ietf-mmusic-msid:
   I-D.ietf-mmusic-sctp-sdp:
@@ -67,6 +72,7 @@ normative:
   I-D.nandakumar-rtcweb-stun-uri:
   I-D.petithuguenin-behave-turn-uris:
   I-D.reddy-mmusic-ice-happy-eyeballs:
+  I-D.martinsen-mmusic-ice-dualstack-fairness:
   RFC2119:
   RFC3264:
   RFC3388:
@@ -117,7 +123,9 @@ The key IETF specifications that the W3C GetUserMedia specification normatively 
 {{I-D.ietf-rtcweb-constraints-registry}},
 {{RFC2119}}.
 
-The key IETF specifications that the W3C WebRTC specification normatively depended on are:
+The key IETF specifications that the W3C WebRTC specification normatively
+depended on are:
+{{I-D.ietf-rtcweb-alpn}},
 {{I-D.ietf-rtcweb-audio}},
 {{I-D.ietf-rtcweb-data-channel}},
 {{I-D.ietf-rtcweb-data-protocol}},
@@ -132,14 +140,17 @@ The key IETF specifications that the W3C WebRTC specification normatively depend
 {{RFC5245}},
 {{RFC7064}},
 {{RFC7065}}
-and
-informatively depends 
-on 
+and informatively depends on 
 {{I-D.ietf-rtcweb-overview}}, 
-{{I-D.ietf-rtcweb-security}}.
+{{I-D.ietf-rtcweb-security}},
+and 
+{{I-D.ietf-mmusic-trickle-ice}}.
 
 These IETF drafts in turn normatively depend on the following drafts:
-{{I-D.ietf-avtcore-6222bis}} (now {{RFC7022}}),
+{{I-D.ietf-rtcweb-fec}},
+{{I-D.singh-payload-rtp-1d2d-parity-scheme}},
+{{I-D.ietf-mmusic-trickle-ice}},
+{{I-D.nandakumar-mmusic-proto-iana-registration}},
 {{I-D.ietf-avtcore-multi-media-rtp-session}}, 
 {{I-D.ietf-avtcore-rtp-circuit-breakers}}, 
 {{I-D.ietf-avtcore-rtp-multi-stream-optimisation}}, 
@@ -163,7 +174,6 @@ These IETF drafts in turn normatively depend on the following drafts:
 {{I-D.ietf-tsvwg-sctp-ndata}}, 
 {{I-D.ietf-tsvwg-sctp-prpolicies}}, 
 {{I-D.reddy-mmusic-ice-happy-eyeballs}}. 
-TODO - verify if there is a dependency on {{I-D.ietf-httpbis-http2}} or not. 
 
 
 Right now security normatively depends on
@@ -173,12 +183,21 @@ Right now video normatively depends on
 {{I-D.grange-vp9-bitstream}}, 
 {{I-D.ietf-payload-rtp-h265}}.
 
+Right now video normatively depends on
+{{I-D.grange-vp9-bitstream}}
+but should probably be changed to
+{{I-D.uberti-payload-vp9}} which also depends on
+{{I-D.lennox-avtext-lrr}}
+
+
 The drafts webrtc currently normatively depends on that are not WG drafts are:
-{{I-D.grange-vp9-bitstream}}, 
+{{I-D.uberti-payload-vp9}},
+{{I-D.lennox-avtext-lrr}},
 {{I-D.reddy-mmusic-ice-happy-eyeballs}}.
 
 Right now transports normatively depends on
-{{I-D.reddy-mmusic-ice-happy-eyeballs}}.
+{{I-D.reddy-mmusic-ice-happy-eyeballs}} but perhaps this should be
+{{I-D.martinsen-mmusic-ice-dualstack-fairness}} and made informative.
 
 A few key drafts that the work informatively depends on:
 {{I-D.alvestrand-rtcweb-gateways}}, 
@@ -195,10 +214,9 @@ A few key drafts that the work informatively depends on:
 {{I-D.lennox-payload-ulp-ssrc-mux}}, 
 {{I-D.nandakumar-rtcweb-sdp}}, 
 {{I-D.roach-mmusic-unified-plan}}, 
+{{I-D.ietf-rtcweb-audio-codecs-for-interop}},
 {{I-D.westerlund-avtcore-multiplex-architecture}}.
 
-Something audio should ref but does not yet:
-{{I-D.ietf-rtcweb-audio-codecs-for-interop}}
 
 Time Estimates
 -
@@ -218,7 +236,6 @@ so take this with a large dose of salt.
 | 2015 Jan       | {{I-D.ietf-rtcweb-rtp-usage}}  |
 | 2015 Jan       | {{I-D.ietf-rtcweb-transports}}  |
 | 2015 Feb       | {{I-D.ietf-httpbis-header-compression}}  |
-| 2015 Feb       | {{I-D.ietf-httpbis-http2}}  |
 | 2015 Feb       | {{I-D.ietf-mmusic-sdp-bundle-negotiation}}  |
 | 2015 Feb       | {{I-D.ietf-mmusic-sdp-mux-attributes}}  |
 | 2015 Feb       | {{I-D.ietf-rtcweb-alpn}}  |
