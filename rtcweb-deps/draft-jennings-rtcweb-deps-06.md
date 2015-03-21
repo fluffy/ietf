@@ -25,9 +25,6 @@ normative:
   I-D.ietf-rtcweb-fec:
   I-D.singh-payload-rtp-1d2d-parity-scheme:
   I-D.ietf-mmusic-trickle-ice:
-  I-D.grange-vp9-bitstream:
-  I-D.uberti-payload-vp9:
-  I-D.lennox-avtext-lrr:
   I-D.nandakumar-mmusic-proto-iana-registration:
   I-D.ietf-avtcore-6222bis:
   I-D.ietf-avtcore-avp-codecs:
@@ -43,7 +40,6 @@ normative:
   I-D.ietf-mmusic-sctp-sdp:
   I-D.ietf-mmusic-sdp-bundle-negotiation:
   I-D.ietf-mmusic-sdp-mux-attributes:
-  I-D.ietf-payload-rtp-h265:
   I-D.ietf-payload-rtp-opus:
   I-D.ietf-payload-vp8:
   I-D.ietf-rtcweb-alpn:
@@ -71,7 +67,6 @@ normative:
   I-D.ietf-tsvwg-sctp-prpolicies:
   I-D.nandakumar-rtcweb-stun-uri:
   I-D.petithuguenin-behave-turn-uris:
-  I-D.reddy-mmusic-ice-happy-eyeballs:
   I-D.martinsen-mmusic-ice-dualstack-fairness:
   RFC2119:
   RFC3264:
@@ -172,32 +167,18 @@ These IETF drafts in turn normatively depend on the following drafts:
 {{I-D.ietf-tsvwg-rtcweb-qos}}, 
 {{I-D.ietf-tsvwg-sctp-dtls-encaps}}, 
 {{I-D.ietf-tsvwg-sctp-ndata}}, 
-{{I-D.ietf-tsvwg-sctp-prpolicies}}, 
-{{I-D.reddy-mmusic-ice-happy-eyeballs}}. 
+{{I-D.ietf-tsvwg-sctp-prpolicies}},
+{{I-D.martinsen-mmusic-ice-dualstack-fairness}}.
 
 
 Right now security normatively depends on
 {{I-D.ietf-rtcweb-overview }}.
 
-Right now video normatively depends on
-{{I-D.grange-vp9-bitstream}}, 
-{{I-D.ietf-payload-rtp-h265}}.
-
-Right now video normatively depends on
-{{I-D.grange-vp9-bitstream}}
-but should probably be changed to
-{{I-D.uberti-payload-vp9}} which also depends on
-{{I-D.lennox-avtext-lrr}}
-
 
 The drafts webrtc currently normatively depends on that are not WG drafts are:
-{{I-D.uberti-payload-vp9}},
-{{I-D.lennox-avtext-lrr}},
-{{I-D.reddy-mmusic-ice-happy-eyeballs}}.
+{{I-D.martinsen-mmusic-ice-dualstack-fairness}}
+from the transport draft.
 
-Right now transports normatively depends on
-{{I-D.reddy-mmusic-ice-happy-eyeballs}} but perhaps this should be
-{{I-D.martinsen-mmusic-ice-dualstack-fairness}} and made informative.
 
 A few key drafts that the work informatively depends on:
 {{I-D.alvestrand-rtcweb-gateways}}, 
@@ -229,9 +210,8 @@ so take this with a large dose of salt.
 | 2014 Dec       | {{I-D.ietf-payload-vp8}}  |
 | 2014 Dec       | {{I-D.ietf-rtcweb-data-channel}}  |
 | 2014 Dec       | {{I-D.ietf-rtcweb-data-protocol}}  |
-| 2014 Dec       | {{I-D.ietf-rtcweb-security-arch}}  |
-| 2014 Dec       | {{I-D.ietf-rtcweb-security}}  |
-| 2015 Jan       | {{I-D.ietf-payload-rtp-h265}}  |
+| PubReq         | {{I-D.ietf-rtcweb-security-arch}}  |
+| PubReq        | {{I-D.ietf-rtcweb-security}}  |
 | 2015 Jan       | {{I-D.ietf-rtcweb-constraints-registry}}  |
 | 2015 Jan       | {{I-D.ietf-rtcweb-rtp-usage}}  |
 | 2015 Jan       | {{I-D.ietf-rtcweb-transports}}  |
@@ -239,7 +219,7 @@ so take this with a large dose of salt.
 | 2015 Feb       | {{I-D.ietf-mmusic-sdp-bundle-negotiation}}  |
 | 2015 Feb       | {{I-D.ietf-mmusic-sdp-mux-attributes}}  |
 | 2015 Feb       | {{I-D.ietf-rtcweb-alpn}}  |
-| 2015 Feb       | {{I-D.ietf-rtcweb-stun-consent-freshness}}  |
+| PubReq       | {{I-D.ietf-rtcweb-stun-consent-freshness}}  |
 | 2015 Feb       | {{I-D.ietf-tsvwg-sctp-dtls-encaps}}  |
 | 2015 Feb       | {{I-D.ietf-tsvwg-sctp-ndata}}  |
 | 2015 Feb       | {{I-D.ietf-tsvwg-sctp-prpolicies}}  |
@@ -250,14 +230,14 @@ so take this with a large dose of salt.
 | 2015 May       | {{I-D.ietf-rtcweb-audio}}  |
 | 2015 May       | {{I-D.ietf-rtcweb-jsep}}  |
 | 2015 May       | {{I-D.ietf-rtcweb-overview}}  |
-| 2015 May       | {{I-D.ietf-rtcweb-video}}  |
+| WGLC       | {{I-D.ietf-rtcweb-video}}  |
 |                | {{I-D.ietf-avtcore-multi-media-rtp-session}}  |
 |                | {{I-D.ietf-avtcore-rtp-circuit-breakers}}  |
 |                | {{I-D.ietf-avtcore-rtp-multi-stream-optimisation}}  |
 |                | {{I-D.ietf-avtcore-rtp-multi-stream}}  |
 |                | {{I-D.ietf-mmusic-trickle-ice}}  |
 |                | {{I-D.ietf-tsvwg-rtcweb-qos}}  |
-|                | {{I-D.reddy-mmusic-ice-happy-eyeballs}}  |
+|                | {{I-D.martinsen-mmusic-ice-dualstack-fairness}} |
 | {{RFC6904}}    | {{I-D.ietf-avtcore-srtp-encrypted-header-ext}}  |
 | {{RFC7007}}    | {{I-D.ietf-avtcore-avp-codecs}}  |
 | {{RFC7022}}    | {{I-D.ietf-avtcore-6222bis}}  |
