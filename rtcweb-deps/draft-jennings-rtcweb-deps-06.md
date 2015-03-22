@@ -158,7 +158,7 @@ These IETF drafts in turn normatively depend on the following drafts:
 {{I-D.ietf-rtcweb-data-protocol}}, 
 {{I-D.ietf-rtcweb-security}}, 
 {{I-D.ietf-rtcweb-stun-consent-freshness}}, 
-{{I-D.ietf-tls-applayerprotoneg}} (now {{RFC7301}}),
+{{I-D.ietf-tls-applayerprotoneg}},
 {{I-D.ietf-tram-alpn}}, 
 {{I-D.ietf-tsvwg-rtcweb-qos}}, 
 {{I-D.ietf-tsvwg-sctp-dtls-encaps}}, 
@@ -230,8 +230,11 @@ so take this with a large dose of salt.
 |                | {{I-D.ietf-avtcore-rtp-circuit-breakers}}  |
 |                | {{I-D.ietf-avtcore-rtp-multi-stream-optimisation}}  |
 |                | {{I-D.ietf-avtcore-rtp-multi-stream}}  |
-|                | {{I-D.ietf-mmusic-trickle-ice}}  |
 |                | {{I-D.ietf-tsvwg-rtcweb-qos}}  |
+|                | {{I-D.nandakumar-mmusic-proto-iana-registration}} |
+|                | {{I-D.ietf-rtcweb-fec}} |
+|                | {{I-D.singh-payload-rtp-1d2d-parity-scheme}} |
+|                | {{I-D.ietf-mmusic-trickle-ice}}  |
 |                | {{I-D.martinsen-mmusic-ice-dualstack-fairness}} |
 | {{RFC6904}}    | {{I-D.ietf-avtcore-srtp-encrypted-header-ext}}  |
 | {{RFC7007}}    | {{I-D.ietf-avtcore-avp-codecs}}  |
