@@ -34,8 +34,6 @@ normative:
   I-D.ietf-avtcore-rtp-multi-stream:
   I-D.ietf-avtcore-srtp-encrypted-header-ext:
   I-D.ietf-avtext-multiple-clock-rates:
-  I-D.ietf-httpbis-header-compression:
-  I-D.ietf-httpbis-tunnel-protocol:
   I-D.ietf-mmusic-msid:
   I-D.ietf-mmusic-sctp-sdp:
   I-D.ietf-mmusic-sdp-bundle-negotiation:
@@ -150,8 +148,6 @@ These IETF drafts in turn normatively depend on the following drafts:
 {{I-D.ietf-avtcore-rtp-circuit-breakers}}, 
 {{I-D.ietf-avtcore-rtp-multi-stream-optimisation}}, 
 {{I-D.ietf-avtcore-rtp-multi-stream}}, 
-{{I-D.ietf-httpbis-header-compression}}, 
-{{I-D.ietf-httpbis-tunnel-protocol}},
 {{I-D.ietf-mmusic-msid}}, 
 {{I-D.ietf-mmusic-sctp-sdp}}, 
 {{I-D.ietf-mmusic-sdp-bundle-negotiation}}, 
@@ -177,7 +173,8 @@ Right now security normatively depends on
 
 The drafts webrtc currently normatively depends on that are not WG drafts are:
 {{I-D.martinsen-mmusic-ice-dualstack-fairness}}
-from the transport draft.
+{{I-D.singh-payload-rtp-1d2d-parity-scheme}},
+{{I-D.nandakumar-mmusic-proto-iana-registration}}.
 
 
 A few key drafts that the work informatively depends on:
@@ -207,30 +204,28 @@ RFC. Historically these dates have often taken much longer than the estimates
 so take this with a large dose of salt.
 
 | ETA            | Draft Name  |
-| 2014 Dec       | {{I-D.ietf-payload-vp8}}  |
-| 2014 Dec       | {{I-D.ietf-rtcweb-data-channel}}  |
-| 2014 Dec       | {{I-D.ietf-rtcweb-data-protocol}}  |
+| PubReq        | {{I-D.ietf-payload-vp8}}  |
+| PubReq       | {{I-D.ietf-rtcweb-data-channel}}  |
+| PubReq       | {{I-D.ietf-rtcweb-data-protocol}}  |
 | PubReq         | {{I-D.ietf-rtcweb-security-arch}}  |
 | PubReq        | {{I-D.ietf-rtcweb-security}}  |
+| PubReq     | {{I-D.ietf-rtcweb-rtp-usage}}  |
+| PubReq       | {{I-D.ietf-rtcweb-stun-consent-freshness}}  |
+| PubReq       | {{I-D.ietf-tsvwg-sctp-dtls-encaps}}  |
+| Pubreq       | {{I-D.ietf-payload-rtp-opus}}  |
+| PubReq      | {{I-D.ietf-tsvwg-sctp-prpolicies}}  |
+| WGLC       | {{I-D.ietf-rtcweb-overview}}  |
+| WGLC       | {{I-D.ietf-rtcweb-video}}  |
 | 2015 Jan       | {{I-D.ietf-rtcweb-constraints-registry}}  |
-| 2015 Jan       | {{I-D.ietf-rtcweb-rtp-usage}}  |
 | 2015 Jan       | {{I-D.ietf-rtcweb-transports}}  |
-| 2015 Feb       | {{I-D.ietf-httpbis-header-compression}}  |
 | 2015 Feb       | {{I-D.ietf-mmusic-sdp-bundle-negotiation}}  |
 | 2015 Feb       | {{I-D.ietf-mmusic-sdp-mux-attributes}}  |
 | 2015 Feb       | {{I-D.ietf-rtcweb-alpn}}  |
-| PubReq       | {{I-D.ietf-rtcweb-stun-consent-freshness}}  |
-| 2015 Feb       | {{I-D.ietf-tsvwg-sctp-dtls-encaps}}  |
 | 2015 Feb       | {{I-D.ietf-tsvwg-sctp-ndata}}  |
-| 2015 Feb       | {{I-D.ietf-tsvwg-sctp-prpolicies}}  |
 | 2015 Mar       | {{I-D.ietf-mmusic-msid}}  |
 | 2015 Mar       | {{I-D.ietf-mmusic-sctp-sdp}}  |
-| 2015 Mar       | {{I-D.ietf-payload-rtp-opus}}  |
-| 2015 April     | {{I-D.ietf-httpbis-tunnel-protocol}} |
 | 2015 May       | {{I-D.ietf-rtcweb-audio}}  |
 | 2015 May       | {{I-D.ietf-rtcweb-jsep}}  |
-| 2015 May       | {{I-D.ietf-rtcweb-overview}}  |
-| WGLC       | {{I-D.ietf-rtcweb-video}}  |
 |                | {{I-D.ietf-avtcore-multi-media-rtp-session}}  |
 |                | {{I-D.ietf-avtcore-rtp-circuit-breakers}}  |
 |                | {{I-D.ietf-avtcore-rtp-multi-stream-optimisation}}  |
