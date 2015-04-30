@@ -2,7 +2,7 @@
 title: "WebRTC Dependencies"
 abbrev: WebRTC Dependencies
 docname: draft-jennings-rtcweb-deps-07
-date: 2015-03-24
+date: 2015-04-30
 category: info
 ipr: trust200902
 
@@ -22,6 +22,8 @@ author:
 
 
 normative:
+  I-D.ietf-jose-json-web-algorithms:
+  I-D.ietf-tram-turn-third-party-authz:
   I-D.ietf-rtcweb-fec:
   I-D.ietf-payload-flexible-fec-scheme:
   I-D.ietf-mmusic-trickle-ice:
@@ -128,6 +130,7 @@ depended on are:
 {{I-D.ietf-rtcweb-security-arch}},
 {{I-D.ietf-rtcweb-transports}},
 {{I-D.ietf-rtcweb-video}},
+{{I-D.ietf-tram-turn-third-party-authz}},
 {{RFC2119}},
 {{RFC3264}},
 {{RFC3388}},
@@ -139,6 +142,8 @@ and informatively depends on
 {{I-D.ietf-rtcweb-security}},
 and 
 {{I-D.ietf-mmusic-trickle-ice}}.
+
+In addition 3GPP work normatively depends on {{I-D.alvestrand-rtcweb-gateways}}.
 
 These IETF drafts in turn normatively depend on the following drafts:
 {{I-D.ietf-rtcweb-fec}},
@@ -165,8 +170,8 @@ These IETF drafts in turn normatively depend on the following drafts:
 {{I-D.ietf-tsvwg-sctp-dtls-encaps}}, 
 {{I-D.ietf-tsvwg-sctp-ndata}}, 
 {{I-D.ietf-tsvwg-sctp-prpolicies}},
-{{I-D.martinsen-mmusic-ice-dualstack-fairness}}.
-
+{{I-D.martinsen-mmusic-ice-dualstack-fairness}}, and 
+{{I-D.ietf-jose-json-web-algorithms}}.
 
 Right now security normatively depends on
 {{I-D.ietf-rtcweb-overview }}.
@@ -246,3 +251,6 @@ so take this with a large dose of salt.
 |                | {{I-D.ietf-mmusic-trickle-ice}}  |
 |                | {{I-D.martinsen-mmusic-ice-dualstack-fairness}} |
 |                | {{I-D.ietf-httpbis-tunnel-protocol}} |
+|                | {{I-D.ietf-jose-json-web-algorithms}} |
+|                | {{I-D.ietf-tram-turn-third-party-authz}} |
+
