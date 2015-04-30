@@ -1,8 +1,8 @@
 ---
 title: "WebRTC Dependencies"
 abbrev: WebRTC Dependencies
-docname: draft-jennings-rtcweb-deps-07
-date: 2015-04-30
+docname: draft-jennings-rtcweb-deps-08
+date: 2015-05-01
 category: info
 ipr: trust200902
 
