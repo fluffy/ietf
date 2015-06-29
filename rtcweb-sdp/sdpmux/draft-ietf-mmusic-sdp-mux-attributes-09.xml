@@ -80,7 +80,7 @@
 <?rfc rfcedstyle="no" ?>
 <?rfc tocdepth="4"?>
 
-<rfc category="std" docName="draft-ietf-mmusic-sdp-mux-attributes-08"
+<rfc category="std" docName="draft-ietf-mmusic-sdp-mux-attributes-09"
      ipr="pre5378Trust200902">
   <front>
     <title abbrev="SDP Attribute Multiplexing">A Framework for SDP Attributes
@@ -106,7 +106,7 @@
       </address>
     </author>
 
-    <date day="20" month="January" year="2015" />
+    <date day="29" month="June" year="2015" />
 
     <area>MMUSIC</area>
 
@@ -115,7 +115,7 @@
        describe attributes of multimedia sessions and of individual media
        streams (e.g., Real-time Transport Protocol (RTP) sessions) within a
        multimedia session. Typically media associated with individual 
-       media descriptions ("m=" lines) represent seperate RTP Sessions
+       media descriptions ("m=" lines) represent RTP sessions
        and are thus carried over individual underlying transport layer flows. 
        For scenarios where SDP is used to negotiate the usage of single 5-tuple 
        for sending and receiving media associated with multiple media descriptions, 
@@ -135,7 +135,7 @@
         apply to the individual media descriptions (described by "m=" lines")
         and the overall multimedia session. Typically different media types 
         (audio, video, etc.) described using different media descriptions 
-        represent separate RTP Sessions that are carried over individual 
+        represent separate RTP sessions that are carried over individual 
         transport layer flows. However <xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/> 
         defines a way to use a single address:port combination (BUNDLE address) 
         for receiving media associated with multiple SDP media 
@@ -152,7 +152,7 @@
       <t> The document starts with providing the motivation for
         requiring such a framework. This is followed by introduction
         to the SDP attribute analysis framework/procedures, following
-        which several sections applies the framework to the SDP
+        which several sections apply the framework to the SDP
         attributes registered with the <xref target="IANA"></xref>.
       </t>
     </section>
@@ -169,7 +169,9 @@
       <t>The time and complications of setting up ICE <xref
         target="RFC5245"></xref> and DTLS-SRTP <xref
         target="RFC5763"></xref> transports for use by RTP, and
-        conservation of ports, forms an requirement to try and reduce
+        conservation of ports (to avoid maintaining large number of
+        NAT bindings open, reduce time/ports needed for ICE
+        to detect connectivity), forms a requirement to try and reduce
         the number of transport level flows needed. This has resulted
         in the definition of ways, such as, <xref
         target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref> to
@@ -178,7 +180,7 @@
         further restrictions on applicability of the SDP attributes
         as they are defined today. </t>
        <t>The specific problem is that there are attribute combinations
-        which make sense when specified on independent "m= " lines -- as
+        which make sense when specified on independent "m=" lines -- as
         with classical SDP -- that do not make sense when those
         "m=" lines are then multiplexed over the same transport. To give
         an obvious example, ICE permits each "m=" line to have an
@@ -186,15 +188,15 @@
         media from multiple "m=" lines is multiplexed over the same ICE
         component, then the meaning of media-level ice-ufrag
         attributes becomes muddled.</t>
-      <t>As of today there are close to 250 SDP attributes registered
-        with the <xref target="IANA"></xref> and more will be
+      <t>At the time of writing this document there are close to 250 SDP 
+      	attributes registered with the <xref target="IANA"></xref> and more will be
         added in the future. There is no clearly defined procedure to
-        establish the validity/applicability of these attribute when
+        establish the validity/applicability of these attributes when
         used with transport multiplexing.</t>
     </section>
     <section title="SDP Attribute Analysis Framework" anchor="sec-mux-fwork">
       <t>Attributes in an SDP session description can be defined at the
-       session-level and media-level. These attributes could be
+       session-level and media-level. Informally, these attributes could be
        semantically grouped as noted below.</t>
 	  <t>
        <list style="symbols">
@@ -204,8 +206,8 @@
           RTP/RTCP port numbers, network addresses, QOS.</t>
          <t>Metadata description attributes capturing session timing and
           origin information.</t>
-         <t>Attributes establishing relationships between media streams
-          such as grouping framework</t>
+         <t>Attributes establishing relationships between media descriptions
+          such as grouping framework <xref target="RFC5888"/></t>
        </list>
       </t>
       <t>With the above semantic grouping as a reference, the proposed
@@ -240,14 +242,14 @@
 	   <t>&nbsp;</t>
       </section>
       <section title="Category: NOT RECOMMENDED">  
-        <t>Attributes that are recommended against multiplexing since
+        <t>Attributes that are not recommended for multiplexing since
          their usage under multiplexing might lead to incorrect
          behavior.</t>
         <t>&nbsp;</t>
-        <t>Example: Multiplexing media descriptions having attribute
-         zrtp-hash defined with the media descriptions lacking it,
-         would either complicate the handling of multiplexed streams
-        or might fail multiplexing altogether.</t> 
+        <t>Example: Multiplexing media descriptions over a single 
+        DCCP transport <xref target="RFC5762"/> is NOT RECOMMENDED
+        since DCCP being a connection oriented protocol doesn't
+        allow multiple connections on the same 5-tuple.</t> 
         <figure>
           <artwork align="left" alt="" height="" name="" type="" width=""
                    xml:space="preserve"><![CDATA[
@@ -256,12 +258,16 @@
      s=
      c=IN IP4 client.biloxi.example.com
      t=0 0
-     m=audio 3456 RTP/AVP 97 // with zrtp
-     a=rtpmap:97 iLBC/8000
-     a=zrtp-hash:1.10 fe30efd02423cb054e50efd0248742ac7a52c8f91bc2
-       df881ae642c371ba46df
-     m=video 34567 RTP/AVP 31 //without zrtp
-     a=rtpmap:31 H261/90000
+     m=video 5004 DCCP/RTP/AVP 99
+     a=rtpmap:99 h261/9000
+     a=dccp-service-code:SC=x52545056
+     a=setup:passive
+     a=connection:new
+     m=video 5004 DCCP/RTP/AVP 100 
+     a=rtpmap:100 h261/9000
+     a=dccp-service-code:SC=x5254504f
+     a=setup:passive
+     a=connection:new
            ]]></artwork>
         </figure>
 	   <t>&nbsp;</t>
@@ -271,7 +277,7 @@
           be identical across all the media descriptions being multiplexed.</t>
          <t>&nbsp;</t>
          <t>Attributes such as rtcp-mux fall into this category. Since
-          RTCP reporting is done per RTP Session, RTCP Multiplexing
+          RTCP reporting is done per RTP session, RTCP Multiplexing
           MUST be enabled for both the audio and video "m=" lines if
           they are transported over a single 5-tuple.</t>
          <figure>
@@ -323,10 +329,9 @@
       </section>
       <section title="Category: TRANSPORT">
         <t> Attributes that can be set normally for multiple items in
-         a multiplexed group but the software MUST pick just one of
-         the attributes of the given type for use. The one chosen is
-         the attribute associated with the "m=" line that represents
-         the information being used for the transport of the RTP.</t>
+         a multiplexed group but the software MUST pick the one 
+         that's associated with the "m=" line whose information is 
+         used for setting up the underyling transport.</t>
         <t>&nbsp;</t>
         <t>In the example below, "a=crypto" attribute is defined for both
         the audio and the video "m=" lines. The video media line's a=crypto
@@ -364,7 +369,7 @@
      <section title="Category: INHERIT">
        <t>Attributes that encapsulate other SDP attributes or parameters.
        These attributes inherit their multiplexing characteristics from the
-       attributes or parameters they encapsulate. Such attributes as of today, 
+       attributes or parameters they encapsulate. Such attributes  
        are defined in <xref target="RFC3407"/>, <xref target="RFC5939"/> and 
        <xref target="RFC6871"/> as part of a generic framework for indicating 
        and negotiating transport, media and media format related capabilities 
@@ -415,7 +420,8 @@
         <t>&nbsp;</t>
         <t>In the SDP example below, Payload Types 96 and 97 are repeated
          across all the video "m=" lines and all the payload specific
-         parameters (ex: rtpmap, fmtp) are identical.</t>   
+         parameters (ex: rtpmap, fmtp) are identical 
+         (Note: some line breaks included are due to formatting only).</t> 
        <figure>
           <artwork align="left" alt="" height="" name="" type="" width=""
                xml:space="preserve"><![CDATA[
@@ -425,8 +431,8 @@
      s=
      c=IN IP4 host.atlanta.example.com
      t=0 0
-     a=group:BUNDLE cam1, cam2
-     m= video 96 97
+     a=group:BUNDLE cam1 cam2
+     m=video 96 97
      a=mid:cam1
      a=rtpmap:96 H264/90000
      a=fmtp:96 profile-level-id=42400d; max-fs=3600; max-fps=3000;
@@ -434,7 +440,7 @@
      a=rtpmap:97 H264/90000
      a=fmtp:97 profile-level-id=42400a; max-fs=240; max-fps=3000;
      max-mbps=7200; max-br=200
-     m= video  96 97
+     m=video  96 97
      a=mid:cam2
      a=rtpmap:96 H264/90000
      a=fmtp:96 profile-level-id=42400d; max-fs=3600; max-fps=3000;
@@ -449,13 +455,13 @@
     <section title="Category: SPECIAL">
       <t>Attributes where the text in the specification defining the
       attribute MUST be consulted for further handling when multiplexed. </t>
-      <t>As an example, for the attribute extmap, the specification
-      defining the extension needs to be referred to understand the
-      multiplexing implications.</t>
+      <t>As an example, for the attribute extmap <xref target="RFC5285"/>, 
+      the specification defining the extension needs to be referred to 
+      understand the multiplexing implications.</t>
     </section>
     <section title="Category: TBD">
       <t>Attributes that have not been analyzed under the proposed multiplexing
-      framework yet. For the purposes of implementations it is advised to 
+      framework. For the purposes of implementations it is advised to 
       consider "NOT RECOMMENDED" as the category when multiplexing these
       attributes.</t>
     </section>
@@ -471,7 +477,7 @@
           <t>S -- Session level</t>
           <t>M -- Media level</t>
           <t>B -- Both</t>
-          <t>SR -- Source-level (for a single SSRC)</t>
+          <t>SR -- Source-level (for a single SSRC) <xref target="RFC5576"/></t>
         </list>
       </t>
       <t>The "Mux Category" column identifies multiplexing category assigned
@@ -625,7 +631,7 @@
           <ttcol align='left'>Mux Category</ttcol>
 
           <c>rtcp-mux&nbsp;</c><c>RTP and RTCP Multiplexing affects the
-          entire RTP Session&nbsp;</c>
+          entire RTP session&nbsp;</c>
           <c>M&nbsp;</c><c>IDENTICAL&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
@@ -711,10 +717,10 @@
         <t hangText="Note">
           A single DSCP code point per flow being multiplexed
           doesn't impact multiplexing since QOS mechanisms are
-          signaled/scoped per flow. For scenarios that involves having
+          signaled/scoped per flow. For scenarios that involve having
           different DSCP code points for packets being transmitted over
           the same 5-tuple, issues as discussed in
-          <xref target="I.D-draft-ietf-dart-dscp-rtp"/> needs to be
+          <xref target="I.D-draft-ietf-dart-dscp-rtp"/> need to be
           taken into consideration.
         </t>
       </section>
@@ -824,7 +830,7 @@
           <ttcol align='left'>Mux Category</ttcol>
 
           <c>rtcp-rsize&nbsp;</c><c>Reduced size RTCP affects the
-          entire RTP Session&nbsp;</c>
+          entire RTP session&nbsp;</c>
           <c>M&nbsp;</c><c>IDENTICAL&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
@@ -987,7 +993,7 @@
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
           <c>ssrc-group&nbsp;</c>
-          <c>Refer to section <xref target="sec-ssrc-group"></xref>
+          <c>Refer to <xref target="sec-ssrc-group"></xref>
           for specific analysis of the grouping semantics&nbsp;</c><c>M</c>
           <c>NORMAL&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
@@ -1367,12 +1373,14 @@
           <ttcol align='left'>Level</ttcol>
           <ttcol align='left'>Mux Category</ttcol>
 
-          <c>loopback rtp-pkt-loopback&nbsp;</c><c>Not Impacted &nbsp;</c>
-          <c>M</c><c>NORMAL&nbsp;</c>
+          <c>loopback rtp-pkt-loopback&nbsp;</c><c>The attribute value MUST be
+          same for a given codec configuration&nbsp;</c>
+          <c>M</c><c>IDENTICAL-PER-PT&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
-          <c>loopback rtp-media-loopback&nbsp;</c><c>Not Impacted &nbsp;</c>
-          <c>M</c><c>NORMAL&nbsp;</c>
+          <c>loopback rtp-media-loopback&nbsp;</c><c>The attribute value MUST be
+          same for a given codec configuration &nbsp;</c>
+          <c>M</c><c>IDENTICAL-PER-PT&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
           <c>loopback-source&nbsp;</c><c>Not Impacted&nbsp;</c><c>M</c>
@@ -1440,12 +1448,12 @@
           <ttcol align='left'>Mux Category</ttcol>
 
           <c>pcfg&nbsp;</c>
-          <c>Refer to Section <xref target="sec-encap"/> &nbsp;</c>
+          <c>Refer to <xref target="sec-encap"/> &nbsp;</c>
           <c>M</c><c>SPECIAL&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
           <c>acfg&nbsp;</c>
-          <c>Refer to Section <xref target="sec-encap"/>&nbsp;</c>
+          <c>Refer to <xref target="sec-encap"/>&nbsp;</c>
           <c>M</c><c>SPECIAL&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
@@ -1458,12 +1466,12 @@
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
           <c>acap&nbsp;</c>
-          <c>Refer to section <xref target="sec-encap"/>&nbsp;</c>
+          <c>Refer to <xref target="sec-encap"/>&nbsp;</c>
           <c>B</c><c>INHERIT&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
           <c>tcap&nbsp;</c>
-          <c>Refer to section <xref target="sec-encap"/>&nbsp;</c>
+          <c>Refer to <xref target="sec-encap"/>&nbsp;</c>
           <c>B</c><c>INHERIT&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
@@ -1489,7 +1497,7 @@
           <ttcol align='left'>Mux Category</ttcol>
 
           <c>rmcap&nbsp;</c>
-          <c>Refer to Section <xref target="sec-encap"/>&nbsp;</c>
+          <c>Refer to <xref target="sec-encap"/>&nbsp;</c>
           <c>B</c><c>IDENTICAL-PER-PT&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
@@ -1498,17 +1506,17 @@
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
           <c>mfcap&nbsp;</c>
-          <c>Refer to Section <xref target="sec-encap"/>&nbsp;</c>
+          <c>Refer to <xref target="sec-encap"/>&nbsp;</c>
           <c>B</c><c>IDENTICAL-PER-PT&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
           <c>mscap&nbsp;</c>
-          <c>Refer to Section <xref target="sec-encap"/>&nbsp;</c>
+          <c>Refer to <xref target="sec-encap"/>&nbsp;</c>
           <c>B</c><c>INHERIT&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
           <c>lcfg&nbsp;</c>
-          <c>Refer to Section <xref target="sec-encap"/>&nbsp;</c>
+          <c>Refer to <xref target="sec-encap"/>&nbsp;</c>
           <c>B</c><c>SPECIAL&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
@@ -1694,9 +1702,10 @@
           <ttcol align='left'>Level</ttcol>
           <ttcol align='left'>Mux Category</ttcol>
 
-          <c>zrtp-hash&nbsp;</c><c>Complicates if all the "m=" lines are
-          not authenticated&nbsp;</c><c>M</c>
-          <c>NOT RECOMMENDED&nbsp;</c>
+          <c>zrtp-hash&nbsp;</c><c>zrtp-hash attribute MUST be the one 
+          that corresponds to the "m=" line chosen for setting up
+          the underlying transport flow&nbsp;</c><c>M</c>
+          <c>TRANSPORT&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
         </texttable>
@@ -1765,25 +1774,32 @@
           <ttcol align='left'>Mux Category</ttcol>
 
           <c>cs-correlation:callerid&nbsp;</c>
-          <c>Not Impacted&nbsp;</c>
-          <c>M</c><c>NORMAL&nbsp;</c>
+          <c>Refer to notes below&nbsp;</c>
+          <c>M</c><c>NOT RECOMMENDED&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
           <c>cs-correlation:uuie&nbsp;</c>
-          <c>Not Impacted&nbsp;</c>
-          <c>M</c><c>NORMAL&nbsp;</c>
+          <c>Refer to notes below&nbsp;</c>
+          <c>M</c><c>NOT RECOMMENDED&nbsp;</c>
 
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
           <c>cs-correlation:dtmf&nbsp;</c>
-          <c>Not Impacted&nbsp;</c>
+          <c>NOT RECOMMENDED&nbsp;</c>
           <c>M</c><c>NORMAL&nbsp;</c>
 
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
           <c>cs-correlation:external&nbsp;</c>
-          <c>Not Impacted&nbsp;</c>
-          <c>M</c><c>NORMAL&nbsp;</c>
+          <c>Refer to notes below&nbsp;</c>
+          <c>M</c><c>NOT RECOMMENDED&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
         </texttable>
+        <t hangText="Notes">
+         <xref target="RFC7195"/> defines SDP attributes for
+         establishing audio and video media streams over circuit-switched
+         bearers by defining a new nettype value "PSTN". However, Section 7.2 of
+         <xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/> mandates the
+         "c=" line nettype value of 'IN'.
+        </t>
 
       </section>
 
@@ -1823,12 +1839,12 @@
           <c>B</c><c>NORMAL&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
-          <c>SRTPAuthentication&nbsp;</c><c>Not Impacted&nbsp;</c>
-          <c>M</c><c>NORMAL&nbsp;</c>
+          <c>SRTPAuthentication&nbsp;</c><c>Needs further analysis&nbsp;</c>
+          <c>M</c><c>TBD&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
-          <c>SRTPROCTxRate&nbsp;</c><c>Not Impacted&nbsp;</c>
-          <c>M</c><c>NORMAL&nbsp;</c>
+          <c>SRTPROCTxRate&nbsp;</c><c>Needs further analysis&nbsp;</c>
+          <c>M</c><c>TBD&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
         </texttable>
@@ -2490,6 +2506,9 @@
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
         </texttable>
+        <t hangText="Note">Section 9.1 of <xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/>
+        </t>
+
       </section>
 
       <section title="Historical Attributes">
@@ -2587,7 +2606,7 @@
          defined Offer/Answer usage.&nbsp;</c>
          <c>B</c><c>SPECIAL&nbsp;</c>
          <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c> 
-         <c>bwtype:maxprate&nbsp;</c><c>The usage of TIAS and maxprate 
+         <c>maxprate&nbsp;</c><c>The usage of TIAS and maxprate 
          is not well defined under multiplexing&nbsp;</c>
          <c>B</c><c>SPECIAL&nbsp;</c>
          <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
@@ -2728,7 +2747,7 @@
          <ttcol align='left'>Mux Category</ttcol>
 
          <c>ecn-capable-rtp&nbsp;</c><c>ECN markup are enabled at the
-         RTP Session level&nbsp;</c>
+         RTP session level&nbsp;</c>
          <c>M&nbsp;</c><c>IDENTICAL&nbsp;</c>
          <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
          <c>nack ecn&nbsp;</c><c>This attribute enables ECN at the RTP
@@ -2812,7 +2831,8 @@
   <section title="group Attribute Analysis"
      anchor="SecgroupAnalysis">
      <t>
-       This section analyzes SDP &quot;group&quot; attribute semantics.
+       This section analyzes SDP &quot;group&quot; attribute semantics
+       <xref target="RFC5888"/>.
      </t>
      <section title="RFC5888 - SDP Grouping Framework">
        <t>
@@ -3016,12 +3036,16 @@
           <ttcol align='left'>Level</ttcol>
           <ttcol align='left'>Mux Category</ttcol>
 
-          <c>rsvp&nbsp;</c><c>Not Impacted&nbsp;</c>
-          <c>B</c><c>NORMAL&nbsp;</c>
+          <c>rsvp&nbsp;</c><c>rsvp attribute MUST be the one
+          that corresponds to the "m=" line chosen for
+          setting up the underlying transport flow&nbsp;</c>
+          <c>B</c><c>TRANSPORT&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
-          <c>nsis&nbsp;</c><c>Not Impacted&nbsp;</c>
-          <c>B</c><c>NORMAL&nbsp;</c>
+          <c>nsis&nbsp;</c><c>rsvp attribute MUST be the one
+          that corresponds to the "m=" line chosen for
+          setting up the underlying transport&nbsp;</c>
+          <c>B</c><c>TRANSPORT&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
         </texttable>
       </section>
@@ -3198,7 +3222,7 @@
                     transport protocols (e.g., "RTP/AVP") as
                     capabilities.</t>
                     <t>A set of potential configurations ("a=pcfg") provided
-                    by the offerer to indicate whcich combination of those
+                    by the offerer to indicate which combinations of those
                     capabilities can be used for the session and its 
                     associated media stream components. Potential
                     configurations are not ready for use until fully 
@@ -3242,7 +3266,7 @@
                 when negotiated. When multiplexing media descriptions with 
                 potential configurations specified, there MAY be a need 
                 for coordinating this selection between multiplexed media 
-                descriptions ensuring right multiplexing behavior.</t>
+                descriptions to ensure the right multiplexing behavior.</t>
                 <t> Although it is possible to analyze the various potential 
                 configurations in multiplexed media descriptions to find combinations 
                 that satisfy such constraints, it can quickly become complicated 
@@ -3277,7 +3301,7 @@
                     </list>
                   </t>  
                   <t> The above allows the answerer to easily find multiplexing compatible 
-                  combinations of potential configurations:- The answerer simply choses a 
+                  combinations of potential configurations: The answerer simply choses a 
                   potential configuration (number) that is present in all of the media 
                   descriptions with potential configurations in the bundle.</t> 
                   <t> Note that it is still possible for the offerer to provide additional 
@@ -3295,11 +3319,11 @@ t=0 0
 a=tcap:1 RTP/SAVPF
 a=tcap:2 RTP/SAVP
 a=group:BUNDLE audio video
-m= audio
+m=audio
 a=mid:audio
 a=pcfg:1 t=1 
 a=pcfg:2
-m= video
+m=video
 a=mid:video
 a=pcfg:1 t=1 
 a=pcfg:2 t=2
@@ -3322,11 +3346,11 @@ a=acap:1 a=rtcp-mux
 a=acap:2 a=crypto:1 AES_CM_128_HMAC_SHA1_80
   inline:EcGZiNWpFJhQXdspcl1ekcmVCNWpVLcfHAwJSoj|2^20|1:32
 a=group:BUNDLE audio video
-m= audio 49172 RTP/AVP 99
+m=audio 49172 RTP/AVP 99
 a=mid:audio
 a=pcfg:1 a=1
 a=pcfg:2
-m= video 560024 RTP/AVP 100
+m=video 560024 RTP/AVP 100
 a=mid:video
 a=pcfg:1 a=1 
 a=pcfg:2 a=2
@@ -3400,7 +3424,7 @@ a=pcfg:4 m=5 pt=5:101
                 </figure> 
             <t>In the example above, the potential configuration
             number "1" is repeated when referring to media and media
-            format capability used for the Payload Type 97. This
+            format capability used for the Payload Type 96. This
             implies that both the media capability 2 and 4 along
             with their media format capabilities MUST refer to the
             same codec configuration, as per the definition of
@@ -3415,7 +3439,7 @@ a=pcfg:4 m=5 pt=5:101
           have configuration numbers which cannot overlap with the potential configuration
           numbers <xref target="RFC6871"/>. Supported combinations of potential and 
           latent configurations are indicated by use of the "a=sescap" attribute, 
-          however use of this attribute is not recommended with multiplexed media, 
+          however use of this attribute is NOT RECOMMENDED with multiplexed media, 
           since it requires the use of unique configuration numbers across the SDP. 
           Taken together, this means there is no well-defined way to indicate supported 
           combinations of latent configurations, or combinations of latent and potential 
@@ -3697,8 +3721,8 @@ a=pcfg:4 m=5 pt=5:101
           <c>candidate&nbsp;</c><c>TRANSPORT&nbsp;</c>
           <c>ice-mismatch&nbsp;</c><c>NORMAL&nbsp;</c>
           <c>remote-candidates&nbsp;</c><c>TRANSPORT&nbsp;</c>
-          <c>SRTPAuthentication&nbsp;</c><c>NORMAL&nbsp;</c>
-          <c>SRTPROCTxRate&nbsp;</c><c>NORMAL&nbsp;</c>
+          <c>SRTPAuthentication&nbsp;</c><c>TBD&nbsp;</c>
+          <c>SRTPROCTxRate&nbsp;</c><c>TBD&nbsp;</c>
           <c>rtcp-rsize&nbsp;</c><c>IDENTICAL&nbsp;</c>
           <c>file-selector&nbsp;</c><c>NORMAL&nbsp;</c>
           <c>file-transfer-id&nbsp;</c><c>NORMAL&nbsp;</c>
@@ -3712,7 +3736,7 @@ a=pcfg:4 m=5 pt=5:101
           <c>rtcp-unicast&nbsp;</c><c>IDENTICAL&nbsp;</c>
           <c>pcfg&nbsp;</c><c>SPECIAL&nbsp;</c>
           <c>acfg&nbsp;</c><c>SPECIAL&nbsp;</c>
-          <c>zrtp-hash&nbsp;</c><c>NOT RECOMMENDED&nbsp;</c>
+          <c>zrtp-hash&nbsp;</c><c>TRANSPORT&nbsp;</c>
           <c>X-predecbufsize&nbsp;</c><c>NOT RECOMMENDED&nbsp;</c>
           <c>X-initpredecbufperiod&nbsp;</c><c>NOT RECOMMENDED&nbsp;</c>
           <c>X-initpostdecbufperiod&nbsp;</c><c>NOT RECOMMENDED&nbsp;</c>
@@ -3882,10 +3906,10 @@ a=pcfg:4 m=5 pt=5:101
         <texttable align="left">
           <ttcol align='left'>Value</ttcol>
           <ttcol align='left'>Mux Category</ttcol>
-          <c>callerid&nbsp;</c><c>NORMAL&nbsp;</c>
-          <c>uuie&nbsp;</c><c>NORMAL&nbsp;</c>
-          <c>dtmf&nbsp;</c><c>NORMAL&nbsp;</c>
-          <c>external&nbsp;</c><c>NORMAL&nbsp;</c>
+          <c>callerid&nbsp;</c><c>NOT RECOMMENDED&nbsp;</c>
+          <c>uuie&nbsp;</c><c>NOT RECOMMENDED&nbsp;</c>
+          <c>dtmf&nbsp;</c><c>NOT RECOMMENDEDL&nbsp;</c>
+          <c>external&nbsp;</c><c>NOT RECOMMENDED&nbsp;</c>
         </texttable>
       </section>
       <section title="Table: Semantics for the 'ssrc-group' SDP Attribute">
@@ -3944,8 +3968,8 @@ a=pcfg:4 m=5 pt=5:101
         <texttable align="left">
           <ttcol align='left'>QoS Mechanism</ttcol>
           <ttcol align='left'>Mux Category</ttcol>
-          <c>rsvp&nbsp;</c><c>NORMAL&nbsp;</c>
-          <c>nsis&nbsp;</c><c>NORMAL&nbsp;</c>
+          <c>rsvp&nbsp;</c><c>TRANSPORT&nbsp;</c>
+          <c>nsis&nbsp;</c><c>TRANSPORT&nbsp;</c>
         </texttable>
       </section>
       <section title="Table: SDP Capability Negotiation Option Tags">
