@@ -26,7 +26,7 @@
 <?rfc colonspace="yes" ?>
 <?rfc rfcedstyle="no" ?>
 <?rfc tocdepth="4"?>
-<rfc category="std" docName="draft-nandakumar-mmusic-proto-iana-registration-01"
+<rfc category="std" docName="draft-ietf-mmusic-proto-iana-registration-01"
      ipr="pre5378Trust200902">
   <front>
     <title abbrev="SDP Proto Registrations">IANA registrations of SDP 'proto'
@@ -47,10 +47,10 @@
       </address>
     </author>
 
-    <date day="1" month="February" year="2015" />
+    <date day="3" month="July" year="2015" />
     <area>RAI</area>
     <workgroup>MMUSIC</workgroup>
-    
+
     <abstract>
     <t>RTP provides end-to-end network transport functions suitable for
    	 applications transmitting real-time data such as audio, video or
@@ -64,7 +64,7 @@
      following new SDP transport protocol identifiers for transporting
      RTP Media over TCP: 'TCP/RTP/AVPF',  'TCP/RTP/SAVP',  'TCP/RTP/SAVPF',
      'TCP/DTLS/RTP/SAVP',  'TCP/DTLS/RTP/SAVPF',  'TCP/TLS/RTP/AVP',
-     'TCP/TLS/RTP/AVPF',  'TCP/TLS/RTP/SAVP', 'TCP/TLS/RTP/SAVPF'.</t>
+     'TCP/TLS/RTP/AVPF'.</t>
     </abstract>
   </front>
 
@@ -116,15 +116,6 @@
         TCP/TLS/RTP/AVPF: to describe RTP Media with RTCP-based
         Feedback <xref target="RFC5124"/> on top of TLS over TCP, as
         defined in <xref target="sec.tcp.tls.rtp.avpf"/>.
-      </t>
-      <t>
-        TCP/TLS/RTP/SAVP: to describe Secure RTP Media on top of TLS over TCP,
-        as defined in <xref target="sec.tcp.tls.rtp.savp"/>.
-      </t>
-      <t>
-        TCP/TLS/RTP/SAVPF: to describe Secure RTP Media with RTCP-based
-        Feedback <xref target="RFC5124"/> on top of TLS over TCP, as
-        defined in <xref target="sec.tcp.tls.rtp.savpf"/>.
       </t>
     </section>
 
@@ -193,8 +184,9 @@
         <t>
             <list style="symbols">
                 <t>
-                    RTP/SAVP on top of DTLS is realized according to the
-                    procedures defined in <xref target="RFC5764"/>; and
+                    RTP/SAVP using DTLS-based key establishment is realized 
+                    according to the procedures defined in 
+                    <xref target="RFC5764"/>; and
                 </t>
                 <t>
                     <xref target="RFC4571"/> framing is used to transport
@@ -209,8 +201,9 @@
         <t>
             <list style="symbols">
                 <t>
-                    RTP/SAVPF on top of DTLS is realized according to the procedures
-                    defined in <xref target="RFC5764"/>; and
+                    RTP/SAVPF using DTLS-based key establishment is realized 
+                    according to the procedures defined in 
+                    <xref target="RFC5764"/>; and
                 </t>
                 <t>
                     <xref target="RFC4571"/> framing is used to transport DTLS-SRTP
@@ -253,62 +246,14 @@
               </list>
           </t>
         </section>
-        <section title="TCP/TLS/RTP/SAVP Transport Realization"
-            anchor="sec.tcp.tls.rtp.savp">
-            <t>The TCP/TLS/RTP/SAVP is realized as described below:</t>
-            <t>
-                <list style="symbols">
-                    <t>
-                        <xref target="RFC4572"/> procedures are followed for setting up
-                        TLS association(s) between the peers. However, the cryptographic
-                        mechanism used to generate the certificate fingerprint presented in
-                        the SDP MUST be chosen from the SRTPProtectionProfiles as described
-                        in <xref target="RFC5764"/>; and
-                    </t>
-                    <t>
-                        RTP/SAVP packets are framed according to the procedures from
-                        <xref target="RFC4571"/>; and
-                    </t>
-                    <t>
-                        <xref target="RFC4571"/> framed RTP/SAVP packets are transported
-                        as Application data messages over the TLS association setup using
-                        the procedures from <xref target="RFC4572"/>.
-                    </t>
-                </list>
-            </t>
-        </section>
-        <section title="TCP/TLS/RTP/SAVPF Transport Realization"
-            anchor="sec.tcp.tls.rtp.savpf">
-            <t>The TCP/TLS/RTP/SAVPF is realized as described below:</t>
-            <t>
-                <list style="symbols">
-                    <t>
-                        <xref target="RFC4572"/> procedures are followed for setting up
-                        TLS association(s) between the peers. However, the cryptographic
-                        mechanism used to generate the certificate fingerprint presented in
-                        the SDP MUST be chosen from the SRTPProtectionProfiles as described
-                        in <xref target="RFC5764"/>; and
-                    </t>
-                    <t>
-                        RTP/SAVPF packets are framed according to the procedures from
-                        <xref target="RFC4571"/>; and
-                    </t>
-                    <t>
-                        <xref target="RFC4571"/> framed RTP/SAVPF packets are transported
-                        as Application data messages over the TLS association setup using
-                        the procedures from <xref target="RFC4572"/>.
-                    </t>
-                </list>
-            </t>
-        </section>
     </section>
     <section title="ICE Considerations" anchor="sec.ice.considerations">
         <t>
             When procedures from <xref target="RFC6544"/> are used to setup ICE
             <xref target="RFC5245"/> candidates for a TCP transport,
             the framing mechanism from <xref target="RFC4571"/>
-            is used for STUN  keep-alive packets as well, as defined in
-            section 3 of <xref target="RFC6544"/>.
+            is used for framing STUN packets (for keep-alives, consent checks),
+            as defined in section 3 of <xref target="RFC6544"/>.
         </t>
     </section>
     <section title="IANA Considerations">
@@ -316,24 +261,23 @@
           This specification describes the following new SDP transport protocol
           identifiers :'TCP/RTP/AVPF',  'TCP/RTP/SAVP',  'TCP/RTP/SAVPF',
           'TCP/DTLS/RTP/SAVP',  'TCP/DTLS/RTP/SAVPF',  'TCP/TLS/RTP/AVP',
-          'TCP/TLS/RTP/AVPF',  'TCP/TLS/RTP/SAVP', 'TCP/TLS/RTP/SAVPF' as
-          defined in the <xref target="sec.proto-identifiers"/>.
+          'TCP/TLS/RTP/AVPF', as defined in the <xref target="sec.proto-identifiers"/>.
           These proto values should be registered by the IANA under the:
         </t>
         <t>
           <list style="symbols">
-            <t> "proto" subregistery in the "Session Description Protocol (SDP) Parameters"
-                registry; and
+            <t> "proto" subregistry in the "Session Description Protocol (SDP)
+              Parameters" registry; and
             </t>
-            <t>"RTP Profile Names" registry subregistry on the
-                "Real-Time Transport Protocol (RTP) Parameters" registry.
+            <t>"RTP Profile Names" subregistry in the
+              "Real-Time Transport Protocol (RTP) Parameters" registry.
             </t>
            </list>
         </t>
         <t>
           Additionally the  following proto values described in
           <xref target="RFC5764"/> should be registered under the
-          "RTP Profile Names" subregistry under the
+          "RTP Profile Names" subregistry in the
           "Real-Time Transport Protocol (RTP) Parameters" registry:
           'UDP/TLS/RTP/SAVP' , 'DCCP/TLS/RTP/SAVP', 'UDP/TLS/RTP/SAVPF',
           'DCCP/TLS/RTP/SAVPF'.
@@ -354,8 +298,9 @@
 
     <section title="Acknowledgements">
       <t>
-        Author would like to thank Cullen Jennings, Alissa Cooper, Justin Uberti and
-        Christer Holmberg for early reviews and suggested improvements.
+        Author would like to thank Cullen Jennings, Alissa Cooper, Justin Uberti,
+         Mo Zanaty, Christer Holmberg, Jonathan Lennox for their reviews and
+         suggested improvements.
       </t>
     </section>
   </middle>
