@@ -1,0 +1,1461 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+
+<?rfc toc="yes"?>
+<?rfc symrefs="yes"?>
+<?rfc autobreaks="yes"?>
+<?rfc tocindent="yes"?>
+<?rfc compact="yes"?>
+<?rfc subcompact="no"?>
+
+<rfc ipr="pre5378Trust200902" docName="draft-ietf-mmusic-ice-sip-sdp-06" category="std">
+	<front>
+		<title abbrev="ICE SIP/SDP Usage">Using Interactive Connectivity Establishment (ICE) with Session&nbsp;Description Protocol (SDP) offer/answer and Session Initiation Protocol (SIP)</title>
+
+		<author initials="M." surname="Petit-Huguenin" fullname="Marc Petit-Huguenin">
+			<organization>Impedance Mismatch</organization>
+			<address>
+				<email>marc@petit-huguenin.org</email>
+			</address>
+		</author>
+
+		<author initials="A" surname="Keranen" fullname="Ari Keranen">
+			<organization>Ericsson</organization>
+
+			<address>
+				<postal>
+					<street/>
+					<city>Jorvas</city> <code>02420</code>
+					<country>Finland</country>
+				</postal>
+
+				<email>ari.keranen@ericsson.com</email>
+			</address>
+		</author>
+
+		<author initials="S." surname="Nandakumar" fullname="Suhas Nandakumar">
+			<organization>Cisco Systems</organization>
+
+			<address>
+				<postal>
+					<street>707 Tasman Dr</street>
+					<city>Milpitas</city> <code>95035</code>
+					<country>USA</country>
+				</postal>
+
+				<email>snandaku@cisco.com</email>
+			</address>
+		</author>
+
+		<date year="2015" />
+
+		<area>RAI</area>
+
+		<workgroup>MMUSIC</workgroup>
+
+		<abstract>
+			<t>This document describes how Interactive Connectivity Establishment (ICE) is used with Session Description Protocol (SDP) offer/answer and Session Initiation Protocol (SIP).</t>
+		</abstract>
+	</front>
+
+	<middle>
+		<section anchor="intro" title="Introduction">
+			<t>
+				This document describes how Interactive Connectivity Establishment (ICE) is used with Session Description Protocol (SDP) offer/answer <xref target="RFC3264"/> and Session Initiation Protocol (SIP).
+				The ICE specification <xref target="ICE-BIS"/> describes procedures that are common to all usages of ICE and this document gives the additional details needed to use ICE with SDP offer/answer and SIP.
+			</t>
+
+			<t>Note that ICE is not intended for NAT traversal for SIP, which is assumed to be provided via another mechanism <xref target="RFC5626"/>.</t>
+		</section>
+
+		<section title="Terminology">
+			<t> The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in RFC 2119 <xref target="RFC2119"/>.</t>
+
+			<t>This document uses the terms defined in <xref target="ICE-BIS" /> and the following:</t>
+
+			<t>
+				<list style="hanging">
+					<t hangText="Default Destination/Candidate:">
+						The default destination for a component of a media stream is the transport address that would be used by an agent that is not ICE aware.
+						A default candidate for a component is one whose transport address matches the default destination for that component.
+						For the RTP component, the default IP address is in the "c=" line of the SDP, and the port is in the "m=" line.
+						For the RTCP component, it is in the rtcp attribute when present, and when not present, the IP address is in the "c=" line and 1 plus the port is in the "m=" line.
+					</t>
+				</list>
+			</t>
+		</section>
+
+		<section title="Sending the Initial Offer">
+			<section anchor="sec-inuse" title="Choosing Default Candidates">
+				<t>
+					A candidate is said to be default if it would be the target of media from a non-ICE peer; that target is called the DEFAULT DESTINATION.
+					If the default candidates are not selected by the ICE algorithm when communicating with an ICE-aware peer, an updated offer/answer will be required after ICE processing completes in order to "fix up" the SDP so that the default destination for media matches the candidates selected by ICE.
+					If ICE happens to select the default candidates, no updated offer/answer is required.
+				</t>
+
+				<!-- TODO: always send updated offer? -->
+				<t>
+					An agent MUST choose a set of candidates, one for each component of each in-use media stream, to be default.
+					A media stream is in-use if it does not have a port of zero (which is used in RFC 3264 to reject a media stream).
+					Consequently, a media stream is in-use even if it is marked as a=inactive <xref target="RFC4566"/> or has a bandwidth value of zero.
+				</t>
+
+				<t>
+					It is RECOMMENDED that default candidates be chosen based on the likelihood of those candidates to work with the peer that is being contacted if ICE is not being used.
+					It is RECOMMENDED that the default candidates are the relayed candidates (if relayed candidates are available), server reflexive candidates (if server reflexive candidates are available), and finally host candidates.
+				</t>
+			</section>
+
+			<section anchor="sec-encoding" title="Encoding the SDP">
+				<t>The process of encoding the SDP is identical between full and lite implementations.</t>
+
+				<t>
+					The agent will include an "m=" line for each media stream it wishes to use.
+					The ordering of media streams in the SDP is relevant for ICE. ICE will perform its connectivity checks for the first "m=" line first, and consequently media will be able to flow for that stream first.
+					Agents SHOULD place their most important media stream, if there is one, first in the SDP.
+				</t>
+
+				<t>There will be a candidate attribute for each candidate for a particular media stream. <xref target="sec-grammar"/> provides detailed rules for constructing this attribute.</t>
+
+				<t>
+					STUN connectivity checks between agents are authenticated using the short-term credential mechanism defined for STUN <xref target="RFC5389"/>.
+					This mechanism relies on a username and password that are exchanged through protocol machinery between the client and server.
+					The username fragment and password are exchanged in the ice-ufrag and ice-pwd attributes, respectively.
+				</t>
+
+				<t>
+					If an agent is a lite implementation, it MUST include an "a=ice-lite" session-level attribute in its SDP to indicate this.
+					If an agent is a full implementation, it MUST NOT include this attribute.
+				</t>
+
+				<t>
+					The default candidates are added to the SDP as the default destination for media.
+					For streams based on RTP, this is done by placing the IP address and port of the RTP candidate into the "c=" and "m=" lines, respectively.
+					If the agent is utilizing RTCP, it MUST encode the RTCP candidate using the a=rtcp attribute as defined in <xref target="RFC3605">RFC 3605</xref>.
+					If RTCP is not in use, the agent MUST signal that using b=RS:0 and b=RR:0 as defined in <xref target="RFC3556">RFC 3556</xref>.
+				</t>
+
+				<t>The transport addresses that will be the default destination for media when communicating with non-ICE peers MUST also be present as candidates in one or more a=candidate lines.</t>
+
+				<t>
+					ICE provides for extensibility by allowing an offer or answer to contain a series of tokens that identify the ICE extensions used by that agent.
+					If an agent supports an ICE extension, it MUST include the token defined for that extension in the ice-options attribute.
+				</t>
+
+				<t>The following is an example SDP message that includes ICE attributes (lines folded for readability):</t>
+
+				<figure>
+					<artwork>
+<![CDATA[v=0
+o=jdoe 2890844526 2890842807 IN IP4 10.0.1.1
+s=
+c=IN IP4 192.0.2.3
+t=0 0
+a=ice-pwd:asd88fgpdd777uzjYhagZg
+a=ice-ufrag:8hhY
+m=audio 45664 RTP/AVP 0
+b=RS:0
+b=RR:0
+a=rtpmap:0 PCMU/8000
+a=candidate:1 1 UDP 2130706431 10.0.1.1 8998 typ host
+a=candidate:2 1 UDP 1694498815 192.0.2.3 45664 typ srflx raddr
+ 10.0.1.1 rport 8998]]>
+					</artwork>
+				</figure>
+
+				<t>
+					Once an agent has sent its offer or its answer, that agent MUST be prepared to receive both STUN and media packets on each candidate.
+					As discussed in Section 10.1 of <xref target="ICE-BIS" />, media packets can be sent to a candidate prior to its appearance as the default destination for media in an offer or answer.
+				</t>
+			</section>
+		</section>
+
+		<section title="Receiving the Initial Offer">
+			<section title="Choosing Default Candidates">
+				<t>The process for selecting default candidates at the answerer is identical to the process followed by the offerer, as described in <xref target="sec-inuse"/> for full implementations and <!-- sec-offer-lite --> 4.2 of <xref target="ICE-BIS" /> for lite implementations.</t>
+			</section>
+
+			<section anchor="sec-verify" title="Verifying ICE Support">
+				<t>
+					The agent will proceed with the ICE procedures defined in <xref target="ICE-BIS"/> and this specification if, for each media stream in the SDP it received, the default destination for each component of that media stream appears in a candidate attribute.
+					For example, in the case of RTP, the IP address and port in the "c=" and "m=" lines, respectively, appear in a candidate attribute and the value in the rtcp attribute appears in a candidate attribute.
+				</t>
+
+				<t>
+					If this condition is not met, the agent MUST process the SDP based on normal RFC 3264 procedures, without using any of the ICE mechanisms described in the remainder of this specification with the following exceptions:</t>
+
+				<t>
+					<list style="numbers">
+						<t> The agent MUST follow the rules of section <!-- keepalive --> 10 of <xref target="ICE-BIS" />, which describe keepalive procedures for all agents.</t>
+
+						<t>If the agent is not proceeding with ICE because there were a=candidate attributes, but none that matched the default destination of the media stream, the agent MUST include an a=ice-mismatch attribute in its answer.</t>
+
+						<t>
+							If the default candidates were relayed candidates learned through a TURN server, the agent MUST create permissions in the TURN server for the IP addresses learned from its peer in the SDP it just received.
+							If this is not done, initial packets in the media stream from the peer may be lost.
+						</t>
+					</list>
+				</t>
+			</section>
+
+			<section title="Determining Role">
+			  <t>  In unusual cases, described in <xref target="sec-glare"/>, it is possible for both agents to mistakenly believe they are controlled or controlling. To resolve this, each agent MUST select a random number, called the tie-breaker, uniformly distributed between 0 and (2**64) - 1 (that is, a 64-bit positive integer). This number is used in connectivity checks to detect and repair this case, as described in <!-- ICE-CONTROLLED and ICE-CONTROLLING --> Section 7.1.2.2 of <xref target="ICE-BIS"/>. </t>
+			</section>
+		</section>
+
+		<section title="Receipt of the Initial Answer">
+			<t>
+				When ICE is used with SIP, forking may result in a single offer generating a multiplicity of answers.
+				In that case, ICE proceeds completely in parallel and independently for each answer, treating the combination of its offer and each answer as an independent offer/answer exchange, with its own set of pairs, check lists, states, and so on.
+				The only case in which processing of one pair impacts another is freeing of candidates, discussed below in <xref target="sec-freeing"/>.
+			</t>
+
+			<section anchor="sec-overify" title="Verifying ICE Support">
+				<t>The logic at the offerer is identical to that of the answerer as described in section 5.1 <!--sec-verify--> of <xref target="ICE-BIS" />, with the exception that an offerer would not ever generate a=ice-mismatch attributes in an SDP.</t>
+
+				<t>
+					In some cases, the answer may omit a=candidate attributes for the media streams, and instead include an a=ice-mismatch attribute for one or more of the media streams in the SDP.
+					This signals to the offerer that the answerer supports ICE, but that ICE processing was not used for the session because a signaling intermediary modified the default destination for media components without modifying the corresponding candidate attributes.
+					See <xref target="sec-alg-sip"/> for a discussion of cases where this can happen.
+					This specification provides no guidance on how an agent should proceed in such a failure case.
+				</t>
+			</section>
+		</section>
+
+		<section anchor="sec-connectivity_check" title="Performing Connectivity Checks">
+		  <t> The possibility for role conflicts described in <!-- "Detecting and Repairing Role Conflicts" --> Section 7.2.1.1 of <xref target="ICE-BIS"/> applies to this usage and hence all full agents MUST implement the role conflict repairing mechanism. Also both full and lite agents MUST utilize the ICE-CONTROLLED and ICE-CONTROLLING attributes as described in <!-- ICE-CONTROLLED and ICE-CONTROLLING --> Section 7.1.2.2 of <xref target="ICE-BIS"/>. </t>
+		</section>
+
+		<section anchor="sec-conclude" title="Concluding ICE">
+			<t>Once all of the media streams are completed, the controlling endpoint sends an updated offer if the candidates in the "m=" and "c=" lines for the media stream (called the DEFAULT CANDIDATES) don't match ICE's SELECTED CANDIDATES.</t>
+
+			<!-- TODO: send updated offer always? -->
+
+			<section title="Procedures for Full Implementations">
+				<section title="Updating states">
+					<t>
+						Once the state of each check list is Completed, If an agent is controlling, it examines the highest-priority nominated candidate pair for each component of each media stream.
+						If any of those candidate pairs differ from the default candidate pairs in the most recent offer/answer exchange, the controlling agent MUST generate an updated offer as described in <xref target="sec-subsequent"/>.
+					</t>
+				</section>
+			</section>
+
+			<section anchor="sec-freeing" title="Freeing Candidates">
+				<section title="Full Implementation Procedures">
+					<t>
+						When ICE is used with SIP, and an offer is forked to multiple recipients, ICE proceeds in parallel and independently with each answerer, all using the same local candidates.
+						Once ICE processing has reached the Completed state for all peers for media streams using those candidates, the agent SHOULD wait an additional three seconds, and then it MAY cease responding to checks or generating triggered checks on that candidate.
+						It MAY free the candidate at that time.
+						Freeing of server reflexive candidates is never explicit; it happens by lack of a keepalive. The three-second delay handles cases when aggressive nomination is used, and the selected pairs can quickly change after ICE has completed.
+					</t>
+				</section>
+			</section>
+		</section>
+
+		<section anchor="sec-grammar" title="Grammar">
+			<t>This specification defines eight new SDP attributes -- the "candidate", "remote-candidates", "ice-lite", "ice-mismatch", "ice-ufrag", "ice-pwd", "ice-pacing", and "ice-options" attributes.</t>
+
+			<section title="&quot;candidate&quot; Attribute">
+				<t>The candidate attribute is a media-level attribute only. It contains a transport address for a candidate that can be used for connectivity checks.</t>
+
+				<t>The syntax of this attribute is defined using Augmented BNF as defined in <xref target="RFC5234"/>:</t>
+
+				<figure>
+					<artwork>
+<![CDATA[candidate-attribute   = "candidate" ":" foundation SP component-id SP
+                        transport SP
+                        priority SP
+                        connection-address SP     ;from RFC 4566
+                        port         ;port from RFC 4566
+                        SP cand-type
+                        [SP rel-addr]
+                        [SP rel-port]
+                        *(SP extension-att-name SP
+                             extension-att-value)
+
+foundation            = 1*32ice-char
+component-id          = 1*5DIGIT
+transport             = "UDP" / transport-extension
+transport-extension   = token              ; from RFC 3261
+priority              = 1*10DIGIT
+cand-type             = "typ" SP candidate-types
+candidate-types       = "host" / "srflx" / "prflx" / "relay" / token
+rel-addr              = "raddr" SP connection-address
+rel-port              = "rport" SP port
+extension-att-name    = token
+extension-att-value   = *VCHAR
+ice-char              = ALPHA / DIGIT / "+" / "/"]]>
+					</artwork>
+				</figure>
+
+				<t>This grammar encodes the primary information about a candidate: its IP address, port and transport protocol, and its properties: the foundation, component ID, priority, type, and related transport address:</t>
+
+					<t>
+						<list style="hanging">
+							<t hangText="&lt;connection-address&gt;:">
+								is taken from RFC 4566 <xref target="RFC4566"/>. It is the IP address of the candidate, allowing for IPv4 addresses, IPv6 addresses, and fully qualified domain names (FQDNs).
+								When parsing this field, an agent can differentiate an IPv4 address and an IPv6 address by presence of a colon in its value -- the presence of a colon indicates IPv6. An agent MUST ignore candidate lines that include candidates with IP address versions that are not supported or recognized.
+								An IP address SHOULD be used, but an FQDN MAY be used in place of an IP address.
+								In that case, when receiving an offer or answer containing an FQDN in an a=candidate attribute, the FQDN is looked up in the DNS first using an AAAA record (assuming the agent supports IPv6), and if no result is found or the agent only supports IPv4, using an A.
+								If the DNS query returns more than one IP address, one is chosen, and then used for the remainder of ICE processing.
+							</t>
+
+							<t hangText="&lt;port&gt;:">
+								is also taken from RFC 4566 <xref target="RFC4566"/>.
+								It is the port of the candidate.
+							</t>
+
+							<t hangText="&lt;transport&gt;:">
+								indicates the transport protocol for the candidate.
+								This specification only defines UDP.
+								However, extensibility is provided to allow for future transport protocols to be used with ICE, such as TCP or the Datagram Congestion Control Protocol (DCCP) <xref target="RFC4340"/>.
+							</t>
+
+							<t hangText="&lt;foundation&gt;:">
+								is composed of 1 to 32 &lt;ice-char&gt;s.
+								It is an identifier that is equivalent for two candidates that are of the same type, share the same base, and come from the same STUN server.
+								The foundation is used to optimize ICE performance in the Frozen algorithm.
+							</t>
+
+							<t hangText="&lt;component-id&gt;:">
+								is a positive integer between 1 and 256 that identifies the specific component of the media stream for which this is a candidate.
+								It MUST start at 1 and MUST increment by 1 for each component of a particular candidate.
+								For media streams based on RTP, candidates for the actual RTP media MUST have a component ID of 1, and candidates for RTCP MUST have a component ID of 2.
+								See section 12 in <xref target="ICE-BIS" /> for additional discussion on extending ICE to new media streams.
+							</t>
+
+							<t hangText="&lt;priority&gt;:">
+								is a positive integer between 1 and (2**31 - 1).
+							</t>
+
+							<t hangText="&lt;cand-type&gt;:">
+								encodes the type of candidate.
+								This specification defines the values "host", "srflx", "prflx", and "relay" for host, server reflexive, peer reflexive, and relayed candidates, respectively.
+								The set of candidate types is extensible for the future.
+							</t>
+
+							<t hangText="&lt;rel-addr&gt; and &lt;rel-port&gt;:">
+								convey transport addresses related to the candidate, useful for diagnostics and other purposes.
+								&lt;rel-addr&gt; and &lt;rel-port&gt; MUST be present for server reflexive, peer reflexive, and relayed candidates.
+								If a candidate is server or peer reflexive, &lt;rel-addr&gt; and &lt;rel-port&gt; are equal to the base for that server or peer reflexive candidate.
+								If the candidate is relayed, &lt;rel-addr&gt; and &lt;rel-port&gt; is equal to the mapped address in the Allocate response that provided the client with that relayed candidate (see section <!--sec-translation--> Appendix B.3 of <xref target="ICE-BIS" /> for a discussion of its purpose).
+								If the candidate is a host candidate, &lt;rel-addr&gt; and &lt;rel-port&gt; MUST be omitted.
+							</t>
+
+							<t> In some cases, e.g., for privacy reasons, an agent may not want to reveal the related address and port. In this case the address MUST be set to "0.0.0.0" (for IPv4 candidates) or "::" (for IPv6 candidates) and the port to zero. </t>
+					</list>
+				</t>
+
+				<t>
+					The candidate attribute can itself be extended.
+					The grammar allows for new name/value pairs to be added at the end of the attribute.
+					An implementation MUST ignore any name/value pairs it doesn't understand.
+				</t>
+			</section>
+
+			<section title="&quot;remote-candidates&quot; Attribute">
+				<t>
+					The syntax of the "remote-candidates" attribute is defined using Augmented BNF as defined in <xref target="RFC5234">RFC 5234</xref>.
+					The remote-candidates attribute is a media-level attribute only.
+				</t>
+
+				<figure>
+					<artwork>
+<![CDATA[remote-candidate-att = "remote-candidates" ":" remote-candidate
+                         0*(SP remote-candidate)
+remote-candidate = component-ID SP connection-address SP port]]>
+					</artwork>
+				</figure>
+
+				<t>
+					The attribute contains a connection-address and port for each component.
+					The ordering of components is irrelevant.
+					However, a value MUST be present for each component of a media stream.
+					This attribute MUST be included in an offer by a controlling agent for a media stream that is Completed, and MUST NOT be included in any other case.
+				</t>
+			</section>
+
+			<section title="&quot;ice-lite&quot; and &quot;ice-mismatch&quot; Attributes">
+				<t>The syntax of the "ice-lite" and "ice-mismatch" attributes, both of which are flags, is:</t>
+
+				<figure>
+					<artwork>
+<![CDATA[ice-lite               = "ice-lite"
+ice-mismatch           = "ice-mismatch"]]>
+					</artwork>
+				</figure>
+
+				<t>
+					"ice-lite" is a session-level attribute only, and indicates that an agent is a lite implementation.
+					"ice-mismatch" is a media-level attribute only, and when present in an answer, indicates that the offer arrived with a default destination for a media component that didn't have a corresponding candidate attribute.
+				</t>
+			</section>
+
+			<section title="&quot;ice-ufrag&quot; and &quot;ice-pwd&quot; Attributes">
+				<t>The "ice-ufrag" and "ice-pwd" attributes convey the username fragment and password used by ICE for message integrity. Their syntax is:</t>
+
+				<figure>
+					<artwork>
+<![CDATA[ice-pwd-att           = "ice-pwd" ":" password
+ice-ufrag-att         = "ice-ufrag" ":" ufrag
+password              = 22*256ice-char
+ufrag                 = 4*256ice-char]]>
+					</artwork>
+				</figure>
+
+				<t>
+					The "ice-pwd" and "ice-ufrag" attributes can appear at either the session-level or media-level.
+					When present in both, the value in the media-level takes precedence.
+					Thus, the value at the session-level is effectively a default that applies to all media streams, unless overridden by a media-level value.
+					Whether present at the session or media-level, there MUST be an ice-pwd and ice-ufrag attribute for each media stream.
+					If two media streams have identical ice-ufrag's, they MUST have identical ice-pwd's.
+				</t>
+
+				<t>
+					The ice-ufrag and ice-pwd attributes MUST be chosen randomly at the beginning of a session.
+					The ice-ufrag attribute MUST contain at least 24 bits of randomness, and the ice-pwd attribute MUST contain at least 128 bits of randomness.
+					This means that the ice-ufrag attribute will be at least 4 characters long, and the ice-pwd at least 22 characters long, since the grammar for these attributes allows for 6 bits of randomness per character.
+					The attributes MAY be longer than 4 and 22 characters, respectively, of course, up to 256 characters.
+					The upper limit allows for buffer sizing in implementations.
+					Its large upper limit allows for increased amounts of randomness to be added over time.
+					For compatibility with the 512 character limitation for the STUN username attribute value and for bandwidth conservation considerations, the ice-ufrag attribute MUST NOT be longer than 32 characters when sending, but an implementation  MUST accept up to 256 characters when receiving.
+				</t>
+			</section>
+
+			<section title="&quot;ice-pacing&quot; Attribute">
+				<t>The "ice-pacing" attribute indicates the desired connectivity check pacing, in milliseconds, for this agent (see Section 13 of <xref target="ICE-BIS"/>). The syntax is:</t>
+
+				<figure>
+					<artwork>
+<![CDATA[ice-pacing-att            = "ice-pacing" ":" pacing-value
+pacing-value              = 1*10DIGIT]]>
+					</artwork>
+				</figure>
+
+			</section>
+
+
+			<section anchor="sec-ice-options" title="&quot;ice-options&quot; Attribute">
+				<t>
+					The "ice-options" attribute is a session- and media-level attribute.
+					It contains a series of tokens that identify the options supported by the agent.
+					Its grammar is:
+				</t>
+
+				<figure>
+					<artwork>
+<![CDATA[ice-options           = "ice-options" ":" ice-option-tag
+                          0*(SP ice-option-tag)
+ice-option-tag        = 1*ice-char]]>
+					</artwork>
+				</figure>
+
+				<t>The existence of an ice-option can indicate that a certain extension is supported by the agent and will be used or that the extension is used only if the other agent is willing to use it too. In order to avoid ambiguity, documents defining new options must indicate which case applies to the defined extensions. </t>
+			</section>
+		</section> <!-- end grammar -->
+
+		<section anchor="sec-subsequent" title="Subsequent Offer/Answer Exchanges">
+			<t>
+				Either agent MAY generate a subsequent offer at any time allowed by RFC 3264 <xref target="RFC3264"/>.
+				The rules in <xref target="sec-conclude"/> will cause the controlling agent to send an updated offer at the conclusion of ICE processing when ICE has selected different candidate pairs from the default pairs.
+				This section defines rules for construction of subsequent offers and answers.
+			</t>
+
+			<t>Should a subsequent offer be rejected, ICE processing continues as if the subsequent offer had never been made.</t>
+
+			<section anchor="sec-suboffer" title="Generating the Offer">
+				<section title="Procedures for All Implementations">
+					<section anchor="sec-suboffer-restarts" title="ICE Restarts">
+						<t>
+							An agent MAY restart ICE processing for an existing media stream.
+							An ICE restart, as the name implies, will cause all previous states of ICE processing to be flushed and checks to start anew.
+							The only difference between an ICE restart and a brand new media session is that, during the restart, media can continue to be sent to the previously validated pair.
+						</t>
+
+						<t>An agent MUST restart ICE for a media stream if:</t>
+
+						<t>
+							<list style="symbols">
+								<t>
+									The offer is being generated for the purposes of changing the target of the media stream.
+									In other words, if an agent wants to generate an updated offer that, had ICE not been in use, would result in a new value for the destination of a media component.
+								</t>
+
+								<t>
+									An agent is changing its implementation level.
+									This typically only happens in third party call control use cases, where the entity performing the signaling is not the entity receiving the media, and it has changed the target of media mid-session to another entity that has a different ICE implementation.
+								</t>
+							</list>
+						</t>
+
+						<t>
+							These rules imply that setting the IP address in the "c=" line to 0.0.0.0 will cause an ICE restart.
+							Consequently, ICE implementations MUST NOT utilize this mechanism for call hold, and instead MUST use a=inactive and a=sendonly as described in <xref target="RFC3264"/>.
+						</t>
+
+						<t>
+							To restart ICE, an agent MUST change both the ice-pwd and the ice-ufrag for the media stream in an offer.
+							Note that it is permissible to use a session-level attribute in one offer, but to provide the same ice-pwd or ice-ufrag as a media-level attribute in a subsequent offer.
+							This is not a change in password, just a change in its representation, and does not cause an ICE restart.
+						</t>
+
+						<t>
+							An agent sets the rest of the fields in the SDP for this media stream as it would in an initial offer of this media stream (see <xref target="sec-encoding"/>).
+							Consequently, the set of candidates MAY include some, none, or all of the previous candidates for that stream and MAY include a totally new set of candidates.
+							<!-- TODO: gathered as described in <xref target="sec-gathering"/>. -->
+						</t>
+					</section>
+
+					<section title="Removing a Media Stream">
+						<t>If an agent removes a media stream by setting its port to zero, it MUST NOT include any candidate attributes for that media stream and SHOULD NOT include any other ICE-related attributes defined in <xref target="sec-grammar"/> for that media stream.</t>
+					</section>
+
+					<section title="Adding a Media Stream">
+						<t>
+							If an agent wishes to add a new media stream, it sets the fields in the SDP for this media stream as if this was an initial offer for that media stream (see <xref target="sec-encoding"/>).
+							This will cause ICE processing to begin for this media stream.
+						</t>
+					</section>
+				</section>
+
+				<section title="Procedures for Full Implementations">
+					<t>This section describes additional procedures for full implementations, covering existing media streams.</t>
+
+					<t>
+						The username fragments, password, and implementation level MUST remain the same as used previously.
+						If an agent needs to change one of these, it MUST restart ICE for that media stream.
+					</t>
+
+					<t>Additional behavior depends on the state ICE processing for that media stream.</t>
+
+					<section anchor="sec-exist-run" title="Existing Media Streams with ICE Running">
+						<t>If an agent generates an updated offer including a media stream that was previously established, and for which ICE checks are in the Running state, the agent follows the procedures defined here.</t>
+
+						<t>
+							An agent MUST include candidate attributes for all local candidates it had signaled previously for that media stream.
+							The properties of that candidate as signaled in SDP -- the priority, foundation, type, and related transport address -- SHOULD remain the same.
+							The IP address, port, and transport protocol, which fundamentally identify that candidate, MUST remain the same (if they change, it would be a new candidate).
+							The component ID MUST remain the same.
+							The agent MAY include additional candidates it did not offer previously, but which it has gathered since the last offer/answer exchange, including peer reflexive candidates.
+						</t>
+
+						<t>
+							The agent MAY change the default destination for media.
+							As with initial offers, there MUST be a set of candidate attributes in the offer matching this default destination.
+						</t>
+					</section>
+
+					<section anchor="sec-exist-comp" title="Existing Media Streams with ICE Completed">
+						<t>If an agent generates an updated offer including a media stream that was previously established, and for which ICE checks are in the Completed state, the agent follows the procedures defined here.</t>
+
+						<t>
+							The default destination for media (i.e., the values of the IP addresses and ports in the "m=" and "c=" lines used for that media stream) MUST be the local candidate from the highest-priority nominated pair in the valid list for each component.
+							This "fixes" the default destination for media to equal the destination ICE has selected for media.
+						</t>
+
+						<t>The agent MUST include candidate attributes for candidates matching the default destination for each component of the media stream, and MUST NOT include any other candidates.</t>
+
+						<t>
+							In addition, if the agent is controlling, it MUST include the a=remote-candidates attribute for each media stream whose check list is in the Completed state.
+							The attribute contains the remote candidates from the highest-priority nominated pair in the valid list for each component of that media stream.
+							It is needed to avoid a race condition whereby the controlling agent chooses its pairs, but the updated offer beats the connectivity checks to the controlled agent, which doesn't even know these pairs are valid, let alone selected. See <xref target="sec-why-remote"/> for elaboration on this race condition.
+						</t>
+					</section>
+				</section>
+
+				<section anchor="sec-sub-lite" title="Procedures for Lite Implementations">
+					<section title="Existing Media Streams with ICE Running">
+						<t>This section describes procedures for lite implementations for existing streams for which ICE is running.</t>
+
+						<t>
+							A lite implementation MUST include all of its candidates for each component of each media stream in an a=candidate attribute in any subsequent offer.
+							These candidates are formed identically to the procedures for initial offers, as described in section <!--sec-offer-lite--> 4.2 of <xref target="ICE-BIS" />.
+						</t>
+
+						<t>
+							A lite implementation MUST NOT add additional host candidates in a subsequent offer.
+							If an agent needs to offer additional candidates, it MUST restart ICE.
+						</t>
+
+						<t>
+							The username fragments, password, and implementation level MUST remain the same as used previously.
+							If an agent needs to change one of these, it MUST restart ICE for that media stream.
+						</t>
+					</section>
+
+					<section title="Existing Media Streams with ICE Completed">
+						<t>
+							If ICE has completed for a media stream, the default destination for that media stream MUST be set to the remote candidate of the candidate pair for that component in the valid list.
+							For a lite implementation, there is always just a single candidate pair in the valid list for each component of a media stream.
+							Additionally, the agent MUST include a candidate attribute for each default destination.
+						</t>
+
+						<t>
+							Additionally, if the agent is controlling (which only happens when both agents are lite), the agent MUST include the a=remote-candidates attribute for each media stream.
+							The attribute contains the remote candidates from the candidate pairs in the valid list (one pair for each component of each media stream).
+						</t>
+					</section> <!-- ICE complete -->
+				</section> <!-- Lite Implementations -->
+			</section> <!-- end constructing of offer -->
+
+			<section title="Receiving the Offer and Generating an Answer">
+				<section title="Procedures for All Implementations">
+					<t>
+						When receiving a subsequent offer within an existing session, an agent MUST reapply the verification procedures in <xref target="sec-verify"/> without regard to the results of verification from any previous offer/answer exchanges.
+						Indeed, it is possible that a previous offer/answer exchange resulted in ICE not being used, but it is used as a consequence of a subsequent exchange.
+					</t>
+
+					<section title="Detecting ICE Restart">
+						<t>
+							If the offer contained a change in the a=ice-ufrag or a=ice-pwd attributes compared to the previous SDP from the peer, it indicates that ICE is restarting for this media stream.
+							If all media streams are restarting, then ICE is restarting overall.
+						</t>
+
+						<t>If ICE is restarting for a media stream:</t>
+
+						<t>
+							<list style="symbols">
+								<t>The agent MUST change the a=ice-ufrag and a=ice-pwd attributes in the answer.</t>
+
+								<t>The agent MAY change its implementation level in the answer.</t>
+							</list>
+						</t>
+
+						<t>
+							An agent sets the rest of the fields in the SDP for this media stream as it would in an initial answer to this media stream (see <xref target="sec-encoding"/>).
+							Consequently, the set of candidates MAY include some, none, or all of the previous candidates for that stream and MAY include a totally new set of candidates.
+							<!-- TODO: gathered as described in <xref target="sec-gathering"/>. -->
+						</t>
+					</section>
+
+					<section title="New Media Stream">
+						<t>
+							If the offer contains a new media stream, the agent sets the fields in the answer as if it had received an initial offer containing that media stream (see <xref target="sec-encoding"/>).
+							This will cause ICE processing to begin for this media stream.
+						</t>
+					</section>
+
+					<section title="Removed Media Stream">
+						<t>If an offer contains a media stream whose port is zero, the agent MUST NOT include any candidate attributes for that media stream in its answer and SHOULD NOT include any other ICE-related attributes defined in <xref target="sec-grammar"/> for that media stream.</t>
+					</section>
+				</section> <!-- Procedures for all -->
+
+				<section title="Procedures for Full Implementations">
+					<t>
+						Unless the agent has detected an ICE restart from the offer, the username fragments, password, and implementation level MUST remain the same as used previously.
+						If an agent needs to change one of these it MUST restart ICE for that media stream by generating an offer; ICE cannot be restarted in an answer.
+					</t>
+
+					<t>Additional behaviors depend on the state of ICE processing for that media stream.</t>
+
+					<section title="Existing Media Streams with ICE Running and no remote-candidates">
+						<t>If ICE is running for a media stream, and the offer for that media stream lacked the remote-candidates attribute, the rules for construction of the answer are identical to those for the offerer as described in <xref target="sec-exist-run"/>.</t>
+					</section>
+
+					<section title="Existing Media Streams with ICE Completed and no remote-candidates">
+						<t>If ICE is Completed for a media stream, and the offer for that media stream lacked the remote-candidates attribute, the rules for construction of the answer are identical to those for the offerer as described in <xref target="sec-exist-comp"/>, except that the answerer MUST NOT include the a=remote-candidates attribute in the answer.</t>
+					</section>
+
+					<section anchor="sec-full-existing" title="Existing Media Streams and remote-candidates">
+						<t>
+							A controlled agent will receive an offer with the a=remote-candidates attribute for a media stream when its peer has concluded ICE processing for that media stream.
+							This attribute is present in the offer to deal with a race condition between the receipt of the offer, and the receipt of the Binding response that tells the answerer the candidate that will be selected by ICE.
+							See <xref target="sec-why-remote"/> for an explanation of this race condition.
+							Consequently, processing of an offer with this attribute depends on the winner of the race.
+						</t>
+
+						<t>The agent forms a candidate pair for each component of the media stream by:
+							<list style="symbols">
+								<t>Setting the remote candidate equal to the offerer's default destination for that component (e.g., the contents of the "m=" and "c=" lines for RTP, and the a=rtcp attribute for RTCP)</t>
+								<t>Setting the local candidate equal to the transport address for that same component in the a=remote-candidates attribute in the offer.</t>
+							</list>
+							The agent then sees if each of these candidate pairs is present in the valid list.
+							If a particular pair is not in the valid list, the check has "lost" the race. Call such a pair a "losing pair".
+						</t>
+
+						<t>
+							The agent finds all the pairs in the check list whose remote candidates equal the remote candidate in the losing pair:
+							<list style="symbols">
+								<t>
+									If none of the pairs are In-Progress, and at least one is Failed, it is most likely that a network failure, such as a network partition or serious packet loss, has occurred.
+									The agent SHOULD generate an answer for this media stream as if the remote-candidates attribute had not been present, and then restart ICE for this stream.
+								</t>
+
+								<t>If at least one of the pairs is In-Progress, the agent SHOULD wait for those checks to complete, and as each completes, redo the processing in this section until there are no losing pairs.</t>
+							</list>
+						</t>
+
+						<t>
+							Once there are no losing pairs, the agent can generate the answer.
+							It MUST set the default destination for media to the candidates in the remote-candidates attribute from the offer (each of which will now be the local candidate of a candidate pair in the valid list).
+							It MUST include a candidate attribute in the answer for each candidate in the remote-candidates attribute in the offer.
+						</t>
+					</section>
+				</section> <!-- end procedures for Full -->
+
+				<section anchor="sec-this-sucks" title="Procedures for Lite Implementations">
+					<t>If the received offer contains the remote-candidates attribute for a media stream, the agent forms a candidate pair for each component of the media stream by:
+						<list style="symbols">
+							<t>Setting the remote candidate equal to the offerer's default destination for that component (e.g., the contents of the "m=" and "c=" lines for RTP, and the a=rtcp attribute for RTCP).</t>
+							<t>Setting the local candidate equal to the transport address for that same component in the a=remote-candidates attribute in the offer.</t>
+						</list>
+						It then places those candidates into the Valid list for the media stream. The state of ICE processing for that media stream is set to Completed.
+					</t>
+
+					<t>
+						Furthermore, if the agent believed it was controlling, but the offer contained the remote-candidates attribute, both agents believe they are controlling.
+						In this case, both would have sent updated offers around the same time.
+						However, the signaling protocol carrying the offer/answer exchanges will have resolved this glare condition, so that one agent is always the 'winner' by having its offer received before its peer has sent an offer.
+						The winner takes the role of controlled, so that the loser (the answerer under consideration in this section) MUST change its role to controlled.
+						Consequently, if the agent was going to send an updated offer since, based on the rules in section <!--sec-lite-conc2--> 8.2 of <xref target="ICE-BIS" />, it was controlling, it no longer needs to.
+					</t>
+
+					<t>Besides the potential role change, change in the Valid list, and state changes, the construction of the answer is performed identically to the construction of an offer as described in <xref target="sec-sub-lite"/>.</t>
+				</section> <!-- lite offer processing -->
+			</section> <!-- end receipt of offer -->
+
+			<section anchor="sec-answer-subsequent" title="Receiving the Answer for a Subsequent Offer">
+				<t>
+					Some deployments of ICE include e.g. SDP-Modifying Signaling-only <xref target="RFC7092">Back-to-Back User Agents (B2BUAs)</xref> that modify the SDP body during the subsequent offer/answer exchange.
+					With the B2BUA being ICE-unaware a subsequent answer might be manipulated and might not include ICE candidates although the initial answer did.
+				</t>
+
+				<t>
+					An example of a situation where such an "unexpected" answer might be experienced appears when such a B2BUA introduces a media server during call hold using 3rd party call-control procedures.
+					Omitting further details how this is done this could result in an answer being received at the holding UA that was constructed by the B2BUA.
+					With the B2BUA being ICE-unaware that answer would not include ICE candidates.
+				</t>
+
+				<t>Receiving an answer without ICE attributes in this situation might be unexpected, but would not necessarily impair the user experience.</t>
+
+				<t>In addition to procedures for the expected answer, the following sections advice on how to recover from the unexpected situation.</t>
+
+				<section title="Procedures for All Implementations">
+					<t>When receiving an answer within an existing session for a subsequent offer as specified in <xref target="sec-exist-comp" />, an agent MUST verify ICE support as specified in <xref target="sec-overify" />.</t>
+
+					<section title="ICE Restarts">
+						<t>If ICE support is indicated in the SDP answer, the agent MUST perform ICE restart procedures as specified in <xref target="sec-updating" />.</t>
+
+						<t>
+							If ICE support is no longer indicated in the SDP answer, the agent MUST fall-back to RFC 3264 procedures and SHOULD NOT drop the dialog just because of missing ICE support.
+							If the agent sends a new offer later on it SHOULD perform an ICE restart as specified in <xref target="sec-suboffer-restarts" />.
+						</t>
+					</section>
+
+					<section title="Existing Media Streams with ICE Running">
+						<t>If ICE support is indicated in the SDP answer, the agent MUST continue ICE procedures as specified in <xref target="sec-updating-continuing" />.</t>
+
+						<t>
+							If ICE support is no longer indicated in the SDP answer, the agent MUST abort the ongoing ICE processing and fall-back to RFC 3264 procedures.
+							The agent SHOULD NOT drop the dialog just because of missing ICE support.
+							If the agent sends a new offer later on, it SHOULD perform an ICE restart as specified in <xref target="sec-suboffer-restarts"/>.
+						</t>
+					</section>
+
+					<section title="Existing Media Streams with ICE Completed">
+						<t>If ICE support is indicated in the SDP answer and if the answer conforms to <xref target="sec-full-existing" />, the agent MUST remain in the ICE Completed state.</t>
+
+						<t>
+							If ICE support is no longer indicated in the SDP answer, the agent MUST fall-back to RFC 3264 procedures and SHOULD NOT drop the dialog just because of this unexpected answer.
+							Once the agent sends a new offer later on it MUST perform an ICE restart.
+						</t>
+					</section>
+				</section>
+
+			</section>
+
+			<section anchor="sec-updating" title="Updating the Check and Valid Lists">
+				<section title="Procedures for Full Implementations">
+					<section title="ICE Restarts">
+						<t>
+							The agent MUST remember the highest-priority nominated pairs in the Valid list for each component of the media stream, called the previous selected pairs, prior to the restart.
+							The agent will continue to send media using these pairs, as described in Section 11.1 of <xref target="ICE-BIS" />.
+							Once these destinations are noted, the agent MUST flush the valid and check lists, and then recompute the check list and its states as described in section <!--sec-forming--> 6.3 of <xref target="ICE-BIS" />.
+						</t>
+					</section>
+
+					<section title="New Media Stream">
+						<t>If the offer/answer exchange added a new media stream, the agent MUST create a new check list for it (and an empty Valid list to start of course), as described in section <!--sec-forming--> 6.3 of <xref target="ICE-BIS" />.</t>
+					</section>
+
+					<section title="Removed Media Stream">
+						<t>
+							If the offer/answer exchange removed a media stream, or an answer rejected an offered media stream, an agent MUST flush the Valid list for that media stream.
+							It MUST terminate any STUN transactions in progress for that media stream.
+							An agent MUST remove the check list for that media stream and cancel any pending ordinary checks for it.
+						</t>
+					</section>
+
+					<section anchor="sec-updating-continuing" title="ICE Continuing for Existing Media Stream">
+						<!-- this makes my head hurt. Is there a way to simplify?? -->
+						<t>The valid list is not affected by an updated offer/answer exchange unless ICE is restarting.</t>
+
+						<t>
+							If an agent is in the Running state for that media stream, the check list is updated (the check list is irrelevant if the state is completed).
+							To do that, the agent recomputes the check list using the procedures described in section <!--sec-forming--> 6.3 of <xref target="ICE-BIS" />.
+							If a pair on the new check list was also on the previous check list, and its state was Waiting, In-Progress, Succeeded, or Failed, its state is copied over.
+							Otherwise, its state is set to Frozen.
+						</t>
+
+						<t>If none of the check lists are active (meaning that the pairs in each check list are Frozen), the full-mode agent sets the first pair in the check list for the first media stream to Waiting, and then sets the state of all other pairs in that check list for the same component ID and with the same foundation to Waiting as well.</t>
+
+						<t>
+							Next, the agent goes through each check list, starting with the highest-priority pair.
+							If a pair has a state of Succeeded, and it has a component ID of 1, then all Frozen pairs in the same check list with the same foundation whose component IDs are not 1 have their state set to Waiting.
+							If, for a particular check list, there are pairs for each component of that media stream in the Succeeded state, the agent moves the state of all Frozen pairs for the first component of all other media streams (and thus in different check lists) with the same foundation to Waiting.
+						</t>
+					</section>
+				</section>
+
+				<section title="Procedures for Lite Implementations">
+					<t>
+						If ICE is restarting for a media stream, the agent MUST start a new Valid list for that media stream.
+						It MUST remember the pairs in the previous Valid list for each component of the media stream, called the previous selected pairs, and continue to send media there as described in Section 11.1 of <xref target="ICE-BIS"/>.
+						The state of ICE processing for each media stream MUST change to Running, and the state of ICE processing MUST change to Running.
+					</t>
+				</section>
+			</section> <!-- Updating Check and Valid Lists -->
+		</section> <!-- subsequent -->
+
+		<section anchor="sec-keepalive" title="Keepalives">
+			<t>
+				The procedures defined in Section 10 of <xref target="ICE-BIS"/> MUST be followed. The keepalives MUST be sent regardless of whether the media stream is currently inactive, sendonly, recvonly, or sendrecv, and regardless of the presence or value of the bandwidth attribute.
+				An agent can determine that its peer supports ICE by the presence of a=candidate attributes for each media session.
+			</t>
+		</section>
+
+		<section title="Usage with SIP">
+			<section anchor="sec-latency" title="Latency Guidelines">
+				<t>
+					ICE requires a series of STUN-based connectivity checks to take place between endpoints.
+					These checks start from the answerer on generation of its answer, and start from the offerer when it receives the answer.
+					These checks can take time to complete, and as such, the selection of messages to use with offers and answers can affect perceived user latency.
+					Two latency figures are of particular interest.
+					These are the post-pickup delay and the post-dial delay.
+					The post-pickup delay refers to the time between when a user "answers the phone" and when any speech they utter can be delivered to the caller.
+					The post-dial delay refers to the time between when a user enters the destination address for the user and ringback begins as a consequence of having successfully started ringing the phone of the called party.
+				</t>
+
+				<t>Two cases can be considered -- one where the offer is present in the initial INVITE and one where it is in a response.</t>
+
+				<section title="Offer in INVITE">
+					<t>
+						To reduce post-dial delays, it is RECOMMENDED that the caller begin gathering candidates prior to actually sending its initial INVITE.
+						This can be started upon user interface cues that a call is pending, such as activity on a keypad or the phone going off-hook.
+					</t>
+
+					<t>
+						If an offer is received in an INVITE request, the answerer SHOULD begin to gather its candidates on receipt of the offer and then generate an answer in a provisional response once it has completed that process.
+						ICE requires that a provisional response with an SDP be transmitted reliably.
+						This can be done through the existing Provisional Response Acknowledgment (PRACK) mechanism <xref target="RFC3262"/> or through an optimization that is specific to ICE.
+						With this optimization, provisional responses containing an SDP answer that begins ICE processing for one or more media streams can be sent reliably without RFC 3262.
+						To do this, the agent retransmits the provisional response with the exponential backoff timers described in RFC 3262.
+						Retransmits MUST cease on receipt of a STUN Binding request for one of the media streams signaled in that SDP (because receipt of a Binding request indicates the offerer has received the answer) or on transmission of the answer in a 2xx response.
+						If the peer agent is lite, there will never be a STUN Binding request.
+						In such a case, the agent MUST cease retransmitting the 18x after sending it four times (ICE will actually work even if the peer never receives the 18x; however, experience has shown that sending it is important for middleboxes and firewall traversal).
+						If no Binding request is received prior to the last retransmit, the agent does not consider the session terminated.
+						Despite the fact that the provisional response will be delivered reliably, the rules for when an agent can send an updated offer or answer do not change from those specified in RFC 3262.
+						Specifically, if the INVITE contained an offer, the same answer appears in all of the 1xx and in the 2xx response to the INVITE.
+						Only after that 2xx has been sent can an updated offer/answer exchange occur.
+						This optimization SHOULD NOT be used if both agents support PRACK.
+						Note that the optimization is very specific to provisional response carrying answers that start ICE processing; it is not a general technique for 1xx reliability.
+					</t>
+
+					<t>Alternatively, an agent MAY delay sending an answer until the 200 OK; however, this results in a poor user experience and is NOT RECOMMENDED.</t>
+
+					<t>
+						Once the answer has been sent, the agent SHOULD begin its connectivity checks.
+						Once candidate pairs for each component of a media stream enter the valid list, the answerer can begin sending media on that media stream.
+					</t>
+
+					<t>
+						However, prior to this point, any media that needs to be sent towards the caller (such as SIP early media <xref target="RFC3960"/>) MUST NOT be transmitted.
+						For this reason, implementations SHOULD delay alerting the called party until candidates for each component of each media stream have entered the valid list.
+						In the case of a PSTN gateway, this would mean that the setup message into the PSTN is delayed until this point.
+						Doing this increases the post-dial delay, but has the effect of eliminating 'ghost rings'.
+						Ghost rings are cases where the called party hears the phone ring, picks up, but hears nothing and cannot be heard.
+						This technique works without requiring support for, or usage of, preconditions <xref target="RFC3312"/>, since it's a localized decision.
+						It also has the benefit of guaranteeing that not a single packet of media will get clipped, so that post-pickup delay is zero.
+						If an agent chooses to delay local alerting in this way, it SHOULD generate a 180 response once alerting begins.
+					</t>
+				</section>
+
+				<section title="Offer in Response">
+					<t>
+						In addition to uses where the offer is in an INVITE, and the answer is in the provisional and/or 200 OK response, ICE works with cases where the offer appears in the response.
+						In such cases, which are common in third party call control <xref target="RFC3725"/>, ICE agents SHOULD generate their offers in a reliable provisional response (which MUST utilize RFC 3262), and not alert the user on receipt of the INVITE.
+						The answer will arrive in a PRACK. This allows for ICE processing to take place prior to alerting, so that there is no post-pickup delay, at the expense of increased call setup delays.
+						Once ICE completes, the callee can alert the user and then generate a 200 OK when they answer.
+						The 200 OK would contain no SDP, since the offer/answer exchange has completed.
+					</t>
+
+					<t>
+						Alternatively, agents MAY place the offer in a 2xx instead (in which case the answer comes in the ACK).
+						When this happens, the callee will alert the user on receipt of the INVITE, and the ICE exchanges will take place only after the user answers.
+						This has the effect of reducing call setup delay, but can cause substantial post-pickup delays and media clipping.
+					</t>
+				</section>
+			</section>
+
+			<section title="SIP Option Tags and Media Feature Tags">
+				<t>
+					<xref target="RFC5768"/> specifies a SIP option tag and media feature tag for usage with ICE.
+					ICE implementations using SIP SHOULD support this specification, which uses a feature tag in registrations to facilitate interoperability through signaling intermediaries.
+				</t>
+			</section>
+
+			<section title="Interactions with Forking">
+				<t>
+					ICE interacts very well with forking. Indeed, ICE fixes some of the problems associated with forking.
+					Without ICE, when a call forks and the caller receives multiple incoming media streams, it cannot determine which media stream corresponds to which callee.
+				</t>
+
+				<t>
+					With ICE, this problem is resolved.
+					The connectivity checks which occur prior to transmission of media carry username fragments, which in turn are correlated to a specific callee.
+					Subsequent media packets that arrive on the same candidate pair as the connectivity check will be associated with that same callee.
+					Thus, the caller can perform this correlation as long as it has received an answer.
+				</t>
+			</section>
+
+			<section title="Interactions with Preconditions">
+				<t>
+					Quality of Service (QoS) preconditions, which are defined in RFC 3312 <xref target="RFC3312"/> and RFC 4032 <xref target="RFC4032"/>, apply only to the transport addresses listed as the default targets for media in an offer/answer.
+					If ICE changes the transport address where media is received, this change is reflected in an updated offer that changes the default destination for media to match ICE's selection.
+					As such, it appears like any other re-INVITE would, and is fully treated in RFCs 3312 and 4032, which apply without regard to the fact that the destination for media is changing due to ICE negotiations occurring "in the background".
+				</t>
+
+				<t>Indeed, an agent SHOULD NOT indicate that QoS preconditions have been met until the checks have completed and selected the candidate pairs to be used for media.</t>
+
+				<t>
+					ICE also has (purposeful) interactions with connectivity preconditions <xref target="RFC5898"/>.
+					Those interactions are described there.
+					Note that the procedures described in <xref target="sec-latency"/> describe their own type of "preconditions", albeit with less functionality than those provided by the explicit preconditions in <xref target="RFC5898"/>.
+				</t>
+			</section>
+
+			<section title="Interactions with Third Party Call Control">
+				<t>
+					ICE works with Flows I, III, and IV as described in <xref target="RFC3725"/>.
+					Flow I works without the controller supporting or being aware of ICE.
+					Flow IV will work as long as the controller passes along the ICE attributes without alteration.
+					Flow II is fundamentally incompatible with ICE; each agent will believe itself to be the answerer and thus never generate a re-INVITE.
+				</t>
+
+				<t>
+					The flows for continued operation, as described in Section 7 of RFC 3725, require additional behavior of ICE implementations to support.
+					In particular, if an agent receives a mid-dialog re-INVITE that contains no offer, it MUST restart ICE for each media stream and go through the process of gathering new candidates.
+					Furthermore, that list of candidates SHOULD include the ones currently being used for media.
+				</t>
+			</section>
+		</section>
+
+		<section title="Relationship with ANAT">
+			<t>
+				RFC 4091 <xref target="RFC4091"/>, the Alternative Network Address Types (ANAT) Semantics for the SDP grouping framework, and RFC 4092 <xref target="RFC4092"/>, its usage with SIP, define a mechanism for indicating that an agent can support both IPv4 and IPv6 for a media stream, and it does so by including two "m=" lines, one for v4 and one for v6.
+				This is similar to ICE, which allows for an agent to indicate multiple transport addresses using the candidate attribute.
+				However, ANAT relies on static selection to pick between choices, rather than a dynamic connectivity check used by ICE.
+			</t>
+
+			<t>This specification deprecates RFC 4091 and RFC 4092. Instead, agents wishing to support dual-stack will utilize ICE.</t>
+		</section>
+
+		<section title="Security Considerations">
+			<section title="Attacks on the Offer/Answer Exchanges">
+				<t>
+					An attacker that can modify or disrupt the offer/answer exchanges themselves can readily launch a variety of attacks with ICE.
+					They could direct media to a target of a DoS attack, they could insert themselves into the media stream, and so on.
+					These are similar to the general security considerations for offer/answer exchanges, and the security considerations in RFC 3264 <xref target="RFC3264"/> apply.
+					These require techniques for message integrity and encryption for offers and answers, which are satisfied by the SIPS mechanism <xref target="RFC3261"/> when SIP is used.
+					As such, the usage of SIPS with ICE is RECOMMENDED.
+				</t>
+			</section>
+
+			<section title="Insider Attacks">
+				<t>In addition to attacks where the attacker is a third party trying to insert fake offers, answers, or stun messages, there are several attacks possible with ICE when the attacker is an authenticated and valid participant in the ICE exchange.</t>
+
+				<section anchor="sec-voice-hammer" title="The Voice Hammer Attack">
+					<t>
+						The voice hammer attack is an amplification attack.
+						In this attack, the attacker initiates sessions to other agents, and maliciously includes the IP address and port of a DoS target as the destination for media traffic signaled in the SDP.
+						This causes substantial amplification; a single offer/answer exchange can create a continuing flood of media packets, possibly at high rates (consider video sources).
+						This attack is not specific to ICE, but ICE can help provide remediation.
+					</t>
+
+					<t>
+						Specifically, if ICE is used, the agent receiving the malicious SDP will first perform connectivity checks to the target of media before sending media there.
+						If this target is a third-party host, the checks will not succeed, and media is never sent.
+					</t>
+
+					<t>
+						Unfortunately, ICE doesn't help if its not used, in which case an attacker could simply send the offer without the ICE parameters.
+						However, in environments where the set of clients is known, and is limited to ones that support ICE, the server can reject any offers or answers that don't indicate ICE support.
+					</t>
+				</section>
+
+				<section anchor="sec-alg-sip" title="Interactions with Application Layer Gateways and SIP">
+					<t>
+						Application Layer Gateways (ALGs) are functions present in a NAT device that inspect the contents of packets and modify them, in order to facilitate NAT traversal for application protocols.
+						Session Border Controllers (SBCs) are close cousins of ALGs, but are less transparent since they actually exist as application layer SIP intermediaries.
+						ICE has interactions with SBCs and ALGs.
+					</t>
+
+					<t>
+						If an ALG is SIP aware but not ICE aware, ICE will work through it as long as the ALG correctly modifies the SDP.
+						A correct ALG implementation behaves as follows:
+					</t>
+
+					<t>
+						<list style="symbols">
+							<t>The ALG does not modify the "m=" and "c=" lines or the rtcp attribute if they contain external addresses.</t>
+							<t>If the "m=" and "c=" lines contain internal addresses, the modification depends on the state of the ALG:
+								<list style="empty">
+									<t>If the ALG already has a binding established that maps an external port to an internal IP address and port matching the values in the "m=" and "c=" lines or rtcp attribute, the ALG uses that binding instead of creating a new one.</t>
+									<t>If the ALG does not already have a binding, it creates a new one and modifies the SDP, rewriting the "m=" and "c=" lines and rtcp attribute.</t>
+								</list>
+							</t>
+						</list>
+					</t>
+
+					<t>
+						Unfortunately, many ALGs are known to work poorly in these corner cases.
+						ICE does not try to work around broken ALGs, as this is outside the scope of its functionality.
+						ICE can help diagnose these conditions, which often show up as a mismatch between the set of candidates and the "m=" and "c=" lines and rtcp attributes.
+						The ice-mismatch attribute is used for this purpose.
+					</t>
+
+					<t>
+						ICE works best through ALGs when the signaling is run over TLS.
+						This prevents the ALG from manipulating the SDP messages and interfering with ICE operation.
+						Implementations that are expected to be deployed behind ALGs SHOULD provide for TLS transport of the SDP.
+					</t>
+
+					<t>
+						If an SBC is SIP aware but not ICE aware, the result depends on the behavior of the SBC.
+						If it is acting as a proper Back-to-Back User Agent (B2BUA), the SBC will remove any SDP attributes it doesn't understand, including the ICE attributes.
+						Consequently, the call will appear to both endpoints as if the other side doesn't support ICE.
+						This will result in ICE being disabled, and media flowing through the SBC, if the SBC has requested it.
+						If, however, the SBC passes the ICE attributes without modification, yet modifies the default destination for media (contained in the "m=" and "c=" lines and rtcp attribute), this will be detected as an ICE mismatch, and ICE processing is aborted for the call.
+						It is outside of the scope of ICE for it to act as a tool for "working around" SBCs.
+						If one is present, ICE will not be used and the SBC techniques take precedence.
+					</t>
+				</section>
+			</section>
+		</section>
+
+		<section anchor="iana" title="IANA Considerations">
+			<section title="SDP Attributes">
+				<t>
+					Original ICE specification defined seven new SDP attributes per the procedures of Section 8.2.4 of <xref target="RFC4566"/>.
+					The registration information is reproduced here.
+				</t>
+
+				<section title="candidate Attribute">
+					<t>
+						<list style="hanging">
+							<t hangText="Contact Name:">Jonathan Rosenberg, jdrosen@jdrosen.net.</t>
+							<t hangText="Attribute Name:">candidate</t>
+							<t hangText="Long Form:">candidate</t>
+							<t hangText="Type of Attribute:">media-level</t>
+							<t hangText="Charset Considerations:">The attribute is not subject to the charset attribute.</t>
+							<t hangText="Purpose:">
+								This attribute is used with Interactive Connectivity Establishment (ICE), and provides one of many possible candidate addresses for communication.
+								These addresses are validated with an end-to-end connectivity check using Session Traversal Utilities for NAT (STUN).
+							</t>
+							<t hangText="Appropriate Values:">See <xref target="sec-grammar"/> of RFC XXXX.</t>
+						</list>
+					</t>
+				</section>
+
+				<section title="remote-candidates Attribute">
+					<t>
+						<list style="hanging">
+							<t hangText="Contact Name:">Jonathan Rosenberg, jdrosen@jdrosen.net.</t>
+							<t hangText="Attribute Name:">remote-candidates</t>
+							<t hangText="Long Form:">remote-candidates</t>
+							<t hangText="Type of Attribute:">media-level</t>
+							<t hangText="Charset Considerations:">The attribute is not subject to the charset attribute.</t>
+							<t hangText="Purpose:">This attribute is used with Interactive Connectivity Establishment (ICE), and provides the identity of the remote candidates that the offerer wishes the answerer to use in its answer.</t>
+							<t hangText="Appropriate Values:"> See <xref target="sec-grammar"/> of RFC XXXX.</t>
+						</list>
+					</t>
+				</section>
+
+				<section title="ice-lite Attribute">
+					<t>
+						<list style="hanging">
+							<t hangText="Contact Name:">Jonathan Rosenberg, jdrosen@jdrosen.net.</t>
+							<t hangText="Attribute Name:">ice-lite</t>
+							<t hangText="Long Form:">ice-lite</t>
+							<t hangText="Type of Attribute:">session-level</t>
+							<t hangText="Charset Considerations:">The attribute is not subject to the charset attribute.</t>
+							<t hangText="Purpose:">This attribute is used with Interactive Connectivity Establishment (ICE), and indicates that an agent has the minimum functionality required to support ICE inter-operation with a peer that has a full implementation.</t>
+							<t hangText="Appropriate Values:">See <xref target="sec-grammar"/> of RFC XXXX.</t>
+						</list>
+					</t>
+				</section>
+
+				<section title="ice-mismatch Attribute">
+					<t>
+						<list style="hanging">
+							<t hangText="Contact Name:">Jonathan Rosenberg, jdrosen@jdrosen.net.</t>
+							<t hangText="Attribute Name:">ice-mismatch</t>
+							<t hangText="Long Form:">ice-mismatch</t>
+							<t hangText="Type of Attribute:">session-level</t>
+							<t hangText="Charset Considerations:">The attribute is not subject to the charset attribute.</t>
+							<t hangText="Purpose:">This attribute is used with Interactive Connectivity Establishment (ICE), and indicates that an agent is ICE capable, but did not proceed with ICE due to a mismatch of candidates with the default destination for media signaled in the SDP.</t>
+							<t hangText="Appropriate Values:">See <xref target="sec-grammar"/> of RFC XXXX.</t>
+						</list>
+					</t>
+				</section>
+
+				<section title="ice-pwd Attribute">
+					<t>
+						<list style="hanging">
+							<t hangText="Contact Name:">Jonathan Rosenberg, jdrosen@jdrosen.net.</t>
+							<t hangText="Attribute Name:">ice-pwd</t>
+							<t hangText="Long Form:">ice-pwd</t>
+							<t hangText="Type of Attribute:">session- or media-level</t>
+							<t hangText="Charset Considerations:">The attribute is not subject to the charset attribute.</t>
+							<t hangText="Purpose:">This attribute is used with Interactive Connectivity Establishment (ICE), and provides the password used to protect STUN connectivity checks.</t>
+							<t hangText="Appropriate Values:">See <xref target="sec-grammar"/> of RFC XXXX.</t>
+						</list>
+					</t>
+				</section>
+
+				<section title="ice-ufrag Attribute">
+					<t>
+						<list style="hanging">
+							<t hangText="Contact Name:">Jonathan Rosenberg, jdrosen@jdrosen.net.</t>
+							<t hangText="Attribute Name:">ice-ufrag</t>
+							<t hangText="Long Form:">ice-ufrag </t>
+							<t hangText="Type of Attribute:">session- or media-level </t>
+							<t hangText="Charset Considerations:">The attribute is not subject to the charset attribute.</t>
+							<t hangText="Purpose:">This attribute is used with Interactive Connectivity Establishment (ICE), and provides the fragments used to construct the username in STUN connectivity checks.</t>
+							<t hangText="Appropriate Values:">See <xref target="sec-grammar"/> of RFC XXXX.</t>
+						</list>
+					</t>
+
+				</section>
+
+				<section title="ice-pacing Attribute">
+					<t>
+						<list style="hanging">
+							<t hangText="Contact Name:">Jonathan Rosenberg, jdrosen@jdrosen.net.</t>
+							<t hangText="Attribute Name:">ice-pacing</t>
+							<t hangText="Long Form:">ice-pacing </t>
+							<t hangText="Type of Attribute:">session-level </t>
+							<t hangText="Charset Considerations:">The attribute is not subject to the charset attribute.</t>
+							<t hangText="Purpose:">This attribute is used with Interactive Connectivity Establishment (ICE) to indicate desired connectivity check pacing values.</t>
+							<t hangText="Appropriate Values:">See <xref target="sec-grammar"/> of RFC XXXX.</t>
+						</list>
+					</t>
+
+				</section>
+
+				<section title="ice-options Attribute">
+					<t>
+						<list style="hanging">
+							<t hangText="Contact Name:">Jonathan Rosenberg, jdrosen@jdrosen.net.</t>
+							<t hangText="Attribute Name:">ice-options</t>
+							<t hangText="Long Form:">ice-options</t>
+							<t hangText="Type of Attribute:">session- or media-level</t>
+							<t hangText="Charset Considerations:">The attribute is not subject to the charset attribute.</t>
+							<t hangText="Purpose:">This attribute is used with Interactive Connectivity Establishment (ICE), and indicates the ICE options or extensions used by the agent.</t>
+							<t hangText="Appropriate Values:">See <xref target="sec-grammar"/> of RFC XXXX.</t>
+						</list>
+					</t>
+				</section>
+			</section>
+
+			<section title="Interactive Connectivity Establishment (ICE) Options Registry">
+				<t>IANA maintains a registry for ice-options identifiers under the Specification Required policy as defined in <xref target="RFC5226">"Guidelines for Writing an IANA Considerations Section in RFCs"</xref>.</t>
+
+				<t>
+					ICE options are of unlimited length according to the syntax in <xref target="sec-ice-options" />; however, they are RECOMMENDED to be no longer than 20 characters.
+					This is to reduce message sizes and allow for efficient parsing.
+				</t>
+
+				<t>
+					In RFC 5245 ICE options could only be defined at the session level.
+					ICE options can now also be defined at the media level.
+					This can be used when aggregating between different ICE agents in the same endpoint, but future options may require to be defined at the media-level.
+					To ensure compatibility with legacy implementation, the media-level ICE options MUST be aggregated into a session-level ICE option.
+					Because aggregation rules depend on the specifics of each option, all new ICE options MUST also define in their specification how the media-level ICE option values are aggregated to generate the value of the session-level ICE option.
+				</t>
+
+				<t>
+					The only ICE option defined at the time of publication is <xref target="RFC6679">"rtp+ecn"</xref>.
+					The aggregation rule for this ICE option is that if all aggregated media using ICE contain a media-level "rtp+ecn" ICE option then an "rtp+ecn" ICE option MUST be inserted at the session-level.
+					If one of the media does not contain the option, then it MUST NOT be inserted at the session-level.
+				</t>
+
+				<t>
+					A registration request MUST include the following information:
+					<list style="symbols">
+						<t>The ICE option identifier to be registered</t>
+						<t>Name, Email, and Address of a contact person for the registration</t>
+						<t>Organization or individuals having the change control</t>
+						<t>Short description of the ICE extension to which the option relates</t>
+						<t>Reference(s) to the specification defining the ICE option and the related extensions</t>
+					</list>
+				</t>
+			</section>
+		</section>
+
+		<section title="Acknowledgments">
+			<t>A large part of the text in this document was taken from RFC 5245, authored by Jonathan Rosenberg.</t>
+			<t>Some of the text in this document was taken from RFC 6336, authored by Magnus Westerlund and Colin Perkins.</t>
+			<t>Thanks to Thomas Stach for the text in <xref target="sec-answer-subsequent" /></t>
+		</section>
+	</middle>
+
+	<back>
+		<references title="Normative References">
+			<?rfc include="reference.RFC.2119"?>
+			<?rfc include="reference.RFC.3261"?>
+			<?rfc include="reference.RFC.3262"?>
+			<?rfc include="reference.RFC.3264"?>
+			<?rfc include="reference.RFC.3312"?>
+			<?rfc include="reference.RFC.3550"?>
+			<?rfc include="reference.RFC.3556"?>
+			<?rfc include="reference.RFC.3605"?>
+			<?rfc include="reference.RFC.4032"?>
+			<?rfc include="reference.RFC.4091"?>
+			<?rfc include="reference.RFC.4092"?>
+			<?rfc include="reference.RFC.4566"?>
+			<?rfc include="reference.RFC.5226"?>
+			<?rfc include="reference.RFC.5234"?>
+			<?rfc include="reference.RFC.5389"?>
+			<?rfc include="reference.RFC.5768"?>
+			<?rfc include="reference.RFC.6679"?>
+			<?rfc include="reference.RFC.7092"?>
+
+			<reference anchor="ICE-BIS">
+				<front>
+					<title>Interactive Connectivity Establishment (ICE): A Protocol for Network Address Translator (NAT) Traversal for Offer/Answer Protocols</title>
+
+					<author initials='A' surname='Keranen' fullname='Ari Keranen'>
+						<organization />
+					</author>
+
+					<author initials='J' surname='Rosenberg' fullname='Jonathan Rosenberg'>
+						<organization />
+					</author>
+
+					<date month='March' day='9' year='2015' />
+
+					<abstract>
+						<t>
+							This document describes a protocol for Network Address Translator (NAT) traversal for UDP-based multimedia sessions established with the offer/answer model.
+							This protocol is called Interactive Connectivity Establishment (ICE).
+							ICE makes use of the Session Traversal Utilities for NAT (STUN) protocol and its extension, Traversal Using Relay NAT (TURN).
+							ICE can be used by any protocol utilizing the offer/answer model, such as the Session Initiation Protocol (SIP).
+						</t>
+					</abstract>
+				</front>
+
+				<seriesInfo name='Internet-Draft' value='draft-ietf-mmusic-rfc5245bis-04' />
+
+				<format type='TXT' target='http://www.ietf.org/internet-drafts/draft-ietf-mmusic-rfc5245bis-04.txt' />
+			</reference>
+		</references>
+
+		<references title="Informative References">
+			<?rfc include="reference.RFC.3725"?>
+			<?rfc include="reference.RFC.3960"?>
+			<?rfc include="reference.RFC.4340"?>
+			<?rfc include="reference.RFC.5626"?>
+			<?rfc include="reference.RFC.5898"?>
+		</references>
+
+		<section anchor="sec-example" title="Examples">
+			<t>For the example shown in Section 14 of <xref target="ICE-BIS" /> the resulting offer (message 5) encoded in SDP looks like:</t>
+
+			<figure>
+				<artwork>
+<![CDATA[v=0
+o=jdoe 2890844526 2890842807 IN IP4 $L-PRIV-1.IP
+s=
+c=IN IP4 $NAT-PUB-1.IP
+t=0 0
+a=ice-pwd:asd88fgpdd777uzjYhagZg
+a=ice-ufrag:8hhY
+m=audio $NAT-PUB-1.PORT RTP/AVP 0
+b=RS:0
+b=RR:0
+a=rtpmap:0 PCMU/8000
+a=candidate:1 1 UDP 2130706431 $L-PRIV-1.IP $L-PRIV-1.PORT typ host
+a=candidate:2 1 UDP 1694498815 $NAT-PUB-1.IP $NAT-PUB-1.PORT typ
+ srflx raddr $L-PRIV-1.IP rport $L-PRIV-1.PORT
+]]>
+				</artwork>
+			</figure>
+
+			<t>The offer, with the variables replaced with their values, will look like (lines folded for clarity):</t>
+
+			<figure>
+				<artwork>
+<![CDATA[v=0
+o=jdoe 2890844526 2890842807 IN IP4 10.0.1.1
+s=
+c=IN IP4 192.0.2.3
+t=0 0
+a=ice-pwd:asd88fgpdd777uzjYhagZg
+a=ice-ufrag:8hhY
+m=audio 45664 RTP/AVP 0
+b=RS:0
+b=RR:0
+a=rtpmap:0 PCMU/8000
+a=candidate:1 1 UDP 2130706431 10.0.1.1 8998 typ host
+a=candidate:2 1 UDP 1694498815 192.0.2.3 45664 typ srflx raddr
+ 10.0.1.1 rport 8998]]>
+				</artwork>
+			</figure>
+
+			<t>The resulting answer looks like:</t>
+
+			<figure>
+				<artwork>
+<![CDATA[v=0
+o=bob 2808844564 2808844564 IN IP4 $R-PUB-1.IP
+s=
+c=IN IP4 $R-PUB-1.IP
+t=0 0
+a=ice-pwd:YH75Fviy6338Vbrhrlp8Yh
+a=ice-ufrag:9uB6
+m=audio $R-PUB-1.PORT RTP/AVP 0
+b=RS:0
+b=RR:0
+a=rtpmap:0 PCMU/8000
+a=candidate:1 1 UDP 2130706431 $R-PUB-1.IP $R-PUB-1.PORT typ host]]>
+				</artwork>
+			</figure>
+
+			<t>With the variables filled in:</t>
+
+			<figure>
+				<artwork>
+<![CDATA[v=0
+o=bob 2808844564 2808844564 IN IP4 192.0.2.1
+s=
+c=IN IP4 192.0.2.1
+t=0 0
+a=ice-pwd:YH75Fviy6338Vbrhrlp8Yh
+a=ice-ufrag:9uB6
+m=audio 3478 RTP/AVP 0
+b=RS:0
+b=RR:0
+a=rtpmap:0 PCMU/8000
+a=candidate:1 1 UDP 2130706431 192.0.2.1 3478 typ host]]>
+				</artwork>
+			</figure>
+		</section>
+
+		<section anchor="sec-why-remote" title="The remote-candidates Attribute">
+			<t>
+				The a=remote-candidates attribute exists to eliminate a race condition between the updated offer and the response to the STUN Binding request that moved a candidate into the Valid list.
+				This race condition is shown in <xref target="fig-race-flow"/>.
+				On receipt of message 4, agent L adds a candidate pair to the valid list.
+				If there was only a single media stream with a single component, agent L could now send an updated offer.
+				However, the check from agent R has not yet generated a response, and agent R receives the updated offer (message 7) before getting the response (message 9).
+				Thus, it does not yet know that this particular pair is valid.
+				To eliminate this condition, the actual candidates at R that were selected by the offerer (the remote candidates) are included in the offer itself, and the answerer delays its answer until those pairs validate.
+			</t>
+
+			<figure title="Race Condition Flow" anchor="fig-race-flow">
+				<artwork>
+<![CDATA[
+       Agent L               Network               Agent R
+          |(1) Offer            |                     |
+          |------------------------------------------>|
+          |(2) Answer           |                     |
+          |<------------------------------------------|
+          |(3) STUN Req.        |                     |
+          |------------------------------------------>|
+          |(4) STUN Res.        |                     |
+          |<------------------------------------------|
+          |(5) STUN Req.        |                     |
+          |<------------------------------------------|
+          |(6) STUN Res.        |                     |
+          |-------------------->|                     |
+          |                     |Lost                 |
+          |(7) Offer            |                     |
+          |------------------------------------------>|
+          |(8) STUN Req.        |                     |
+          |<------------------------------------------|
+          |(9) STUN Res.        |                     |
+          |------------------------------------------>|
+          |(10) Answer          |                     |
+          |<------------------------------------------|]]>
+				</artwork>
+			</figure>
+		</section>
+
+		<section anchor="sec-glare" title="Why Is the Conflict Resolution Mechanism Needed?">
+			<t>
+				When ICE runs between two peers, one agent acts as controlled, and the other as controlling.
+				Rules are defined as a function of implementation type and offerer/answerer to determine who is controlling and who is controlled.
+				However, the specification mentions that, in some cases, both sides might believe they are controlling, or both sides might believe they are controlled.
+				How can this happen?
+			</t>
+
+			<t>The condition when both agents believe they are controlled shows up in third party call control cases. Consider the following flow:</t>
+
+			<figure title="Role Conflict Flow" anchor="fig-conflict">
+				<artwork>
+<![CDATA[
+          A         Controller          B
+          |(1) INV()     |              |
+          |<-------------|              |
+          |(2) 200(SDP1) |              |
+          |------------->|              |
+          |              |(3) INV()     |
+          |              |------------->|
+          |              |(4) 200(SDP2) |
+          |              |<-------------|
+          |(5) ACK(SDP2) |              |
+          |<-------------|              |
+          |              |(6) ACK(SDP1) |
+          |              |------------->|]]>
+				</artwork>
+			</figure>
+
+			<t>
+				This flow is a variation on flow III of RFC 3725 <xref target="RFC3725"/>.
+				In fact, it works better than flow III since it produces fewer messages.
+				In this flow, the controller sends an offerless INVITE to agent A, which responds with its offer, SDP1.
+				The agent then sends an offerless INVITE to agent B, which it responds to with its offer, SDP2.
+				The controller then uses the offer from each agent to generate the answers.
+				When this flow is used, ICE will run between agents A and B, but both will believe they are in the controlling role.
+				With the role conflict resolution procedures, this flow will function properly when ICE is used.
+			</t>
+
+			<t>
+				At this time, there are no documented flows that can result in the case where both agents believe they are controlled.
+				However, the conflict resolution procedures allow for this case, should a flow arise that would fit into this category.
+			</t>
+		</section>
+
+		<section title="Why Send an Updated Offer?">
+			<t>
+				Section 11.1 of <xref target="ICE-BIS"/> describes rules for sending media.
+				Both agents can send media once ICE checks complete, without waiting for an updated offer.
+				Indeed, the only purpose of the updated offer is to "correct" the SDP so that the default destination for media matches where media is being sent based on ICE procedures (which will be the highest-priority nominated candidate pair).
+			</t>
+
+			<t>
+				This begs the question -- why is the updated offer/answer exchange needed at all?
+				Indeed, in a pure offer/answer environment, it would not be.
+				The offerer and answerer will agree on the candidates to use through ICE, and then can begin using them.
+				As far as the agents themselves are concerned, the updated offer/answer provides no new information.
+				However, in practice, numerous components along the signaling path look at the SDP information.
+				These include entities performing off-path QoS reservations, NAT traversal components such as ALGs and Session Border Controllers (SBCs), and diagnostic tools that passively monitor the network.
+				For these tools to continue to function without change, the core property of SDP -- that the existing, pre-ICE definitions of the addresses used for media -- the "m=" and "c=" lines and the rtcp attribute -- must be retained.
+				For this reason, an updated offer must be sent.
+			</t>
+		</section>
+	</back>
+</rfc>
+

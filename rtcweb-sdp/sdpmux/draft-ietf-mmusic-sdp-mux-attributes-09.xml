@@ -106,7 +106,7 @@
       </address>
     </author>
 
-    <date day="29" month="June" year="2015" />
+    <date day="4" month="July" year="2015" />
 
     <area>MMUSIC</area>
 
@@ -665,11 +665,9 @@
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
         </texttable>
-        <t hangText="Note">
-         A mismatched set of preconditions across media descriptions
+        <t>NOTE: A mismatched set of preconditions across media descriptions
          results in Session establishment failures due to inability
-         in meeting the right resource reservations requested.
-        </t>
+         in meeting the right resource reservations requested.</t>
       </section>
 
       <section title="RFC4574 - SDP Label Attribute ">
@@ -709,20 +707,18 @@
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
           <c>qos-mech-recv&nbsp;</c>
-          <c> Refer to notes below.&nbsp;</c>
+          <c> Refer to notes below&nbsp;</c>
           <c>B</c><c>NORMAL&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
         </texttable>
-        <t hangText="Note">
-          A single DSCP code point per flow being multiplexed
+        <t>NOTE: A single DSCP code point per flow being multiplexed
           doesn't impact multiplexing since QOS mechanisms are
           signaled/scoped per flow. For scenarios that involve having
           different DSCP code points for packets being transmitted over
           the same 5-tuple, issues as discussed in
           <xref target="I.D-draft-ietf-dart-dscp-rtp"/> need to be
-          taken into consideration.
-        </t>
+          taken into consideration.</t>
       </section>
 
       <section title="RFC4568 - SDP Security Descriptions">
@@ -770,16 +766,14 @@
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
         </texttable>
-        <t hangText="Note">
-         If RFC6773 is being used in addition to RFC5762 and provided
+        <t>If RFC6773 is being used in addition to RFC5762 and provided
          that DCCP-in-UDP layer has additional demultiplexing, then it
          may be possible to use different DCCP service codes for each
          DCCP flow, given each uses a different DCCP port. Although
          doing so might conflict with the media type of the "m="
          line. None of this is standardized yet and it wouldn't work
          as explained. Hence multiplexing MUST not be performed even
-         in this alternate scenario.
-        </t>
+         in this alternate scenario.</t>
       </section>
 
       <section title="RFC6773 - DCCP-UDP Encapsulation">
@@ -802,20 +796,17 @@
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
         </texttable>
-        <t hangText="Note">
-         RFC6773 is about tunneling DCCP in UDP, with the UDP
+        <t>
+         NOTE: RFC6773 is about tunneling DCCP in UDP, with the UDP
          port being the port of the DCCP en-/de-capsulation
          service. This encapsulation allows arbitrary DCCP packets to
          be encapsulated and the DCCP port chosen MAY conflict with
-         the port chosen for the RTP traffic.
-        </t>
-        <t>
-         For multiplexing several DCCP-in-UDP encapsulations on the
-         same UDP port, with no RTP traffic on the same port implies
-         collapsing several DCCP port spaces together. This may or
-         may not work depending on the nature of DCCP encapsulations
-         and ports choices thus rendering it to be very application
-         dependent.
+         the port chosen for the RTP traffic. For multiplexing several 
+         DCCP-in-UDP encapsulations on the same UDP port, with no RTP 
+         traffic on the same port implies collapsing several DCCP port 
+         spaces together. This may or may not work depending on the 
+         nature of DCCP encapsulation and ports choices thus rendering 
+         it to be very application dependent.
         </t>
       </section>
 
@@ -1011,10 +1002,8 @@
           <c>IDENTICAL-PER-PT&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
         </texttable>
-        <t hangText="Note">
-         If SSRCs are repeated across "m=" lines being multiplexed, they
-         MUST all represent the same underlying RTP Source.
-        </t>
+        <t>NOTE: If SSRCs are repeated across "m=" lines being multiplexed, they
+         MUST all represent the same underlying RTP Source.</t>
       </section>
 
       <section title="RFC7273 - RTP Clock Source Signalling">
@@ -1237,11 +1226,10 @@
           <c>B</c><c>SPECIAL&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
         </texttable>
-         <t hangText="Note"> Since the attributes (a=cparmin and
+         <t>NOTE: Since the attributes (a=cparmin and
          a=cparmax) define minimum and maximum numerical values
          associated with the attributes described in a=cpar, it is
-         recommended to consult the document defining the attribute.
-        </t>
+         recommended to consult the document defining the attribute.</t>
       </section>
 
       <section title="RFC6284 - Port Mapping between Unicast and Multicast RTP Sessions">
@@ -1284,11 +1272,18 @@
           <ttcol align='left'>Level</ttcol>
           <ttcol align='left'>Mux Category</ttcol>
 
-          <c>msrp-cema&nbsp;</c><c>Not Impacted&nbsp;</c><c>M&nbsp;</c>
-          <c>NORMAL&nbsp;</c>
+          <c>msrp-cema&nbsp;</c><c>Refer to notes below&nbsp;</c><c>M&nbsp;</c>
+          <c>TBD&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
         </texttable>
+        <t>NOTE: As per section 9.1 of
+         <xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/>, there 
+         exists no publicly available specification that 
+         defines procedures for multiplexing/demulitplexing MRSP flows
+         over a single 5-tuple. Once such a specification is available, 
+         the multiplexing categories assigments for attributes in this
+         section MUST be revisited.</t>	
       </section>
 
 
@@ -1323,6 +1318,13 @@
           <c>&nbsp;</c><c>&nbsp;</c>
 
         </texttable>
+        <t>NOTE: As per section 9.1 of 
+         <xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/>, 
+         there exists no publicly available specification that 
+         defines procedures for multiplexing/demulitplexing MRSP flows
+         over a single 5-tuple. Once such a specification is available, 
+         the multiplexing categories assigments for attributes in this
+         section MUST be revisited.</t>
       </section>
 
       <section title="RFC5547 - SDP Offer/Answer for File Transfer">
@@ -1336,27 +1338,38 @@
           <ttcol align='left'>Level</ttcol>
           <ttcol align='left'>Mux Category</ttcol>
 
-          <c>file-selector&nbsp;</c><c>Not Impacted&nbsp;</c>
-          <c>M</c><c>NORMAL&nbsp;</c>
+          <c>file-selector&nbsp;</c><c>Refer to notes below&nbsp;</c>
+          <c>M</c><c>TBD&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
-          <c>file-transfer-id&nbsp;</c><c>Not Impacted&nbsp;</c>
-          <c>M</c><c>NORMAL&nbsp;</c>
+          <c>file-transfer-id&nbsp;</c><c>Refer to notes below&nbsp;</c>
+          <c>M</c><c>TBD&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
-          <c> file-disposition&nbsp;</c><c>Not Impacted&nbsp;</c>
-          <c>M</c><c>NORMAL&nbsp;</c>
+          <c>file-disposition&nbsp;</c><c>Refer to notes below&nbsp;</c>
+          <c>M</c><c>TBD&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
-          <c> file-date&nbsp;</c><c>Not Impacted&nbsp;</c>
-          <c>M</c><c>NORMAL&nbsp;</c>
+          <c>file-date&nbsp;</c><c>Refer to notes below&nbsp;</c>
+          <c>M</c><c>TBD&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
-          <c> file-iconfile-range&nbsp;</c><c>Not Impacted&nbsp;</c>
-          <c>M</c><c>NORMAL&nbsp;</c>
+          <c>file-icon&nbsp;</c><c>Refer to notes below&nbsp;</c>
+          <c>M</c><c>TBD&nbsp;</c>
+          <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
+
+		  <c>file-range&nbsp;</c><c>Refer to notes below&nbsp;</c>
+          <c>M</c><c>TBD&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
         </texttable>
+        <t>NOTE: As per section 9.1 of 
+         <xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/>, 
+         there exists no publicly available specification that 
+         defines procedures for multiplexing/demulitplexing MRSP flows
+         over a single 5-tuple. Once such a specification is available, 
+         the multiplexing categories assigments for attributes in this
+         section MUST be revisited.</t>	
       </section>
 
       <section title="RFC6849 - SDP and RTP Media Loopback Extension">
@@ -1530,7 +1543,7 @@
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
         </texttable>
-        <t hangText="Note"> The "sescap" attribute is NOT RECOMMENDED 
+        <t>NOTE: The "sescap" attribute is NOT RECOMMENDED 
         for use with multiplexing. The reason is that it requires the 
         use of unique configuration numbers across the entire SDP 
         (per <xref target="RFC6871"/>) as opposed to within a media
@@ -1775,31 +1788,32 @@
 
           <c>cs-correlation:callerid&nbsp;</c>
           <c>Refer to notes below&nbsp;</c>
-          <c>M</c><c>NOT RECOMMENDED&nbsp;</c>
+          <c>M</c><c>TBD&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
           <c>cs-correlation:uuie&nbsp;</c>
           <c>Refer to notes below&nbsp;</c>
-          <c>M</c><c>NOT RECOMMENDED&nbsp;</c>
-
+          <c>M&nbsp;</c><c>TBD&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
+
           <c>cs-correlation:dtmf&nbsp;</c>
-          <c>NOT RECOMMENDED&nbsp;</c>
-          <c>M</c><c>NORMAL&nbsp;</c>
-
+          <c>Refer to notes below&nbsp;</c>
+          <c>M</c><c>TBD&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
+
           <c>cs-correlation:external&nbsp;</c>
           <c>Refer to notes below&nbsp;</c>
-          <c>M</c><c>NOT RECOMMENDED&nbsp;</c>
+          <c>M</c><c>TBD&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
         </texttable>
-        <t hangText="Notes">
-         <xref target="RFC7195"/> defines SDP attributes for
+        <t>NOTE: <xref target="RFC7195"/> defines SDP attributes for
          establishing audio and video media streams over circuit-switched
-         bearers by defining a new nettype value "PSTN". However, Section 7.2 of
-         <xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/> mandates the
-         "c=" line nettype value of 'IN'.
-        </t>
+         bearers by defining a new nettype value "PSTN". However, section 7.2 of
+         <xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/> requires the
+         "c=" line nettype value of 'IN'. If in future there exists a specification
+         that defines procedures to multiplex media streams over nettype "PSTN",
+         the multiplexing categories for attributes in this section MUST be 
+         revisited.</t>
 
       </section>
 
@@ -1882,10 +1896,9 @@
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
         </texttable>
-        <t hangText="Note"> With the above SDP constraints, a session
+        <t>NOTE: With the above SDP constraints, a session
         multiplexed with multiple "m=" lines will use only one IPSec
-        association for all of the "m=" lines.
-        </t>
+        association for all of the "m=" lines.</t>
       </section>
 
       <section title="RFC2326 - Real Time Streaming Protocol">
@@ -1917,13 +1930,11 @@
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
         </texttable>
-        <t hangText="Notes">
-         <xref target="RFC2326"/> defines SDP attributes that are
+        <t>NOTE: <xref target="RFC2326"/> defines SDP attributes that are
          applicable in the declarative usage of SDP alone. For
          purposes of this document, only the Offer/Answer usage of SDP
          is considered as mandated by <xref
-         target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref>.
-        </t>
+         target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref>.</t>
       </section>
 
       <section title="RFC6064 - SDP and RTSP Extensions for 3GPP">
@@ -2079,8 +2090,7 @@
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
         </texttable>
-        <t hangText="Notes">
-         <xref target="RFC6064"/> defines SDP attributes that are
+        <t>NOTE: <xref target="RFC6064"/> defines SDP attributes that are
          applicable in the declarative usage of SDP alone. For
          purposes of this document, only the Offer/Answer usage of SDP
          is considered as mandated by <xref
@@ -2189,7 +2199,7 @@
           <c>B&nbsp;</c><c>NOT RECOMMENDED&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
         </texttable>
-        <t hangText="Note">RFC3108 describes conventions for using the
+        <t>NOTE: RFC3108 describes conventions for using the
         Session Description Protocol (SDP) for characterizing ATM
         bearer connections using an AAL1, AAL2 or AAL5 adaptation
         layers. For AAL1, AAL2 and AAL5, bearer connections can be
@@ -2204,10 +2214,7 @@
         as a low-level transport pipe for IP packets which in turn MAY
         carry one or more real-time (e.g. VoIP) media sessions with a
         life-cycle different from that of the underlying ATM
-        transport.
-        </t>
-        <t hangText="Note"> <xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/>
-        is applicable only for nettypes IN and address types "IP4" or "IP6".</t>	
+        transport.</t>
      </section>
      <section title="3GPP TS 26.114">
         <t>
@@ -2366,66 +2373,69 @@
           <ttcol align='left'>Level</ttcol>
           <ttcol align='left'>Mux Category</ttcol>
 
-          <c>T38FaxVersion&nbsp;</c><c>Not Impacted&nbsp;</c>
-          <c>S</c><c>NORMAL&nbsp;</c>
+          <c>T38FaxVersion&nbsp;</c><c>Refer to notes below&nbsp;</c>
+          <c>S</c><c>TBD&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
-          <c>T38MaxBitRate&nbsp;</c><c>Not Impacted&nbsp;</c>
-          <c>S</c><c>NORMAL&nbsp;</c>
+          <c>T38MaxBitRate&nbsp;</c><c>Refer to notes below&nbsp;</c>
+          <c>S</c><c>TBD&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
-          <c>T38FaxFillBitRemoval&nbsp;</c><c>Not Impacted&nbsp;</c>
-          <c>S</c><c>NORMAL&nbsp;</c>
+          <c>T38FaxFillBitRemoval&nbsp;</c><c>Refer to notes below&nbsp;</c>
+          <c>S</c><c>TBD&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
-          <c>T38FaxTranscodingMMR&nbsp;</c><c>Not Impacted&nbsp;</c>
-          <c>S</c><c>NORMAL&nbsp;</c>
+          <c>T38FaxTranscodingMMR&nbsp;</c><c>Refer to notes below&nbsp;</c>
+          <c>S</c><c>TBD&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
-          <c>T38FaxTranscodingJBIG&nbsp;</c><c>Not Impacted&nbsp;</c>
-          <c>S</c><c>NORMAL&nbsp;</c>
+          <c>T38FaxTranscodingJBIG&nbsp;</c><c>Refer to notes below&nbsp;</c>
+          <c>S</c><c>TBD&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
-          <c>T38FaxRateManagement&nbsp;</c><c>Not Impacted&nbsp;</c>
-          <c>S</c><c>NORMAL&nbsp;</c>
+          <c>T38FaxRateManagement&nbsp;</c><c>Refer to notes below&nbsp;</c>
+          <c>S</c><c>TBD&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
-          <c>T38FaxMaxBuffer&nbsp;</c><c>Not Impacted&nbsp;</c>
-          <c>S</c><c>NORMAL&nbsp;</c>
+          <c>T38FaxMaxBuffer&nbsp;</c><c>Refer to notes below&nbsp;</c>
+          <c>S</c><c>TBD&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
-          <c>T38FaxMaxDatagram&nbsp;</c><c>Not Impacted&nbsp;</c>
-          <c>S</c><c>NORMAL&nbsp;</c>
+          <c>T38FaxMaxDatagram&nbsp;</c><c>Refer to notes below&nbsp;</c>
+          <c>S</c><c>TBD&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
-          <c>T38FaxUdpEC&nbsp;</c><c>Not Impacted&nbsp;</c>
-          <c>S</c><c>NORMAL&nbsp;</c>
+          <c>T38FaxUdpEC&nbsp;</c><c>Refer to notes below&nbsp;</c>
+          <c>S</c><c>TBD&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
-          <c>T38FaxMaxIFP&nbsp;</c><c>Not Impacted&nbsp;</c>
-          <c>S</c><c>NORMAL&nbsp;</c>
+          <c>T38FaxMaxIFP&nbsp;</c><c>Refer to notes below&nbsp;</c>
+          <c>S</c><c>TBD&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
-          <c>T38FaxUdpECDepth&nbsp;</c><c>Not Impacted&nbsp;</c>
-          <c>S</c><c>NORMAL&nbsp;</c>
+          <c>T38FaxUdpECDepth&nbsp;</c><c>Refer to notes below&nbsp;</c>
+          <c>S</c><c>TBD&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
-          <c>T38FaxUdpFECMaxSpan&nbsp;</c><c>Not Impacted&nbsp;</c>
-          <c>S</c><c>NORMAL&nbsp;</c>
+          <c>T38FaxUdpFECMaxSpan&nbsp;</c><c>Refer to notes below&nbsp;</c>
+          <c>S</c><c>TBD&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
-          <c>T38ModemType&nbsp;</c><c>Not Impacted&nbsp;</c>
-          <c>S</c><c>NORMAL&nbsp;</c>
+          <c>T38ModemType&nbsp;</c><c>Refer to notes below&nbsp;</c>
+          <c>S</c><c>TBD&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
           
-          <c>T38VendorInfo&nbsp;</c><c>Not Impacted&nbsp;</c>
-          <c>S</c><c>NORMAL&nbsp;</c>
+          <c>T38VendorInfo&nbsp;</c><c>Refer to notes below&nbsp;</c>
+          <c>S</c><c>TBD&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
         </texttable>
-         <t hangText="Note"> The ITU T.38 attributes are clearly unaffected 
-          by multiplexing and are specific to the working of the fax 
-          protocol itself.</t>
+         <t>NOTE: As per section 9.1 of 
+          <xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/>, 
+          there exists no publicly available specification that defines 
+          procedures for multiplexing/demulitplexing fax protocols flows over a 
+          single 5-tuple. Once such a specification is available, the multiplexing 
+          categories assigments for attributes in this section MUST be revisited.</t>
       </section>
 
       <section title="ITU-T Q.1970">
@@ -2489,26 +2499,29 @@
           <ttcol align='left'>Level</ttcol>
           <ttcol align='left'>Mux Category</ttcol>
 
-          <c>accept-types&nbsp;</c><c>Not Impacted&nbsp;</c>
-          <c>M&nbsp;</c><c>NORMAL&nbsp;</c>
+          <c>accept-types&nbsp;</c><c>Refer to notes below&nbsp;</c>
+          <c>M&nbsp;</c><c>TBD&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
-          <c>accept-wrapped-types&nbsp;</c><c>Not Impacted&nbsp;</c>
-          <c>M&nbsp;</c><c>NORMAL&nbsp;</c>
+          <c>accept-wrapped-types&nbsp;</c><c>Refer to notes below&nbsp;</c>
+          <c>M&nbsp;</c><c>TBD&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
-          <c>max-size&nbsp;</c><c>Not Impacted&nbsp;</c>
-          <c>M&nbsp;</c><c>NORMAL&nbsp;</c>
+          <c>max-size&nbsp;</c><c>Refer to notes below&nbsp;</c>
+          <c>M&nbsp;</c><c>TBD&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
-          <c>path&nbsp;</c><c>Not Impacted&nbsp;</c>
-          <c>M&nbsp;</c><c>NORMAL&nbsp;</c>
+          <c>path&nbsp;</c><c>Refer to notes below&nbsp;</c>
+          <c>M&nbsp;</c><c>TBD&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
         </texttable>
-        <t hangText="Note">Section 9.1 of <xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/>
-        </t>
-
+        <t>NOTE: As per section 9.1 of 
+         <xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/>, 
+         there exists no publicly available specification that 
+         defines procedures for multiplexing/demulitplexing MRSP flows over 
+         a single 5-tuple. Once such a specification is available, the multiplexing 
+         categories assigments for attributes in this section MUST be revisited.</t>
       </section>
 
       <section title="Historical Attributes">
@@ -2612,7 +2625,7 @@
          <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
        </texttable>
-       <t hangText="Note"> The intention of TIAS is that the media
+       <t>NOTE: The intention of TIAS is that the media
        level bit-rate is multiplied with the known per-packet overhead
        for the selected transport and the maxprate value to determine
        the worst case bit-rate from the transport to more accurately
@@ -3559,6 +3572,10 @@ a=pcfg:4 m=5 pt=5:101
         and media level)" subregistry in the "Session Description Protocol (SDP)
         Parameters" registry. The references should be updated to point at this RFC
         as well as the previous references. </t>
+        <t> NOTE: The attributes from draft-ietf-rmt-flute-sdp ('flute-tsi', 
+        'flute-ch', 'FEC-declaration', 'FEC-OTI-extension') were not analyzed 
+        for their multiplexing behavior due to expired status of the draft and thus
+        included in this section with the multiplexing category as 'TBD'. </t>
 
         <texttable align="left">
           <ttcol align='left'>SDP Name</ttcol>
@@ -3645,15 +3662,15 @@ a=pcfg:4 m=5 pt=5:101
           <c>fmtp&nbsp;</c><c>IDENTICAL-PER-PT&nbsp;</c>
           <c>rtpred1&nbsp;</c><c>NOT RECOMMENDED&nbsp;</c>
           <c>rtpred2&nbsp;</c><c>NOT RECOMMENDED&nbsp;</c>
-          <c>T38FaxVersion&nbsp;</c><c>NORMAL&nbsp;</c>
-          <c>T38MaxBitRate&nbsp;</c><c>NORMAL&nbsp;</c>
-          <c>T38FaxFillBitRemoval&nbsp;</c><c>NORMAL&nbsp;</c>
-          <c>T38FaxTranscodingMMR&nbsp;</c><c>NORMAL&nbsp;</c>
-          <c>T38FaxTranscodingJBIG&nbsp;</c><c>NORMAL&nbsp;</c>
-          <c>T38FaxRateManagement&nbsp;</c><c>NORMAL&nbsp;</c>
-          <c>T38FaxMaxBuffer&nbsp;</c><c>NORMAL&nbsp;</c>
-          <c>T38FaxMaxDatagram&nbsp;</c><c>NORMAL&nbsp;</c>
-          <c>T38FaxUdpEC&nbsp;</c><c>NORMAL&nbsp;</c>
+          <c>T38FaxVersion&nbsp;</c><c>TBD&nbsp;</c>
+          <c>T38MaxBitRate&nbsp;</c><c>TBD&nbsp;</c>
+          <c>T38FaxFillBitRemoval&nbsp;</c><c>TBD&nbsp;</c>
+          <c>T38FaxTranscodingMMR&nbsp;</c><c>TBD&nbsp;</c>
+          <c>T38FaxTranscodingJBIG&nbsp;</c><c>TBD&nbsp;</c>
+          <c>T38FaxRateManagement&nbsp;</c><c>TBD&nbsp;</c>
+          <c>T38FaxMaxBuffer&nbsp;</c><c>TBD&nbsp;</c>
+          <c>T38FaxMaxDatagram&nbsp;</c><c>TBD&nbsp;</c>
+          <c>T38FaxUdpEC&nbsp;</c><c>TBD&nbsp;</c>
           <c>maxptime&nbsp;</c><c>IDENTICAL-PER-PT&nbsp;</c>
           <c>des&nbsp;</c><c>NOT RECOMMENDED&nbsp;</c>
           <c>curr&nbsp;</c><c>NOT RECOMMENDED&nbsp;</c>
@@ -3662,7 +3679,7 @@ a=pcfg:4 m=5 pt=5:101
           <c>rtcp&nbsp;</c><c>TRANSPORT&nbsp;</c>
           <c>rtcp-fb&nbsp;</c><c>IDENTICAL-PER-PT&nbsp;</c>
           <c>label&nbsp;</c><c>NORMAL&nbsp;</c>
-          <c>T38VendorInfo&nbsp;</c><c>NORMAL&nbsp;</c>
+          <c>T38VendorInfo&nbsp;</c><c>TBD&nbsp;</c>
           <c>crypto&nbsp;</c><c>TRANSPORT&nbsp;</c>
           <c>eecid&nbsp;</c><c>NOT RECOMMENDED&nbsp;</c>
           <c>aalType&nbsp;</c><c>NOT RECOMMENDED&nbsp;</c>
@@ -3712,10 +3729,10 @@ a=pcfg:4 m=5 pt=5:101
           <c>userid&nbsp;</c><c>NORMAL&nbsp;</c>
           <c>floorid&nbsp;</c><c>NORMAL&nbsp;</c>
           <c>FEC&nbsp;</c><c>NORMAL&nbsp;</c>
-          <c>accept-types&nbsp;</c><c>NORMAL&nbsp;</c>
-          <c>accept-wrapped-types&nbsp;</c><c>NORMAL&nbsp;</c>
-          <c>max-size&nbsp;</c><c>NORMAL&nbsp;</c>
-          <c>path&nbsp;</c><c>NORMAL&nbsp;</c>
+          <c>accept-types&nbsp;</c><c>TBD&nbsp;</c>
+          <c>accept-wrapped-types&nbsp;</c><c>TBD&nbsp;</c>
+          <c>max-size&nbsp;</c><c>TBD&nbsp;</c>
+          <c>path&nbsp;</c><c>TBD&nbsp;</c>
           <c>dccp-service-code&nbsp;</c><c>NOT RECOMMENDED&nbsp;</c>
           <c>rtcp-mux&nbsp;</c><c>IDENTICAL&nbsp;</c>
           <c>candidate&nbsp;</c><c>TRANSPORT&nbsp;</c>
@@ -3724,13 +3741,13 @@ a=pcfg:4 m=5 pt=5:101
           <c>SRTPAuthentication&nbsp;</c><c>TBD&nbsp;</c>
           <c>SRTPROCTxRate&nbsp;</c><c>TBD&nbsp;</c>
           <c>rtcp-rsize&nbsp;</c><c>IDENTICAL&nbsp;</c>
-          <c>file-selector&nbsp;</c><c>NORMAL&nbsp;</c>
-          <c>file-transfer-id&nbsp;</c><c>NORMAL&nbsp;</c>
-          <c>file-disposition&nbsp;</c><c>NORMAL&nbsp;</c>
-          <c>file-date&nbsp;</c><c>NORMAL&nbsp;</c>
-          <c>file-icon&nbsp;</c><c>NORMAL&nbsp;</c>
+          <c>file-selector&nbsp;</c><c>TBD&nbsp;</c>
+          <c>file-transfer-id&nbsp;</c><c>TBD&nbsp;</c>
+          <c>file-disposition&nbsp;</c><c>TBD&nbsp;</c>
+          <c>file-date&nbsp;</c><c>TBD&nbsp;</c>
+          <c>file-icon&nbsp;</c><c>TBD&nbsp;</c>
           <c>file-range&nbsp;</c><c>NORMAL&nbsp;</c>
-          <c>depend&nbsp;</c><c>IDENTICAL-PER-PT&nbsp;</c>
+          <c>depend&nbsp;</c><c>TBD-PER-PT&nbsp;</c>
           <c>ssrc&nbsp;</c><c>NORMAL&nbsp;</c>
           <c>ssrc-group&nbsp;</c><c>NORMAL&nbsp;</c>
           <c>rtcp-unicast&nbsp;</c><c>IDENTICAL&nbsp;</c>
@@ -3767,7 +3784,7 @@ a=pcfg:4 m=5 pt=5:101
           <c>omr-s-att&nbsp;</c><c>NORMAL&nbsp;</c>
           <c>omr-m-bw&nbsp;</c><c>NORMAL&nbsp;</c>
           <c>omr-s-bw&nbsp;</c><c>NORMAL&nbsp;</c>
-          <c>msrp-cema&nbsp;</c><c>NORMAL&nbsp;</c>
+          <c>msrp-cema&nbsp;</c><c>TBD&nbsp;</c>
           <c>dccp-port&nbsp;</c><c>NOT RECOMMENDED&nbsp;</c>
           <c>resource&nbsp;</c><c>NORMAL&nbsp;</c>
           <c>channel&nbsp;</c><c>NORMAL&nbsp;</c>
@@ -3779,11 +3796,11 @@ a=pcfg:4 m=5 pt=5:101
           <c>loopback-mirror&nbsp;</c><c>NORMAL&nbsp;</c>
           <c>chatroom&nbsp;</c><c>TBD&nbsp;</c>
           <c>altc&nbsp;</c><c>TRANSPORT&nbsp;</c>
-          <c>T38FaxMaxIFP&nbsp;</c><c>NORMAL&nbsp;</c>
-          <c>T38FaxUdpECDepth&nbsp;</c><c>NORMAL&nbsp;</c>
-          <c>T38FaxUdpFECMaxSpan&nbsp;</c><c>NORMAL&nbsp;</c>
-          <c>T38ModemType&nbsp;</c><c>NORMAL&nbsp;</c>
-          <c>cs-correlation&nbsp;</c><c>NORMAL&nbsp;</c>
+          <c>T38FaxMaxIFP&nbsp;</c><c>TBD&nbsp;</c>
+          <c>T38FaxUdpECDepth&nbsp;</c><c>TBD&nbsp;</c>
+          <c>T38FaxUdpFECMaxSpan&nbsp;</c><c>TBD&nbsp;</c>
+          <c>T38ModemType&nbsp;</c><c>TBD&nbsp;</c>
+          <c>cs-correlation&nbsp;</c><c>TBD&nbsp;</c>
           <c>rtcp-idms&nbsp;</c><c>NORMAL&nbsp;</c>
           </texttable>
       </section>
@@ -3906,10 +3923,10 @@ a=pcfg:4 m=5 pt=5:101
         <texttable align="left">
           <ttcol align='left'>Value</ttcol>
           <ttcol align='left'>Mux Category</ttcol>
-          <c>callerid&nbsp;</c><c>NOT RECOMMENDED&nbsp;</c>
-          <c>uuie&nbsp;</c><c>NOT RECOMMENDED&nbsp;</c>
-          <c>dtmf&nbsp;</c><c>NOT RECOMMENDEDL&nbsp;</c>
-          <c>external&nbsp;</c><c>NOT RECOMMENDED&nbsp;</c>
+          <c>callerid&nbsp;</c><c>TBD&nbsp;</c>
+          <c>uuie&nbsp;</c><c>TBD&nbsp;</c>
+          <c>dtmf&nbsp;</c><c>TBD&nbsp;</c>
+          <c>external&nbsp;</c><c>TBD&nbsp;</c>
         </texttable>
       </section>
       <section title="Table: Semantics for the 'ssrc-group' SDP Attribute">
@@ -4064,6 +4081,19 @@ a=pcfg:4 m=5 pt=5:101
     </section>
     <section title="Change Log">
       <t>[RFC EDITOR NOTE: Please remove this section when publishing]</t>
+      <t>Changes from draft-ietf-mmusic-sdp-mux-attributes-06 - 08
+          <list style="symbols">
+              <t>
+                Assigned TBD category to all the attributes for whom there
+                exists no speficication on multiplexing behavior for the
+                underlying transport protocol today.
+              </t>
+              <t>
+                Incorporated comments from Flemming and Ari (post last call)
+              </t>
+          </list>
+      </t>
+
       <t>Changes from draft-ietf-mmusic-sdp-mux-attributes-06
           <list style="symbols">
               <t>
@@ -4440,7 +4470,7 @@ a=pcfg:4 m=5 pt=5:101
       
       <reference anchor="I.D-draft-ietf-dart-dscp-rtp">
         <front>
-          <title>The Session Description Protocol (SDP) Content Attribute</title>
+          <title>Differentiated Services (DiffServ) and Real-time Communication</title>
           <author fullname="David Black" initials="D." surname="Black">
             <organization></organization>
           </author>
@@ -4449,9 +4479,9 @@ a=pcfg:4 m=5 pt=5:101
           </author>
           <date month="September" year="2014" />
         </front>
-        <seriesInfo name='Internet-Draft' value='draft-ietf-dart-dscp-rtp-07' />
+        <seriesInfo name='Internet-Draft' value='draft-ietf-dart-dscp-rtp-10' />
         <format type='TXT'
-          target='http://www.ietf.org/id/draft-ietf-dart-dscp-rtp-07.txt' />
+          target='http://www.ietf.org/id/draft-ietf-dart-dscp-rtp-10.txt' />
       </reference>
 
     </references>
