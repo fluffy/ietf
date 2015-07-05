@@ -106,7 +106,7 @@
       </address>
     </author>
 
-    <date day="4" month="July" year="2015" />
+    <date day="5" month="July" year="2015"/>
 
     <area>MMUSIC</area>
 
@@ -331,7 +331,7 @@
         <t> Attributes that can be set normally for multiple items in
          a multiplexed group but the software MUST pick the one 
          that's associated with the "m=" line whose information is 
-         used for setting up the underyling transport.</t>
+         used for setting up the underlying transport.</t>
         <t>&nbsp;</t>
         <t>In the example below, "a=crypto" attribute is defined for both
         the audio and the video "m=" lines. The video media line's a=crypto
@@ -702,23 +702,16 @@
           <ttcol align='left'>Mux Category</ttcol>
 
           <c>qos-mech-send&nbsp;</c>
-          <c> Refer to notes below &nbsp;</c>
-          <c>B</c><c>NORMAL&nbsp;</c>
+          <c> Refer to section <xref target="SecqostokenAnalysis"/> &nbsp;</c>
+          <c>B</c><c>TRANSPORT&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
           <c>qos-mech-recv&nbsp;</c>
-          <c> Refer to notes below&nbsp;</c>
-          <c>B</c><c>NORMAL&nbsp;</c>
+          <c>Refer to section <xref target="SecqostokenAnalysis"/> &nbsp;</c>
+          <c>B</c><c>TRANSPORT&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
         </texttable>
-        <t>NOTE: A single DSCP code point per flow being multiplexed
-          doesn't impact multiplexing since QOS mechanisms are
-          signaled/scoped per flow. For scenarios that involve having
-          different DSCP code points for packets being transmitted over
-          the same 5-tuple, issues as discussed in
-          <xref target="I.D-draft-ietf-dart-dscp-rtp"/> need to be
-          taken into consideration.</t>
       </section>
 
       <section title="RFC4568 - SDP Security Descriptions">
@@ -1280,9 +1273,9 @@
         <t>NOTE: As per section 9.1 of
          <xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/>, there 
          exists no publicly available specification that 
-         defines procedures for multiplexing/demulitplexing MRSP flows
+         defines procedures for multiplexing/demultiplexing MRSP flows
          over a single 5-tuple. Once such a specification is available, 
-         the multiplexing categories assigments for attributes in this
+         the multiplexing categories assignments for the attributes in this
          section MUST be revisited.</t>	
       </section>
 
@@ -1318,13 +1311,6 @@
           <c>&nbsp;</c><c>&nbsp;</c>
 
         </texttable>
-        <t>NOTE: As per section 9.1 of 
-         <xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/>, 
-         there exists no publicly available specification that 
-         defines procedures for multiplexing/demulitplexing MRSP flows
-         over a single 5-tuple. Once such a specification is available, 
-         the multiplexing categories assigments for attributes in this
-         section MUST be revisited.</t>
       </section>
 
       <section title="RFC5547 - SDP Offer/Answer for File Transfer">
@@ -1366,9 +1352,9 @@
         <t>NOTE: As per section 9.1 of 
          <xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/>, 
          there exists no publicly available specification that 
-         defines procedures for multiplexing/demulitplexing MRSP flows
+         defines procedures for multiplexing/demultiplexing MRSP flows
          over a single 5-tuple. Once such a specification is available, 
-         the multiplexing categories assigments for attributes in this
+         the multiplexing categories assignments for attributes in this
          section MUST be revisited.</t>	
       </section>
 
@@ -2433,9 +2419,9 @@
          <t>NOTE: As per section 9.1 of 
           <xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/>, 
           there exists no publicly available specification that defines 
-          procedures for multiplexing/demulitplexing fax protocols flows over a 
+          procedures for multiplexing/demultiplexing fax protocols flows over a 
           single 5-tuple. Once such a specification is available, the multiplexing 
-          categories assigments for attributes in this section MUST be revisited.</t>
+          category assignments for the attributes in this section MUST be revisited.</t>
       </section>
 
       <section title="ITU-T Q.1970">
@@ -2519,9 +2505,9 @@
         <t>NOTE: As per section 9.1 of 
          <xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/>, 
          there exists no publicly available specification that 
-         defines procedures for multiplexing/demulitplexing MRSP flows over 
+         defines procedures for multiplexing/demultiplexing MRSP flows over 
          a single 5-tuple. Once such a specification is available, the multiplexing 
-         categories assigments for attributes in this section MUST be revisited.</t>
+         categories assignments for the attributes in this section MUST be revisited.</t>
       </section>
 
       <section title="Historical Attributes">
@@ -3061,6 +3047,13 @@
           <c>B</c><c>TRANSPORT&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
         </texttable>
+        <t>NOTE: A single DSCP code point per flow being multiplexed
+          doesn't impact multiplexing since QOS mechanisms are
+          signaled/scoped per flow. For scenarios that involve having
+          different DSCP code points for packets being transmitted over
+          the same 5-tuple, issues as discussed in
+          <xref target="I.D-draft-ietf-dart-dscp-rtp"/> need to be
+          taken into consideration.</t>
       </section>
     </section>
     <section title="k= Attribute Analysis" anchor="SeckAnalysis">
@@ -3573,9 +3566,10 @@ a=pcfg:4 m=5 pt=5:101
         Parameters" registry. The references should be updated to point at this RFC
         as well as the previous references. </t>
         <t> NOTE: The attributes from draft-ietf-rmt-flute-sdp ('flute-tsi', 
-        'flute-ch', 'FEC-declaration', 'FEC-OTI-extension') were not analyzed 
-        for their multiplexing behavior due to expired status of the draft and thus
-        included in this section with the multiplexing category as 'TBD'. </t>
+        'flute-ch', 'FEC-declaration', 'FEC-OTI-extension', 'content-desc') were 
+        not analyzed for their multiplexing behavior due to the expired status of the 
+        draft. For purposes of this specification, the multiplexing category 
+        of 'TBD' is assigned. </t>
 
         <texttable align="left">
           <ttcol align='left'>SDP Name</ttcol>
@@ -4085,7 +4079,7 @@ a=pcfg:4 m=5 pt=5:101
           <list style="symbols">
               <t>
                 Assigned TBD category to all the attributes for whom there
-                exists no speficication on multiplexing behavior for the
+                exists no specification on multiplexing behavior over the
                 underlying transport protocol today.
               </t>
               <t>
