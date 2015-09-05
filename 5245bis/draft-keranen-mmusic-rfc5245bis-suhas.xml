@@ -99,10 +99,10 @@ simplification is extra RTT and a extra bandwidth of retransmits -->
 
 <section title="Introduction">
 
-<t>Protocols establishing real-time multimedia session between peers typically 
+<t>Protocols establishing multimedia session between peers typically 
 involves exchanging IP addresses and ports for the media sources and 
 sinks. However this poses challenges when operated through Network Address 
-Translators (NATs) [RFC3235]. The protocols also seek to
+Translators (NATs) [RFC3235]. These protocols also seek to
 create a media flow directly between participants, so that there is
 no application layer intermediary between them.  This is done to
 reduce media latency, decrease packet loss, and reduce the
@@ -131,17 +131,17 @@ to work well in all situations.  </t>
 <t> This specification defines Interactive Connectivity Establishment
 (ICE) as a technique for NAT traversal for UDP-based media streams
 (though ICE has been extended to handle other transport protocols,
-such as TCP [RFC6544]). ICE works by exchanging a
+such as TCP <xref target="RFC6544"/>). ICE works by exchanging a
 multiplicity of IP addresses and ports which are then tested for 
 connectivity by peer-to-peer connectivity checks. The  IP addresses and 
-ports are exchanged via mechanisms (by including in the offer/answer, 
+ports are exchanged via mechanisms (say by including in the offer/answer, 
 for example) and the connectivity checks are performed using Session 
 Traversal Utilities for NAT (STUN) specification [RFC5389]. ICE also makes 
 use of Traversal Using Relays around NAT (TURN) [RFC5766], an extension
 to STUN.  Because ICE exchanges a multiplicity of IP addresses and
 ports for each media stream, it also allows for address selection for
 multihomed and dual-stack hosts, and for this reason it deprecates
-[RFC4091] and [RFC4092]..
+[RFC4091] and [RFC4092].
 <!-- TODO: 4091 and 4092 already deprecated by 5245 -->
 </t>
 
@@ -675,13 +675,15 @@ implementation is preferable if achievable.
 
 <t>This document specifies generic use of ICE with protocols that
 provide means to exchange candidate information between the ICE Peers.
-The specific details (e.g., how to encode candidates) for different 
-protocols using ICE are described in separate usage documents. For example, 
-usage with SIP and SDP is described in <xref target="I-D.ietf-mmusic-ice-sip-sdp"/>.
+The specific details of (i.e how to encode candidate information and 
+the actual candidate exchange process) for different protocols using 
+ICE are described in separate usage documents. One possible way the 
+agents exchange the candidate information would be to use 
+<xref target="RFC3264"/> based Offer/Answer semantics as part of the 
+SIP <xref target="RFC3261"/> protocol 
+<xref target="I-D.ietf-mmusic-ice-sip-sdp"/>.
 </t>
-
 </section>
-
 </section>
 
 <section title="Terminology">
@@ -709,18 +711,22 @@ This specification makes use of the following additional terminology:
 ICE candidate exchange.  There are two agents involved in an typically candidate 
 exchange. </t>
  
-<t hangText= "Initiating Peer:">  An agent is the protocol implementation involved in the
- ICE candidate exchange. This is the agent that initiates the ICE candidate
- exchange process. </t>  
+<t hangText= "Initiating Peer, Initiating Agent, Initiator:">  
+An agent is the protocol implementation involved in the ICE 
+candidate exchange. This is the agent that 
+initiates the ICE candidate exchange process. </t>  
 
-<t hangText="Responding Peer:">  An agent is the protocol implementation involved in the
-ICE candidate exchange. This is the agent that receives and responds to the candidate exchange 
-process initiated by the Initiating Agent. </t>
+<t hangText="Responding Peer, Responding Agent, Responder:">  
+An agent is the protocol implementation involved in the ICE 
+candidate exchange. This is the agent that receives 
+and responds to the candidate exchange process initiated by the 
+Initiator. </t>
    
-<t hangText="ICE Candidate Exchange:"> The process where the ICE agents
-exchange information (e.g., candidates and passwords) that is needed
-to perform ICE. RFC 3264 offer/answer with SDP is one example of a
-protocol that can be used for exchanging the candidate information. </t>
+<t hangText="ICE Candidate Exchange, Candidate Exchange:"> 
+The process where the ICE agents exchange information 
+(e.g., candidates and passwords) that is needed to perform ICE. 
+RFC 3264 offer/answer with SDP is one example of a protocol 
+that can be used for exchanging the candidate information. </t>
 
 <t hangText="Peer:">From the perspective of one of the agents in a
 session, its peer is the other agent. Specifically, from the
@@ -739,10 +745,10 @@ stream", and "media session" are still used in this specification to
 refer to the IP data packets that are exchanged between the peers on
 the path created and tested with ICE. </t>
 
-<t hangText="Candidate:"> A transport address that is a potential
-point of contact for receipt of media. Candidates also have properties
--- their type (server reflexive, relayed, or host), priority,
-foundation, and base.
+<t hangText="Candidate, Candidate Information:"> A transport address 
+that is a potential point of contact for receipt of media. Candidates 
+also have properties -- their type (server reflexive, relayed, or host), 
+priority,foundation, and base.
 </t>
 
 <t hangText="Component:"> A component is a piece of a media
@@ -893,53 +899,56 @@ protocol. </t>
 </section>
 
 
-<section anchor="sec-cand-exchange" title="ICE Candidate Exchange Process">
+<section anchor="sec-gathering_exchange" title="ICE Candidate Gathering and Exchange">
+
 <t>
-As part of ICE processing, both the Initiating and Responding Agents 
-exchange encoded candidate information as defined by the Usage Protocol (ICE Usage).
-Specifics of encoding mechanism and the semantics of candidate information exchange 
-is out of scope of this specification. One possible way the agents exchange 
-the candidate information would be to use <xref target="RFC3264"/> based 
-Offer/Answer semantics as part of the SIP <xref target="RFC3261"/> protocol 
-<xref target="I-D.ietf-mmusic-ice-sip-sdp"/>.
+As part of ICE processing, both the Initiating and Responding Agents
+exchange encoded candidate information as defined by the Usage 
+Protocol (ICE Usage). Specifics of encoding mechanism and the semantics 
+of candidate information exchange is out of scope of this specification.
 </t>
-</section>
-
-<!--
-<section title="Procedures for the Initiating Peer">
 
 <t>
-The ICE agent initiating the candidate exchange must 	
-(1) gather candidates, (2) prioritize them, (3) eliminate
-redundant candidates, (4) (possibly) choose default candidates, and then (5)
-formulate and send the candidates to the Peer ICE agent. All but the last of these 
+However at a higher level, the below diagram captures ICE processing 
+sequence in the agents (initiator and responder) for exchanging 
+their respective candidate(s) information.
+</t>
+
+<figure title="Candidate Exchange Call Flow" 
+anchor="fig:basic-cand-exchange" align="left">
+<artwork>
+<![CDATA[
+         Initiating                      Responding
+           Agent                           Agent
+           (L)                             (R)
+Gather,     |                               |
+prioritize, |                               |
+eliminate   |                               |
+redundant   |                               |
+candidates  |                               |
+            |   L's Candidate Information   |
+            |------------------------------>|
+            |                               | Gather,
+            |                               | prioritize,
+            |                               | eliminate
+            |                               | redundant
+            |                               | candidates
+            |   R's Candidate Information   |
+            |<------------------------------|
+            |                               |
+]]></artwork></figure>
+<t>
+As shown, the agents involved in the candidate 
+exchange perform (1) candidate gathering, (2) candidate prioritization, 
+(3) eliminating redundant candidates, (4) (possibly) choose default candidates, and then (5)
+formulate and send the candidates to the Peer ICE agent. All but the last of these
 five steps differ for full and lite implementations.
 </t>
-
--->
-<section anchor="sec-full-impl-reqs" title="Full Implementation Requirements">
 <t>
-The ICE Agents (Initiating and Responding) involved in the candidate 
-exchange process perform (1) candidate gathering, (2) candidate prioritization, 
-(3) eliminating redundant candidates, (4) (possibly) choose default candidates, and then (5)
-formulate and send the candidates to the Peer ICE agent. Additionally the agents needs to 
-verify that its peer supports ICE, determines its and peer's role, form the check list 
-and begins performing connectivity checks.
 </t>
 
-<section anchor="sec-verify" title="Verifying ICE Support">
+<section anchor="sec-full-impl-reqs" title="Procedures for Full Implementation">
 
-<t> 
-Certain middleboxes, such as ALGs, may alter the ICE candidate information
-that breaks ICE. If the using protocol is vulnerable
-to this kind of changes, called ICE mismatch, the responding agent needs to
-detect this and signal this back to the initiating agent. The details on
-whether this is needed and how it is done is defined by the usage
-specifications. One exception to the above is that an initiating anget would
-never indicate ICE mismatch. 
-</t>
-
-</section>
 
 <section anchor="sec-gathering" title="Gathering Candidates">
 
@@ -1330,6 +1339,212 @@ redundant candidate with the lower priority.
 <t>
 This process is common across the initiating and responding agents.	
 </t>	
+</section>
+<!-- end full implementation -->
+</section>
+
+<section anchor="sec-offer-lite" title="Lite Implementation Procedures">
+
+<t>
+Lite implementations only utilize host candidates. A lite
+implementation MUST, for each component of each media stream, allocate
+zero or one IPv4 candidates. It MAY allocate zero or more IPv6
+candidates, but no more than one per each IPv6 address utilized by the
+host. Since there can be no more than one IPv4 candidate per component
+of each media stream, if an agent has multiple IPv4 addresses, it
+MUST choose one for allocating the candidate. If a host is dual-stack,
+it is RECOMMENDED that it allocate one IPv4 candidate and one global
+IPv6 address. With the lite implementation, ICE cannot be used 
+to dynamically choose amongst candidates. Therefore, including
+more than one candidate from a particular scope is NOT RECOMMENDED,
+since only a connectivity check can truly determine whether to use one
+address or the other.
+</t>
+
+<t>Each component has an ID assigned to it, called the component
+ID. For RTP-based media streams, the RTP itself has a component ID of
+1, and RTCP a component ID of 2. If an agent is using RTCP, it MUST
+obtain candidates for it.
+</t>
+
+<t>
+Each candidate is assigned a foundation. The foundation MUST be
+different for two candidates allocated from different IP addresses,
+and MUST be the same otherwise. A simple integer that increments for
+each IP address will suffice. In addition, each candidate MUST be
+assigned a unique priority amongst all candidates for the same media
+stream. This priority SHOULD be equal to:
+</t>
+
+<figure><artwork>
+<![CDATA[
+priority = (2^24)*(126) +
+           (2^8)*(IP precedence) +
+           (2^0)*(256 - component ID) 
+
+]]></artwork></figure>
+
+<t>
+If a host is v4-only, it SHOULD set the IP precedence to 65535. If a
+host is v6 or dual-stack, the IP precedence SHOULD be the precedence value
+for IP addresses described in RFC 6724 <xref target="RFC6724"/>.
+</t>
+
+<t>
+Next, an agent chooses a default candidate for each component of each
+media stream. If a host is IPv4-only, there would only be one
+candidate for each component of each media stream, and therefore that
+candidate is the default. If a host is IPv6 or dual-stack, the
+selection of default is a matter of local policy. This default SHOULD
+be chosen such that it is the candidate most likely to be used with
+a peer. For IPv6-only hosts, this would typically be a globally scoped
+IPv6 address. For dual-stack hosts, the IPv4 address is RECOMMENDED. 
+</t>
+
+</section>
+
+<section anchor="sec-encoding" title="Encoding the Candidate Information">
+
+<t>
+Regardless of the agent being an Initiator or Responder Agent, 
+the following parameters and their data types needs to be conveyed 
+as part of the candidate exchange process. The specifics of syntax
+for encoding the candidate information is out of scope of this 
+specification. 
+</t>	
+
+<t><list style="hanging">
+
+<t hangText="Candidate attribute"> There will be one or more of these
+  for each "media stream". Each candidate is composed of:
+<list style="hanging">
+   <t hangText="Connection Address:"> The IP address and transport
+   protocol port of the candidate. </t>
+   <t hangText="Transport:"> An indicator of the transport protocol
+   for this candidate. This need not be present if the using protocol
+   will only ever run over a single transport protocol. If it runs
+   over more than one, or if others are anticipated to be used in the
+   future, this should be present. </t>
+   <t hangText="Foundation:"> A sequence of up to 32 characters.</t>
+   <t hangText="Component-ID:"> This would be present only if the using
+   protocol were utilizing the concept of components. If it is, it
+   would be a positive integer that indicates the component ID for
+   which this is a candidate. </t>
+   <t hangText="Priority:"> An encoding of the 32-bit priority
+   value. </t>
+   <t hangText="Candidate Type:"> The candidate type, as defined in
+   ICE. </t>
+   <t hangText="Related Address and Port:"> The related IP address and
+   port for this candidate, as defined by ICE. These MAY be omitted or
+   set to invalid values if the agent does not want to reveal them,
+   e.g., for privacy reasons.
+   </t>
+   <t hangText="Extensibility Parameters:"> The using protocol should
+   define some means for adding new per-candidate ICE parameters in
+   the future. </t>
+</list></t>
+
+<t hangText="Lite Flag:"> If ICE lite is used by the using protocol,
+  it needs to convey a boolean parameter which indicates whether the
+  implementation is lite or not. </t>
+
+<t hangText="Connectivity check pacing value:"> If an agent wants to
+use other than the default pacing values for the connectivity checks,
+it MUST indicate this in the ICE exchange. </t>
+
+<t hangText="Username Fragment and Password:"> The using protocol has
+to convey a username fragment and password. The username fragment MUST
+contain at least 24 bits of randomness, and the password MUST contain
+at least 128 bits of randomness. </t>
+
+
+<t hangText="ICE extensions:"> In addition to the per-candidate
+  extensions above, the using protocol should allow for new
+  media-stream or session-level attributes (ice-options).
+</t>
+
+</list></t>
+
+<t>
+If the using protocol is using the ICE mismatch feature, a way is
+needed to convey this parameter in answers. It is a boolean flag.
+</t>
+
+<t>
+The exchange of parameters is symmetric; both agents need to send the
+same set of attributes as defined above.
+</t>
+
+<t>
+The using protocol may (or may not) need to deal with backwards
+compatibility with older implementations that do not support ICE. If
+the fallback mechanism is being used, then presumably the using
+protocol provides a way of conveying the default candidate (its IP
+address and port) in addition to the ICE parameters.
+</t>
+
+
+<t>
+STUN connectivity checks between agents are authenticated using the
+short-term credential mechanism defined for STUN [RFC5389].  This
+mechanism relies on a username and password that are exchanged
+through protocol machinery between the client and server. The username
+part of this credential is formed by concatenating a username
+fragment from each agent, separated by a colon.  Each agent also
+provides a password, used to compute the message integrity for
+requests it receives.  The username fragment and password are
+exchanged between the peers.  In addition to providing
+security, the username provides disambiguation and correlation of
+checks to media streams.  See Appendix B.4 for motivation.
+</t>
+
+<t>
+If the initiating agent is a lite implementation, it MUST indicate 
+this when sending its candidates .
+</t>
+
+<t>
+ICE provides for extensibility by allowing an agent to include a
+series of tokens that identify ICE extensions as part of the
+candidate exchange process.
+</t>
+
+<t>
+Once an agent has sent its candidate information, that agent 
+MUST be prepared to receive both STUN and media packets on each 
+candidate. As discussed in <xref target="sec-send-media"/>, media packets 
+can be sent to a candidate prior to its appearance as the default 
+destination for media.	
+</t>	
+
+</section>
+
+</section>
+
+<section anchor="sec-candidate_proc" title="ICE Candidate Processing">
+
+<t>
+Once an agent has candidates from it's peer, it will check if the 
+peer supports ICE, determine its own role, exchanges candidates 
+(<xref target="sec-gathering_exchange"/>) and for
+full implementations, form the check lists and begin connectivity
+checks as explained in this section.	
+</t>	
+
+<section anchor="sec-candidate_proc_full" title="Proedures for Full Implementation">	
+
+<section anchor="sec-verify" title="Verifying ICE Support">
+
+<t> 
+Certain middleboxes, such as ALGs, may alter the ICE candidate information
+that breaks ICE. If the using protocol is vulnerable
+to this kind of changes, called ICE mismatch, the responding agent needs to
+detect this and signal this back to the initiating agent. The details on
+whether this is needed and how it is done is defined by the usage
+specifications. One exception to the above is that an initiating agent would
+never indicate ICE mismatch. 
+</t>
+
 </section>
 
 <section anchor="sec-role" title="Determining Role">
@@ -1829,203 +2044,35 @@ known directly by the agent for its own candidate.
 </t>
 
 <t>		
- Initiating agent performs the ordinary checks on recieving the candidate 
- information from the Peer and having formed the checklists. On the 
- other hand the responding agent either performs the triggered or ordinary 
- checks as described above.
+The Initiatior performs the ordinary checks on recieving the candidate 
+information from the Peer (responder) and having formed the checklists. 
+On the  other hand the responding agent either performs the triggered or 
+ordinary checks as described above.
 </t>	
 </section>
-
-<!-- end full implementation -->
-</section> 
-
-<section anchor="sec-offer-lite" title="Lite Implementation Requirements">
-
-<t>
- As part of initial candidate exchange process, an lite implementation 
- performs most of the steps described in <xref target="sec-full-impl-reqs"/> 
- except for (1) forming the checklists, (2) schedluling connectivity checks.
-</t>	
-<t>
-Lite implementations only utilize host candidates. A lite
-implementation MUST, for each component of each media stream, allocate
-zero or one IPv4 candidates. It MAY allocate zero or more IPv6
-candidates, but no more than one per each IPv6 address utilized by the
-host. Since there can be no more than one IPv4 candidate per component
-of each media stream, if an agent has multiple IPv4 addresses, it
-MUST choose one for allocating the candidate. If a host is dual-stack,
-it is RECOMMENDED that it allocate one IPv4 candidate and one global
-IPv6 address. With the lite implementation, ICE cannot be used 
-to dynamically choose amongst candidates. Therefore, including
-more than one candidate from a particular scope is NOT RECOMMENDED,
-since only a connectivity check can truly determine whether to use one
-address or the other.
-</t>
-<t>
-An lite implementation acting as the controlling agent means selecting 
-a candidate pair based on the ones in the candidate exchanged , and then 
-updating the peer reflecting the selection, when needed 
-(it is never needed for an IPv4-only host)
-</t>	
-
-<t>Each component has an ID assigned to it, called the component
-ID. For RTP-based media streams, the RTP itself has a component ID of
-1, and RTCP a component ID of 2. If an agent is using RTCP, it MUST
-obtain candidates for it.
-</t>
-
-<t>
-Each candidate is assigned a foundation. The foundation MUST be
-different for two candidates allocated from different IP addresses,
-and MUST be the same otherwise. A simple integer that increments for
-each IP address will suffice. In addition, each candidate MUST be
-assigned a unique priority amongst all candidates for the same media
-stream. This priority SHOULD be equal to:
-</t>
-
-<figure><artwork>
-<![CDATA[
-priority = (2^24)*(126) +
-           (2^8)*(IP precedence) +
-           (2^0)*(256 - component ID) 
-
-]]></artwork></figure>
-
-<t>
-If a host is v4-only, it SHOULD set the IP precedence to 65535. If a
-host is v6 or dual-stack, the IP precedence SHOULD be the precedence value
-for IP addresses described in RFC 6724 <xref target="RFC6724"/>.
-</t>
-
-<t>
-Next, an agent chooses a default candidate for each component of each
-media stream. If a host is IPv4-only, there would only be one
-candidate for each component of each media stream, and therefore that
-candidate is the default. If a host is IPv6 or dual-stack, the
-selection of default is a matter of local policy. This default SHOULD
-be chosen such that it is the candidate most likely to be used with
-a peer. For IPv6-only hosts, this would typically be a globally scoped
-IPv6 address. For dual-stack hosts, the IPv4 address is RECOMMENDED. 
-</t>
-
+<!-- end of full implementation -->
 </section>
 
+<section anchor="sec-candidate_proc_lite" title="Lite Implementation Procedures">
+ 
+ <t>
+ Lite implementations skips most of the steps in <xref target="sec-candidate_proc"/> 
+ except for verifying the peer's ICE support and determing's its Role in the ICE 
+ processing.	
+ </t>	
+ 
+ <t>
+ On determining the role, for a lite implementation, being the controlling agent 
+ means selecting a candidate pair based on the ones in the candidate exchange 
+ (for IPv4, there is only ever one pair), and then updating the peer with the
+ new candidate information reflecting that selection, when needed 
+ (it is never needed for an IPv4-only host)	
+ </t>	
 
-<section anchor="sec-encoding" title="Encoding the Candidate Information">
+</section>	
 
-<t>
-Regardless of the agent being an Initiating or Responding Agent, 
-the following parameters and their data types needs to be conveyed 
-as part of the candidate exchange process. The specifics of syntax
-for encoding the candidate information is out of scope of this 
-specification. 
-</t>	
+</section>	
 
-<t><list style="hanging">
-
-<t hangText="Candidate attribute"> There will be one or more of these
-  for each "media stream". Each candidate is composed of:
-<list style="hanging">
-   <t hangText="Connection Address:"> The IP address and transport
-   protocol port of the candidate. </t>
-   <t hangText="Transport:"> An indicator of the transport protocol
-   for this candidate. This need not be present if the using protocol
-   will only ever run over a single transport protocol. If it runs
-   over more than one, or if others are anticipated to be used in the
-   future, this should be present. </t>
-   <t hangText="Foundation:"> A sequence of up to 32 characters.</t>
-   <t hangText="Component-ID:"> This would be present only if the using
-   protocol were utilizing the concept of components. If it is, it
-   would be a positive integer that indicates the component ID for
-   which this is a candidate. </t>
-   <t hangText="Priority:"> An encoding of the 32-bit priority
-   value. </t>
-   <t hangText="Candidate Type:"> The candidate type, as defined in
-   ICE. </t>
-   <t hangText="Related Address and Port:"> The related IP address and
-   port for this candidate, as defined by ICE. These MAY be omitted or
-   set to invalid values if the agent does not want to reveal them,
-   e.g., for privacy reasons.
-   </t>
-   <t hangText="Extensibility Parameters:"> The using protocol should
-   define some means for adding new per-candidate ICE parameters in
-   the future. </t>
-</list></t>
-
-<t hangText="Lite Flag:"> If ICE lite is used by the using protocol,
-  it needs to convey a boolean parameter which indicates whether the
-  implementation is lite or not. </t>
-
-<t hangText="Connectivity check pacing value:"> If an agent wants to
-use other than the default pacing values for the connectivity checks,
-it MUST indicate this in the ICE exchange. </t>
-
-<t hangText="Username Fragment and Password:"> The using protocol has
-to convey a username fragment and password. The username fragment MUST
-contain at least 24 bits of randomness, and the password MUST contain
-at least 128 bits of randomness. </t>
-
-
-<t hangText="ICE extensions:"> In addition to the per-candidate
-  extensions above, the using protocol should allow for new
-  media-stream or session-level attributes (ice-options).
-</t>
-
-</list></t>
-
-<t>
-If the using protocol is using the ICE mismatch feature, a way is
-needed to convey this parameter in answers. It is a boolean flag.
-</t>
-
-<t>
-The exchange of parameters is symmetric; both agents need to send the
-same set of attributes as defined above.
-</t>
-
-<t>
-The using protocol may (or may not) need to deal with backwards
-compatibility with older implementations that do not support ICE. If
-the fallback mechanism is being used, then presumably the using
-protocol provides a way of conveying the default candidate (its IP
-address and port) in addition to the ICE parameters.
-</t>
-
-
-<t>
-STUN connectivity checks between agents are authenticated using the
-short-term credential mechanism defined for STUN [RFC5389].  This
-mechanism relies on a username and password that are exchanged
-through protocol machinery between the client and server. The username
-part of this credential is formed by concatenating a username
-fragment from each agent, separated by a colon.  Each agent also
-provides a password, used to compute the message integrity for
-requests it receives.  The username fragment and password are
-exchanged between the peers.  In addition to providing
-security, the username provides disambiguation and correlation of
-checks to media streams.  See Appendix B.4 for motivation.
-</t>
-
-<t>
-If the initiating agent is a lite implementation, it MUST indicate 
-this when sending its candidates .
-</t>
-
-<t>
-ICE provides for extensibility by allowing an agent to include a
-series of tokens that identify ICE extensions as part of the
-candidate exchange process.
-</t>
-
-<t>
-Once an agent has sent its candidate information, that agent 
-MUST be prepared to receive both STUN and media packets on each 
-candidate. As discussed in <xref target="sec-send-media"/>, media packets 
-can be sent to a candidate prior to its appearance as the default 
-destination for media.	
-</t>	
-
-</section>
 
 <section anchor="sec-connectivity_check" title="Performing Connectivity Checks"> 
 
@@ -3017,8 +3064,8 @@ MUST send updated candidate list which will include the remote-candidates
 attribute.
 <!-- TODO: reference to updated offer -->
 </t>
-<t>The agent MUST NOT update the state of ICE processing when the
-offer is sent. If this subsequent offer completes, the controlling
+<t>The agent MUST NOT update the state of ICE processing until
+after the candidate exchange completes. Then the controlling
 agent MUST change the state of ICE processing to Completed for all
 media streams, and the state of ICE processing overall to
 Completed. 
@@ -3610,7 +3657,7 @@ The call flow examples omit STUN authentication operations and RTCP,
 and focus on RTP for a single media stream between two full
 implementations.
 </t>
-
+                                                                  
 <figure title="Example Flow" anchor="fig:basic-ex"><artwork>
 <![CDATA[
           L             NAT           STUN             R
@@ -4849,7 +4896,7 @@ anchor="fig-horror-net"><artwork>
             |192.168.1.100      -----                                     
        +----------+           //     \\             +----------+          
        |          |          |         |            |          |          
-       | Offerer  |---------|  C:net10  |-----------| Answerer |          
+       | Initiator|---------|  C:net10  |-----------| Responder|          
        |          |10.0.1.100|         | 10.0.1.101 |          |          
        +----------+           \\     //             +----------+          
                                 -----                                     
@@ -4937,7 +4984,7 @@ actually required for correct operation of ICE in the first place.
 <t> Consider agents L, R, and Z. L and R are within private enterprise
 1, which is using 10.0.0.0/8. Z is within private enterprise 2, which
 is also using 10.0.0.0/8. As it turns out, R and Z both have IP
-address 10.0.1.1. L sends an offer to Z. Z, in its answer, provides L
+address 10.0.1.1. L sends candidates to Z. Z, in responds L
 with its host candidates. In this case, those candidates are 10.0.1.1:8866 and
 10.0.1.1:8877. As it turns out, R is in a session at that same time,
 and is also using 10.0.1.1:8866 and 10.0.1.1:8877 as host
