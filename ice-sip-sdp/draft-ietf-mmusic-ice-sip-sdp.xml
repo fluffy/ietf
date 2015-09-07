@@ -229,7 +229,8 @@ a=candidate:2 1 UDP 1694498815 192.0.2.3 45664 typ srflx raddr
 		</section>
 
 		<section anchor="sec-conclude" title="Concluding ICE">
-			<t>Once all of the media streams are completed, the controlling endpoint sends an updated offer if the candidates in the "m=" and "c=" lines for the media stream (called the DEFAULT CANDIDATES) don't match ICE's SELECTED CANDIDATES.</t>
+			<t>Once all of the media streams are completed, the controlling endpoint sends an updated offer if the transport
+			destination in the "m=" and "c=" lines for the media stream (called the DEFAULT CANDIDATES) don't match ICE's SELECTED CANDIDATES.</t>
 
 			<!-- TODO: send updated offer always? -->
 
@@ -819,6 +820,13 @@ ice-option-tag        = 1*ice-char]]>
 			</section> <!-- Updating Check and Valid Lists -->
 		</section> <!-- subsequent -->
 
+		<section anchor="sec-keepalive" title="Keepalives">
+			<t>
+				The procedures defined in Section 10 of <xref target="ICE-BIS"/> MUST be followed. The keepalives MUST be sent regardless of whether the media stream is currently inactive, sendonly, recvonly, or sendrecv, and regardless of the presence or value of the bandwidth attribute.
+				An agent can determine that its peer supports ICE by the presence of a=candidate attributes for each media session.
+			</t>
+		</section>
+
 		<section  title="Media Handling">
 			<section anchor="sec-send_media" title="Sending Media">
 				<t>
@@ -845,13 +853,6 @@ ice-option-tag        = 1*ice-char]]>
 					  receiving media.
 					</t>	
 				</section>	
-		</section>
-
-		<section anchor="sec-keepalive" title="Keepalives">
-			<t>
-				The procedures defined in Section 10 of <xref target="ICE-BIS"/> MUST be followed. The keepalives MUST be sent regardless of whether the media stream is currently inactive, sendonly, recvonly, or sendrecv, and regardless of the presence or value of the bandwidth attribute.
-				An agent can determine that its peer supports ICE by the presence of a=candidate attributes for each media session.
-			</t>
 		</section>
 
 		<section title="Usage with SIP">
