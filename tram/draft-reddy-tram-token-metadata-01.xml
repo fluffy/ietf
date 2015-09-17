@@ -1,0 +1,528 @@
+<?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+<?rfc toc="yes"?>
+<?rfc tocompact="yes"?>
+<?rfc tocdepth="3"?>
+<?rfc tocindent="yes"?>
+<?rfc symrefs="yes"?>
+<?rfc sortrefs="yes"?>
+<?rfc comments="yes"?>
+<?rfc inline="yes"?>
+<?rfc compact="yes"?>
+<?rfc subcompact="no"?>
+<rfc category="std" docName="draft-reddy-tram-token-metadata-01"
+     ipr="trust200902">
+  <front>
+    <title abbrev="Metadata discovery for TURN session">Metadata discovery for
+    third party authorized TURN session</title>
+
+    <author fullname="Tirumaleswar Reddy" initials="T." surname="Reddy">
+      <organization abbrev="Cisco">Cisco Systems, Inc.</organization>
+
+      <address>
+        <email>tireddy@cisco.com</email>
+      </address>
+    </author>
+
+    <author fullname="Suhas Nandakumar" initials="S." surname="Nandakumar">
+      <organization abbrev="Cisco">Cisco Systems, Inc.</organization>
+
+      <address>
+        <email>snandaku@cisco.com</email>
+      </address>
+    </author>
+
+    <author fullname="Dan Wing" initials="D." surname="Wing">
+      <organization abbrev="Cisco">Cisco Systems, Inc.</organization>
+
+      <address>
+        <postal>
+          <street>170 West Tasman Drive</street>
+
+          <city>San Jose</city>
+
+          <region>California</region>
+
+          <code>95134</code>
+
+          <country>USA</country>
+        </postal>
+
+        <email>dwing@cisco.com</email>
+      </address>
+    </author>
+
+    <author fullname="Brandon Williams" initials="B." surname="Williams">
+      <organization>Akamai, Inc.</organization>
+
+      <address>
+        <postal>
+          <street>8 Cambridge Center</street>
+
+          <city>Cambridge, MA</city>
+
+          <code>02142</code>
+
+          <country>USA</country>
+        </postal>
+
+        <email>brandon.williams@akamai.com</email>
+      </address>
+    </author>
+
+    <date />
+
+    <workgroup>TRAM</workgroup>
+
+    <abstract>
+      <t>The operator of the TURN server might want to have fine grained
+      control on the clients usage of the server resources for providing
+      features such as limiting the bandwidth usage, number of allocations and
+      so on. This document proposes a generic mechanism for the operator to
+      introspect the access token to retrieve any policy restrictions imposed
+      by the authorization server on the TURN server resources assigned to the
+      client.</t>
+    </abstract>
+  </front>
+
+  <middle>
+    <section anchor="introduction" title="Introduction">
+      <t>The TURN protocol <xref target="RFC5766"></xref> is used to setup a
+      relay service (via a TURN Server) to exchange traffic (real time media,
+      data) between peers when direct peer-to-peer connection is not otherwise
+      possible. Due to the costs associated with operating a relay service, it
+      is important to constrain resource usage. For example, the operator
+      might want to limit the number of allocations or bandwidth.</t>
+
+      <t><xref target="RFC7635"></xref> allows clients to obtain OAuth2.0
+      access token (of type &lsquo;Assertion&rsquo;) authorized by a
+      Authorization Server to access a given TURN server. On receiving such a
+      token, the TURN server validates the token to grant or reject access to
+      the session resources. However, having a token doesn't provide any
+      control for the operator of the TURN server restrict the server's
+      resources. This specification proposes using the mechanism defined in
+      <xref target="I-D.ietf-oauth-introspection"></xref> to query OAuth2.0
+      authorization server to determine resource restrictions for this
+      token.</t>
+
+      <t>The rest of the document is organized as follows. <xref
+      target="introspect_req"></xref> provides procedure for querying the
+      OAuth2.0 Introspection Endpoint and <xref
+      target="introspect_resp"></xref> shows the introspection response with
+      the parameters identifying the policy controls associated with the
+      access token.</t>
+    </section>
+
+    <section anchor="term" title="Terminology">
+      <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+      "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+      document are to be interpreted as described in <xref
+      target="RFC2119"></xref>.</t>
+
+      <t>This document defines the following terms:</t>
+
+      <t>Access Token: OAuth 2.0 access token.</t>
+
+      <t>Token Introspection: The act of inquiring about the current state of
+      an OAuth 2.0 token through use of the network protocol defined in this
+      document.</t>
+
+      <t>Introspection Endpoint: The OAuth 2.0 endpoint through which the
+      token introspection operation is accomplished. The Introspection
+      Endpoint could be a WebRTC server.</t>
+    </section>
+
+    <section anchor="introspect_req" title="Introspection Request">
+      <t>For introspecting the meta-information associated with the access
+      token, the TURN server shall execute the procedures defined in Section
+      2.1 of <xref target="I-D.ietf-oauth-introspection"></xref>.</t>
+
+      <figure>
+        <artwork><![CDATA[
+  POST {scheme}://{host}:{port}/.well-known/introspection
+  Accept: application/json
+  Content-Type: application/x-www-form-urlencoded
+
+  {
+      "token" : "string" 
+      "token_type_hint" : "string"
+  }
+]]></artwork>
+      </figure>
+
+      <t><list hangIndent="5" style="hanging">
+          <t>token REQUIRED. This parameter is defined in <xref
+          target="I-D.ietf-oauth-introspection"></xref>. The access token is
+          conveyed by the TURN client to the TURN server as discussed in
+          Section 3.1 of <xref target="RFC7635"></xref>.</t>
+
+          <t>token_type_hint OPTIONAL. This parameter is defined in <xref
+          target="I-D.ietf-oauth-introspection"></xref>. The token type MUST
+          be set to &lsquo;access_token&rsquo; defined in <xref
+          target="RFC7009"></xref>. If the token type is not
+          &lsquo;access_token&rsquo;, the server rejects the request with a
+          400 (Bad Request) error.</t>
+        </list></t>
+
+      <t>Following is a non-normative example request showcasing the
+      introspection request for a given access token.</t>
+
+      <figure>
+        <artwork><![CDATA[
+  POST /introspect HTTP/1.1
+  Host: server.example.com
+  Accept: application/json
+  Content-Type: application/x-www-form-urlencoded
+  
+  {
+
+     "token" : "2YotnFZFEjr1zCsicMWpAA"
+     "token_type_hint" : "access_token"
+
+  }]]></artwork>
+      </figure>
+    </section>
+
+    <section anchor="introspect_resp" title="Introspection Response">
+      <t>The OAuth2.0 Introspection Endpoint on recognizing the token,
+      responds with a JSON object <xref target="RFC7159"></xref> in
+      &ldquo;application/json&rdquo; format with the following members.</t>
+
+      <figure>
+        <artwork><![CDATA[
+  HTTP/1.1 200 OK
+  Content-Type: application/json
+ 
+  {
+  "active" : "boolean",
+  "scope" : "string",
+  "max_upstream_bandwidth" : "unsigned integer",
+  "max_downstream_bandwidth" : "unsigned integer",
+  "max_allocations" : "unsigned integer",
+  "lifetime" : "unsigned integer",
+  }
+]]></artwork>
+      </figure>
+
+      <t><list hangIndent="5" style="hanging">
+          <t>active REQUIRED. This parameter is defined in <xref
+          target="I-D.ietf-oauth-introspection"></xref>.</t>
+
+          <t>scope OPTIONAL. This parameter is defined in <xref
+          target="I-D.ietf-oauth-introspection"></xref>. For this
+          specification, the scope MUST be 'stun'.</t>
+
+          <t>max_upstream_bandwidth REQUIRED. The value of this parameter is
+          an 64 bit unsigned integer that represents the maximum upstream
+          bandwidth permitted for the token in kilobits per second (1 kilobit
+          = 1024 bits).</t>
+
+          <t>max_downstream bandwidth REQUIRED. The value of this parameter is
+          an 64 bit unsigned integer that represents the maximum downstream
+          bandwidth permitted for the token in kilobits per second (1 kilobit
+          = 1024 bits).</t>
+
+          <t>max_allocations: REQUIRED. 16 bit unsigned integer defining
+          maximum number of allocations that is allowable for the given access
+          token.</t>
+
+          <t>lifetime: REQUIRED: The lifetime of the access token, in
+          seconds.</t>
+        </list></t>
+
+      <t>NOTE: Future specifications are allowed to define further top-level
+      members as mandated by the use-cases.</t>
+
+      <t>Following is a non-normative example response:</t>
+
+      <figure>
+        <artwork><![CDATA[
+  HTTP/1.1 200 OK
+  Content-Type: application/json
+
+  {
+  "active" : true,
+  "scope" : "stun",
+  "upstream-bandwidth" : 4096,
+  "downstream-bandwidth" : 4096,
+  "max-allocations" : 1,
+  }
+]]></artwork>
+      </figure>
+    </section>
+
+    <section anchor="introspection_endpoint"
+             title="INTROSPECTION_ENDPOINT Attribute">
+      <t>This attribute is used by the TURN client to inform the TURN server
+      the FQDN of Introspection Endpoint.</t>
+
+      <t>The TURN server establishes an HTTPS connection with the indicated
+      server and sends the above-described communications to that server. The
+      INTROSPECTION_ENDPOINT attribute is a comprehension-optional attribute
+      (see Section 15 from <xref target="RFC5389"></xref>).</t>
+
+      <t>TBD: An alternate approach is to convey the FQDN in the token
+      itself.</t>
+    </section>
+
+    <section anchor="revoke" title="Notifications from Introspection Endpoint">
+      <t>Introspection Endpoint can send unsolicited responses to notify
+      updates to the metadata associated with the token to the TURN server
+      using HTTP/2 server push mechanism. Examples where such notifications
+      are desired are:</t>
+
+      <t><list style="symbols">
+          <t>The Introspection Endpoint can signal the TURN server to revoke
+          the access token after the call is terminated by setting lifetime to
+          zero.</t>
+
+          <t>When the call switches from audio to video, the Introspection
+          Endpoint notifies the increased bandwidth to the TURN server.</t>
+        </list></t>
+    </section>
+
+    <section anchor="example" title="Example usage with WebRTC">
+      <t>Below diagram shows a flow where a WebRTC client uses the procedures
+      discussed in <xref target="RFC7635"></xref> to obtain a OAuth 2.0 access
+      token from the WebRTC server. The TURN Server queries the Introspection
+      Endpoint to determine the metadata associated with the token. Steps 7, 8
+      and 9 are done using the procedures mentioned in this document.</t>
+
+      <t><figure anchor="figure1" title="Metadata discovery for TURN session">
+          <artwork><![CDATA[
+  
+   +-------------------+                         +--------+  +---------------+
+   | .........  TURN   |                         |  TURN  |  |  WebRTC Server|
+   | .WebRTC .  Client |                         |        |  |               |
+   | .Client .         |                         | Server |  |(Introspection |
+   | .........         |                         |        |  |  Endpoint)    |
+   +-------------------+                         +--------+  +---------------+
+     |       |         (1)Allocate request              |                  |
+     |       |----------------------------------------->|                  |
+     |       |                                          |                  |
+     |       |         (2)Allocate error response       |                  |
+     |       |         (401 Unauthorized)               |                  |
+     |       |<-----------------------------------------|                  |
+     |       |         THIRD-PARTY-AUTHORIZATION        |                  |
+     |       |                                          |                  |
+     |       |                                          |                  |
+     |       |      (3)HTTP Request for token           |                  |
+     |-------------------------------------------------------------------->|
+     |       |(4)  HTTP Response with token parameters  |                  |
+     |<--------------------------------------------------------------------|
+     |OAuth 2.0                                         |                  |
+      Attributes                                        |                  |
+     |------>|                                          |                  |
+     |       |    (5)Allocate request ACCESS-TOKEN      |                  |
+     |       |----------------------------------------->|                  |
+     |       |                                          |                  | 
+     |       |      (6)Allocate success response        |                  |
+     |       |<-----------------------------------------|                  |
+     |       |                                          |(7)Introspection  |
+     |       |                                          |  Request         |
+     |       |                                          |----------------->|
+     |       |                                          |                  |
+     |       |                                          |(8)Introspection  |
+     |       |                                          | response         |
+     |       |                                          |<-----------------|
+     |       |<---------------------------------------->|                  |
+     |       |             TURN Messages                |                  |
+     |       |      ////// integrity protected //////   |                  |
+     |       |      ////// integrity protected //////   |                  |
+     |       |                                          | (9)Introspection |  
+     |       |                                          | response         |
+     |       |                                          |<-----------------|  ]]></artwork>
+        </figure></t>
+    </section>
+
+    <section anchor="alternate" title="Alternate Approach">
+      <t>An alternate approach considered by the authors makes use of the
+      access token itself to deliver metadata related to the TURN
+      authentication request. Standard STUN TLV encoded attributes are used to
+      communicate additional metadata associated with the token. Such
+      attributes can be used to define the maximum bandwidth utilization
+      allowed for allocations associated with the token, the maximum number of
+      distinct concurrent allocations, etc.</t>
+
+      <t>To include STUN attributes within the body of the access token, the
+      authorization server simply appends them to the access token's plaintext
+      immediately after the lifetime field. The variable length list of
+      attributes MUST consume all of the additional plaintext data space
+      within the body of the access token. No explicit option length value is
+      required or provided.</t>
+
+      <t>In order for inclusion of attributes within the plaintext to work
+      correctly in the absence of an explicit length field, one of two things
+      must be true: either the receiver must be able to reliably determine the
+      correct content length from the output of the decryption operation, or
+      the receiver must be able to reliably differentiate between padding
+      bytes and data bytes within the token. AES-128-GCM is an example of the
+      first case, and AEAD mode AES-CBC-HMAC-SHA256 is an example of the
+      second case.</t>
+
+      <t>Before parsing the optional data within the access token, the TURN
+      server MUST first perform all token validation required by <xref
+      target="RFC7635"></xref>. If any of the specified validation checks
+      fail, the TURN server MUST NOT attempt to parse optional attributes.</t>
+
+      <t>To interpret the optional attributes within an access token, the TURN
+      server first calculates the amount of option space included in the
+      plaintext by subtracting the size of the base payload data (14 bytes +
+      key_length) from the total payload size. It then interprets the data in
+      the option space as STUN TLV formatted attributes. While parsing the
+      option space, the TURN server MUST apply the same validations to the
+      access token's attributes that it would have applied if the attributes
+      had been included in the outer STUN header (e.g. Verify the data format
+      and value types). If any such validation checks fail, the TURN server
+      MUST reject the STUN request with an error response 401
+      (Unauthorized).</t>
+
+      <t>The following STUN attributes are defined by this document for
+      inclusion in the access token: TBD. Additional attributes may be defined
+      for this purpose in future specifications.</t>
+
+      <t>The primary benefits of this method of metadata distribution are:
+      <list style="symbols">
+          <t>It does not impose additional requirements on the Introspection
+          Endpoint for out of band communication with the TURN server.</t>
+
+          <t>Communicating with the Introspection Endpoint may increase the
+          latency associated with TURN allocation request handling.</t>
+        </list></t>
+
+      <t>The primary shortcomings of this method of metadata distribution are:
+      <list style="symbols">
+          <t>Needs a larger TURN packet to accommodate the token. For example,
+          inclusion of the four fields defined above (max_upstream_bandwidth,
+          max_downstream_bandwidth, max_allocations, and lifetime) would
+          increase the token size by around 38 bytes, depending upon whether
+          the AEAD algorithm requires padding.</t>
+
+          <t>The Introspection Endpoint cannot notify the TURN server of
+          changes to the metadata associated with the token.</t>
+        </list></t>
+
+      <t>[NOTE: Backward compatibility with <xref target="RFC7635"></xref>
+      requires discussion, but it should not be a major issue if the dynamic
+      option space calculation method described is considered acceptable.]</t>
+
+      <t>[NOTE: The authors are seeking feedback from the working group on the
+      relative merits of this approach versus the "Introspection Endpoint"
+      approach. Which should we attempt to move forward? Or does each one have
+      enough merit that we should try to advance both?]</t>
+    </section>
+
+    <section anchor="security" title="Security Considerations">
+      <t>The Security Considerations and Privacy Considerations of <xref
+      target="I-D.ietf-oauth-introspection"></xref> apply to this
+      document.</t>
+    </section>
+
+    <section anchor="iana" title="IANA Considerations">
+      <section title="JSON Web Token Claims">
+        <t>This specification requests IANA to register the following values
+        into the IANA JSON Web Token Claims registry for JWT Claim Names.</t>
+
+        <t><?rfc subcompact="yes"?><list style="symbols">
+            <t>Claim Name: <spanx style="verb">max_upstream_bandwidth</spanx></t>
+
+            <t>Claim Description: Maximum limit of upstream bandwidth</t>
+
+            <t>Change Controller: IESG</t>
+
+            <t>Specification Document(s): <xref
+            target="introspect_resp"></xref> of [[ this document ]].</t>
+          </list><list style="symbols">
+            <t>Claim Name: <spanx style="verb">max_downstream_bandwidth</spanx></t>
+
+            <t>Claim Description: Maximum limit of downstream bandwidth</t>
+
+            <t>Change Controller: IESG</t>
+
+            <t>Specification Document(s): <xref
+            target="introspect_resp"></xref> of [[ this document ]].</t>
+          </list><list style="symbols">
+            <t>Claim Name: <spanx style="verb">max_allocations</spanx></t>
+
+            <t>Claim Description: Maximum number of allocations</t>
+
+            <t>Change Controller: IESG</t>
+
+            <t>Specification Document(s): <xref
+            target="introspect_resp"></xref> of [[ this document ]].</t>
+          </list><?rfc subcompact="no"?></t>
+      </section>
+
+      <section title="Well-Known 'introspection' URI">
+        <t>This memo registers the 'introspection' well-known URI in the
+        Well-Known URIs registry as defined by <xref
+        target="RFC5785"></xref>.</t>
+
+        <t>URI suffix: introspection</t>
+
+        <t>Change controller: IETF</t>
+
+        <t>Specification document(s): This document</t>
+
+        <t>Related information: None</t>
+      </section>
+
+      <section title="STUN attribute">
+        <t>[Paragraphs below in braces should be removed by the RFC Editor
+        upon publication]</t>
+
+        <t>[IANA is requested to add the following attributes to the <xref
+        target="iana-stun">STUN attribute registry</xref>, the
+        INTROSPECTION_ENDPOINT attribute requires that IANA allocate a value
+        in the "STUN attributes Registry" from the comprehension-optional
+        range (0x8000-0xBFFF)].</t>
+
+        <t>This document defines the INTROSPECTION_ENDPOINT attribute,
+        described in <xref target="introspection_endpoint"></xref>. IANA has
+        allocated the comprehension-optional codepoint TBD for this
+        attribute.</t>
+      </section>
+    </section>
+
+    <section title="Acknowledgements">
+      <t>Authors would like to thank Ram Mohan for comments and review.</t>
+    </section>
+  </middle>
+
+  <back>
+    <references title="Normative References">
+      <?rfc include="reference.RFC.2119"?>
+
+      <?rfc include="reference.RFC.5389"?>
+
+      <?rfc include="reference.RFC.5766"?>
+
+      <?rfc include="reference.RFC.7635"?>
+
+      <?rfc include='reference.I-D.ietf-oauth-introspection' ?>
+
+      <reference anchor="iana-stun"
+                 target="http://www.iana.org/assignments/stun-parameters/stun-pa rameters.xml">
+        <front>
+          <title>IANA: STUN Attributes</title>
+
+          <author fullname="IANA" surname="IANA">
+            <organization></organization>
+          </author>
+
+          <date month="April" year="2011" />
+        </front>
+      </reference>
+    </references>
+
+    <references title="Informative References">
+      <?rfc include="reference.RFC.7159"?>
+
+      <?rfc include="reference.RFC.7009"?>
+
+      <?rfc include="reference.RFC.5785"?>
+
+      <!---->
+    </references>
+  </back>
+</rfc>
