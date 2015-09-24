@@ -110,7 +110,8 @@ follow the same syntax as session-level and media-level attributes,
 they are defined independently.  All 'rid-level' attributes MUST be
 registered with IANA, using the registry defined in Section XXXX
 
-Section XXXX gives a formal Augmented Backus-Naur Form(ABNF) [RFC5234] grammar for the "rid" attribute.
+Section XXXX gives a formal Augmented Backus-Naur Form(ABNF) 
+[RFC5234] grammar for the "rid" attribute.
 
 
 # "rid-level' attributes
@@ -369,7 +370,19 @@ It is recommended that the identification-tag is kept short. Due to the properti
 
 # Open Issues
 
-TODO
+## Name of the idetifier
+The name 'rid' has not yet been finalized and the authors believe taking
+help from the list would be a right approach for deciding the name.
+
+Here are the few options that were considered while writing this draft
+
+* ESID: Encoded Stream ID, does not align well with taxonomy which defines Encoded Stream as before RTP packetization.
+
+* RSID or RID: RTP Stream ID, aligns better with taxonomy but very vague.
+
+* LID: Layer ID, aligns well for SVC with each layer in a separate stream, but not for other SVC layerings or independent simulcast which is awkward to view as layers.
+
+* EPT or XPT: EXtended Payload Type, conveys XPT.PT usage well, but may be confused with PT, for example people may mistakenly think they can use it in other places where PT would normally be used. 
 
 # IANA Considerations
 
