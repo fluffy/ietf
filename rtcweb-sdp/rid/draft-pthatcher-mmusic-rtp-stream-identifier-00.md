@@ -31,6 +31,20 @@ author:
     org: Mozilla
     email: adam@nostrum.com      
 
+-
+    ins: B. Burman
+    name: Bo Burman
+    org: Ericsson
+    email: bo.burman@ericsson.com
+
+-
+    ins: B. Campen
+    name: Byron Campen
+    org: Mozilla
+    email: bcampen@mozilla.com 
+
+
+
 normative:
   RFC2119:
   RFC3264:
@@ -49,7 +63,7 @@ informative:
 --- abstract
 
 In this specification, we define a framework for configuring and identifying
-Source RTP Streams in the Session Description Protocol. This framework uses "rid" SDP attribute to, a) effectively identify the Source RTP Streams within a RTP Session, b) describe their payload format parameters in a codec agnostic way and c) enable unambiguous mapping between the Source RTP Streams to their
+Source RTP Streams in the Session Description Protocol. This framework uses "rid" SDP attribute to: a) effectively identify the Source RTP Streams within a RTP Session, b) describe or constrain their payload format parameters in a codec agnostic way beyond what is provided with the regular Payload Types and c) enable unambiguous mapping between the Source RTP Streams to their
 media format specification in the SDP
 
 Note-1: The name 'rid' is not yet finalized. Please refer to Section "Open Issues" for more details on the naming.
@@ -60,7 +74,7 @@ Note-1: The name 'rid' is not yet finalized. Please refer to Section "Open Issue
 
 Payload Type (PT) in RTP provides mapping between the format of the RTP payload to the media format description specified in the signaling. For applications that use SDP for signaling, the constructs rtpmap and/or fmtp describe the characteristics of the media that is carried in the RTP payload, mapped to a given PT.
 
-Recents advances in standards such as RTCWeb, NetVC have given rise to
+Recents advances in standards such as RTCWeb, Netvc have given rise to
 rich multimedia applications requiring support for multiple RTP Streams with in a RTP session {{I-D.ietf-mmusic-sdp-bundle-negotiation}}, {{I-D.ietf-mmusic-sdp-simulcast}} or having to support multiple codecs, for 
 example. These demands have unearthed challenges inherent with the,
 
@@ -68,11 +82,14 @@ example. These demands have unearthed challenges inherent with the,
 
 * Codec specific constructs for the payload formats in SDP,
 
+* Missing or underspecied payload format parameters,
+
 * Ambiguity in mapping between the individual Source RTP Streams and their equivalent format specification in the SDP.
 
 This specification defines a new SDP framework for configuring and identifying
-Source RTP Streams (Section 2.1.10 {{I-D.ietf-avtext-rtp-grouping-taxonomy}}) called " RTP Source Stream Identifier (rid) " along with the SDP attributes to configure the individual Source RTP Streams in a codec agnostic way. This specification also proposes a new RTP header extension to carry the
-"rid" value thus provding the correlation between the RTP Packets to their
+Source RTP Streams (Section 2.1.10 {{I-D.ietf-avtext-rtp-grouping-taxonomy}}) called " RTP Source Stream Identifier (rid) " along with the SDP attributes to configure the individual Source RTP Streams in a codec agnostic way. The "rid" framework can be thought as complementary extension to the way the media format parameters are specified in SDP today, via the "a=fmtp" attribute.
+This specification also proposes a new RTP header extension to carry the
+"rid" value for provding the correlation between the RTP Packets to their
 format specification in the SDP.
 
 # Key Words for Requirements
@@ -102,10 +119,18 @@ and also to effectively map an Source RTP Stream to its configuration in the sig
 future. Thus there is a need to define common media characteristics 
 in a codec-agnostic way in order to reduce the duplicated efforts and to simplify the syntactic representation across the different codec standards.
 
+3. Multisource and Multistream Usecases: Recently, there is a rising trend with Realtime multimedia applications supporting multiple sources per EndPoint with various temporal resolutions (Scalable Video Codec) and spatial resolutions (Simulcast) per source. These applications are being challenged 
+by the limited RTP PT space and/or by the underspecified SDP contructs for 
+exercising granular control on configuring the indivual Source RTP Streams.
+
 
 # Applicability Statement
 
-The mechanism in this specification only applies to the Session Description Protocol (SDP) {{RFC4566}}, when used together with the SDP Offer/Answer mechanism {{RFC3264}}. Declarative usage of SDP is out of scope of this document, and is thus undefined.
+The 'rid' SDP framework provides a set of codec agnostic media format configurations and constraints with a specific identifier in SDP. Further, 
+procedures for applying a particular configuration and constraints set 
+to an Source RTP stream and the SDP Offer/Answer specific syntax for the same
+are defined.
+
 
 # SDP 'rid' Media Level Attribute {#sec-rid_attribute}
 
@@ -117,22 +142,23 @@ a=rid:<rid-identifier> <direction> pt=<fmt-list> <rid-attribute>:<value> ...
 
 ~~~~~~~~~~~~~~~
 
-The "a=rid" SDP media attribute describes the payload media format 
-(defined via the rid-level attributes {{sec-rid_level_attributes}}) for 
-one or more media format tokens (usually mapped to RTP Payload Type). 
-'rid-identifier' identifies the Source RTP Stream.
+A given "a=rid" SDP media attribute specifies constraints defining 
+an unique RTP payload configuration identified via the "rid-identifier".
+A set of codec agnostic "rid-level" attributes are defined ({sec-rid_level_atributes}) that describe the media format specification 
+applicable to one or more Payload Types speicified by the "a=rid" line.
+
 
 The 'rid' framework MAY be used in combination with the 'a=fmtp' SDP 
 attribute for describing the media format parameters for a given 
 RTP Payload Type. However in such scenarios, the 'rid-level' attributes
 ({{sec-rid_level_attributes}}) further constrains the equivalent 'fmtp' attributes. The 'rid' framework MAY also be used to fully describe the RTP payload encoding, thus completely skipping the 'a=fmtp' SDP attribute for the Payload Types identified in the "a=rid" line. In either case, the 'a=rtpmap' attribute MUST be defined to identify the media encoding format and the RTP Payload Type.
 
-The 'direction' identifies the either 'send', 'recv', 'sendrecv' directionality
+The 'direction' identifies the either 'send', 'recv' directionality
 of the Source RTP Stream. 
 
 A given SDP media description MAY have zero or more "a=rid" lines
-capturing various possible RTP payload configurations. The 'rid-identifier' MUST be unique across all the media descriptions. Also, the combination of 
-RTP Payload Type (a.k.a fmt in SDP) and a 'rid-identifier' MUST be unique across all the RTP Streams in a given RTP Session.
+capturing various possible RTP payload configurations. A given
+'rid-identifier' MUST not be repeated in a given media description.
 
 The 'rid' media attribute MAY be used for any RTP-based media transport.
 It is not defined for other transports.
@@ -287,7 +313,7 @@ the below steps:
   MUST be unique across all the media descriptions in the Offer.
 
 2. It MUST include the direction for the 'rid-identifier' to one of
-   the 'send', 'recv' or 'sendrecv'.
+   the 'send', 'recv'
 
 3. A listing of SDP format tokens (usually corresponding to RTP payload
    types) MUST be included to which the constraints expressed by the
@@ -406,7 +432,7 @@ rid-syntax = "a=rid:" rid-identifier SP rid-dir SP rid-fmt-list SP rid-attr-list
 
 rid-identifier = 1*(alpha-numeric / "-" / "_")
 
-rid-dir              = "send" / "recv" / "sendrecv"
+rid-dir              = "send" / "recv"
 
 rid-fmt-list   = "pt=" rid-fmt *( ";" rid-fmt )
 
@@ -452,12 +478,140 @@ param-val  = byte-string
 ## Single Stream Scenarios
  TODO
 
-## Multistream Scenarios
+## Many Bundled Streams using Many Codecs
 
-### Two simulcast streams with PT reuse
+In the scenario, the offerer supports adio codecs Opus, G.722, G.711 and DTMF
+VP8, VP9, H.264 (CBP/CHP, mode 0/1), H.264-SVC (SCBP/SCHP) and H.265 (MP/M10P) for video. An 8-way video call (to a mixer) is supported (send 1 and receive 7 video streams) by offering 7 video media sections (1 sendrecv at max resolution and 6 recvonly at smaller resolutions), all bundled on the same port, using 3 different resolutions.
+The resolutions include, 1 receive stream of 720p resolution is offered for the active speaker. 2 receive streams of 360p resolution are offered for the prior 2 active speakers. 4 receive streams of 180p resolution are offered for others in the call. 
 
-This example shows and offer answer exchange where the offer propose to sendonly of two simulcast streams at 720P30 and 180P15. The answer accepts both of them.
+Expressing all these codecs and resolutions using 32 dynamic PTs (2 audio + 10x3 video) would exhaust the primary dynamic space (96-127). RIDs are used to avoid PT exhaustion and express the resolution constraints.
 
+
+NOTE: The SDP given below skips few lines to keep the example short and
+focussed, as indicated by either the "..." or the comments inserted.
+
+~~~~~~~~~~~~~~~~~~
+Offer:
+...
+m=audio 10000 RTP/SAVPF 96 9 8 0 123
+a=rtpmap:96 OPUS/48000
+a=rtpmap:9 G722/8000
+a=rtpmap:8 PCMA/8000
+a=rtpmap:0 PCMU/8000
+a=rtpmap:123 telephone-event/8000
+a=mid:a1
+...
+m=video 10000 RTP/SAVPF 98 99 100 101 102 103 104 105 106 107
+a=rtpmap:98 VP8/90000
+a=fmtp:98 max-fs=3600; max-fr=30
+a=rtpmap:99 VP9/90000
+a=fmtp:99 max-fs=3600; max-fr=30
+a=rtpmap:100 H264/90000
+a=fmtp:100 profile-level-id=42401f; packetization-mode=0
+a=rtpmap:101 H264/90000
+a=fmtp:101 profile-level-id=42401f; packetization-mode=1
+a=rtpmap:102 H264/90000
+a=fmtp:102 profile-level-id=640c1f; packetization-mode=0
+a=rtpmap:103 H264/90000
+a=fmtp:103 profile-level-id=640c1f; packetization-mode=1
+a=rtpmap:104 H264-SVC/90000
+a=fmtp:104 profile-level-id=530c1f
+a=rtpmap:105 H264-SVC/90000
+a=fmtp:105 profile-level-id=560c1f
+a=rtpmap:106 H265/90000
+a=fmtp:106 profile-id=1; level-id=93
+a=rtpmap:107 H265/90000
+a=fmtp:107 profile-id=2; level-id=93
+a=sendrecv
+a=mid:v1 (max resolution)
+a=rid:1 send pt=*; max-width=1280; max-height=720; max-fps=30
+a=rid:2 recv pt=*; max-width=1280; max-height=720; max-fps=30
+...
+m=video 10000 RTP/SAVPF 98 99 100 101 102 103 104 105 106 107
+...same rtpmap/fmtp as above...
+a=recvonly
+a=mid:v2 (medium resolution)
+a=rid:3 recv pt=*; max-width=640; max-height=360; max-fps=15
+...
+m=video 10000 RTP/SAVPF 98 99 100 101 102 103 104 105 106 107
+...same rtpmap/fmtp as above...
+a=recvonly
+a=mid:v3 (medium resolution)
+a=rid:3 recv pt=*; max-width=640; max-height=360; max-fps=15
+...
+m=video 10000 RTP/SAVPF 98 99 100 101 102 103 104 105 106 107
+...same rtpmap/fmtp as above...
+a=recvonly
+a=mid:v4 (small resolution)
+a=rid:4 recv pt=*; max-width=320; max-height=180; max-fps=15
+...
+m=video 10000 RTP/SAVPF 98 99 100 101 102 103 104 105 106 107
+...same rtpmap/fmtp as above...
+...same rid:4 as above for mid:v5,v6,v7 (small resolution)...
+...
+
+
+Answer:
+...same as offer but swap send/recv...
+
+~~~~~~~~~~~~~~~~~~
+
+## Simulcast
+
+Adding simulcast to the above example allows the mixer to selectively forward streams like an SFU rather than transcode high resolutions to lower ones. Simulcast encodings can be expressed using PTs or RIDs. Using PTs can exhaust the primary dynamic space even faster in simulcast scenarios. So RIDs are used to avoid PT exhaustion and express the encoding constraints. In the example below, 3 resolutions are offered to be sent as simulcast to a mixer/SFU.
+
+~~~~~~~~~~~~~~~~~~
+
+Offer:
+...
+m=audio ... same as from prior example
+...
+m=video ...same as above...
+...same rtpmap/fmtp as above...
+a=sendrecv
+a=mid:v1 (max resolution)
+a=rid:1 send pt=*; max-width=1280; max-height=720; max-fps=30
+a=rid:2 recv pt=*; max-width=1280; max-height=720; max-fps=30
+a=rid:5 send pt=*; max-width=640; max-height=360; max-fps=15
+a=rid:6 send pt=*; max-width=320; max-height=180; max-fps=15
+a=simulcast: send rid=1;5;6 recv rid=2
+...
+...same m=video sections as prior example for mid:v2-v7...
+...
+
+Answer:
+...same as offer but swap send/recv...
+
+~~~~~~~~~~~~~~~~~~
+
+## Scalable Layers
+
+Adding scalable layers to the above simulcast example allows the SFU further flexibility to selectively forward packets from a source that best match the bandwidth and capabilities of diverse receivers. Scalable encodings have dependencies between layers, unlike independent simulcast streams. RIDs can be used to express these dependencies using the "depend" parameter. In the example below, the highest resolution is offered to be sent as 2 scalable temporal layers (using MRST).
+
+~~~~~~~~~~~~~~~~~~
+
+Offer:
+...
+m=audio ...same as above...
+...
+m=video ...same as above...
+...same rtpmap/fmtp as above...
+a=sendrecv
+a=mid:v1 (max resolution)
+a=rid:0 send pt=*; max-width=1280; max-height=720; max-fps=15
+a=rid:1 send pt=*; max-width=1280; max-height=720; max-fps=30; depend=0
+a=rid:2 recv pt=*; max-width=1280; max-height=720; max-fps=30
+a=rid:5 send pt=*; max-width=640; max-height=360; max-fps=15
+a=rid:6 send pt=*; max-width=320; max-height=180; max-fps=15
+a=simulcast: send rid=0;1;5;6 recv rid=2
+...
+...same m=video sections as prior example for mid:v2-v7...
+...
+
+Answer:
+...same as offer but swap send/recv...
+
+~~~~~~~~~~~~~~~~~~
 
 # Open Issues
 
