@@ -219,7 +219,9 @@ following steps:
 ### 'rid' unaware Answerer
 
 If the receiver doesn't support the 'rid' framework proposed in this specification, the entire "a=rid" line is ignored following the standard
-{{RFC3264}} Offer/Answer rules.
+{{RFC3264}} Offer/Answer rules. If a given codec would require 'a=fmtp' line
+when used without "a-rid" then the offer still needs to include that even when
+using RID. 
 
 ### 'rid' aware Answerer
 
@@ -289,7 +291,7 @@ within an RTP session, but in some use cases applications need
 further identifiers in order to effectively map the individual
 RTP Streams to their equivalent payload configurations in the SDP.
 
-This specification defines a new RTP header extension to include the 'rid-identifier'. This makes it possible for a receiver to associate received RTP packets (identifying the Source RTP Stream) with a media description hain the format costraint specificied.
+This specification defines a new RTP header extension to include the 'rid-identifier'. This makes it possible for a receiver to associate received RTP packets (identifying the Source RTP Stream) with a media description having the format costraint specificied.
 
 ## RTP 'rid' Header Extension
 
@@ -343,7 +345,7 @@ rid-pps-param    = "max-pps=" param-val
 
 rid-depend-param = "depend=" rid-list
 
-rid-list = rid-identifier *( "," rid-identifier )
+rid-list = rid-identifier *( ";" rid-identifier )
 
 param-val  = byte-string
 
@@ -510,10 +512,13 @@ identify:
 
 * 1 send stream at max resolution,
 * 1 recv stream at max resolution, 
-* 1 recv stream at low resolution,
+* 1 recv stream at low resolution
 
-and "a=simulcast" attrubute to express the streams using their Payload Types.
+and includes 2 "a=simulcast" lines to identify the simulcast streams
+with the Payload Types and rid-identifier respectively.
 
+> Note: The exact rules for the usage of rid framework with simulcast 
+is still a work in progress.
 
 ~~~~~~~~~~~~~~~~~~
                                     Example 4
@@ -528,6 +533,7 @@ a=rid:1 send pt=97; max-br=; max-height=720;
 a=rid:2 recv pt=97; max-width=1280; max-height=720
 a=rid:3 recv pt=98; max-width=320; max-height=180
 a=simulcast send pt=97 recv pt=*
+a=simulcast: send rid=1 recv rid=2;3
 
 ~~~~~~~~~~~~~~~~~~
 
