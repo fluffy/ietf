@@ -2,7 +2,7 @@
 title: "RTP Payload Format Constraints"
 abbrev: i3c
 docname:  draft-pthatcher-mmusic-rfc-00
-date: 2015-09-28
+date: 2015-10-2
 category: std
 ipr: trust200902
 
@@ -58,9 +58,7 @@ informative:
 
 --- abstract
 
-In this specification, we define a framework for configuring and identifying
-Source RTP Streams in the Session Description Protocol. This framework uses "rid" SDP attribute to: a) effectively identify the Source RTP Streams within a RTP Session, b) constrain their payload format parameters in a codec-agnostic way beyond what is provided with the regular Payload Types and c) enable unambiguous mapping between the Source RTP Streams to their
-media format specification in the SDP
+In this specification, we define a framework for identifying Source RTP Streams with the constraints on its payload format in the Session Description Protocol. This framework uses "rid" SDP attribute to: a) effectively identify the Source RTP Streams within a RTP Session, b) constrain their payload format parameters in a codec-agnostic way beyond what is provided with the regular Payload Types and c) enable unambiguous mapping between the Source RTP Streams to their media format specification in the SDP.
 
 Note-1: The name 'rid' is not yet finalized. Please refer to Section "Open Issues" for more details on the naming.
 
@@ -83,7 +81,7 @@ example. These demands have unearthed challenges inherent with:
 * Ambiguity in mapping between the individual Source RTP Streams and their equivalent format specification in the SDP.
 
 This specification defines a new SDP framework for configuring and identifying
-Source RTP Streams (Section 2.1.10 {{I-D.ietf-avtext-rtp-grouping-taxonomy}}) called "RTP Source Stream Identifier (rid)" along with the SDP attributes to configure the individual Source RTP Streams in a codec-agnostic way. The "rid" framework can be thought of as complementary extension to the way the media format parameters are specified in SDP today, via the "a=fmtp" attribute.
+Source RTP Streams (Section 2.1.10 {{I-D.ietf-avtext-rtp-grouping-taxonomy}}) called "RTP Source Stream Identifier (rid)" along with the SDP attributes to constrain their payload formats in a codec-agnostic way. The "rid" framework can be thought of as complementary extension to the way the media format parameters are specified in SDP today, via the "a=fmtp" attribute.
 This specification also proposes a new RTP header extension to carry the
 "rid" value, to provide correlation between the RTP Packets and their
 format specification in the SDP.
@@ -143,8 +141,6 @@ attribute for describing the media format parameters for a given
 RTP Payload Type. However in such scenarios, the 'rid-level' attributes
 ({{sec-rid_level_attributes}}) further constrains the equivalent 'fmtp' attributes.
 
-For codecs that do not require the use of "a=fmtp", the 'rid' framework MAY also be used to fully describe the RTP payload encoding, thus completely skipping the 'a=fmtp' SDP attribute for the Payload Types identified in the "a=rid" line. In either case, the 'a=rtpmap' attribute MUST be defined to identify the media encoding format and the RTP Payload Type.
-
 The 'direction' identifies the either 'send', 'recv' directionality
 of the Source RTP Stream.
 
@@ -171,6 +167,7 @@ This section defines the 'rid-level' attributes that can be used
 to constrain the RTP payload encoding format in a codec-agnostic way.
 
 The following new SDP parameters shall be defined that represent things common across video codecs.
+
 * max-width, for spatial resolution in pixels.  In the case that stream orientation signaling is used to modify the intended display orientation, this attribute refers to the width of
 the stream when a rotation of zero degrees is encoded.
 * max-height, for spatial resolution in pixels.  In the case that stream orientation signaling is used to modify the intended display orientation, this attribute refers to the width of the stream when a rotation of zero degrees is encoded.
@@ -222,11 +219,7 @@ following steps:
 ### 'rid' unaware Answerer
 
 If the receiver doesn't support the 'rid' framework proposed in this specification, the entire "a=rid" line is ignored following the standard
-{{RFC3264}} Offer/Answer rules. Furthermore, if the offer lacked 'a=fmtp' attributes for the Payload Types included, the answerer MAY either reject the entire media description or prefer to apply default media format parameters,
-as appropriate for media encoding.
-
-> Open Issue: Does it make sense to allow offers to omit fmtp: for codecs that
-are insufficiently specified without it?
+{{RFC3264}} Offer/Answer rules.
 
 ### 'rid' aware Answerer
 
@@ -296,7 +289,7 @@ within an RTP session, but in some use cases applications need
 further identifiers in order to effectively map the individual
 RTP Streams to their equivalent payload configurations in the SDP.
 
-This specification defines a new RTP header extension to include the 'rid-identifier'. This makes it possible for a receiver to associate received RTP packets (identifying the Source RTP Stream) with a media description with the format costraint specification.
+This specification defines a new RTP header extension to include the 'rid-identifier'. This makes it possible for a receiver to associate received RTP packets (identifying the Source RTP Stream) with a media description hain the format costraint specificied.
 
 ## RTP 'rid' Header Extension
 
@@ -366,8 +359,7 @@ param-val  = byte-string
 
 ## Many Bundled Streams using Many Codecs
 
-In this scenario, the offerer supports the Opus, G.722, G.711 and DTMF audio codecs, and
-VP8, VP9, H.264 (CBP/CHP, mode 0/1), H.264-SVC (SCBP/SCHP) and H.265 (MP/M10P) for video. An 8-way video call (to a mixer) is supported (send 1 and receive 7 video streams) by offering 7 video media sections (1 sendrecv at max resolution and 6 recvonly at smaller resolutions), all bundled on the same port, using 3 different resolutions.
+In this scenario, the offerer supports the Opus, G.722, G.711 and DTMF audio codecs, and VP8, VP9, H.264 (CBP/CHP, mode 0/1), H.264-SVC (SCBP/SCHP) and H.265 (MP/M10P) for video. An 8-way video call (to a mixer) is supported (send 1 and receive 7 video streams) by offering 7 video media sections (1 sendrecv at max resolution and 6 recvonly at smaller resolutions), all bundled on the same port, using 3 different resolutions.
 The resolutions include:
 
 * 1 receive stream of 720p resolution is offered for the active speaker.
@@ -456,6 +448,8 @@ Answer:
 Adding simulcast to the above example allows the mixer to selectively forward streams like an SFU rather than transcode high resolutions to lower ones. Simulcast encodings can be expressed using PTs or RIDs. Using PTs can exhaust the primary dynamic space even faster in simulcast scenarios. So RIDs are used to avoid PT exhaustion and express the encoding constraints. In the example below, 3 resolutions are offered to be sent as simulcast to a mixer/SFU.
 
 ~~~~~~~~~~~~~~~~~~
+                                    Example 2
+
 
 Offer:
 ...
@@ -484,6 +478,7 @@ Answer:
 Adding scalable layers to the above simulcast example gives the SFU further flexibility to selectively forward packets from a source that best match the bandwidth and capabilities of diverse receivers. Scalable encodings have dependencies between layers, unlike independent simulcast streams. RIDs can be used to express these dependencies using the "depend" parameter. In the example below, the highest resolution is offered to be sent as 2 scalable temporal layers (using MRST).
 
 ~~~~~~~~~~~~~~~~~~
+                                    Example 3
 
 Offer:
 ...
@@ -507,6 +502,35 @@ Answer:
 ...same as offer but swap send/recv...
 
 ~~~~~~~~~~~~~~~~~~
+
+## Simulcast with Payload Types
+
+This example shows a simulcast Offer SDP that uses rid framework to 
+identify:
+
+* 1 send stream at max resolution,
+* 1 recv stream at max resolution, 
+* 1 recv stream at low resolution,
+
+and "a=simulcast" attrubute to express the streams using their Payload Types.
+
+
+~~~~~~~~~~~~~~~~~~
+                                    Example 4
+
+Offer:
+m=video 10000 RTP/AVP 97 98
+a=rtpmap:97 VP8/90000
+a=rtpmap:98 VP8/90000
+a=fmtp:97 max-fs=3600
+a=fmtp:98 max-fs=3600
+a=rid:1 send pt=97; max-br=; max-height=720;
+a=rid:2 recv pt=97; max-width=1280; max-height=720
+a=rid:3 recv pt=98; max-width=320; max-height=180
+a=simulcast send pt=97 recv pt=*
+
+~~~~~~~~~~~~~~~~~~
+
 
 # Open Issues
 
