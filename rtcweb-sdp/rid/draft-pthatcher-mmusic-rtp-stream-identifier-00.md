@@ -291,7 +291,7 @@ within an RTP session, but in some use cases applications need
 further identifiers in order to effectively map the individual
 RTP Streams to their equivalent payload configurations in the SDP.
 
-This specification defines a new RTP header extension to include the 'rid-identifier'. This makes it possible for a receiver to associate received RTP packets (identifying the Source RTP Stream) with a media description having the format costraint specificied.
+This specification defines a new RTP header extension to include the 'rid-identifier'. This makes it possible for a receiver to associate received RTP packets (identifying the Source RTP Stream) with a media description having the format constraint specificied.
 
 ## RTP 'rid' Header Extension
 
