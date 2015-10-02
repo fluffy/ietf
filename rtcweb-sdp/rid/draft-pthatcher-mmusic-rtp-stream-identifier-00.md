@@ -1,7 +1,7 @@
 ---
-title: "Framework for configuring and identifying Source RTP Streams in a codec-agnostic way"
+title: "RTP Payload Format Constraints"
 abbrev: i3c
-docname:  draft-pthatcher-mmusic-rtp-stream-identifier-00
+docname:  draft-pthatcher-mmusic-rfc-00
 date: 2015-09-28
 category: std
 ipr: trust200902
@@ -14,7 +14,7 @@ author:
     ins: P. Thatcher
     name: Peter Thatcher
     org: Google
-    email: ppthatcher@webrtc.org
+    email: pthatcher@google.com
 -
     ins: M. Zanaty
     name: Mo Zanaty
@@ -30,20 +30,16 @@ author:
     name: Adam Roach
     org: Mozilla
     email: adam@nostrum.com
-
 -
     ins: B. Burman
     name: Bo Burman
     org: Ericsson
     email: bo.burman@ericsson.com
-
 -
     ins: B. Campen
     name: Byron Campen
     org: Mozilla
     email: bcampen@mozilla.com
-
-
 
 normative:
   RFC2119:
@@ -126,17 +122,6 @@ in a codec-agnostic way in order to reduce the duplicated efforts and to simplif
 by the limited RTP PT space and/or by the underspecified SDP constructs for
 exercising granular control on configuring the individual Source RTP Streams.
 
-
-# Applicability Statement
-
-The 'rid' SDP framework provides a set of codec-agnostic media format
-constraints, bound to a specific identifier in SDP. This identifier is
-associated with one or more RTP streams to which the constraints have been
-applied. It also defines procedures for applying a particular configuration
-and constraints set to a Source RTP stream and the SDP Offer/Answer specific
-syntax for the same.
-
-
 # SDP 'rid' Media Level Attribute {#sec-rid_attribute}
 
 This section defines new SDP media-level attribute {{RFC4566}}, "a=rid".
@@ -182,144 +167,22 @@ The "a=rid" media attribute is not dependent on charset.
 
 # "rid-level' attributes {#sec-rid_level_attributes}
 
-This section defines individual 'rid-level' attributes that can be used
-to describe RTP payload encoding format in a codec-agnostic way.
+This section defines the 'rid-level' attributes that can be used
+to constrain the RTP payload encoding format in a codec-agnostic way.
+
+The following new SDP parameters shall be defined that represent things common across video codecs.
+* max-width, for spatial resolution in pixels.  In the case that stream orientation signaling is used to modify the intended display orientation, this attribute refers to the width of
+the stream when a rotation of zero degrees is encoded.
+* max-height, for spatial resolution in pixels.  In the case that stream orientation signaling is used to modify the intended display orientation, this attribute refers to the width of the stream when a rotation of zero degrees is encoded.
+* max-fps, for frame rate in frames per second.  For encoders that do not use a fixed framerate for encoding, this value should constrain the minimum amount of time between frames: the time between any two consecutive frames SHOULD not be less than 1/max-fps seconds.
+* max-fs, for frame size in pixels per frame.
+* max-br, for bit rate in bits per second.  The exact means of keeping withing this limit are left up to the implementation, and instantaneous excursions outside the limit are permissible. For any given one-second sliding window, however, the total number of bits in the payload portion of RTP SHOULD NOT exceed the value specific in "max-br."
+* max-pps, for pixel rate in pixels per second.  This value SHOULD be handled identically to max-fps, after performing the following conversion: max-fps = max-pps / (width * height). If the stream resolution changes, this value is recalculated. Due to this recalculation, excursions outside the specified maximum are possible during near resolution change boundaries.
 
 All the attributes are optional and are subjected to negotiation
 based on the SDP Offer/Answer rules described in {{sec-sdp_o_a}}
 
 {{sec-abnf}} provides formal Augmented Backus-Naur Form(ABNF) {{RFC5234}} grammar for each of the "rid-level" attributes defined in this section.
-
-
-## The "max-width" Attribute
-
-The "max-width" rid-level attribute specifies the maximum width in pixels for
-spatial resolution. In the case that stream orientation signaling is used to
-modify the intended display orientation, this attribute refers to the width of
-the stream when a rotation of zero degrees is encoded.
-
-~~~~~~~~~~~~~~~
-
-a=rid:<rid-identifier> <direction> pt=<fmt-list> max-width=<width-val> ...
-
-Example:
-a=rid:1 send pt=96 max-width=1280
-
-~~~~~~~~~~~~~~~
-
-
-## The "max-height" Attribute
-
-The "max-height" rid-level attribute specifies the maximum height in pixels
-for spatial resolution.  In the case that stream orientation signaling is used
-to modify the intended display orientation, this attribute refers to the width
-of the stream when a rotation of zero degrees is encoded.
-
-
-~~~~~~~~~~~~~~~
-
-a=rid:<rid-identifier> <direction> pt=<fmt-list> max-height=<height-val> ...
-
-Example:
-a=rid:1 send pt=96 max-height=1080
-
-~~~~~~~~~~~~~~~
-
-
-
-## The "max-fps" Attribute
-
-The "max-fps" rid-level attribute specifies the maximum video framerate in
-frames per second. For encoders that do not use a fixed framerate for encoding,
-this value should constrain the minimum amount of time between frames: the time
-between any two consecutive frames SHOULD not be less than 1/max-fps seconds.
-
-
-~~~~~~~~~~~~~~~
-
-a=rid:<rid-identifier> <direction> pt=<fmt-list> max-fps=<fps-val> ...
-
-Example:
-a=rid:1 recv pt=* max-fps=60
-
-~~~~~~~~~~~~~~~
-
-
-## The "max-fs" Attribute
-
-The "max-fs" rid-level attribute specifies the maximum framesize (maximum width * max height) in pixels per frame.
-
-~~~~~~~~~~~~~~~
-
-a=rid:<rid-identifier> <direction> pt=<fmt-list> max-fs=<fs-val> ...
-
-Example:
-a=rid:1 send pt=96 max-fs=1382400
-
-~~~~~~~~~~~~~~~
-
-
-## The "max-br" Attribute
-
-The "max-br" rid-level attribute specifies the maximum bitrate in bits
-per second. The exact means of keeping withing this limit are left up
-to the implementation, and instantaneous excursions outside the limit are
-permissible. For any given one-second sliding window, however, the total
-number of bits in the payload portion of RTP SHOULD NOT exceed the value
-specific in "max-br."
-
-
-~~~~~~~~~~~~~~~
-
-a=rid:<rid-identifier> <direction> pt=<fmt-list> max-br=<br-val> ...
-
-Example:
-a=rid:1 recv pt=96 max-fs=2000000
-
-~~~~~~~~~~~~~~~
-
-
-## The "max-pps" Attribute
-
-The "max-br" rid-level attribute specifies maximum video pixelrate in pixels
-per second. This value SHOULD be handled identically to max-fps, after
-performing the following conversion: max-fps = max-pps / (width * height). If
-the stream resolution changes, this value is recalculated. Due to this
-recalculation, excursions outside the specified maximum are possible during
-near resolution change boundaries.
-
-
-~~~~~~~~~~~~~~~
-
-a=rid:<rid-identifier> <direction> pt=<fmt-list> max-pps=<pps-val> ...
-
-Example:
-a=rid:1 recv pt=96 max-pps=2000000
-
-~~~~~~~~~~~~~~~
-
-
-## The "depend” attribute
-
-The 'depend' attribute can be used to establish relationships
-between several 'rid-identifiers'. Such relationship exists when
-signaling layer dependencies for Scalable Video Coding (SVC)  or
-relating a primary RTP Stream to a Secondary RTP Stream (FEC/RTX),
-for example.
-
-~~~~~~~~~~~~~~~
-
-a=rid:<rid-identifier> <direction> pt=<fmt-list> depend=<rid-identifier>, ...
-
-Example to show rid '2' depending on '1'
-a=rid:1  send pt=100
-a=rid:2  send pt=101 depend=1
-
-~~~~~~~~~~~~~~~
-
-The list of 'rid-identifiers' specified as part of the depend attribute
-MUST be defined elsewhere in the SDP. If not, such definition MUST be
-considered an error and the entire 'rid' line MUST be rejected.
 
 # SDP Offer/Answer Procedures {#sec-sdp_o_a}
 
@@ -335,8 +198,7 @@ the given set of RTP Payload Types.
 In order to construct a given "a=rid" line, the offerer must follow
 the below steps:
 
-1. It MUST generate a unique 'rid-identifier'. The chosen identifier
-  MUST be unique across all the media descriptions in the Offer.
+1. It MUST generate rid-identifier' unique with in a media description
 
 2. It MUST set the direction for the 'rid-identifier' to one of
    'send' or 'recv'
@@ -350,8 +212,6 @@ the below steps:
 
 5. If an 'a=fmtp' attribute is also used to provide media-format-specific
   parameters, then the 'rid-level' attributes will further constrain the equivalent 'fmtp' parameters for the given Payload Type for those streams associated with the 'rid'.
-
-It is RECOMMENDED that the Offerer includes both the "a=fmtp" and the "a=rid" attributes in the offer for describing the media encoding formats in the SDP. This is done to ensure interoperability between the endpoints that do not support the 'rid' framework proposed in this specification.
 
 ## Answerer processing the SDP Offer
 
@@ -436,8 +296,7 @@ within an RTP session, but in some use cases applications need
 further identifiers in order to effectively map the individual
 RTP Streams to their equivalent payload configurations in the SDP.
 
-This specification defines a new RTP header extension to include the 'rid-identifier'. This makes it possible for a receiver to associate received RTP packets (identifying the Source RTP Stream) with a specific media description,
-in which the receiver has assigned the 'rid-identifier' identifying a particular payload configuration, even if those "m=" lines are part of the same RTP session.
+This specification defines a new RTP header extension to include the 'rid-identifier'. This makes it possible for a receiver to associate received RTP packets (identifying the Source RTP Stream) with a media description with the format costraint specification.
 
 ## RTP 'rid' Header Extension
 
@@ -505,9 +364,6 @@ param-val  = byte-string
 
 # SDP Examples
 
-## Single Stream Scenarios
- TODO
-
 ## Many Bundled Streams using Many Codecs
 
 In this scenario, the offerer supports the Opus, G.722, G.711 and DTMF audio codecs, and
@@ -527,6 +383,9 @@ NOTE: The SDP given below skips few lines to keep the example short and
 focussed, as indicated by either the "..." or the comments inserted.
 
 ~~~~~~~~~~~~~~~~~~
+                                    Example 1
+
+
 Offer:
 ...
 m=audio 10000 RTP/SAVPF 96 9 8 0 123
@@ -600,9 +459,9 @@ Adding simulcast to the above example allows the mixer to selectively forward st
 
 Offer:
 ...
-m=audio ... same as from prior example
+m=audio ... same as from Example 1 ..
 ...
-m=video ...same as above...
+m=video ...same as from Example 1 ...
 ...same rtpmap/fmtp as above...
 a=sendrecv
 a=mid:v1 (max resolution)
@@ -612,7 +471,7 @@ a=rid:5 send pt=*; max-width=640; max-height=360; max-fps=15
 a=rid:6 send pt=*; max-width=320; max-height=180; max-fps=15
 a=simulcast: send rid=1;5;6 recv rid=2
 ...
-...same m=video sections as prior example for mid:v2-v7...
+...same m=video sections as Example 1 for mid:v2-v7...
 ...
 
 Answer:
@@ -628,10 +487,10 @@ Adding scalable layers to the above simulcast example gives the SFU further flex
 
 Offer:
 ...
-m=audio ...same as above...
+m=audio ...same as Example 1 ...
 ...
-m=video ...same as above...
-...same rtpmap/fmtp as above...
+m=video ...same as Example 1 ...
+...same rtpmap/fmtp as Example 1...
 a=sendrecv
 a=mid:v1 (max resolution)
 a=rid:0 send pt=*; max-width=1280; max-height=720; max-fps=15
@@ -641,7 +500,7 @@ a=rid:5 send pt=*; max-width=640; max-height=360; max-fps=15
 a=rid:6 send pt=*; max-width=320; max-height=180; max-fps=15
 a=simulcast: send rid=0;1;5;6 recv rid=2
 ...
-...same m=video sections as prior example for mid:v2-v7...
+...same m=video sections as Example1 for mid:v2-v7...
 ...
 
 Answer:
@@ -730,4 +589,4 @@ The initial set of rid-level attribute names, with definitions in Section XXXX o
 TODO
 
 #  Acknowledgements
-Many thanks to review from TODO.
+Many thanks to review from Cullen Jennings, Magnus Westerlund.
