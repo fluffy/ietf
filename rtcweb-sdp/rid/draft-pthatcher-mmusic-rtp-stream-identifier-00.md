@@ -1,6 +1,6 @@
 ---
 title: "RTP Payload Format Constraints"
-abbrev:rid 
+abbrev: i3c
 docname:  draft-pthatcher-mmusic-rfc-00
 date: 2015-10-2
 category: std
