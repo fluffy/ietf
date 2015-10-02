@@ -170,14 +170,37 @@ The "a=rid" media attribute is not dependent on charset.
 This section defines the 'rid-level' attributes that can be used
 to constrain the RTP payload encoding format in a codec-agnostic way.
 
-The following new SDP parameters shall be defined that represent things common across video codecs.
-* max-width, for spatial resolution in pixels.  In the case that stream orientation signaling is used to modify the intended display orientation, this attribute refers to the width of
-the stream when a rotation of zero degrees is encoded.
-* max-height, for spatial resolution in pixels.  In the case that stream orientation signaling is used to modify the intended display orientation, this attribute refers to the width of the stream when a rotation of zero degrees is encoded.
-* max-fps, for frame rate in frames per second.  For encoders that do not use a fixed framerate for encoding, this value should constrain the minimum amount of time between frames: the time between any two consecutive frames SHOULD not be less than 1/max-fps seconds.
+The following new SDP parameters shall be defined that represent things common
+across video codecs:
+
+* max-width, for spatial resolution in pixels.  In the case that stream
+  orientation signaling is used to modify the intended display orientation, this
+  attribute refers to the width of the stream when a rotation of zero degrees is
+  encoded.
+
+* max-height, for spatial resolution in pixels.  In the case that stream
+  orientation signaling is used to modify the intended display orientation, this
+  attribute refers to the width of the stream when a rotation of zero degrees is
+  encoded.
+
+* max-fps, for frame rate in frames per second.  For encoders that do not use a
+  fixed framerate for encoding, this value should constrain the minimum amount
+  of time between frames: the time between any two consecutive frames SHOULD not
+  be less than 1/max-fps seconds.
+
 * max-fs, for frame size in pixels per frame.
-* max-br, for bit rate in bits per second.  The exact means of keeping withing this limit are left up to the implementation, and instantaneous excursions outside the limit are permissible. For any given one-second sliding window, however, the total number of bits in the payload portion of RTP SHOULD NOT exceed the value specific in "max-br."
-* max-pps, for pixel rate in pixels per second.  This value SHOULD be handled identically to max-fps, after performing the following conversion: max-fps = max-pps / (width * height). If the stream resolution changes, this value is recalculated. Due to this recalculation, excursions outside the specified maximum are possible during near resolution change boundaries.
+
+* max-br, for bit rate in bits per second.  The exact means of keeping withing
+  this limit are left up to the implementation, and instantaneous excursions
+  outside the limit are permissible. For any given one-second sliding window,
+  however, the total number of bits in the payload portion of RTP SHOULD NOT
+  exceed the value specific in "max-br."
+
+* max-pps, for pixel rate in pixels per second.  This value SHOULD be handled
+  identically to max-fps, after performing the following conversion: max-fps =
+  max-pps / (width * height). If the stream resolution changes, this value is
+  recalculated. Due to this recalculation, excursions outside the specified
+  maximum are possible during near resolution change boundaries.
 
 All the attributes are optional and are subjected to negotiation
 based on the SDP Offer/Answer rules described in {{sec-sdp_o_a}}
