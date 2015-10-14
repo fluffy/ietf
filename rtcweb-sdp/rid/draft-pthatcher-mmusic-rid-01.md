@@ -1,8 +1,8 @@
 ---
 title: "RTP Payload Format Constraints"
 abbrev: rid 
-docname:  draft-pthatcher-mmusic-rid-00
-date: 2015-10-2
+docname:  draft-pthatcher-mmusic-rid-01
+date: 2015-10-14
 category: std
 ipr: trust200902
 
@@ -51,7 +51,10 @@ normative:
   I-D.ietf-avtext-rtp-grouping-taxonomy:
 
 informative:
+  RFC5226:
   RFC5888:
+  RFC5939:
+  RFC6236:
   I-D.ietf-mmusic-sdp-bundle-negotiation:
   I-D.ietf-mmusic-sdp-simulcast:
 
@@ -88,6 +91,12 @@ format specification in the SDP.
 
 Note that the "rid" parameters only serve to further constrain the parameters
 that are established on a PT format. They do not relax any existing constraints.
+
+As described in {{sec-rid_unaware}}, this mechanism achieves backwards
+compatibility via the normal SDP processing rules, which require unknown a=
+parameters to be ignored. This means that implementations need to be prepared
+to handle successful offers and answers from other implementations that
+neither indicate nor honor the constraints requested by this mechanism.
 
 # Key Words for Requirements
 
@@ -126,20 +135,20 @@ This section defines new SDP media-level attribute {{RFC4566}}, "a=rid".
 
 ~~~~~~~~~~~~~~~
 
-a=rid:<rid-identifier> <direction> pt=<fmt-list> <rid-attribute>:<value> ...
+a=rid:<rid-identifier> <direction>;pt=<fmt-list>;<rid-attribute>=<value> ...
 
 ~~~~~~~~~~~~~~~
 
 A given "a=rid" SDP media attribute specifies constraints defining
 an unique RTP payload configuration identified via the "rid-identifier".
-A set of codec-agnostic "rid-level" attributes are defined ({{sec-rid_level_attributes}}) that describe the media format specification
+A set of codec-agnostic "rid-level" constraints are defined ({{sec-rid_level_constraints}}) that describe the media format specification
 applicable to one or more Payload Types speicified by the "a=rid" line.
 
 
 The 'rid' framework MAY be used in combination with the 'a=fmtp' SDP
 attribute for describing the media format parameters for a given
-RTP Payload Type. However in such scenarios, the 'rid-level' attributes
-({{sec-rid_level_attributes}}) further constrains the equivalent 'fmtp' attributes.
+RTP Payload Type. However in such scenarios, the 'rid-level' constraints
+({{sec-rid_level_constraints}}) further constrains the equivalent 'fmtp' attributes.
 
 The 'direction' identifies the either 'send', 'recv' directionality
 of the Source RTP Stream.
@@ -156,17 +165,19 @@ follow the syntax similar to session-level and media-level attributes,
 they are defined independently.  All 'rid-level' attributes MUST be
 registered with IANA, using the registry defined in {{sec-iana}}
 
-{{sec-abnf}} gives a formal Augmented Backus-Naur Form(ABNF)
+{{sec-abnf}} gives a formal Augmented Backus-Naur Form (ABNF)
 {{RFC5234}} grammar for the "rid" attribute.
 
 The "a=rid" media attribute is not dependent on charset.
 
-# "rid-level' attributes {#sec-rid_level_attributes}
+# 'rid-level' constraints {#sec-rid_level_constraints}
 
-This section defines the 'rid-level' attributes that can be used
+This section defines the 'rid-level' constraints that can be used
 to constrain the RTP payload encoding format in a codec-agnostic way.
 
-The following new SDP parameters shall be defined that represent things common across video codecs.
+The following constraints are intended to apply to video codecs in
+a codec-independent fashion.
+
 
 * max-width, for spatial resolution in pixels.  In the case that stream orientation signaling is used to modify the intended display orientation, this attribute refers to the width of
 the stream when a rotation of zero degrees is encoded.
@@ -176,8 +187,13 @@ the stream when a rotation of zero degrees is encoded.
 * max-br, for bit rate in bits per second.  The exact means of keeping withing this limit are left up to the implementation, and instantaneous excursions outside the limit are permissible. For any given one-second sliding window, however, the total number of bits in the payload portion of RTP SHOULD NOT exceed the value specific in "max-br."
 * max-pps, for pixel rate in pixels per second.  This value SHOULD be handled identically to max-fps, after performing the following conversion: max-fps = max-pps / (width * height). If the stream resolution changes, this value is recalculated. Due to this recalculation, excursions outside the specified maximum are possible during near resolution change boundaries.
 
-All the attributes are optional and are subjected to negotiation
+All the constraints are optional and are subjected to negotiation
 based on the SDP Offer/Answer rules described in {{sec-sdp_o_a}}
+
+This list is intended to be an initial set of constraints; future documents
+may define additional constraints; see {{sec-iana_rid}}.  While this document doesn't define
+constraints for audio codecs, there is no reason such constraints should be
+precluded from definition and registration by other documents.
 
 {{sec-abnf}} provides formal Augmented Backus-Naur Form(ABNF) {{RFC5234}} grammar for each of the "rid-level" attributes defined in this section.
 
@@ -195,20 +211,23 @@ the given set of RTP Payload Types.
 In order to construct a given "a=rid" line, the offerer must follow
 the below steps:
 
-1. It MUST generate rid-identifier' unique with in a media description
+1. It MUST generate a 'rid-identifier' that is unique within a media description
 
 2. It MUST set the direction for the 'rid-identifier' to one of
    'send' or 'recv'
 
-3. A listing of SDP format tokens (usually corresponding to RTP payload
-   types) MUST be included to which the constraints expressed by the
-   'rid-level' attributes apply. The Payload Types chosen MUST either be defined as part of "a=rtpmap" or "a=fmtp" attributes.
+3. It MAY include a listing of SDP format tokens (usually corresponding to RTP
+   payload types) to which the constraints expressed by the 'rid-level'
+   attributes apply. Any Payload Types chosen MUST either be defined as part of
+   "a=rtpmap" or "a=fmtp" attributes.
 
-4. The Offerer then chooses the 'rid-level' attributes
-   ({{sec-rid_level_attributes}}) to be applied for the SDP format tokens listed.
+4. The Offerer then chooses the 'rid-level' constraints
+   ({{sec-rid_level_constraints}}) to be applied for the SDP format tokens listed.
 
-5. If an 'a=fmtp' attribute is also used to provide media-format-specific
-  parameters, then the 'rid-level' attributes will further constrain the equivalent 'fmtp' parameters for the given Payload Type for those streams associated with the 'rid'.
+Note: If an 'a=fmtp' attribute is also used to provide media-format-specific
+parameters, then the 'rid-level' attributes will further constrain the
+equivalent 'fmtp' parameters for the given Payload Type for those streams
+associated with the 'rid'.
 
 ## Answerer processing the SDP Offer
 
@@ -216,14 +235,14 @@ For each media description in the offer, and for each "a=rid" attribute
 in the media description, the receiver of the offer will perform the
 following steps:
 
-### 'rid' unaware Answerer
+### 'rid' unaware Answerer {#sec-rid_unaware}
 
 If the receiver doesn't support the 'rid' framework proposed in this specification, the entire "a=rid" line is ignored following the standard
 {{RFC3264}} Offer/Answer rules. If a given codec would require 'a=fmtp' line
-when used without "a-rid" then the offer still needs to include that even when
-using RID. 
+when used without "a=rid" then the offer still needs to include that even when
+using RID.
 
-### 'rid' aware Answerer
+### 'rid' aware Answerer {#sec-rid_offer_recv}
 
 If the answerer supports 'rid' framework, the following steps are executed, in
 order, for each "a=rid" line in a given media description:
@@ -231,22 +250,26 @@ order, for each "a=rid" line in a given media description:
 1. Extract the rid-identifier from the "a=rid" line and verify its uniqueness.
    In the case of a duplicate, the entire "a=rid" line is rejected and MUST not be included in the SDP Answer.
 
-2. As a next step, the list of payload types are verified against the list
-  obtained from "a=rtpmap" and/or "a=fmtp" attributes. If there is no match
-  for the Payload Type listed in the "a=rid" line, then remove the "a=rid" line. The exception being when '*' is used for identifying the media format,
-  where in the "a=rid" line applies to all the formats in a given media description.
+2. If the "a=rid" line contains a "pt=" parameter, the list of payload types
+   is verified against the list obtained from "a=rtpmap" and/or "a=fmtp"
+   attributes. If there is no match for the Payload Type listed in the "a=rid"
+   line, then remove the "a=rid" line.
 
-3. On verifying the Payload Type(s) matches, the answerer shall ensure that
-  "rid-level" attributes listed are supported and syntactically well formed.
+3. The answerer ensures that "rid-level" parameters listed are supported and syntactically well formed.
   In the case of a syntax error or an unsupported parameter, the "a=rid" line is removed.
 
 4. If the 'depend' rid-level attribute is included, the answerer MUST make
   sure that the rid-identifiers listed unambiguously match the rid-identifiers in the SDP offer.
+  Any lines that do not are removed.
 
-5. If the media description contains an "a=fmtp" attribute, the answerer
-   verifies that the attribute values provided in the "rid-level" attributes are within the scope of their fmtp equivalents for a given media format.
+5. if the "a=rid" line contains a "pt=" parameter, the answerer verifies that
+   the attribute values provided in the "rid-level" attributes are consistent
+   with the corrsponding codecs and their other parameters. See
+   {{sec-feature_interactions}} for more detail. If the rid-level parameters
+   are incompatible with the other codec properties, then the "a=rid" line is
+   removed.
 
-## Generating the SDP Answer
+## Generating the SDP Answer {#sec-rid_answer_send}
 
 Having performed the verification of the SDP offer as described, the answerer shall perform the following steps to generate the SDP answer.
 
@@ -264,7 +287,7 @@ For each "a=rid" line:
 4. In cases where the answerer is unable to support the payload configuration
    specified in a given "a=rid" line in the offer, the answerer MUST remove the corresponding "a=rid" line.
 
-## Offering Processing of the SDP Answer
+## Offering Processing of the SDP Answer {#sec-rid_answer_recv}
 
 The offerer shall follow the steps similar to answerer's offer processing with the following exceptions
 
@@ -278,10 +301,19 @@ The offerer shall follow the steps similar to answerer's offer processing with t
 3. If the SDP answer contains any "rid-identifier" that doesn't match with
    the offer, the offerer MUST ignore the corresponding "a=rid" line.
 
+5. if the "a=rid" line contains a "pt=" parameter, the offerer verifies that
+   the attribute values provided in the "rid-level" attributes are consistent
+   with the corrsponding codecs and their other parameters. See
+   {{sec-feature_interactions}} for more detail. If the rid-level parameters
+   are incompatible with the other codec properties, then the "a=rid" line is
+   removed.
 
 ## Modifying the Session
 
-TODO
+Offers and answers inside an existing session follow the rules for initial session negotiation.
+Such an offer MAY propose a change the number of RIDs in use. To avoid race conditions with media,
+any RIDs with proposed changes SHOULD use a new ID, rather than re-using one from the previous
+offer/answer exchange. RIDs without proposed changes SHOULD re-use the ID from the previous exchange.
 
 # Usage of 'rid' in RTP
 
@@ -291,7 +323,7 @@ within an RTP session, but in some use cases applications need
 further identifiers in order to effectively map the individual
 RTP Streams to their equivalent payload configurations in the SDP.
 
-This specification defines a new RTP header extension to include the 'rid-identifier'. This makes it possible for a receiver to associate received RTP packets (identifying the Source RTP Stream) with a media description having the format constraint specificied.
+This specification defines a new RTP header extension to include the 'rid-identifier'. This makes it possible for a receiver to associate received RTP packets (identifying the Source RTP Stream) with a media description having the format constraint specified.
 
 ## RTP 'rid' Header Extension
 
@@ -305,6 +337,41 @@ It is recommended that the identification-tag is kept short. Due to the properti
 header extension, in case no other header extensions are included at the same time. In many cases, a one-byte tag will be sufficient; it is RECOMMENDED that implementations use the shortest tag that fits their purposes.
 
 
+# Interaction with Other Techniques {#sec-feature_interactions}
+
+{::comment}
+## Other Restrictions
+{/:comment}
+
+Historically, a number of other approaches have been defined that allow constraining media
+streams via SDP parameters. These include:
+
+* Codec-specific configuration set via format parameters ("a=fmtp"); for example, the H.264 "max-fs" format parameter
+* Size restrictions imposed by image attribute attributes ("a=imgattr") {{RFC6236}}
+
+When the mechanism described in this document is used in conjunction with these other restricting mechanisms,
+it is intended to impose additional restrictions beyond those communicated in other techniques.
+
+In an offer, this means that a=rid lines, when combined with other restrictions on the media stream,
+are expected to result in a non-empty union. For example, if image attributes are used to indicate
+that a PT has a minimum width of 640, then specification of "max-width=320" in an "a=rid" line
+that is then applied to that PT is nonsensical. According to the rules of {{sec-rid_offer_recv}}, this
+will result in the corresponding "a=rid" line being ignored by the recipient.
+
+Similarly, an answer the a=rid lines, when combined with the other restrictions on the media stream,
+are also expected to result in a non-empty union. If the implementation generating an answer wishes
+to restrict a property of the stream below that which would be allowed by other parameters (e.g.,
+those specified in "a=fmtp" or "a=imgattr"), its only recourse is to remove the "a=rid" line
+altogether, as described in {{sec-rid_answer_send}}. If it instead attempts to constrain the stream
+beyond what is allowed by other mechanisms, then the offerer will ignore the corresponding "a=rid"
+line, as described in {{sec-rid_answer_recv}}.
+
+{::comment}
+## SDP Capability Negotiation
+
+TODO: I'm 12 years old and what is this? {{RFC5939}}
+{:/comment}
+
 # Formal Grammar {#sec-abnf}
 
 This section gives a formal Augmented Backus-Naur Form (ABNF)
@@ -312,46 +379,47 @@ This section gives a formal Augmented Backus-Naur Form (ABNF)
 defined in this document.
 
 ~~~~~~~~~~~~~~~~~~
-rid-syntax = "a=rid:" rid-identifier SP rid-dir SP rid-fmt-list SP rid-attr-list
 
-rid-identifier = 1*(alpha-numeric / "-" / "_")
+rid-syntax        = "a=rid:" rid-identifier SP rid-dir
+                    [ rid-pt-param-list / rid-param-list ]
 
-rid-dir              = "send" / "recv"
+rid-identifier    = 1*(alpha-numeric / "-" / "_")
 
-rid-fmt-list   = "pt=" rid-fmt *( ";" rid-fmt )
+rid-dir           = "send" / "recv"
 
-rid-fmt        = "*" ; wildcard: applies to all formats
-               / fmt
+rid-pt-param-list = SP rid-fmt-list *(";" rid-param)
 
-rid-attr-list  = rid-width-param
-               / rid-height-param
-               / rid-fps-param
-               / rid-fs-param
-               / rid-br-param
-               / rid-pps-param
-               / rid-depend-param
+rid-param-list    = SP rid-param *(";" rid-param)
 
-rid-width-param = "max-width=" param-val
+rid-fmt-list      = "pt=" fmt *( "," fmt )
+                     ; fmt defined in {{RFC4566}}
 
-rid-height-param = "max-height=" param-val
+rid-param         = rid-width-param
+                    / rid-height-param
+                    / rid-fps-param
+                    / rid-fs-param
+                    / rid-br-param
+                    / rid-pps-param
+                    / rid-depend-param
 
-rid-fps-param   = "max-fps=" param-val
+rid-width-param   = "max-width=" param-val
 
-rid-fs-param    = "max-fs=" param-val
+rid-height-param  = "max-height=" param-val
 
-rid-br-param    = "max-br=" param-val
+rid-fps-param     = "max-fps=" param-val
 
-rid-pps-param    = "max-pps=" param-val
+rid-fs-param      = "max-fs=" param-val
 
-rid-depend-param = "depend=" rid-list
+rid-br-param      = "max-br=" param-val
 
-rid-list = rid-identifier *( ";" rid-identifier )
+rid-pps-param     = "max-pps=" param-val
 
-param-val  = byte-string
+rid-depend-param  = "depend=" rid-list
 
-; WSP defined in {{RFC5234}}
-; fmt defined in {{RFC4566}}
-; byte-string in {{RFC4566}}
+rid-list          = rid-identifier *( "," rid-identifier )
+
+param-val         = byte-string
+                    ; byte-string in {{RFC4566}}
 
 ~~~~~~~~~~~~~~~~~~
 
@@ -374,7 +442,7 @@ Expressing all these codecs and resolutions using 32 dynamic PTs (2 audio + 10x3
 
 
 NOTE: The SDP given below skips few lines to keep the example short and
-focussed, as indicated by either the "..." or the comments inserted.
+focused, as indicated by either the "..." or the comments inserted.
 
 ~~~~~~~~~~~~~~~~~~
                                     Example 1
@@ -413,26 +481,26 @@ a=rtpmap:107 H265/90000
 a=fmtp:107 profile-id=2; level-id=93
 a=sendrecv
 a=mid:v1 (max resolution)
-a=rid:1 send pt=*; max-width=1280; max-height=720; max-fps=30
-a=rid:2 recv pt=*; max-width=1280; max-height=720; max-fps=30
+a=rid:1 send max-width=1280;max-height=720;max-fps=30
+a=rid:2 recv max-width=1280;max-height=720;max-fps=30
 ...
 m=video 10000 RTP/SAVPF 98 99 100 101 102 103 104 105 106 107
 ...same rtpmap/fmtp as above...
 a=recvonly
 a=mid:v2 (medium resolution)
-a=rid:3 recv pt=*; max-width=640; max-height=360; max-fps=15
+a=rid:3 recv max-width=640;max-height=360;max-fps=15
 ...
 m=video 10000 RTP/SAVPF 98 99 100 101 102 103 104 105 106 107
 ...same rtpmap/fmtp as above...
 a=recvonly
 a=mid:v3 (medium resolution)
-a=rid:3 recv pt=*; max-width=640; max-height=360; max-fps=15
+a=rid:3 recv max-width=640;max-height=360;max-fps=15
 ...
 m=video 10000 RTP/SAVPF 98 99 100 101 102 103 104 105 106 107
 ...same rtpmap/fmtp as above...
 a=recvonly
 a=mid:v4 (small resolution)
-a=rid:4 recv pt=*; max-width=320; max-height=180; max-fps=15
+a=rid:4 recv max-width=320;max-height=180;max-fps=15
 ...
 m=video 10000 RTP/SAVPF 98 99 100 101 102 103 104 105 106 107
 ...same rtpmap/fmtp as above...
@@ -461,10 +529,10 @@ m=video ...same as from Example 1 ...
 ...same rtpmap/fmtp as above...
 a=sendrecv
 a=mid:v1 (max resolution)
-a=rid:1 send pt=*; max-width=1280; max-height=720; max-fps=30
-a=rid:2 recv pt=*; max-width=1280; max-height=720; max-fps=30
-a=rid:5 send pt=*; max-width=640; max-height=360; max-fps=15
-a=rid:6 send pt=*; max-width=320; max-height=180; max-fps=15
+a=rid:1 send max-width=1280;max-height=720;max-fps=30
+a=rid:2 recv max-width=1280;max-height=720;max-fps=30
+a=rid:5 send max-width=640;max-height=360;max-fps=15
+a=rid:6 send max-width=320;max-height=180;max-fps=15
 a=simulcast: send rid=1;5;6 recv rid=2
 ...
 ...same m=video sections as Example 1 for mid:v2-v7...
@@ -490,11 +558,11 @@ m=video ...same as Example 1 ...
 ...same rtpmap/fmtp as Example 1...
 a=sendrecv
 a=mid:v1 (max resolution)
-a=rid:0 send pt=*; max-width=1280; max-height=720; max-fps=15
-a=rid:1 send pt=*; max-width=1280; max-height=720; max-fps=30; depend=0
-a=rid:2 recv pt=*; max-width=1280; max-height=720; max-fps=30
-a=rid:5 send pt=*; max-width=640; max-height=360; max-fps=15
-a=rid:6 send pt=*; max-width=320; max-height=180; max-fps=15
+a=rid:0 send max-width=1280;max-height=720;max-fps=15
+a=rid:1 send max-width=1280;max-height=720;max-fps=30;depend=0
+a=rid:2 recv max-width=1280;max-height=720;max-fps=30
+a=rid:5 send max-width=640;max-height=360;max-fps=15
+a=rid:6 send max-width=320;max-height=180;max-fps=15
 a=simulcast: send rid=0;1;5;6 recv rid=2
 ...
 ...same m=video sections as Example1 for mid:v2-v7...
@@ -529,10 +597,10 @@ a=rtpmap:97 VP8/90000
 a=rtpmap:98 VP8/90000
 a=fmtp:97 max-fs=3600
 a=fmtp:98 max-fs=3600
-a=rid:1 send pt=97; max-br=; max-height=720;
-a=rid:2 recv pt=97; max-width=1280; max-height=720
-a=rid:3 recv pt=98; max-width=320; max-height=180
-a=simulcast send pt=97 recv pt=*
+a=rid:1 send pt=97;max-br=;max-height=720;
+a=rid:2 recv pt=97;max-width=1280;max-height=720
+a=rid:3 recv pt=98;max-width=320;max-height=180
+a=simulcast send pt=97 recv
 a=simulcast: send rid=1 recv rid=2;3
 
 ~~~~~~~~~~~~~~~~~~
@@ -545,6 +613,8 @@ a=simulcast: send rid=1 recv rid=2;3
 The name 'rid' is provisionally used and is open for further discussion.
 
 Here are the few options that were considered while writing this draft
+
+* CID: Constraint ID, which is a rather precise description of what we are attempting to accomplish.
 
 * ESID: Encoded Stream ID, does not align well with taxonomy which defines Encoded Stream as before RTP packetization.
 
@@ -577,25 +647,31 @@ This document defines "rid" as SDP media-level attribute. This attribute must be
 The "rid" attribute is used to identify characteristics of RTP stream
 with in a RTP Session. Its format is defined in Section XXXX.
 
-## Registry for RID-Level Attributes
+## Registry for RID-Level Parameters {#sec-iana_rid}
 
-This specification creates a new IANA registry named "att-field (rid level)" within the SDP parameters registry.  The rid-level attributes MUST be registered with IANA and documented under the same rules as for SDP session-level and media-level attributes as specified in [RFC4566].
+This specification creates a new IANA registry named "att-field (rid level)" within the SDP parameters registry.  The rid-level parameters MUST be registered with IANA and documented under the same rules as for SDP session-level and media-level attributes as specified in [RFC4566].
 
-New attribute registrations are accepted according to the "Specification Required" policy of [RFC5226], provided that the specification includes the following information:
+Parameters for "a=rid" lines that modify the nature of encoded media MUST be
+of the form that the result of applying the modification to the stream results
+in a stream that still complies with the other parameters that affect the
+media. In other words, parameters always have to restrict the definition to be
+a subset of what is otherwise allowable, and never expand it.
+
+New parameter registrations are accepted according to the "Specification Required" policy of [RFC5226], provided that the specification includes the following information:
 
 * contact name, email address, and telephone number
 
-* attribute name (as it will appear in SDP)
+* parameter name (as it will appear in SDP)
 
-* long-form attribute name in English
+* long-form parameter name in English
 
-* whether the attribute value is subject to the charset attribute
+* whether the parameter value is subject to the charset attribute
 
-* a one-paragraph explanation of the purpose of the attribute
+* an explanation of the purpose of the parameter
 
-* a specification of appropriate attribute values for this attribute
+* a specification of appropriate attribute values for this parameter
 
-The initial set of rid-level attribute names, with definitions in Section XXXX of this document, is given below
+The initial set of rid-level parameter names, with definitions in Section XXXX of this document, is given below
 
 ~~~~~~~~~~~~~~~~~~~~~~~
    Type            SDP Name                     Reference
@@ -616,7 +692,13 @@ The initial set of rid-level attribute names, with definitions in Section XXXX o
 
 # Security Considerations
 
-TODO
+As with most SDP parameters, a failure to provide integrity protection over the a=rid
+attributes provides attackers a way to modify the session in potentially unwanted
+ways. This could result in an implementation sending greater amounts of data than
+a recipient wishes to receive. In general, however, since the "a=rid" attribute can
+only restrict a stream to be a subset of what is otherwise allowable, modification of the
+value cannot result in a stream that is of higher bandwidth than would be sent to
+an implementation that does not support this mechanism.
 
 #  Acknowledgements
-Many thanks to review from Cullen Jennings, Magnus Westerlund.
+Many thanks to review from Cullen Jennings and Magnus Westerlund.
