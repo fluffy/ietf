@@ -1,11 +1,16 @@
+MD      := $(wildcard *.md)
+XML     := $(patsubst %.md,%.xml,$(MD))
+HTML    := $(patsubst %.md,%.html,$(MD))
+TXT     := $(patsubst %.md,%.txt,$(MD))
+
 xml2rfc ?= xml2rfc -v
 kramdown-rfc2629 ?= kramdown-rfc2629
 idnits ?= idnits
 
-all:  draft-pthatcher-mmusic-rid-00.txt draft-pthatcher-mmusic-rid-00.html
+all:  $(TXT) $(HTML)
 
 clean:
-	-rm -f draft-pthatcher-mmusic-rid-00.txt draft-pthatcher-mmusic-rid-00.html draft-pthatcher-mmusic-rid-00.xml
+	-rm -f $(TXT) $(HTML) $(XML)
 
 %.xml: %.md
 	$(kramdown-rfc2629) $< > $@
