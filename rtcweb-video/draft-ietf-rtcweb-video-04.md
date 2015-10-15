@@ -1,8 +1,8 @@
 ---
 title: "WebRTC Video Processing and Codec Requirements"
 abbrev: WebRTC Video
-docname: draft-ietf-rtcweb-video-05
-date: 2015-03-17
+docname: draft-ietf-rtcweb-video-04
+date: 2015-02-13
 category: std
 ipr: trust200902
 
@@ -26,6 +26,10 @@ author:
 
 normative:
   RFC2119:
+  RFC6562:
+
+  RFC4175:
+  RFC4421:
 
   H264:
     title: "Advanced video coding for generic audiovisual services (V9)"
@@ -41,6 +45,7 @@ normative:
       org: ITU-T Recommendation H.Sup1
     target: http://www.itu.int/rec/T-REC-H.Sup1
 
+  RFC5104:
   RFC6184:
   RFC6236:
   RFC6386:
@@ -201,7 +206,7 @@ implementations MAY make use of the codec-specific mechanisms instead.
 Mandatory to Implement Video Codec
 ==================================
 
-For the definitions of "WebRTC Browser," "WebRTC Non-Browser", and
+For the definitions of "WebRTC Brower," "WebRTC Non-Browser", and
 "WebRTC-Compatible Endpoint" as they are used in this section, please
 refer to {{I-D.ietf-rtcweb-overview}}.
 
@@ -235,11 +240,9 @@ Codec-Specific Considerations
 =============================
 
 SDP allows for codec-independent indication of preferred video resolutions
-using the mechanism described in {{RFC6236}}. WebRTC endpoints MAY send an
-"a=imageattr" attribute to indicate the maximum resolution they wish to
-receive. Senders SHOULD interpret and honor this attribute by limiting the
-encoded resolution to the indicated maximum size, as the receiver may not be
-capable of handling higher resolutions.
+using the mechanism described in {{RFC6236}}. If a recipient of video indicates
+a receiving resolution, the sender SHOULD accommodate this resolution, as the
+receiver may not be capable of handling higher resolutions.
 
 Additionally, codecs may include codec-specific means of signaling maximum
 receiver abilities with regards to resolution, frame rate, and bitrate.
@@ -322,11 +325,9 @@ Security Considerations
 This specification does not introduce any new mechanisms or security concerns
 beyond what the other documents it references. In WebRTC, video is protected
 using DTLS/SRTP. A complete discussion of the security can be found in
-{{I-D.ietf-rtcweb-security}} and {{I-D.ietf-rtcweb-security-arch}}.
-Implementors should consider whether the use of variable bit rate video codecs
-are appropriate for their application, keeping in mind that the degree of
-inter-frame change (and, by inference, the amount of motion in the frame) may
-be deduced by an eavesdropper based on the video stream's bit rate.
+{{I-D.ietf-rtcweb-security}} and {{I-D.ietf-rtcweb-security-arch}}. Implementers
+should consider whether the use of variable bit rate video codecs are
+appropriate for their application based on {{RFC6562}}.
 
 Implementors making use of H.264 are also advised to take careful note of the
 "Security Considerations" section of {{RFC6184}}, paying special regard to the
