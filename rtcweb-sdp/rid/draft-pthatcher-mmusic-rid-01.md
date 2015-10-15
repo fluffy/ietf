@@ -67,8 +67,8 @@ parameters in a codec-agnostic way beyond what is provided with the regular
 Payload Types and c) enable unambiguous mapping between the Source RTP Streams
 to their media format specification in the SDP.
 
-Note-1: The name 'rid' is not yet finalized. Please refer to Section "Open
-Issues" for more details on the naming.
+Note-1: The name 'rid' is not yet finalized. Please refer to {{sec-open}} for
+more details on the naming.
 
 --- middle
 
@@ -749,7 +749,7 @@ a=simulcast: send rid=1 recv rid=2;3
 ~~~~~~~~~~~~~~~~~~
 
 
-# Open Issues
+# Open Issues {#sec-open}
 
 ## Name of the identifier
 
@@ -815,14 +815,14 @@ be registered by IANA under "Session Description Protocol (SDP) Parameters"
 under "att-field (media level only)".
 
 The "rid" attribute is used to identify characteristics of RTP stream with in
-a RTP Session. Its format is defined in Section XXXX.
+a RTP Session. Its format is defined in {{sec-abnf}}.
 
 ## Registry for RID-Level Parameters {#sec-iana_rid}
 
 This specification creates a new IANA registry named "att-field (rid level)"
 within the SDP parameters registry.  The rid-level parameters MUST be
 registered with IANA and documented under the same rules as for SDP
-session-level and media-level attributes as specified in [RFC4566].
+session-level and media-level attributes as specified in {{RFC4566}}.
 
 Parameters for "a=rid" lines that modify the nature of encoded media MUST be
 of the form that the result of applying the modification to the stream results
@@ -831,7 +831,7 @@ media. In other words, parameters always have to restrict the definition to be
 a subset of what is otherwise allowable, and never expand it.
 
 New parameter registrations are accepted according to the "Specification
-Required" policy of [RFC5226], provided that the specification includes the
+Required" policy of {{RFC5226}}, provided that the specification includes the
 following information:
 
 * contact name, email address, and telephone number
@@ -846,8 +846,8 @@ following information:
 
 * a specification of appropriate attribute values for this parameter
 
-The initial set of rid-level parameter names, with definitions in Section XXXX
-of this document, is given below
+The initial set of rid-level parameter names, with definitions in
+{{sec-rid_level_constraints}} of this document, is given below:
 
 ~~~~~~~~~~~~~~~~~~~~~~~
    Type            SDP Name                     Reference
