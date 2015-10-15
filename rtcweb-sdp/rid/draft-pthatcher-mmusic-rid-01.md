@@ -1,7 +1,7 @@
 ---
 title: "RTP Payload Format Constraints"
 abbrev: rid
-docname:  draft-pthatcher-mmusic-rid-02
+docname:  draft-pthatcher-mmusic-rid-01
 date: 2015-10-15
 category: std
 ipr: trust200902
