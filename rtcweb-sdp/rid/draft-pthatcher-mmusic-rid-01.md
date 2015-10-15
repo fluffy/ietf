@@ -1,8 +1,8 @@
 ---
 title: "RTP Payload Format Constraints"
-abbrev: rid 
-docname:  draft-pthatcher-mmusic-rid-01
-date: 2015-10-14
+abbrev: rid
+docname:  draft-pthatcher-mmusic-rid-02
+date: 2015-10-15
 category: std
 ipr: trust200902
 
@@ -52,8 +52,6 @@ normative:
 
 informative:
   RFC5226:
-  RFC5888:
-  RFC5939:
   RFC6236:
   I-D.ietf-mmusic-sdp-bundle-negotiation:
   I-D.ietf-mmusic-sdp-simulcast:
@@ -83,8 +81,8 @@ example. These demands have unearthed challenges inherent with:
 
 * Ambiguity in mapping between the individual Source RTP Streams and their equivalent format specification in the SDP.
 
-This specification defines a new SDP framework for configuring and identifying
-Source RTP Streams (Section 2.1.10 {{I-D.ietf-avtext-rtp-grouping-taxonomy}}) called "RTP Source Stream Identifier (rid)" along with the SDP attributes to constrain their payload formats in a codec-agnostic way. The "rid" framework can be thought of as complementary extension to the way the media format parameters are specified in SDP today, via the "a=fmtp" attribute.
+This specification defines a new SDP framework for constraining
+Source RTP Streams (Section 2.1.10 {{I-D.ietf-avtext-rtp-grouping-taxonomy}}), called "Restriction Identifier (rid)", along with the SDP attributes to constrain their payload formats in a codec-agnostic way. The "rid" framework can be thought of as complementary extension to the way the media format parameters are specified in SDP today, via the "a=fmtp" attribute.
 This specification also proposes a new RTP header extension to carry the
 "rid" value, to provide correlation between the RTP Packets and their
 format specification in the SDP.
@@ -97,6 +95,11 @@ compatibility via the normal SDP processing rules, which require unknown a=
 parameters to be ignored. This means that implementations need to be prepared
 to handle successful offers and answers from other implementations that
 neither indicate nor honor the constraints requested by this mechanism.
+
+Further, as described in {{sec-sdp_o_a}} and its subsections, this mechanism
+achieves extensibility by: (a) having offerers include all supported
+constraints in their offer, abd (b) having answerers ignore a=rid lines
+that specify unknown constraints.
 
 # Key Words for Requirements
 
@@ -132,10 +135,12 @@ exercising granular control on configuring the individual Source RTP Streams.
 # SDP 'rid' Media Level Attribute {#sec-rid_attribute}
 
 This section defines new SDP media-level attribute {{RFC4566}}, "a=rid".
+Roughly speaking, this attribute takes the following form (see {{sec-abnf}}
+for a formal definition).
 
 ~~~~~~~~~~~~~~~
 
-a=rid:<rid-identifier> <direction>;pt=<fmt-list>;<rid-attribute>=<value> ...
+a=rid:<rid-identifier> <direction> pt=<fmt-list>;<constraint>=<value>...
 
 ~~~~~~~~~~~~~~~
 
@@ -184,7 +189,7 @@ the stream when a rotation of zero degrees is encoded.
 * max-height, for spatial resolution in pixels.  In the case that stream orientation signaling is used to modify the intended display orientation, this attribute refers to the width of the stream when a rotation of zero degrees is encoded.
 * max-fps, for frame rate in frames per second.  For encoders that do not use a fixed framerate for encoding, this value should constrain the minimum amount of time between frames: the time between any two consecutive frames SHOULD not be less than 1/max-fps seconds.
 * max-fs, for frame size in pixels per frame.
-* max-br, for bit rate in bits per second.  The exact means of keeping withing this limit are left up to the implementation, and instantaneous excursions outside the limit are permissible. For any given one-second sliding window, however, the total number of bits in the payload portion of RTP SHOULD NOT exceed the value specific in "max-br."
+* max-br, for bit rate in bits per second.  The restriction applies to the media payload only, and does not include overhead introduced by other layers (e.g., RTP, UDP, IP, or Ethernet).  The exact means of keeping within this limit are left up to the implementation, and instantaneous excursions outside the limit are permissible. For any given one-second sliding window, however, the total number of bits in the payload portion of RTP SHOULD NOT exceed the value specified in "max-br."
 * max-pps, for pixel rate in pixels per second.  This value SHOULD be handled identically to max-fps, after performing the following conversion: max-fps = max-pps / (width * height). If the stream resolution changes, this value is recalculated. Due to this recalculation, excursions outside the specified maximum are possible during near resolution change boundaries.
 
 All the constraints are optional and are subjected to negotiation
@@ -222,12 +227,17 @@ the below steps:
    "a=rtpmap" or "a=fmtp" attributes.
 
 4. The Offerer then chooses the 'rid-level' constraints
-   ({{sec-rid_level_constraints}}) to be applied for the SDP format tokens listed.
+   ({{sec-rid_level_constraints}}) to be applied for the rid, and adds
+   them to the "a=rid" line. If it wishes the answer to have the
+   ability to specify a constraint, but does not wish to
+   set a value itself, it MUST include the name of the constraint
+   in the "a=rid" line, but without any indicated value.
 
 Note: If an 'a=fmtp' attribute is also used to provide media-format-specific
 parameters, then the 'rid-level' attributes will further constrain the
 equivalent 'fmtp' parameters for the given Payload Type for those streams
 associated with the 'rid'.
+
 
 ## Answerer processing the SDP Offer
 
@@ -276,7 +286,8 @@ Having performed the verification of the SDP offer as described, the answerer sh
 For each "a=rid" line:
 
 1. The answerer MAY choose to modify specific 'rid-level' attribute value in
-   the answer SDP. In such a case, the modified value MUST be lower (more constrained) than the ones specified in the offer.
+   the answer SDP. In such a case, the modified value MUST be more constrained than the ones specified in the offer.
+   The answer MUST NOT include any constraints that were not present in the offer.
 
 2. The answerer MUST NOT modify the 'rid-identifier' present in the offer.
 
@@ -286,6 +297,8 @@ For each "a=rid" line:
 
 4. In cases where the answerer is unable to support the payload configuration
    specified in a given "a=rid" line in the offer, the answerer MUST remove the corresponding "a=rid" line.
+   This includes situations in which the answerer does not understand one or more of the constraints
+   in the "a=rid" line that has an associated value.
 
 ## Offering Processing of the SDP Answer {#sec-rid_answer_recv}
 
@@ -315,7 +328,7 @@ Such an offer MAY propose a change the number of RIDs in use. To avoid race cond
 any RIDs with proposed changes SHOULD use a new ID, rather than re-using one from the previous
 offer/answer exchange. RIDs without proposed changes SHOULD re-use the ID from the previous exchange.
 
-# Usage of 'rid' in RTP
+# Usage of 'rid' in RTP and RTCP
 
 The RTP fixed header includes the payload type number and the SSRC
 values of the RTP stream.  RTP defines how you de-multiplex streams
@@ -323,7 +336,12 @@ within an RTP session, but in some use cases applications need
 further identifiers in order to effectively map the individual
 RTP Streams to their equivalent payload configurations in the SDP.
 
-This specification defines a new RTP header extension to include the 'rid-identifier'. This makes it possible for a receiver to associate received RTP packets (identifying the Source RTP Stream) with a media description having the format constraint specified.
+This specification defines a new RTP header extension {{RFC5285}} to include
+the 'rid-identifier'. This makes it possible for a receiver to associate
+received RTP packets (identifying the Source RTP Stream) with a media
+description having the format constraint specified.  This specification also
+defines a new RTCP SDES item {{RFC3550}}, 'RID', which is used to carry rids
+within RTCP SDES packets.
 
 ## RTP 'rid' Header Extension
 
@@ -336,12 +354,22 @@ Note that set of header extensions included in the packet needs to be padded to 
 It is recommended that the identification-tag is kept short. Due to the properties of the RTP header extension mechanism, when using the one-byte header, a tag that is 1-3 bytes will result in that a minimal number of 32-bit words are used for the RTP
 header extension, in case no other header extensions are included at the same time. In many cases, a one-byte tag will be sufficient; it is RECOMMENDED that implementations use the shortest tag that fits their purposes.
 
+## RTCP 'RID' SDES Extension
+
+~~~~~~~
+
+     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |      MID=TBD  |     length    | rid                         ...
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+~~~~~~~
+
+The rid payload is UTF-8 encoded and is not null-terminated.
+
+>RFC EDITOR NOTE: Please replace TBD with the assigned SDES identifier value.
 
 # Interaction with Other Techniques {#sec-feature_interactions}
-
-{::comment}
-## Other Restrictions
-{/:comment}
 
 Historically, a number of other approaches have been defined that allow constraining media
 streams via SDP parameters. These include:
@@ -401,25 +429,30 @@ rid-param         = rid-width-param
                     / rid-br-param
                     / rid-pps-param
                     / rid-depend-param
+                    / rid-param-other
 
-rid-width-param   = "max-width=" param-val
+rid-width-param   = "max-width" [ "=" int-param-val ]
 
-rid-height-param  = "max-height=" param-val
+rid-height-param  = "max-height" [ "=" int-param-val ]
 
-rid-fps-param     = "max-fps=" param-val
+rid-fps-param     = "max-fps" [ "=" int-param-val ]
 
-rid-fs-param      = "max-fs=" param-val
+rid-fs-param      = "max-fs" [ "=" int-param-val ]
 
-rid-br-param      = "max-br=" param-val
+rid-br-param      = "max-br" [ "=" int-param-val ]
 
-rid-pps-param     = "max-pps=" param-val
+rid-pps-param     = "max-pps" [ "=" int-param-val ]
 
 rid-depend-param  = "depend=" rid-list
 
+rid-param-other   = 1*(alpha-numeric / "-") [ "=" param-val ]
+
 rid-list          = rid-identifier *( "," rid-identifier )
 
-param-val         = byte-string
-                    ; byte-string in {{RFC4566}}
+int-param-val     = 1*DIGIT
+
+param-val         = *( %x20-58 / %x60-7E )
+                    ; Any printable character except semicolon
 
 ~~~~~~~~~~~~~~~~~~
 
@@ -597,7 +630,7 @@ a=rtpmap:97 VP8/90000
 a=rtpmap:98 VP8/90000
 a=fmtp:97 max-fs=3600
 a=fmtp:98 max-fs=3600
-a=rid:1 send pt=97;max-br=;max-height=720;
+a=rid:1 send pt=97;max-width=1280;max-height=720;
 a=rid:2 recv pt=97;max-width=1280;max-height=720
 a=rid:3 recv pt=98;max-width=320;max-height=180
 a=simulcast send pt=97 recv
@@ -634,11 +667,28 @@ This document defines a new extension URI in the RTP Compact Header Extensions s
 
     Extension URI: urn:ietf:params:rtp-hdrext:rid
     Description:   RTP Stream Identifier
-    Contact:       <name@email.com>
+    Contact:       <mmusic@ietf.org>
     Reference:     RFCXXXX
 
 ~~~~~~~~~~~~~~~
 
+## New SDES item
+
+>RFC EDITOR NOTE: Please replace RFCXXXX with the RFC number of this document.
+
+>RFC EDITOR NOTE: Please replace TBD with the assigned SDES identifier value.
+
+This document adds the MID SDES item to the IANA "RTCP SDES item
+types" registry as follows:
+
+~~~~~~~~~~~~~~~
+
+           Value:          TBD
+           Abbrev.:        RID
+           Name:           Restriction Identification
+           Reference:      RFCXXXX
+
+~~~~~~~~~~~~~~~
 
 ## New SDP Media-Level attribute
 
