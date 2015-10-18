@@ -87,7 +87,24 @@
 			</t>
 		</section>
 
+		<section title = "ICE Candidate Exchange and Offer/Answer Mapping">
+			<t>
+				<xref target="ICE-BIS"/> defines ICE candidate exchange as the process for the
+				ICE agents (Intiator and Responder) to exchange their candidate information required
+				for ICE processing at the agents. For the purposes of this specification, the candidate 
+				exchange process correponds to <xref target="RFC3264"/> Offer/Answer protocol and the
+				terminologies offerer and answerer correspond to the initiator and responder 
+				terminologies from the <xref target="ICE-BIS"/> respectively.
+			</t>
+		</section>	
+
 		<section title="Sending the Initial Offer">
+			<t>
+				The offerer shall follow the procedures defined in section 4 of <xref target="ICE-BIS"/>
+				to gather, prioritize and eliminate the redundant candidates. It then chooses the 
+				default candidates and encodes them in SDP to be sent to its peer, the answerer.
+			</t>	
+
 			<section anchor="sec-inuse" title="Choosing Default Candidates">
 				<t>
 					A candidate is said to be default if it would be the target of media from a non-ICE peer; that target is called the DEFAULT DESTINATION.
@@ -173,8 +190,22 @@ a=candidate:2 1 UDP 1694498815 192.0.2.3 45664 typ srflx raddr
 		</section>
 
 		<section title="Receiving the Initial Offer">
+			<t>
+			  On receiving the offer, the answerer verfies the support for ICE 
+			  (section 5.1.1 of <xref target="ICE-BIS"/>), determines its role 
+			  (section 5.1.2 of <xref target="ICE-BIS"/>), gathers candidates (section 
+			  4 of <xref target="ICE-BIS"/>), encodes the candidates in an SDP answer
+			  and sends it to its peer, the offerer. The answerer shall then 
+			  follow the steps defined in sections 5.1.3 and 5.1.4 of <xref target="ICE-BIS"/>
+			  to schedule the ICE connectivity checks.
+			</t>  
+			<t> 
+			  The below sub-sections provide additional requirements associated with the 
+			  processing of the offerer's SDP pertaining to this specification.
+			</t>
+
 			<section title="Choosing Default Candidates">
-				<t>The process for selecting default candidates at the answerer is identical to the process followed by the offerer, as described in <xref target="sec-inuse"/> for full implementations and <!-- sec-offer-lite --> 4.2 of <xref target="ICE-BIS" /> for lite implementations.</t>
+				<t>The process for selecting default candidates at the answerer is identical to the process followed by the offerer, as described in <xref target="sec-inuse"/> for full implementations in this specification and section <!-- sec-offer-lite --> 4.2 of <xref target="ICE-BIS" /> for lite implementations.</t>
 			</section>
 
 			<section anchor="sec-verify" title="Verifying ICE Support">
@@ -188,7 +219,7 @@ a=candidate:2 1 UDP 1694498815 192.0.2.3 45664 typ srflx raddr
 
 				<t>
 					<list style="numbers">
-						<t> The agent MUST follow the rules of section <!-- keepalive --> 10 of <xref target="ICE-BIS" />, which describe keepalive procedures for all agents.</t>
+						<t> The agent MUST follow the rules of section <!-- keepalive --> 9 of <xref target="ICE-BIS" />, which describe keepalive procedures for all agents.</t>
 
 						<t>If the agent is not proceeding with ICE because there were a=candidate attributes, but none that matched the default destination of the media stream, the agent MUST include an a=ice-mismatch attribute in its answer.</t>
 
@@ -201,7 +232,7 @@ a=candidate:2 1 UDP 1694498815 192.0.2.3 45664 typ srflx raddr
 			</section>
 
 			<section title="Determining Role">
-			  <t>  In unusual cases, described in <xref target="sec-glare"/>, it is possible for both agents to mistakenly believe they are controlled or controlling. To resolve this, each agent MUST select a random number, called the tie-breaker, uniformly distributed between 0 and (2**64) - 1 (that is, a 64-bit positive integer). This number is used in connectivity checks to detect and repair this case, as described in <!-- ICE-CONTROLLED and ICE-CONTROLLING --> Section 7.1.2.2 of <xref target="ICE-BIS"/>. </t>
+			  <t>  In unusual cases, described in <xref target="sec-glare"/>, it is possible for both agents to mistakenly believe they are controlled or controlling. To resolve this, each agent MUST select a random number, called the tie-breaker, uniformly distributed between 0 and (2**64) - 1 (that is, a 64-bit positive integer). This number is used in connectivity checks to detect and repair this case, as described in <!-- ICE-CONTROLLED and ICE-CONTROLLING --> Section 5.1.2.2 of <xref target="ICE-BIS"/>. </t>
 			</section>
 		</section>
 
@@ -211,9 +242,15 @@ a=candidate:2 1 UDP 1694498815 192.0.2.3 45664 typ srflx raddr
 				In that case, ICE proceeds completely in parallel and independently for each answer, treating the combination of its offer and each answer as an independent offer/answer exchange, with its own set of pairs, check lists, states, and so on.
 				The only case in which processing of one pair impacts another is freeing of candidates, discussed below in <xref target="sec-freeing"/>.
 			</t>
+			<t>
+				On recieving the SDP answer , the offerer performs steps similar to answerer's processing of
+				the offer. The offerer verifies the answerer's ICE support, detemines its role and processes
+				the answerer's candidates to schedule the connectivity checks as defined in section 5 of 
+				<xref target="ICE-BIS"/>.
+			</t>	
 
 			<section anchor="sec-overify" title="Verifying ICE Support">
-				<t>The logic at the offerer is identical to that of the answerer as described in section 5.1 <!--sec-verify--> of <xref target="ICE-BIS" />, with the exception that an offerer would not ever generate a=ice-mismatch attributes in an SDP.</t>
+				<t>The logic at the offerer is identical to that of the answerer as described in section 5.1.1 <!--sec-verify--> of <xref target="ICE-BIS" />, with the exception that an offerer would not ever generate a=ice-mismatch attributes in an SDP.</t>
 
 				<t>
 					In some cases, the answer may omit a=candidate attributes for the media streams, and instead include an a=ice-mismatch attribute for one or more of the media streams in the SDP.
@@ -225,7 +262,7 @@ a=candidate:2 1 UDP 1694498815 192.0.2.3 45664 typ srflx raddr
 		</section>
 
 		<section anchor="sec-connectivity_check" title="Performing Connectivity Checks">
-		  <t> The possibility for role conflicts described in <!-- "Detecting and Repairing Role Conflicts" --> Section 7.2.1.1 of <xref target="ICE-BIS"/> applies to this usage and hence all full agents MUST implement the role conflict repairing mechanism. Also both full and lite agents MUST utilize the ICE-CONTROLLED and ICE-CONTROLLING attributes as described in <!-- ICE-CONTROLLED and ICE-CONTROLLING --> Section 7.1.2.2 of <xref target="ICE-BIS"/>. </t>
+		  <t> The possibility for role conflicts described in <!-- "Detecting and Repairing Role Conflicts" --> Section 6.2.1.1 of <xref target="ICE-BIS"/> applies to this usage and hence all full agents MUST implement the role conflict repairing mechanism. Also both full and lite agents MUST utilize the ICE-CONTROLLED and ICE-CONTROLLING attributes as described in <!-- ICE-CONTROLLED and ICE-CONTROLLING --> Section 6.1.2.2 of <xref target="ICE-BIS"/>. </t>
 		</section>
 
 		<section anchor="sec-conclude" title="Concluding ICE">
@@ -324,7 +361,7 @@ ice-char              = ALPHA / DIGIT / "+" / "/"]]>
 								is a positive integer between 1 and 256 that identifies the specific component of the media stream for which this is a candidate.
 								It MUST start at 1 and MUST increment by 1 for each component of a particular candidate.
 								For media streams based on RTP, candidates for the actual RTP media MUST have a component ID of 1, and candidates for RTCP MUST have a component ID of 2.
-								See section 12 in <xref target="ICE-BIS" /> for additional discussion on extending ICE to new media streams.
+								See section 11 in <xref target="ICE-BIS" /> for additional discussion on extending ICE to new media streams.
 							</t>
 
 							<t hangText="&lt;priority&gt;:">
@@ -426,7 +463,7 @@ ufrag                 = 4*256ice-char]]>
 			</section>
 
 			<section title="&quot;ice-pacing&quot; Attribute">
-				<t>The "ice-pacing" attribute indicates the desired connectivity check pacing, in milliseconds, for this agent (see Section 13 of <xref target="ICE-BIS"/>). The syntax is:</t>
+				<t>The "ice-pacing" attribute indicates the desired connectivity check pacing, in milliseconds, for this agent (see Section 12 of <xref target="ICE-BIS"/>). The syntax is:</t>
 
 				<figure>
 					<artwork>
@@ -710,7 +747,7 @@ ice-option-tag        = 1*ice-char]]>
 						In this case, both would have sent updated offers around the same time.
 						However, the signaling protocol carrying the offer/answer exchanges will have resolved this glare condition, so that one agent is always the 'winner' by having its offer received before its peer has sent an offer.
 						The winner takes the role of controlled, so that the loser (the answerer under consideration in this section) MUST change its role to controlled.
-						Consequently, if the agent was going to send an updated offer since, based on the rules in section <!--sec-lite-conc2--> 8.2 of <xref target="ICE-BIS" />, it was controlling, it no longer needs to.
+						Consequently, if the agent was going to send an updated offer since, based on the rules in section <!--sec-lite-conc2--> 7.2 of <xref target="ICE-BIS" />, it was controlling, it no longer needs to.
 					</t>
 
 					<t>Besides the potential role change, change in the Valid list, and state changes, the construction of the answer is performed identically to the construction of an offer as described in <xref target="sec-sub-lite"/>.</t>
@@ -773,12 +810,12 @@ ice-option-tag        = 1*ice-char]]>
 						<t>
 							The agent MUST remember the highest-priority nominated pairs in the Valid list for each component of the media stream, called the previous selected pairs, prior to the restart.
 							The agent will continue to send media using these pairs, as described in <xref target="sec-send_media"/>.
-							Once these destinations are noted, the agent MUST flush the valid and check lists, and then recompute the check list and its states as described in section <!--sec-forming--> 6.3 of <xref target="ICE-BIS" />.
+							Once these destinations are noted, the agent MUST flush the valid and check lists, and then recompute the check list and its states as described in section <!--sec-forming--> 5.1.3 of <xref target="ICE-BIS" />.
 						</t>
 					</section>
 
 					<section title="New Media Stream">
-						<t>If the offer/answer exchange added a new media stream, the agent MUST create a new check list for it (and an empty Valid list to start of course), as described in section <!--sec-forming--> 6.3 of <xref target="ICE-BIS" />.</t>
+						<t>If the offer/answer exchange added a new media stream, the agent MUST create a new check list for it (and an empty Valid list to start of course), as described in section <!--sec-forming--> 5.1.3 of <xref target="ICE-BIS" />.</t>
 					</section>
 
 					<section title="Removed Media Stream">
@@ -795,7 +832,7 @@ ice-option-tag        = 1*ice-char]]>
 
 						<t>
 							If an agent is in the Running state for that media stream, the check list is updated (the check list is irrelevant if the state is completed).
-							To do that, the agent recomputes the check list using the procedures described in section <!--sec-forming--> 6.3 of <xref target="ICE-BIS" />.
+							To do that, the agent recomputes the check list using the procedures described in section <!--sec-forming--> 5.1.3 of <xref target="ICE-BIS" />.
 							If a pair on the new check list was also on the previous check list, and its state was Waiting, In-Progress, Succeeded, or Failed, its state is copied over.
 							Otherwise, its state is set to Frozen.
 						</t>
@@ -822,7 +859,7 @@ ice-option-tag        = 1*ice-char]]>
 
 		<section anchor="sec-keepalive" title="Keepalives">
 			<t>
-				The procedures defined in Section 10 of <xref target="ICE-BIS"/> MUST be followed. The keepalives MUST be sent regardless of whether the media stream is currently inactive, sendonly, recvonly, or sendrecv, and regardless of the presence or value of the bandwidth attribute.
+				The procedures defined in Section 9 of <xref target="ICE-BIS"/> MUST be followed. The keepalives MUST be sent regardless of whether the media stream is currently inactive, sendonly, recvonly, or sendrecv, and regardless of the presence or value of the bandwidth attribute.
 				An agent can determine that its peer supports ICE by the presence of a=candidate attributes for each media session.
 			</t>
 		</section>
@@ -842,14 +879,14 @@ ice-option-tag        = 1*ice-char]]>
 				</t>
 				<section title="Procedures for All Implementations">
 					<t>
-					 Section 11.1.3 of <xref target="ICE-BIS"/> defines procedures for
+					 Section 10.1.3 of <xref target="ICE-BIS"/> defines procedures for
 					 seding media common across Full and Lite implementations.
 					</t>	
 				</section>	
 			</section>
 			<section anchor="sec-recv_media" title="Receiving Media">
 					<t>
-					  See Section 11.2 of <xref target="ICE-BIS"/> for procedures on
+					  See Section 10.2 of <xref target="ICE-BIS"/> for procedures on
 					  receiving media.
 					</t>	
 				</section>	
@@ -994,9 +1031,9 @@ ice-option-tag        = 1*ice-char]]>
 		<section title="Setting Ta and RTO for RTP Media Streams">
 			<t>
 			During the gathering phase of ICE (section 4.1.1 <xref target="ICE-BIS"/>) 
-			and while ICE is performing connectivity checks (section 7 <xref target="ICE-BIS"/>), 
+			and while ICE is performing connectivity checks (section 6 <xref target="ICE-BIS"/>), 
 			an agent sends STUN and TURN transactions.  These transactions are paced at a
-  			rate of one every Ta milliseconds, and utilize a specific RTO.  See Section 13.1 of
+  			rate of one every Ta milliseconds, and utilize a specific RTO.  See Section 12.1 of
   			<xref target="ICE-BIS"/> for details on how the valies of Ta and RTO are computed
   			with a real-time media stream of known maximum bandwith to rate-control the ICE exchanges.
 			</t>
