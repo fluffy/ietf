@@ -90,9 +90,9 @@
 		<section title = "ICE Candidate Exchange and Offer/Answer Mapping">
 			<t>
 				<xref target="ICE-BIS"/> defines ICE candidate exchange as the process for the
-				ICE agents (Intiator and Responder) to exchange their candidate information required
+				ICE agents (Initiator and Responder) to exchange their candidate information required
 				for ICE processing at the agents. For the purposes of this specification, the candidate 
-				exchange process correponds to <xref target="RFC3264"/> Offer/Answer protocol and the
+				exchange process corresponds to the <xref target="RFC3264"/> Offer/Answer protocol and the
 				terminologies offerer and answerer correspond to the initiator and responder 
 				terminologies from the <xref target="ICE-BIS"/> respectively.
 			</t>
