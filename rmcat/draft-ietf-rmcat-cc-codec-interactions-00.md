@@ -270,10 +270,12 @@ Another drawback of congestion control in the application layer is
 
 # Codec - CC Interactions
 The following subsections identify the necessary interactions between 
-the Codec and congestion control layer interfaces that needs to be
-considered important
+the Codec and congestion control (CC) layer interfaces that needs to be
+considered important.
 
-##  Allowed Rate
+## Mandatory Interactions
+
+###  Allowed Rate
 
 Allowed Rate (from CC to Codec): The max transmit rate allowed over
     the next time interval.  The time interval may be specified or may
@@ -286,7 +288,18 @@ Allowed Rate (from CC to Codec): The max transmit rate allowed over
     In the simplest possible solution, it may be the only CC interface
     required.
 
-##  Media Elasticity
+
+## Optional Interactions
+
+This section identifies certain advanced interactions that if implemented 
+by an RMCAT solution shall provide more granular control over the
+congestion control state and the encoder behavior. As of today,
+these interactions are optional to implemnt and future evaluations of
+the exisiting/upcoming codecs might result in considering some or
+all of these as Mandatory interactions.
+
+
+###  Media Elasticity
 
 Media Elasticity (from Codec to CC): Many live media encoders are
     highly elastic, often able to achieve any target bit rate within a
@@ -302,7 +315,7 @@ Media Elasticity (from Codec to CC): Many live media encoders are
     Rate changes, especially when there are multiple flows sharing CC
     state and bandwidth.
 
-##  Startup Ramp
+###  Startup Ramp
 
 Startup Ramp (from Codec to CC, and from CC to Codec): Startup is an
     important moment in a conversation.  Rapid rate adaptation during
@@ -324,7 +337,7 @@ Startup Ramp (from Codec to CC, and from CC to Codec): Startup is an
     wrong.  Note that startup can often commence before user interaction
     or conversation to reduce the chance of clipped media.
 
-##  Delay Tolerance
+###  Delay Tolerance
 
 Delay Tolerance (from Codec to CC): An ideal CC will always minimize
     delay and target zero.  However, real solutions often need a real
@@ -332,7 +345,7 @@ Delay Tolerance (from Codec to CC): An ideal CC will always minimize
     tolerance, perhaps expressed as an impairment factor to mix with
     other metrics.
 
-##  Loss Tolerance
+###  Loss Tolerance
 
 Loss Tolerance (from Codec to CC): An ideal CC will always minimize
     packet loss and target zero.  However, real solutions often need a
@@ -341,7 +354,7 @@ Loss Tolerance (from Codec to CC): An ideal CC will always minimize
     other metrics.  Note this is unrecoverable post-repair loss after
     retransmission or forward error correction.
 
-##  Forward Error Correction
+### Forward Error Correction
 
 Forward Error Correction (FEC): Simple FEC schemes like XOR Parity
     codes {{RFC5109}} may not handle consecutive or burst loss well.  More
@@ -354,7 +367,7 @@ Forward Error Correction (FEC): Simple FEC schemes like XOR Parity
     choose the right balance between optimizing for throughput versus low
     loss.
 
-##  Probing for Available Bandwidth
+###  Probing for Available Bandwidth
 
 FEC can also be used to probe for additional available bandwidth, if the 
     application desires a higher target rate than the current rate. 
@@ -365,7 +378,7 @@ FEC can also be used to probe for additional available bandwidth, if the
     flow of all packets including FEC, retransmission and original 
     media never exceeds the Allowed Rate.
 
-##  Throughput Sensitivity
+###  Throughput Sensitivity
 
 Throughput Sensitivity (from Codec to CC): An ideal CC will always
     maximize throughput.  However, real solutions often need a trade-off
@@ -373,7 +386,7 @@ Throughput Sensitivity (from Codec to CC): An ideal CC will always
     codec should provide throughput sensitivity, perhaps expressed as an
     impairment factor (for low throughputs) to mix with other metrics.
 
-##  Rate Stability
+###  Rate Stability
 
 Rate Stability (from Codec to CC): The CC algorithm must strike a
     balance between rate stability and fast reaction to changes in

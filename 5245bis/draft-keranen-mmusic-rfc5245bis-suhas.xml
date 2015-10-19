@@ -707,17 +707,18 @@ This specification makes use of the following additional terminology:
 
 <t><list style="hanging">
 
-<t hangText="ICE Agent:">  An agent is the protocol implementation involved in the
-ICE candidate exchange.  There are two agents involved in an typically candidate 
-exchange. </t>
+<t hangText="ICE Agent:"> 
+An agent is the protocol implementation involved in the
+ICE candidate exchange.  There are two agents involved in an typically 
+candidate exchange. </t>
  
 <t hangText= "Initiating Peer, Initiating Agent, Initiator:">  
-An agent is the protocol implementation involved in the ICE 
+An initiating agent is the protocol implementation involved in the ICE 
 candidate exchange. This is the agent that 
 initiates the ICE candidate exchange process. </t>  
 
 <t hangText="Responding Peer, Responding Agent, Responder:">  
-An agent is the protocol implementation involved in the ICE 
+An receiving agent is the protocol implementation involved in the ICE 
 candidate exchange. This is the agent that receives 
 and responds to the candidate exchange process initiated by the 
 Initiator. </t>
@@ -725,10 +726,11 @@ Initiator. </t>
 <t hangText="ICE Candidate Exchange, Candidate Exchange:"> 
 The process where the ICE agents exchange information 
 (e.g., candidates and passwords) that is needed to perform ICE. 
-RFC 3264 offer/answer with SDP is one example of a protocol 
-that can be used for exchanging the candidate information. </t>
+<xref target="RFC3264"/> Offer/Answer with SDP encoding is one example of a 
+protocol that can be used for exchanging the candidate information. </t>
 
-<t hangText="Peer:">From the perspective of one of the agents in a
+<t hangText="Peer:">
+From the perspective of one of the agents in a
 session, its peer is the other agent. Specifically, from the
 perspective of the initiating agent, the peer is the responding agent. 
 From the perspective of the responding agent, the peer is the initiating 
@@ -859,8 +861,8 @@ generate connectivity checks.
 
 <t hangText="Controlling Agent:"> The ICE agent that is responsible
 for selecting the final choice of candidate pairs and signaling them
-through STUN. In any session, one
-agent is always controlling. The other is the controlled agent.
+through STUN. In any session, one agent is always controlling. The other 
+is the controlled agent.
 </t>
 
 <t hangText="Controlled Agent:"> An ICE agent that waits for the
@@ -902,7 +904,7 @@ protocol. </t>
 <section anchor="sec-gathering_exchange" title="ICE Candidate Gathering and Exchange">
 
 <t>
-As part of ICE processing, both the Initiating and Responding Agents
+As part of ICE processing, both the initiating and responding agents
 exchange encoded candidate information as defined by the Usage 
 Protocol (ICE Usage). Specifics of encoding mechanism and the semantics 
 of candidate information exchange is out of scope of this specification.
@@ -910,39 +912,43 @@ of candidate information exchange is out of scope of this specification.
 
 <t>
 However at a higher level, the below diagram captures ICE processing 
-sequence in the agents (initiator and responder) for exchanging 
+sequence in the agents (initiator and responder) for exchange of
 their respective candidate(s) information.
 </t>
 
-<figure title="Candidate Exchange Call Flow" 
+<figure title="Candidate Gathering and Exchange Sequence" 
 anchor="fig:basic-cand-exchange" align="left">
 <artwork>
 <![CDATA[
-         Initiating                      Responding
-           Agent                           Agent
-           (L)                             (R)
-Gather,     |                               |
-prioritize, |                               |
-eliminate   |                               |
-redundant   |                               |
-candidates  |                               |
-            |   L's Candidate Information   |
-            |------------------------------>|
-            |                               | Gather,
-            |                               | prioritize,
-            |                               | eliminate
-            |                               | redundant
-            |                               | candidates
-            |   R's Candidate Information   |
-            |<------------------------------|
-            |                               |
+          Initiating                      Responding
+            Agent                           Agent
+            (I)                             (R)
+Gather,      |                               |
+prioritize,  |                               |
+eliminate    |                               |
+redundant    |                               |
+candidates,  |                               |
+Encode       |                               |
+candidates   |                               |
+             |   I's Candidate Information   |
+             |------------------------------>|
+             |                               | Gather,
+             |                               | prioritize,
+             |                               | eliminate
+             |                               | redundant
+             |                               | candidates,
+             |                               | Encode
+             |                               | candidates
+             |   R's Candidate Information   |
+             |<------------------------------|
+             |                               |
 ]]></artwork></figure>
 <t>
 As shown, the agents involved in the candidate 
 exchange perform (1) candidate gathering, (2) candidate prioritization, 
-(3) eliminating redundant candidates, (4) (possibly) choose default candidates, and then (5)
-formulate and send the candidates to the Peer ICE agent. All but the last of these
-five steps differ for full and lite implementations.
+(3) eliminating redundant candidates, (4) (possibly) choose default candidates, 
+and then (5) formulate and send the candidates to the Peer ICE agent. All but the 
+last of these five steps differ for full and lite implementations.
 </t>
 <t>
 </t>
@@ -968,9 +974,9 @@ candidate that an agent must send from when using that candidate.
 
 <t>
 The process for gathering candidates at the responding agent is identical to
-the process for the initiating agent. It is RECOMMENDED that this process 
-begin immediately on receipt of the candidate information, prior to alerting 
-the user. Such gathering MAY begin when an agent starts.
+the process for the initiating agent. It is RECOMMENDED that the responding 
+agent begins this process  immediately on receipt of the candidate information, 
+prior to alerting the user. Such gathering MAY begin when an agent starts.
 </t>
 
 <section title="Host Candidates">
@@ -1044,9 +1050,9 @@ following exceptions:
 <t>
 Agents SHOULD obtain relayed candidates and SHOULD obtain server
 reflexive candidates. These requirements are at SHOULD strength to
-allow for provider variation. Use of STUN and TURN servers may be unnecessary
-in closed networks where agents are never connected to the public
-Internet or to endpoints outside of the closed network. In such cases,
+allow for provider variation. Use of STUN and TURN servers may be 
+unnecessary in closed networks where agents are never connected to the 
+public Internet or to endpoints outside of the closed network. In such cases,
 a full implementation would be used for agents that are dual-stack or
 multihomed, to select a host candidate. Use of TURN servers is expensive,
 and when ICE is being used, they will only be utilized when both
@@ -1118,6 +1124,17 @@ sent. The base of a relayed candidate is that candidate itself. If a relayed
 candidate is identical to a host candidate (which can happen in rare
 cases), the relayed candidate MUST be discarded. 
 </t>
+
+<t>
+If an IPv6-only agent is in a network that utilizes NAT64 <xref target="RFC6146"/>
+and DNS64 <xref target="RFC6147"/> technologies, it may gather also IPv4 server
+reflexive and/or relayed candidates from IPv4-only STUN or TURN
+servers.  IPv6-only agents SHOULD also utilize IPv6 prefix discovery
+<xref target="RFC7050"/> to discover the IPv6 prefix used by NAT64 (if any) 
+and generate server reflexive candidates for each IPv6-only interface
+accordingly.  The NAT64 server reflexive candidates are prioritized
+like IPv4 server reflexive candidates.
+</t> 
 
 </section>
 
@@ -1401,6 +1418,11 @@ a peer. For IPv6-only hosts, this would typically be a globally scoped
 IPv6 address. For dual-stack hosts, the IPv4 address is RECOMMENDED. 
 </t>
 
+<t>
+The procedures in this section is common acorss the initaiting and
+responding agents.
+</t> 
+
 </section>
 
 <section anchor="sec-encoding" title="Encoding the Candidate Information">
@@ -1505,8 +1527,8 @@ this when sending its candidates .
 
 <t>
 ICE provides for extensibility by allowing an agent to include a
-series of tokens that identify ICE extensions as part of the
-candidate exchange process.
+series of tokens that identify ICE extensions as part 
+of the candidate exchange process.
 </t>
 
 <t>
@@ -1527,11 +1549,11 @@ destination for media.
 Once an agent has candidates from it's peer, it will check if the 
 peer supports ICE, determine its own role, exchanges candidates 
 (<xref target="sec-gathering_exchange"/>) and for
-full implementations, form the check lists and begin connectivity
+full implementations, forms the check lists and begins connectivity
 checks as explained in this section.	
 </t>	
 
-<section anchor="sec-candidate_proc_full" title="Proedures for Full Implementation">	
+<section anchor="sec-candidate_proc_full" title="Procedures for Full Implementation">	
 
 <section anchor="sec-verify" title="Verifying ICE Support">
 
@@ -1806,17 +1828,17 @@ deployed, it is found to be problematic.
 <section title="Computing States">
 
 <t>
-Each candidate pair in the check list has a foundation and a state. The
-foundation is the combination of the foundations of the local and
+Each candidate pair in the check list has a foundation and a state. 
+The foundation is the combination of the foundations of the local and
 remote candidates in the pair. The state is assigned once the check
 list for each media stream has been computed. There
 are five potential values that the state can have:
 </t>
 
 <t><list style="hanging">
-<t hangText="Waiting:"> A check has not been performed for this pair, and can be
-performed as soon as it is the highest-priority Waiting pair on the check
-list.
+<t hangText="Waiting:"> A check has not been performed for this pair, and 
+can be performed as soon as it is the highest-priority Waiting pair on the 
+check list.
 </t>
 
 <t hangText="In-Progress:"> A check has been sent for this pair, but
@@ -2057,16 +2079,18 @@ ordinary checks as described above.
  
  <t>
  Lite implementations skips most of the steps in <xref target="sec-candidate_proc"/> 
- except for verifying the peer's ICE support and determing's its Role in the ICE 
+ except for verifying the peer's ICE support and determining its role in the ICE 
  processing.	
  </t>	
  
  <t>
- On determining the role, for a lite implementation, being the controlling agent 
+ On determining the role for a lite implementation being the controlling agent 
  means selecting a candidate pair based on the ones in the candidate exchange 
  (for IPv4, there is only ever one pair), and then updating the peer with the
  new candidate information reflecting that selection, when needed 
- (it is never needed for an IPv4-only host)	
+ (it is never needed for an IPv4-only host). The controlled agent is told which
+ candidate pairs to use for each media stream, and no further candidate updates
+ are needed to signal this information.
  </t>	
 
 </section>	
@@ -3145,9 +3169,9 @@ a=inactive and a=sendonly as described in <xref target="RFC3264"/>.
 -->
 
 <t> To restart ICE, an agent MUST change both the password and the
-user name fragment for the media stream. The new candidate set of
-MAY include some, none, or all of theprevious candidates for that 
-stream and MAY include a totally new set of candidates.
+user name fragment for the media stream when exchanging the candidates. 
+The new candidate set MAY include some, none, or all of the previous 
+candidates for that stream and MAY include a totally new set of candidates.
 
 <!-- Note that it is
 permissible to use a session-level attribute in one offer, but to
@@ -3796,7 +3820,7 @@ thus this check won't be successful, because the packet cannot be
 routed from R to L.
 </t>
 
-<t> When agent L gets the answer, it performs its one and only
+<t> When agent L gets the R's candidates, it performs its one and only
 connectivity check (messages 10-13). It implements the aggressive
 nomination algorithm, and thus includes a USE-CANDIDATE
 attribute in this check. Since the check succeeds, 
@@ -4688,7 +4712,11 @@ Uberti.</t>
 <?rfc include="reference.RFC.5245"?>
 <?rfc include="reference.RFC.5382"?>
 <?rfc include="reference.RFC.6080"?>
+<?rfc include="reference.RFC.6146"?>
+<?rfc include="reference.RFC.6147"?>
+<?rfc include="reference.RFC.7050"?>
 <?rfc include="reference.RFC.6544"?>
+
 
 <?rfc include="reference.I-D.ietf-mmusic-ice-sip-sdp"?>
 <?rfc include="reference.I-D.ietf-6man-ipv6-address-generation-privacy"?>
