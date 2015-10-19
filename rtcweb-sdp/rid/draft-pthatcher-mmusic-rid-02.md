@@ -2,7 +2,7 @@
 title: "RTP Payload Format Constraints"
 abbrev: rid
 docname:  draft-pthatcher-mmusic-rid-02
-date: 2015-10-16
+date: 2015-10-19
 category: std
 ipr: trust200902
 
@@ -48,12 +48,12 @@ normative:
   RFC4566:
   RFC5234:
   RFC5285:
-  I-D.ietf-avtext-rtp-grouping-taxonomy:
   I-D.ietf-avtext-sdes-hdr-ext:
 
 informative:
   RFC5226:
   RFC6236:
+  I-D.ietf-avtext-rtp-grouping-taxonomy:
   I-D.ietf-mmusic-sdp-bundle-negotiation:
   I-D.ietf-mmusic-sdp-simulcast:
 
@@ -204,7 +204,7 @@ The 'direction' identifies the either 'send', 'recv' directionality of the
 Source RTP Stream.
 
 A given SDP media description MAY have zero or more "a=rid" lines describing
-various possible RTP payload configurations. A given 'rid-identifier' MUST not
+various possible RTP payload configurations. A given 'rid-identifier' MUST NOT
 be repeated in a given media description.
 
 The 'rid' media attribute MAY be used for any RTP-based media transport.  It
@@ -242,7 +242,7 @@ codec-independent fashion.
 * max-fps, for frame rate in frames per second.  For encoders that do not use
   a fixed framerate for encoding, this value should constrain the minimum
   amount of time between frames: the time between any two consecutive frames
-  SHOULD not be less than 1/max-fps seconds.
+  SHOULD NOT be less than 1/max-fps seconds.
 
 * max-fs, for frame size in pixels per frame. This is the product of frame
   width and frame height, in pixels, for rectangular frames.
@@ -344,8 +344,8 @@ order, for each "a=rid" line in a given media description:
 
 1. Extract the rid-identifier from the "a=rid" line and verify its uniqueness.
    In the case of a duplicate, the entire "a=rid" line, and all "a=rid" lines
-   with rid-identifiers that duplicate this line, are rejected and MUST
-   not be included in the SDP Answer.
+   with rid-identifiers that duplicate this line, are rejected and MUST NOT
+   be included in the SDP Answer.
 
 2. If the "a=rid" line contains a "pt=" parameter, the list of payload types
    is verified against the list of valid payload types for the media section
@@ -917,6 +917,8 @@ conform to the ABNF defined for rid-param-other. In particular, this means
 that such extensions will need to define escaping mechanisms if they
 want to allow semicolons, unprintable characters, or byte values
 greater than 127 in the string.
+
+> OPEN ITEM: Do we need to do more than this regarding escaping?
 
 
 # Security Considerations
