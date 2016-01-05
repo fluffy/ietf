@@ -2,7 +2,7 @@ xml2rfc ?= xml2rfc -v
 kramdown-rfc2629 ?= kramdown-rfc2629
 idnits ?= idnits
 
-draft := draft-ietf-mmusic-proto-iana-registration-02
+draft := draft-ietf-mmusic-proto-iana-registration-03
 
 current_ver := $(shell git tag | grep "$(draft)" | tail -1 | sed -e"s/.*-//")
 ifeq "${current_ver}" ""

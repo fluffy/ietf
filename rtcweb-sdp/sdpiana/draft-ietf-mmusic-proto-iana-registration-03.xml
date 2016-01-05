@@ -26,8 +26,8 @@
 <?rfc colonspace="yes" ?>
 <?rfc rfcedstyle="no" ?>
 <?rfc tocdepth="4"?>
-<rfc category="std" docName="draft-ietf-mmusic-proto-iana-registration-01"
-     ipr="pre5378Trust200902">
+<rfc category="std" docName="draft-ietf-mmusic-proto-iana-registration-03"
+     ipr="trust200902">
   <front>
     <title abbrev="SDP Proto Registrations">IANA registrations of SDP 'proto'
     attribute for transporting RTP Media over TCP under various RTP profiles.
@@ -47,24 +47,25 @@
       </address>
     </author>
 
-    <date day="3" month="July" year="2015" />
+    <date day="4" month="January" year="2016" />
     <area>RAI</area>
     <workgroup>MMUSIC</workgroup>
 
     <abstract>
-    <t>RTP provides end-to-end network transport functions suitable for
-   	 applications transmitting real-time data such as audio, video or
-   	 simulation data, over multicast or unicast network services. The data
-   	 transport is augmented by a control protocol (RTCP) to allow monitoring
-   	 of the data delivery in a manner scalable to large multicast networks,
-   	 and to provide minimal control and identification functionality.</t>
-     <t>The RTP specification <xref target="RFC3550"/> establishes a registry of
+    <t>Real-time Transport Protocol (RTP) provides end-to-end network 
+    transport functions suitable for applications transmitting real-time data 
+    such as audio, video or simulation data, over multicast or unicast network 
+    services. The data transport is augmented by RTP Control Protocol (RTCP), 
+    to allow monitoring of the data delivery in a manner scalable to large 
+    multicast networks, and to provide minimal control and identification 
+    functionality.</t>
+     <t>The RTP specification [RFC3550] establishes a registry of
      profile names for use by higher-level control protocols, such as the
-     SDP, to refer to the transport methods. This specification describes the
-     following new SDP transport protocol identifiers for transporting
-     RTP Media over TCP: 'TCP/RTP/AVPF',  'TCP/RTP/SAVP',  'TCP/RTP/SAVPF',
-     'TCP/DTLS/RTP/SAVP',  'TCP/DTLS/RTP/SAVPF',  'TCP/TLS/RTP/AVP',
-     'TCP/TLS/RTP/AVPF'.</t>
+     Session Description Protocol (SDP), to refer to the transport methods. 
+     This specification describes the following new SDP transport protocol 
+     identifiers for transporting RTP Media over TCP: 'TCP/RTP/AVPF',  
+     'TCP/RTP/SAVP',  'TCP/RTP/SAVPF', 'TCP/DTLS/RTP/SAVP',  'TCP/DTLS/RTP/SAVPF',  
+     'TCP/TLS/RTP/AVP', 'TCP/TLS/RTP/AVPF'.</t>
     </abstract>
   </front>
 
@@ -74,12 +75,11 @@
       <t>SDP <xref target="RFC4566"/> provides a general-purpose format for
       describing multimedia sessions in announcements or invitations.
       <xref target="RFC4145"/> specifies a general mechanism for
-      describing media transport over TCP using SDP with
-      <xref target="RFC4571"/> defining a method for framing
-      Real-time Transport Protocol (RTP) and RTP Control Protocol (RTCP)
-      packets onto a connection-oriented transport (such as TCP) .
+      describing media transport over Transmission Control Protocol (TCP) using 
+      SDP with <xref target="RFC4571"/> defining a method for framing
+      RTP and RTCP packets onto a connection-oriented transport (such as TCP) .
       <xref target="RFC4572"/> extends <xref target="RFC4145"/> for describing
-      TCP-based media streams that are protected using TLS
+      TCP-based media streams that are protected using Transport Layer Security (TLS)
       <xref target="RFC5246"/>.</t>
 
       <t>This specification describes the following new SDP transport protocol
@@ -90,7 +90,7 @@
         <xref target="sec.tcp.rtp.avpf"/>.
       </t>
       <t>
-        TCP/RTP/SAVP: to describe Secure RTP Media <xref target="RFC3711"/>
+        TCP/RTP/SAVP: to describe Secure RTP (SRTP) Media <xref target="RFC3711"/>
         over TCP, as defined in <xref target="sec.tcp.rtp.savp"/>.
       </t>
       <t>
@@ -100,8 +100,8 @@
       </t>
       <t>
         TCP/DTLS/RTP/SAVP: to describe Secure RTP Media <xref target="RFC3711"/>
-        using DTLS-SRTP <xref target="RFC5764"/> over TCP, as defined in
-        <xref target="sec.tcp.dtls.rtp.savp"/>.
+        using Datagram Transport Layer Security (DTLS) SRTP <xref target="RFC5764"/>
+        (DTLS-SRTP) over TCP, as defined in <xref target="sec.tcp.dtls.rtp.savp"/>.
       </t>
       <t>
         TCP/DTLS/RTP/SAVPF: to describe Secure RTP Media with RTCP-based
@@ -109,8 +109,8 @@
         defined in <xref target="sec.tcp.dtls.rtp.savpf"/>.
       </t>
       <t>
-          TCP/TLS/RTP/AVP: to describe RTP Media on top of TLS over TCP, as
-          defined in <xref target="sec.tcp.tls.rtp.avp"/>.
+        TCP/TLS/RTP/AVP: to describe RTP Media on top of TLS over TCP, as
+        defined in <xref target="sec.tcp.tls.rtp.avp"/>.
       </t>
       <t>
         TCP/TLS/RTP/AVPF: to describe RTP Media with RTCP-based
@@ -140,8 +140,6 @@
           m=<media> <port> <proto> <fmt> ...
         ]]></artwork>
       </figure>
-      <t>An 'm' line that specifies these new proto identifiers MUST further
-      qualify the application-layer protocol using an fmt identifier.</t>
       <section title="TCP/RTP/AVPF Transport Realization"
           anchor="sec.tcp.rtp.avpf">
         <t>The TCP/RTP/AVPF is realized as described below:</t>
@@ -249,11 +247,13 @@
     </section>
     <section title="ICE Considerations" anchor="sec.ice.considerations">
         <t>
-            When procedures from <xref target="RFC6544"/> are used to setup ICE
+            When procedures from <xref target="RFC6544"/> are used to setup 
+            Interactive Connectivity Establishment (ICE)
             <xref target="RFC5245"/> candidates for a TCP transport,
             the framing mechanism from <xref target="RFC4571"/>
-            is used for framing STUN packets (for keep-alives, consent checks),
-            as defined in section 3 of <xref target="RFC6544"/>.
+            MUST be used for framing Session Traversal Utilities for NAT 
+            (STUN) packets (for keep-alives, consent checks), as defined in 
+            section 3 of <xref target="RFC6544"/>.
         </t>
     </section>
     <section title="IANA Considerations">
@@ -262,26 +262,28 @@
           identifiers :'TCP/RTP/AVPF',  'TCP/RTP/SAVP',  'TCP/RTP/SAVPF',
           'TCP/DTLS/RTP/SAVP',  'TCP/DTLS/RTP/SAVPF',  'TCP/TLS/RTP/AVP',
           'TCP/TLS/RTP/AVPF', as defined in the <xref target="sec.proto-identifiers"/>.
-          These proto values should be registered by the IANA under the:
+          These proto values should be registered by the IANA under the 
+          "proto" subregistry in the "Session Description Protocol (SDP)
+          Parameters" registry.
         </t>
         <t>
-          <list style="symbols">
-            <t> "proto" subregistry in the "Session Description Protocol (SDP)
-              Parameters" registry; and
-            </t>
-            <t>"RTP Profile Names" subregistry in the
-              "Real-Time Transport Protocol (RTP) Parameters" registry.
-            </t>
-           </list>
+          [To RFC Editor: Remove this note prior to publication. This registration should 
+          take place at the following location: 
+          http://www.iana.org/assignments/sdp-parameters/sdp-parameters.xhtml#sdp-parameters-2. 
+          Replace XXXX in the table below with the assigned number of this RFC] 
         </t>
-        <t>
-          Additionally the  following proto values described in
-          <xref target="RFC5764"/> should be registered under the
-          "RTP Profile Names" subregistry in the
-          "Real-Time Transport Protocol (RTP) Parameters" registry:
-          'UDP/TLS/RTP/SAVP' , 'DCCP/TLS/RTP/SAVP', 'UDP/TLS/RTP/SAVPF',
-          'DCCP/TLS/RTP/SAVPF'.
-        </t>
+        <texttable align='left'>
+            <ttcol align='left'>Type</ttcol>
+            <ttcol align='left'>SDP Name</ttcol>
+            <ttcol align='left'> Reference</ttcol>
+              <c>proto&nbsp;</c><c>TCP/RTP/AVPF&nbsp;</c><c>RFCXXXX</c>
+              <c>proto&nbsp;</c><c>TCP/RTP/SAVP&nbsp;</c><c>RFCXXXX</c>
+              <c>proto&nbsp;</c><c>TCP/RTP/SAVPF&nbsp;</c><c>RFCXXXX</c>
+              <c>proto&nbsp;</c><c>TCP/DTLS/RTP/SAVP&nbsp;</c><c>RFCXXXX</c>
+              <c>proto&nbsp;</c><c>TCP/DTLS/RTP/SAVPF&nbsp;</c><c>RFCXXXX</c>
+              <c>proto&nbsp;</c><c>TCP/TLS/RTP/AVP&nbsp;</c><c>RFCXXXX</c>
+              <c>proto&nbsp;</c><c>TCP/TLS/RTP/AVPF&nbsp;</c><c>RFCXXXX</c>
+        </texttable> 
       </section>
 
    <section title="Security Considerations" anchor="sec.security">
@@ -299,8 +301,8 @@
     <section title="Acknowledgements">
       <t>
         Author would like to thank Cullen Jennings, Alissa Cooper, Justin Uberti,
-         Mo Zanaty, Christer Holmberg, Jonathan Lennox for their reviews and
-         suggested improvements.
+        Mo Zanaty, Christer Holmberg, Jonathan Lennox, Flemming Andreason, Roni Even 
+        and Bo Burman for their reviews and suggested improvements.
       </t>
     </section>
   </middle>
