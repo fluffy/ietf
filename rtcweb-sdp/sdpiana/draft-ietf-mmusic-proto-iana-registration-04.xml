@@ -26,7 +26,7 @@
 <?rfc colonspace="yes" ?>
 <?rfc rfcedstyle="no" ?>
 <?rfc tocdepth="4"?>
-<rfc category="std" docName="draft-ietf-mmusic-proto-iana-registration-03"
+<rfc category="std" docName="draft-ietf-mmusic-proto-iana-registration-04"
      ipr="trust200902">
   <front>
     <title abbrev="SDP Proto Registrations">IANA registrations of SDP 'proto'
@@ -47,7 +47,7 @@
       </address>
     </author>
 
-    <date day="4" month="January" year="2016" />
+    <date day="8" month="January" year="2016" />
     <area>RAI</area>
     <workgroup>MMUSIC</workgroup>
 
@@ -59,7 +59,7 @@
     to allow monitoring of the data delivery in a manner scalable to large 
     multicast networks, and to provide minimal control and identification 
     functionality.</t>
-     <t>The RTP specification [RFC3550] establishes a registry of
+     <t>The RTP specification establishes a registry of
      profile names for use by higher-level control protocols, such as the
      Session Description Protocol (SDP), to refer to the transport methods. 
      This specification describes the following new SDP transport protocol 
@@ -77,10 +77,10 @@
       <xref target="RFC4145"/> specifies a general mechanism for
       describing media transport over Transmission Control Protocol (TCP) using 
       SDP with <xref target="RFC4571"/> defining a method for framing
-      RTP and RTCP packets onto a connection-oriented transport (such as TCP) .
-      <xref target="RFC4572"/> extends <xref target="RFC4145"/> for describing
-      TCP-based media streams that are protected using Transport Layer Security (TLS)
-      <xref target="RFC5246"/>.</t>
+      RTP and RTCP packets <xref target="RFC3550"/> onto a connection-oriented 
+      transport (such as TCP). <xref target="RFC4572"/> extends <xref target="RFC4145"/> 
+      for describing TCP-based media streams that are protected using 
+      Transport Layer Security (TLS) <xref target="RFC5246"/>.</t>
 
       <t>This specification describes the following new SDP transport protocol
       identifiers for transporting RTP Media over TCP:</t>
