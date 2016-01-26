@@ -47,7 +47,7 @@
       </address>
     </author>
 
-    <date day="18" month="January" year="2016" />
+    <date day="26" month="January" year="2016" />
     <area>RAI</area>
     <workgroup>MMUSIC</workgroup>
 
@@ -153,8 +153,8 @@
       <section title="TCP/DTLS/RTP/SAVP Transport Realization"
           anchor="sec.tcp.dtls.rtp.savp">
         <t>The TCP/DTLS/RTP/SAVP transport describes Secure RTP Media <xref target="RFC3711"/>
-        using Datagram Transport Layer Security (DTLS) SRTP <xref target="RFC5764"/>
-        (DTLS-SRTP) over TCP.</t>  
+        using Datagram Transport Layer Security (DTLS) SRTP (DTLS-SRTP) 
+        <xref target="RFC5764"/> over TCP.</t>  
         <t>It is realized as described below:</t>
         <t>
             <list style="symbols">
@@ -271,11 +271,11 @@
 
    <section title="Security Considerations" anchor="sec.security">
      	<t>
-     		The new "proto" identifiers registered by this document in the SDP
-   			parameters registry maintained by IANA is primarily for use by the
-   			offer/answer model of the Session Description Protocol <xref target="RFC3264"/>
-   			for the negotiation and establishment of RTP based Media over the TCP
-   			transport. This specification doesn't introduce any additional security
+     	The new "proto" identifiers registered by this document in the SDP
+   		parameters registry maintained by IANA is primarily for use by the
+   		offer/answer model of the Session Description Protocol <xref target="RFC3264"/>
+   		for the negotiation and establishment of RTP based Media over the TCP
+   		transport. This specification doesn't introduce any additional security
         considerations beyond those specified by the individual transport
         protocols identified in the "proto" identifiers and those detailed in 
         Section 7 of <xref target="RFC4566"/>.
@@ -286,7 +286,7 @@
       <t>
         Author would like to thank Cullen Jennings, Alissa Cooper, Justin Uberti,
         Mo Zanaty, Christer Holmberg, Jonathan Lennox, Flemming Andreason, Roni Even 
-        and Bo Burman for their reviews and suggested improvements.
+        Ben Campbell and Bo Burman for their reviews and suggested improvements.
       </t>
     </section>
   </middle>
