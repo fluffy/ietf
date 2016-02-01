@@ -1,8 +1,8 @@
 ---
 title: "RTP Payload Format Constraints"
 abbrev: rid
-docname:  draft-roach-avtext-rid
-date: 2015-11-16
+docname:  draft-roach-avtext-rid-01
+date: 2016-02-01
 category: std
 ipr: trust200902
 
@@ -41,7 +41,7 @@ informative:
 --- abstract
 
 This document defines and registers an RTCP SDES item, RID, for identification
-of RTP streams associated with encoded and dependent streams.
+of RTP streams associated with Encoded Streams and Dependent Streams.
 
 --- middle
 
@@ -66,7 +66,7 @@ uniquely identifies a single stream. A key motivator for defining
 this identifier is the ability to differentiate among different
 encodings of a single Source Stream that are sent simultaneously
 (i.e., simulcast). This need for unique identification extends to
-Dependent Streams (i.e., simulcast layers used by a layered codec).
+Dependent Streams (i.e., layers used by a layered codec).
 
 At the same time, when Redundancy RTP Streams are in use, we also need an
 identifier that connects such streams to the RTP stream for which they are
