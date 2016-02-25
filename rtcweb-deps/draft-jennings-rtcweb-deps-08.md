@@ -2,7 +2,7 @@
 title: "WebRTC Dependencies"
 abbrev: WebRTC Dependencies
 docname: draft-jennings-rtcweb-deps-08
-date: 2015-05-01
+date: 2016-02-25
 category: info
 ipr: trust200902
 
@@ -22,12 +22,6 @@ author:
 
 
 normative:
-  I-D.ietf-jose-json-web-algorithms:
-  I-D.ietf-tram-turn-third-party-authz:
-  I-D.ietf-rtcweb-fec:
-  I-D.ietf-payload-flexible-fec-scheme:
-  I-D.ietf-mmusic-trickle-ice:
-  I-D.nandakumar-mmusic-proto-iana-registration:
   I-D.ietf-avtcore-6222bis:
   I-D.ietf-avtcore-avp-codecs:
   I-D.ietf-avtcore-multi-media-rtp-session:
@@ -36,10 +30,17 @@ normative:
   I-D.ietf-avtcore-rtp-multi-stream:
   I-D.ietf-avtcore-srtp-encrypted-header-ext:
   I-D.ietf-avtext-multiple-clock-rates:
+  I-D.ietf-httpbis-tunnel-protocol:
+  I-D.ietf-ice-dualstack-fairness:
+  I-D.ietf-jose-json-web-algorithms:
   I-D.ietf-mmusic-msid:
+  I-D.ietf-mmusic-proto-iana-registration:
   I-D.ietf-mmusic-sctp-sdp:
   I-D.ietf-mmusic-sdp-bundle-negotiation:
   I-D.ietf-mmusic-sdp-mux-attributes:
+  I-D.ietf-mmusic-trickle-ice:
+  I-D.ietf-mmusic-trickle-ice:
+  I-D.ietf-payload-flexible-fec-scheme:
   I-D.ietf-payload-rtp-opus:
   I-D.ietf-payload-vp8:
   I-D.ietf-rtcweb-alpn:
@@ -48,6 +49,8 @@ normative:
   I-D.ietf-rtcweb-data-channel:
   I-D.ietf-rtcweb-data-protocol:
   I-D.ietf-rtcweb-data-protocol:
+  I-D.ietf-rtcweb-fec:
+  I-D.ietf-rtcweb-gateways:
   I-D.ietf-rtcweb-jsep:
   I-D.ietf-rtcweb-overview :
   I-D.ietf-rtcweb-overview:
@@ -61,18 +64,25 @@ normative:
   I-D.ietf-tls-applayerprotoneg:
   I-D.ietf-tram-alpn:
   I-D.ietf-tram-stun-dtls:
+  I-D.ietf-tram-turn-third-party-authz:
   I-D.ietf-tsvwg-rtcweb-qos:
   I-D.ietf-tsvwg-sctp-dtls-encaps:
   I-D.ietf-tsvwg-sctp-ndata:
   I-D.ietf-tsvwg-sctp-prpolicies:
   I-D.nandakumar-rtcweb-stun-uri:
   I-D.petithuguenin-behave-turn-uris:
-  I-D.martinsen-mmusic-ice-dualstack-fairness:
-  I-D.ietf-httpbis-tunnel-protocol:
+  I-D.shieh-rtcweb-ip-handling:
   RFC2119:
   RFC3264:
   RFC3388:
+  RFC4566:
   RFC5245:
+  RFC5389:
+  RFC5888:
+  RFC6236:
+  RFC6464:
+  RFC6465:
+  RFC6544:
   RFC6904:
   RFC7007:
   RFC7022:
@@ -84,7 +94,7 @@ normative:
   RFC7301:
   RFC7350:
   RFC7443:
-  I-D.ietf-mmusic-trickle-ice:
+
   
 
 informative:
@@ -100,7 +110,7 @@ informative:
   I-D.ietf-rtcweb-use-cases-and-requirements:
   I-D.kaufman-rtcweb-security-ui:
   I-D.lennox-payload-ulp-ssrc-mux:
-  I-D.nandakumar-rtcweb-sdp:
+  I-D.ietf-rtcweb-sdp:
   I-D.roach-mmusic-unified-plan:
   I-D.westerlund-avtcore-multiplex-architecture:
 
@@ -116,7 +126,7 @@ Dependencies
 ============
 
 The key IETF specifications that the W3C GetUserMedia specification normatively depends on is:
-{{I-D.ietf-rtcweb-constraints-registry}},
+{{I-D.ietf-rtcweb-security-arch}} and 
 {{RFC2119}}.
 
 The key IETF specifications that the W3C WebRTC specification normatively
@@ -131,55 +141,62 @@ depended on are:
 {{I-D.ietf-rtcweb-transports}},
 {{I-D.ietf-rtcweb-video}},
 {{I-D.ietf-tram-turn-third-party-authz}},
+{{I-D.ietf-tsvwg-rtcweb-qos}},
 {{RFC2119}},
-{{RFC3264}},
-{{RFC3388}},
-{{RFC5245}},
+{{RFC4566}},
+{{RFC5389}},
+{{RFC5888}},
+{{RFC6236}},
+{{RFC6464}},
+{{RFC6465}},
+{{RFC6544}},
 {{RFC7064}},
 {{RFC7065}}
+{{RFC3264}},
+{{RFC5245}}, 
 and informatively depends on 
 {{I-D.ietf-rtcweb-overview}}, 
 {{I-D.ietf-rtcweb-security}},
+{{I-D.shieh-rtcweb-ip-handling}},
 and 
 {{I-D.ietf-mmusic-trickle-ice}}.
 
-In addition 3GPP work normatively depends on {{I-D.alvestrand-rtcweb-gateways}}.
+In addition 3GPP work normatively depends on {{I-D.ietf-rtcweb-gateways}}.
 
 These IETF drafts in turn normatively depend on the following drafts:
-{{I-D.ietf-rtcweb-fec}},
-{{I-D.ietf-payload-flexible-fec-scheme}},
-{{I-D.ietf-mmusic-trickle-ice}},
-{{I-D.nandakumar-mmusic-proto-iana-registration}},
 {{I-D.ietf-avtcore-multi-media-rtp-session}}, 
 {{I-D.ietf-avtcore-rtp-circuit-breakers}}, 
 {{I-D.ietf-avtcore-rtp-multi-stream-optimisation}}, 
 {{I-D.ietf-avtcore-rtp-multi-stream}}, 
+{{I-D.ietf-ice-dualstack-fairness}},  
+{{I-D.ietf-jose-json-web-algorithms}}.
 {{I-D.ietf-mmusic-msid}}, 
+{{I-D.ietf-mmusic-proto-iana-registration}},
 {{I-D.ietf-mmusic-sctp-sdp}}, 
 {{I-D.ietf-mmusic-sdp-bundle-negotiation}}, 
 {{I-D.ietf-mmusic-sdp-mux-attributes}}, 
+{{I-D.ietf-mmusic-trickle-ice}},
+{{I-D.ietf-payload-flexible-fec-scheme}},
 {{I-D.ietf-payload-rtp-opus}}, 
 {{I-D.ietf-payload-vp8}},
 {{I-D.ietf-rtcweb-alpn}}, 
 {{I-D.ietf-rtcweb-data-protocol}}, 
+{{I-D.ietf-rtcweb-fec}},
 {{I-D.ietf-rtcweb-security}}, 
 {{I-D.ietf-rtcweb-stun-consent-freshness}}, 
 {{I-D.ietf-tls-applayerprotoneg}},
 {{I-D.ietf-tram-alpn}}, 
 {{I-D.ietf-tsvwg-rtcweb-qos}}, 
 {{I-D.ietf-tsvwg-sctp-dtls-encaps}}, 
-{{I-D.ietf-tsvwg-sctp-ndata}}, 
-{{I-D.ietf-tsvwg-sctp-prpolicies}},
-{{I-D.martinsen-mmusic-ice-dualstack-fairness}}, and 
-{{I-D.ietf-jose-json-web-algorithms}}.
+{{I-D.ietf-tsvwg-sctp-ndata}}, and 
+{{I-D.ietf-tsvwg-sctp-prpolicies}}.
 
 Right now security normatively depends on
 {{I-D.ietf-rtcweb-overview }}.
 
 
 The drafts webrtc currently normatively depends on that are not WG drafts are:
-{{I-D.martinsen-mmusic-ice-dualstack-fairness}},
-{{I-D.nandakumar-mmusic-proto-iana-registration}}.
+{{I-D.shieh-rtcweb-ip-handling}}
 
 
 A few key drafts that the work informatively depends on:
@@ -195,7 +212,7 @@ A few key drafts that the work informatively depends on:
 {{I-D.ietf-rtcweb-use-cases-and-requirements}}, 
 {{I-D.kaufman-rtcweb-security-ui}}, 
 {{I-D.lennox-payload-ulp-ssrc-mux}}, 
-{{I-D.nandakumar-rtcweb-sdp}}, 
+{{I-D.ietf-rtcweb-sdp}}, 
 {{I-D.roach-mmusic-unified-plan}}, 
 {{I-D.ietf-rtcweb-audio-codecs-for-interop}},
 {{I-D.westerlund-avtcore-multiplex-architecture}}.
@@ -230,27 +247,26 @@ so take this with a large dose of salt.
 | PubReq         | {{I-D.ietf-tsvwg-sctp-prpolicies}}  |
 | WGLC           | {{I-D.ietf-rtcweb-overview}}  |
 | WGLC           | {{I-D.ietf-rtcweb-video}}  |
-| 2015 Jan       | {{I-D.ietf-rtcweb-constraints-registry}}  |
-| 2015 Jan       | {{I-D.ietf-rtcweb-transports}}  |
-| 2015 Feb       | {{I-D.ietf-mmusic-sdp-bundle-negotiation}}  |
-| 2015 Feb       | {{I-D.ietf-mmusic-sdp-mux-attributes}}  |
-| 2015 Feb       | {{I-D.ietf-rtcweb-alpn}}  |
-| 2015 Feb       | {{I-D.ietf-tsvwg-sctp-ndata}}  |
-| 2015 Mar       | {{I-D.ietf-mmusic-msid}}  |
-| 2015 Mar       | {{I-D.ietf-mmusic-sctp-sdp}}  |
-| 2015 May       | {{I-D.ietf-rtcweb-audio}}  |
-| 2015 May       | {{I-D.ietf-rtcweb-jsep}}  |
+|        | {{I-D.ietf-rtcweb-transports}}  |
+|       | {{I-D.ietf-mmusic-sdp-bundle-negotiation}}  |
+|      | {{I-D.ietf-mmusic-sdp-mux-attributes}}  |
+|      | {{I-D.ietf-rtcweb-alpn}}  |
+|     | {{I-D.ietf-tsvwg-sctp-ndata}}  |
+|       | {{I-D.ietf-mmusic-msid}}  |
+|       | {{I-D.ietf-mmusic-sctp-sdp}}  |
+|      | {{I-D.ietf-rtcweb-audio}}  |
+|       | {{I-D.ietf-rtcweb-jsep}}  |
 |                | {{I-D.ietf-avtcore-multi-media-rtp-session}}  |
 |                | {{I-D.ietf-avtcore-rtp-circuit-breakers}}  |
 |                | {{I-D.ietf-avtcore-rtp-multi-stream-optimisation}}  |
 |                | {{I-D.ietf-avtcore-rtp-multi-stream}}  |
 |                | {{I-D.ietf-tsvwg-rtcweb-qos}}  |
-|                | {{I-D.nandakumar-mmusic-proto-iana-registration}} |
+|                | {{I-D.ietf-mmusic-proto-iana-registration}} |
 |                | {{I-D.ietf-rtcweb-fec}} |
 |                | {{I-D.ietf-payload-flexible-fec-scheme}} | 
 |                | {{I-D.ietf-mmusic-trickle-ice}}  |
-|                | {{I-D.martinsen-mmusic-ice-dualstack-fairness}} |
+|                | {{I-D.ietf-ice-dualstack-fairness}} |
 |                | {{I-D.ietf-httpbis-tunnel-protocol}} |
 |                | {{I-D.ietf-jose-json-web-algorithms}} |
 |                | {{I-D.ietf-tram-turn-third-party-authz}} |
-
+|     | {{I-D.shieh-rtcweb-ip-handling}} |
