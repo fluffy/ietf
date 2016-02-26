@@ -4,7 +4,8 @@ MD=kramdown-rfc2629
 X2R=xml2rfc
 CF=cupsfilter
 
-all: txt html pdf
+all: txt html
+
 txt: $(NAME).txt
 html: $(NAME).html
 pdf: $(NAME).pdf

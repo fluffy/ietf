@@ -45,7 +45,6 @@ normative:
   I-D.ietf-payload-vp8:
   I-D.ietf-rtcweb-alpn:
   I-D.ietf-rtcweb-audio:
-  I-D.ietf-rtcweb-constraints-registry:
   I-D.ietf-rtcweb-data-channel:
   I-D.ietf-rtcweb-data-protocol:
   I-D.ietf-rtcweb-data-protocol:
@@ -74,7 +73,6 @@ normative:
   I-D.shieh-rtcweb-ip-handling:
   RFC2119:
   RFC3264:
-  RFC3388:
   RFC4566:
   RFC5245:
   RFC5389:
