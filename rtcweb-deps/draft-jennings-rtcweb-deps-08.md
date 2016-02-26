@@ -94,7 +94,12 @@ normative:
   RFC7301:
   RFC7350:
   RFC7443:
-
+  RFC7496:
+  RFC7518:
+  RFC7587:
+  RFC7635:
+  RFC7639:
+  RFC7675:
   
 
 informative:
@@ -164,11 +169,12 @@ and
 In addition 3GPP work normatively depends on {{I-D.ietf-rtcweb-gateways}}.
 
 These IETF drafts in turn normatively depend on the following drafts:
+(Note this list is out of date)
 {{I-D.ietf-avtcore-multi-media-rtp-session}}, 
 {{I-D.ietf-avtcore-rtp-circuit-breakers}}, 
 {{I-D.ietf-avtcore-rtp-multi-stream-optimisation}}, 
 {{I-D.ietf-avtcore-rtp-multi-stream}}, 
-{{I-D.ietf-ice-dualstack-fairness}},  
+{{I-D.ietf-ice-dualstack-fairness}}, 
 {{I-D.ietf-jose-json-web-algorithms}}.
 {{I-D.ietf-mmusic-msid}}, 
 {{I-D.ietf-mmusic-proto-iana-registration}},
@@ -194,10 +200,8 @@ These IETF drafts in turn normatively depend on the following drafts:
 Right now security normatively depends on
 {{I-D.ietf-rtcweb-overview }}.
 
-
 The drafts webrtc currently normatively depends on that are not WG drafts are:
 {{I-D.shieh-rtcweb-ip-handling}}
-
 
 A few key drafts that the work informatively depends on:
 {{I-D.alvestrand-rtcweb-gateways}}, 
@@ -225,6 +229,8 @@ The following table has some very rough estimates of when the draft will become 
 RFC. Historically these dates have often taken much longer than the estimates
 so take this with a large dose of salt.
 
+Last updated Feb 25, 2016.
+
 | ETA            | Draft Name  |
 | {{RFC6904}}    | {{I-D.ietf-avtcore-srtp-encrypted-header-ext}}  |
 | {{RFC7007}}    | {{I-D.ietf-avtcore-avp-codecs}}  |
@@ -235,38 +241,38 @@ so take this with a large dose of salt.
 | {{RFC7301}}    | {{I-D.ietf-tls-applayerprotoneg}}  |
 | {{RFC7350}}    | {{I-D.ietf-tram-stun-dtls}}  |
 | {{RFC7443}}    | {{I-D.ietf-tram-alpn}}  |
-| PubReq         | {{I-D.ietf-payload-vp8}}  |
-| PubReq         | {{I-D.ietf-rtcweb-data-channel}}  |
-| PubReq         | {{I-D.ietf-rtcweb-data-protocol}}  |
+| {{RFC7496}}    | {{I-D.ietf-tsvwg-sctp-prpolicies}}  |
+| {{RFC7518}}    | {{I-D.ietf-jose-json-web-algorithms}} |
+| {{RFC7587}}    | {{I-D.ietf-payload-rtp-opus}}  |
+| {{RFC7635}}    | {{I-D.ietf-tram-turn-third-party-authz}} |
+| {{RFC7639}}    | {{I-D.ietf-httpbis-tunnel-protocol}} |
+| {{RFC7675}}    | {{I-D.ietf-rtcweb-stun-consent-freshness}}  |
+| Auth 48         | {{I-D.ietf-payload-vp8}}  |
+| Auth 48         | {{I-D.ietf-rtcweb-video}}  |
+| Miss Ref        | {{I-D.ietf-rtcweb-rtp-usage}}  |
+| Miss Ref        | {{I-D.ietf-tsvwg-sctp-dtls-encaps}}  |
+| RFC Ed          | {{I-D.ietf-rtcweb-data-channel}}  |
+| RFC Ed          | {{I-D.ietf-rtcweb-data-protocol}}  |
+| RFC Ed          | {{I-D.ietf-avtcore-multi-media-rtp-session}}  |
+| RFC Ed          | {{I-D.ietf-avtcore-rtp-multi-stream-optimisation}}  |
+| RFC Ed          | {{I-D.ietf-avtcore-rtp-multi-stream}}  |
+| IETF LC          | {{I-D.ietf-rtcweb-audio}}  |
+| IETF LC          | {{I-D.ietf-avtcore-rtp-circuit-breakers}}  |
+| IETF LC          | {{I-D.ietf-mmusic-proto-iana-registration}} |
+| AD Eval         | {{I-D.ietf-mmusic-sdp-mux-attributes}}  |
 | PubReq         | {{I-D.ietf-rtcweb-security-arch}}  |
 | PubReq         | {{I-D.ietf-rtcweb-security}}  |
-| PubReq         | {{I-D.ietf-rtcweb-rtp-usage}}  |
-| PubReq         | {{I-D.ietf-rtcweb-stun-consent-freshness}}  |
-| PubReq         | {{I-D.ietf-tsvwg-sctp-dtls-encaps}}  |
-| Pubreq         | {{I-D.ietf-payload-rtp-opus}}  |
-| PubReq         | {{I-D.ietf-tsvwg-sctp-prpolicies}}  |
-| WGLC           | {{I-D.ietf-rtcweb-overview}}  |
-| WGLC           | {{I-D.ietf-rtcweb-video}}  |
-|        | {{I-D.ietf-rtcweb-transports}}  |
-|       | {{I-D.ietf-mmusic-sdp-bundle-negotiation}}  |
-|      | {{I-D.ietf-mmusic-sdp-mux-attributes}}  |
-|      | {{I-D.ietf-rtcweb-alpn}}  |
-|     | {{I-D.ietf-tsvwg-sctp-ndata}}  |
-|       | {{I-D.ietf-mmusic-msid}}  |
-|       | {{I-D.ietf-mmusic-sctp-sdp}}  |
-|      | {{I-D.ietf-rtcweb-audio}}  |
-|       | {{I-D.ietf-rtcweb-jsep}}  |
-|                | {{I-D.ietf-avtcore-multi-media-rtp-session}}  |
-|                | {{I-D.ietf-avtcore-rtp-circuit-breakers}}  |
-|                | {{I-D.ietf-avtcore-rtp-multi-stream-optimisation}}  |
-|                | {{I-D.ietf-avtcore-rtp-multi-stream}}  |
-|                | {{I-D.ietf-tsvwg-rtcweb-qos}}  |
-|                | {{I-D.ietf-mmusic-proto-iana-registration}} |
+| Write Up        | {{I-D.ietf-mmusic-sdp-bundle-negotiation}}  |
+| Write Up      | {{I-D.ietf-rtcweb-alpn}}  |
+| WGLC            | {{I-D.ietf-rtcweb-overview}}  |
+| WGLC            | {{I-D.ietf-tsvwg-rtcweb-qos}}  |
+|                  | {{I-D.ietf-tsvwg-sctp-ndata}}  |
+|                  | {{I-D.ietf-rtcweb-transports}}  |
+|                 | {{I-D.ietf-mmusic-msid}}  |
+|                 | {{I-D.ietf-mmusic-sctp-sdp}}  |
+|                 | {{I-D.ietf-rtcweb-jsep}}  |
 |                | {{I-D.ietf-rtcweb-fec}} |
 |                | {{I-D.ietf-payload-flexible-fec-scheme}} | 
 |                | {{I-D.ietf-mmusic-trickle-ice}}  |
 |                | {{I-D.ietf-ice-dualstack-fairness}} |
-|                | {{I-D.ietf-httpbis-tunnel-protocol}} |
-|                | {{I-D.ietf-jose-json-web-algorithms}} |
-|                | {{I-D.ietf-tram-turn-third-party-authz}} |
-|     | {{I-D.shieh-rtcweb-ip-handling}} |
+|               | {{I-D.shieh-rtcweb-ip-handling}} |
