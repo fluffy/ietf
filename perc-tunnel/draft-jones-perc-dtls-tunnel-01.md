@@ -373,8 +373,8 @@ following format:
 |   Association Identifier                                      |
 |                                                               |
 |                               +-------------------------------+
-|                               |                               :
-+-------------------------------+                               :
+|                               |  DTLS Msg Len                 |
++-------------------------------+-------------------------------:
 :                                                               :
 :                     Tunneled DTLS Message                     :
 :                                                               :
@@ -386,6 +386,8 @@ Version (H): This is the major version number (set to 0x01)
 Version (L): This is the minor version number (set to 0x00)
 
 Association Identifier: This is the 16-octet association identifier
+
+DTLS Msg Len: Length in octets of following Tunneled DTLS Message
 
 Tunneled DTLS Message: This is the DTLS message exchanged between the
 endpoint and KMF.
@@ -406,8 +408,8 @@ message. The format of the message is shown below:
 |                     Association Identifier                    |
 |                                                               |
 |                               +-------------------------------+
-|                               |                               :
-+-------------------------------+                               :
+|                               |   DTLS Msg Len                |
++-------------------------------+-------------------------------:  
 :                                                               :
 :                     Tunneled DTLS Message                     :
 :                                                               :
@@ -456,8 +458,8 @@ will send a Tunnel message with the Key Info appended as shown below:
 |   Association Identifier                                      |
 |                                                               |
 |                               +---------------+---------------+
-|                               |                               :
-+-------------------------------+                               :
+|                               |     DTLS Msg Len              |   
++-------------------------------+-------------------------------: 
 :                                                               :
 :                     Tunneled DTLS Message                     :
 :                                                               :
