@@ -26,7 +26,7 @@
 <?rfc colonspace="yes" ?>
 <?rfc rfcedstyle="no" ?>
 <?rfc tocdepth="4"?>
-<rfc category="std" docName="draft-ietf-mmusic-proto-iana-registration-05"
+<rfc category="std" docName="draft-ietf-mmusic-proto-iana-registration-06"
      ipr="trust200902">
   <front>
     <title abbrev="SDP Proto Registrations">IANA registrations of SDP 'proto'
@@ -47,34 +47,34 @@
       </address>
     </author>
 
-    <date day="26" month="January" year="2016" />
+    <date day="27" month="February" year="2016" />
     <area>RAI</area>
     <workgroup>MMUSIC</workgroup>
 
     <abstract>
-    <t>The Real-time Transport Protocol (RTP) specification establishes a registry of
-    profile names for use by higher-level control protocols, such as the
-    Session Description Protocol (SDP), to refer to the transport methods. 
-    This specification describes the following new SDP transport protocol 
-    identifiers for transporting RTP Media over TCP: 'TCP/RTP/AVPF',  
-    'TCP/RTP/SAVP',  'TCP/RTP/SAVPF', 'TCP/DTLS/RTP/SAVP',  'TCP/DTLS/RTP/SAVPF',  
-    'TCP/TLS/RTP/AVP', 'TCP/TLS/RTP/AVPF'.</t>
+    <t>The Real-time Transport Protocol (RTP) specification establishes a 
+    registry of profile names for use by higher-level control protocols, 
+    such as the Session Description Protocol (SDP), to refer to the 
+    transport methods. This specification describes the following new SDP 
+    transport protocol identifiers for transporting RTP Media over TCP: 
+    'TCP/RTP/AVPF', 'TCP/RTP/SAVP',  'TCP/RTP/SAVPF', 'TCP/DTLS/RTP/SAVP', 
+    'TCP/DTLS/RTP/SAVPF', 'TCP/TLS/RTP/AVP', 'TCP/TLS/RTP/AVPF'.</t>
     </abstract>
   </front>
 
   <middle>
 
     <section title="Overview" anchor="sec.overview">
-      <t>RTP provides end-to-end network transport functions suitable for 
-      applications transmitting real-time data such as audio, video or 
-      simulation data, over multicast or unicast network services. The data 
-      transport is augmented by RTP Control Protocol (RTCP), 
+      <t>Real-time Transport Protocol (RTP) provides end-to-end network 
+      transport functions suitable for applications transmitting real-time 
+      data such as audio, video over multicast or unicast network services. 
+      The data transport is augmented by RTP Control Protocol (RTCP), 
       to allow monitoring of the data delivery in a manner scalable to large 
       multicast networks, and to provide minimal control and identification 
       functionality.</t>
-      <t>SDP <xref target="RFC4566"/> provides a general-purpose format for
-      describing multimedia sessions in announcements or invitations.
-      <xref target="RFC4145"/> specifies a general mechanism for
+      <t>Session Description Protocol (SDP) <xref target="RFC4566"/> provides a 
+      general-purpose format for describing multimedia sessions in announcements 
+      or invitations. <xref target="RFC4145"/> specifies a general mechanism for
       describing media transport over Transmission Control Protocol (TCP) using 
       SDP with <xref target="RFC4571"/> defining a method for framing
       RTP and RTCP packets <xref target="RFC3550"/> onto a connection-oriented 
@@ -85,6 +85,7 @@
       <t>This specification describes additional SDP transport protocol
       identifiers for transporting RTP Media over TCP as defined in
       <xref target="sec.proto-identifiers"/>.</t>
+      
     </section>
 
     <section anchor="sec-term" title="Terminology">
@@ -244,7 +245,7 @@
           This specification describes the following new SDP transport protocol
           identifiers :'TCP/RTP/AVPF',  'TCP/RTP/SAVP',  'TCP/RTP/SAVPF',
           'TCP/DTLS/RTP/SAVP',  'TCP/DTLS/RTP/SAVPF',  'TCP/TLS/RTP/AVP',
-          'TCP/TLS/RTP/AVPF', as defined in the <xref target="sec.proto-identifiers"/>.
+          'TCP/TLS/RTP/AVPF', as defined in <xref target="sec.proto-identifiers"/>.
           These proto values should be registered by the IANA under the 
           "proto" subregistry in the "Session Description Protocol (SDP)
           Parameters" registry.
