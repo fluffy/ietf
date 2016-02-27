@@ -499,7 +499,19 @@ TODO - Add IANA table for data type values.
 
 # Security Considerations
 
-\[TBD\]
+TODO - Much more needed.
+
+The encapsulated data is protected by the DTLS session from the endpoint to KMF
+and the MDD is merely an on path entity. This does not introduce any additional
+security concerns beyond a normal DTLS-SRTP session.
+
+The HBH keying material is protected by the mutual authenticated DTLS session between the MDD and
+KMF. The KMF MUST ensure that it only forms connections with authorised MDDs or
+it could hand HBH keying information to untrusted parties. 
+
+The supported profile information send from the MDD to the KMF is not
+particularly sensitive as it only provides the crypt algorithms supported by the
+MDD but it is still protected by the DTLS session form the MDD to KMF. 
 
 # Acknowledgments
 
