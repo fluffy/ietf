@@ -59,22 +59,27 @@ end-to-end encryption and authentication is inaccessible to the MDD.
 
 # Introduction
 
-An objective of the work in the Privacy-Enhanced RTP Conferencing (PERC)
-working group is to ensure that endpoints in a multimedia conference
-have access to the end-to-end (E2E) and hop-by-hop (HBH) key material 
-used to encrypt and authenticate Real-time Transport Protocol (RTP) [@!RFC3550] packets, while the Media Distribution Device (MDD) has 
-access only to the hop-by-hop (HBH) key material for encryption and authentication.
+An objective of the work in the Privacy-Enhanced RTP Conferencing (PERC) working
+group is to ensure that endpoints in a multimedia conference have access to the
+end-to-end (E2E) and hop-by-hop (HBH) key material used to encrypt and
+authenticate Real-time Transport Protocol (RTP) [@!RFC3550] packets, while the
+Media Distribution Device (MDD) has access only to the hop-by-hop (HBH) key
+material for encryption and authentication.
 
 This specification defines a tunneling protocol that enables the MDD to
 tunnel DTLS [@!RFC6347] messages between an endpoint and the KMF, thus
 allowing an endpoint to use DTLS-SRTP [@!RFC5764] for establishing
 encryption and authentication keys with the KMF.
 
-The tunnel established between the MDD and KMF is a DTLS association
-that is established before any messages are forwarded on behalf of the
-endpoint by the MDD. DTLS packets received from the endpoint are 
-encapsulated by the MDD inside this tunnel as data to be sent to the KMF. Likewise, when the MDD receives data from the KMF over the tunnel, it extracts the DTLS message inside and forwards that to the endpoint. In this way, 
-effectively, the DTLS association for the DTLS-SRTP procedures is established between the endpoint and the KMF, with the MDD simply forwarding packets between the two entities and having no visibility into the confidential information exchanged or derived.
+The tunnel established between the MDD and KMF is a DTLS association that is
+established before any messages are forwarded on behalf of the endpoint by the
+MDD. DTLS packets received from the endpoint are encapsulated by the MDD inside
+this tunnel as data to be sent to the KMF. Likewise, when the MDD receives data
+from the KMF over the tunnel, it extracts the DTLS message inside and forwards
+that to the endpoint. In this way, effectively, the DTLS association for the
+DTLS-SRTP procedures is established between the endpoint and the KMF, with the
+MDD simply forwarding packets between the two entities and having no visibility
+into the confidential information exchanged or derived.
 
 Following the existing DTLS-SRTP procedures, the endpoint and KMF will
 arrive at a selected cipher and key material, which are used for HBH
@@ -128,11 +133,12 @@ The three entities involved in this communication flow are the endpoint,
 the MDD, and the KMF. The behavior of each entity is described in
 (#tunneling-procedures).
 
-The KMF is a logical function whose location is not dictated by this
-document. The KMF might be co-resident with an enterprise key management
-server, reside in one of the endpoints participating in the conference,
-or exist elsewhere. What is important is that the KMF does not allow the
-MDD to gain access to the E2E key material.
+The KMF is a logical function that might might be co-resident with a key
+management server operated by an enterprise, reside in one of the endpoints
+participating in the conference, or elsewhere that is trusted with E2E key
+material.  This document does preclude any location, it only requires that the
+KMF does not allow the MDD to gain access to the E2E key material by following
+the operations defined.
 
 # Example Message Flows
 
@@ -217,59 +223,58 @@ the MDD.
 
 ## Media Distribution Device Tunneling Procedures
 
-The MDD, acting as a client, establishes a DTLS association between
-itself and the KMF for the purpose of facilitating key exchange between
-an endpoint and the KMF. To differentiate this DTLS association from the
-one initiated by the endpoint, this association is called a "tunnel". A
-tunnel may be established when the first endpoint attempts to establish
-a DTLS association with the KMF, or the tunnel may be established in
-advance and independent of communication with an endpoint.
+The MDD, acting as a client, establishes a DTLS association between itself and a
+KMF to relay DTLS messages from any number of endpoints to that KMF.  This MDD
+initiated DTLS association is called a "Tunnel" to differentiate it from the
+DTLS associations initiated by endpoints.
 
-A tunnel allows the MDD to relay DTLS messages for any number of
-endpoints. The MDD cannot see the plaintext contents of the encrypted
-exchanges between the KMF and an endpoint, but the protocol does enable
-the KMF to provide the HBH key material to the MDD for each of the
-individual DTLS associations.
+The MDD **MUST** establish the tunnel association with the KMF in advance of, or
+no later than at the time of, an endpoint attempting to establish a DTLS
+association with the KMF.
 
-The MDD may establish a single DTLS tunnel to the KMF or it may
-establish more than one. However, the MDD **MUST** ensure that all DTLS
-messages received by the endpoint for the same DTLS association are
-transmitted over the same tunnel.
+The MDD **MUST** forward all messages received from an endpoint for a given DTLS
+association through the same tunnel if more than one tunnel has been established
+between it and a KMF.  A MDD is not precluded from establishing more than one
+tunnel to a given KMF.
 
-When a DTLS message is received by the MDD from an endpoint, it forwards
-that message to the KMF encapsulated in a Tunnel + Profiles message (see
-(#tunneling-protocol)).
+The MDD **MUST** assign a tunnel-unique "association identifier" for each
+endpoint-initiated DTLS association and include it in all messages forwarded to
+the KMF.  The KMF will subsequently include in this identifier in all messages
+it sends so that the MDD can map messages received via a given tunnel and
+forward the correct endpoint.
 
-To uniquely identify a distinct endpoint-originated DTLS association,
-the MDD assigns a tunnel-unique "association identifier" for each of connection to each endpoint. The association identifier is necessary since multiple DTLS messages from multiple endpoints might be relayed over the same tunnel. By uniquely assigning an association identifier, the MDD can 
-map the message received from the KMF to an appropriate endpoint.
+The MDD **MUST** assign a locally unique conference identifier common to the
+endpoints it has bridged together locally and include it in all the messages it
+sends to the KMF.  The KMF may use this identifier to ensure any
+conference-specific information it sends can be included only in messages
+destined for the correct endpoints.  Through some means outside the scope of
+this document, the KMF will know if a given endpoint is authorized to receive
+conference-specific information and receiving a conference identifier from an
+MDD will not be not indication of any authorization.
 
-The Tunnel + Profiles message used to tunnel DTLS messages to the KMF
-allows the MDD to signal which SRTP protection profiles it supports for
-HBH operations. The list of protection profiles **MUST** remain constant
-for a given DTLS association identified by the association identifier.
+This tunnel protocol does enable the KMF to separately provide HBH key material
+to the MDD for each of the individual endpoint DTLS associations while the MDD
+cannot decrypt messages between the KMF and endpoints.
 
-The MDD also includes a conference identifier known to both the MDD and
-the KMF in the messages it sends to the KMF. The conference identifier
-is necessary to allow the KMF to provide the endpoint with any
-conference-specific key material. It is important to note that merely
-receiving the conference identifier is not an indication of
-authorization. Through some means defined outside the scope of this
-document, the KMF will know for which conferences the endpoint is
-authorized to receive conference-specific key material.
+When a DTLS message is received by the MDD from an endpoint, it forwards that
+message to the KMF encapsulated in a Tunnel + Profiles message (see
+(#tunneling-protocol)).  The Tunnel + Profiles message allows the MDD to signal
+which SRTP protection profiles it supports for HBH operations.
 
-All messages for a given DTLS association **MUST** be sent via the same
-tunnel and **MUST** include the same association identifier. The
-MDD **MUST** forward all messages received from either the endpoint or
-the KMF to ensure proper communication between those two entities.
+The MDD **MUST** support the same list of protection profiles for the life of
+given endpoint’s DTLS association, represented by a given association
+identifier.
 
-When the MDD receives a message from the KMF that includes Key Info, it
-extracts the cipher and key material conveyed in that message in order
-to perform HBH encryption and authentication for RTP and RTCP packets
-sent to and from the endpoint. Since the HBH cipher and key material
-will be different for each endpoint, the MDD uses the association
-identifier to ensure the key material is associated with the correct
-endpoint.
+When a message from the KMF includes "Key Info," the MDD **MUST** extract the
+cipher and key material conveyed in order to subsequently perform HBH encryption
+and authentication operations for RTP and RTCP packets between it and an
+endpoint.  Since the HBH key material will be different for each endpoint, the
+MDD uses the tunnel-unique association identifier included by the KMF to ensure
+that the HBH material is used with the correct endpoint.
+
+The MDD **MUST** forward all messages received from either the endpoint or the
+KMF to ensure proper communication between those two entities.
+
 
 ## Key Management Function Tunneling Procedures
 
@@ -279,16 +284,15 @@ between an endpoint and the KMF.
 The KMF acts as a server and the MDD acts as a client to
 establish a tunnel.
 
-When the MDD relays a DTLS message from an endpoint, the
-MDD will include an association identifier that is unique per
-endpoint-originated DTLS association and is relayed via the tunnel. 
-The association identifier remains constant for the life of the DTLS
-association. The KMF identifies each distinct endpoint-originated DTLS association by the association
-identifier and the tunnel over which the DTLS association was
-established. The KMF **MUST** use the same association identifier in
-messages it sends to the endpoint and **MUST** send all messages for a
-given DTLS association via the same tunnel. This is to ensure that the
-MDD can properly relay messages to the correct endpoint.
+When the MDD relays a DTLS message from an endpoint, the MDD will include an
+association identifier that is unique per endpoint-originated DTLS association
+and is relayed via the tunnel.  The association identifier remains constant for
+the life of the DTLS association. The KMF identifies each distinct
+endpoint-originated DTLS association by the association identifier and the
+tunnel over which the DTLS association was established. The KMF **MUST** use the
+same association identifier in messages it sends to the endpoint and **MUST**
+send all messages for a given DTLS association via the same tunnel. This is to
+ensure that the MDD can properly relay messages to the correct endpoint.
 
 The KMF extracts tunneled DTLS messages and acts on those messages as if
 the endpoint had established the DTLS association directly with the KMF. The
@@ -305,10 +309,10 @@ Key Info message. The Key Info includes the selected cipher, MKI
 [@!RFC3711] value (if any), SRTP master keys and SRTP master salt
 values.
 
-Since the KMF acts as the server in the DTLS-SRTP exchanges with the
-endpoint, it will negotiate with the endpoint which cipher to employ for
-encryption and authentication. To ensure successful HBH operations, the ciphers negotiated  by the KMF **MUST** be a ciphers that are supported by 
-the MDD.
+Since the KMF acts as the server in the DTLS-SRTP exchanges with the endpoint,
+it will negotiate with the endpoint which cipher to employ for encryption and
+authentication. To ensure successful HBH operations, the ciphers negotiated by
+the KMF **MUST** be a ciphers that are supported by the MDD.
 
 # Tunneling Protocol
 
@@ -491,17 +495,17 @@ The encapsulated data is protected by the DTLS session from the endpoint to KMF
 and the MDD is merely an on path entity. This does not introduce any additional
 security concerns beyond a normal DTLS-SRTP session.
 
-The HBH keying material is protected by the mutual authenticated DTLS session between the MDD and
-KMF. The KMF MUST ensure that it only forms connections with authorized MDDs or
-it could hand HBH keying information to untrusted parties. 
+The HBH keying material is protected by the mutual authenticated DTLS session
+between the MDD and KMF. The KMF MUST ensure that it only forms connections with
+authorized MDDs or it could hand HBH keying information to untrusted parties.
 
 The supported profile information send from the MDD to the KMF is not
 particularly sensitive as it only provides the crypt algorithms supported by the
-MDD but it is still protected by the DTLS session form the MDD to KMF. 
+MDD but it is still protected by the DTLS session from the MDD to KMF. 
 
 # Acknowledgments
 
-The author would like to thank David Benham for reviewing this document
-and providing constructive comments.
+The author would like to thank David Benham and Cullen Jennings for reviewing
+this document and providing constructive comments.
 
 {backmatter}
