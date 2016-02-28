@@ -485,14 +485,14 @@ and the MDD is merely an on path entity. This does not introduce any additional
 security concerns beyond a normal DTLS-SRTP session.
 
 The HBH keying material is protected by the mutual authenticated DTLS session
-between the MDD and KMF. The KMF MUST ensure that it only forms connections with
+between the MDD and KMF. The KMF MUST ensure that it only forms associations with
 authorized MDDs or it could hand HBH keying information to untrusted parties.
 
 The supported profile information send from the MDD to the KMF is not
 particularly sensitive as it only provides the crypt algorithms supported by the
 MDD but it is still protected by the DTLS session from the MDD to KMF. 
 
-The MDD and KMF may need to coordinate or exchange a “conference identifier” common to the endpoints a MDD is bridging together if such information the KMF needs know about conferenced to endpoint associations cannot be gained directly from the endpoints, or some trusted entity on their behalf, via another means or signaling protocol.  Need to revisit this design choice.
+The MDD and KMF may need to coordinate or exchange a “conference identifier” common to the endpoints a MDD is bridging together if such information the KMF needs know about conference-to-endpoint correlations cannot be gained directly from the endpoints, or some trusted entity on their behalf, via another means or signaling protocol.  Need to revisit this design choice.
 
 # Acknowledgments
 
