@@ -239,16 +239,7 @@ The MDD **MUST** assign a tunnel-unique "association identifier" for each
 endpoint-initiated DTLS association and include it in all messages forwarded to
 the KMF.  The KMF will subsequently include in this identifier in all messages
 it sends so that the MDD can map messages received via a given tunnel and
-forward the correct endpoint.
-
-The MDD **MUST** assign a locally unique conference identifier common to the
-endpoints it has bridged together locally and include it in all the messages it
-sends to the KMF.  The KMF may use this identifier to ensure any
-conference-specific information it sends can be included only in messages
-destined for the correct endpoints.  Through some means outside the scope of
-this document, the KMF will know if a given endpoint is authorized to receive
-conference-specific information and receiving a conference identifier from an
-MDD will not be not indication of any authorization.
+forward those messages to the correct endpoint.
 
 This tunnel protocol does enable the KMF to separately provide HBH key material
 to the MDD for each of the individual endpoint DTLS associations while the MDD
@@ -260,7 +251,7 @@ message to the KMF encapsulated in a Tunnel + Profiles message (see
 which SRTP protection profiles it supports for HBH operations.
 
 The MDD **MUST** support the same list of protection profiles for the life of
-given endpoint’s DTLS association, represented by a given association
+a given endpoint’s DTLS association, which is represented by the association
 identifier.
 
 When a message from the KMF includes "Key Info," the MDD **MUST** extract the
@@ -500,6 +491,8 @@ authorized MDDs or it could hand HBH keying information to untrusted parties.
 The supported profile information send from the MDD to the KMF is not
 particularly sensitive as it only provides the crypt algorithms supported by the
 MDD but it is still protected by the DTLS session from the MDD to KMF. 
+
+The MDD and KMF may need to coordinate or exchange a “conference identifier” common to the endpoints a MDD is bridging together if such information the KMF needs know about conferenced to endpoint associations cannot be gained directly from the endpoints, or some trusted entity on their behalf, via another means or signaling protocol.  Need to revisit this design choice.
 
 # Acknowledgments
 
