@@ -221,7 +221,7 @@ the MDD.
 
 ## Media Distribution Device Tunneling Procedures
 
-The MDD, acting as a client, establishes a DTLS association between itself and a
+The MDD, acting as a client, establishes a mutually authenticated DTLS association between itself and a
 KMF to relay DTLS messages from any number of endpoints to that KMF.  This MDD
 initiated DTLS association is called a "Tunnel" to differentiate it from the
 DTLS associations initiated by endpoints.
@@ -245,7 +245,8 @@ This tunnel protocol does enable the KMF to separately provide HBH key material
 to the MDD for each of the individual endpoint DTLS associations while the MDD
 cannot decrypt messages between the KMF and endpoints.
 
-When a DTLS message is received by the MDD from an endpoint, it forwards that
+When a DTLS message is received by the MDD from an endpoint, it forwards the UDP
+payload portion of that 
 message to the KMF encapsulated in a Tunnel + Profiles message (see
 (#tunneling-protocol)).  The Tunnel + Profiles message allows the MDD to signal
 which SRTP protection profiles it supports for HBH operations.
@@ -495,7 +496,7 @@ MDD but it is still protected by the DTLS session from the MDD to KMF.
 The MDD and KMF may need to coordinate or exchange a “conference identifier”
 common to the endpoints a MDD is bridging together.  Alternatively, information
 the KMF needs to know about conference-to-endpoint correlations might be
-satisified by getting info directly from the endpoints, or some trusted entity
+satisfied by getting info directly from the endpoints, or some trusted entity
 on their behalf, via some other means.  Need to revisit this design choice in
 the context of all the alternatives.
 
