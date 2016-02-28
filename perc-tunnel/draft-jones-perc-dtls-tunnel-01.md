@@ -137,7 +137,7 @@ The KMF is a logical function that might might be co-resident with a key
 management server operated by an enterprise, reside in one of the endpoints
 participating in the conference, or elsewhere that is trusted with E2E key
 material.  This document does preclude any location, it only requires that the
-KMF does not allow the MDD to gain access to the E2E key material by following
+KMF not allow the MDD to gain access to the E2E key material by following
 the operations defined.
 
 # Example Message Flows
