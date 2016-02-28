@@ -165,9 +165,7 @@ Endpoint                     MDD                       KMF
     |<------------------------|<========================|
     | DTLS handshake message  |                  Tunnel |
     |                         |                         |
-
-                            .... may be multiple handshake messages ...
-
+       .... may be multiple handshake messages ...
     |------------------------>|========================>|
     | DTLS handshake message  | Tunnel + Profiles       |
     |                         |                         |
@@ -192,7 +190,7 @@ Tunnel message. The KMF will need to select a common profile supported
 by both the endpoint and the MDD to ensure that hop-by-hop operations
 can successfully be performed.
 
-Further, the KMF will provide the SRTP [@RFC3711] key material for HBH
+Further, the KMF will provide the SRTP [@!RFC3711] key material for HBH
 operations at the time it sends a "Finished" message to the endpoint via
 the tunnel. The MDD would extract this Key Info when received and use it
 for hop-by-hop encryption and authentication. The delivery of the keying
