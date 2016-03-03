@@ -10,7 +10,8 @@ PDF  := $(patsubst %.xml,%.pdf,$(SRC))
 SVG  := $(patsubst %.wsd,%.svg,$(WSRC))
 
 #all: $(HTML) $(TXT) $(DIF) $(PDF)
-all: $(HTML) $(TXT) $(DIF) $(SVG) $(PDF)
+#all: $(HTML) $(TXT) $(DIF) $(SVG) $(PDF)
+all: $(HTML) $(TXT) $(DIF) $(SVG) 
 
 clean:
 	rm -f *~ draft*.html draft*pdf draft-*txt $(SVG)
@@ -19,11 +20,10 @@ clean:
 #	xsltproc -o $@ rfc2629.xslt $^
 
 %.html: %.xml
-	xml2rfc $^ $@
-
+	xml2rfc $^ --html
 
 %.txt: %.xml
-	xml2rfc $^ $@
+	xml2rfc $^ --text 
 
 %.diff.html: %.txt
 	htmlwdiff  $^.old $^ >  $@
@@ -32,7 +32,7 @@ clean:
 	wkpdf -p letter -s $^ -o $@
 
 %.svg: %.wsd
-	node ~/bin/ladder.js $^ $@
+	node ./ladder/ladder.js $^ $@
 
 %.png: %.svg
 	java -jar batik-rasterizer.jar $^ -d $@ -bg 255.255.255.255
