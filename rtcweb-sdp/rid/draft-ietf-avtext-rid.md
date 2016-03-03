@@ -1,8 +1,8 @@
 ---
 title: "RTP Stream Identifier (RID) Source Description (SDES)"
 abbrev: RID SDES
-docname:  draft-roach-avtext-rid-02
-date: 2016-02-03
+docname:  draft-ietf-avtext-rid-00
+date: 2016-02-18
 category: std
 ipr: trust200902
 
