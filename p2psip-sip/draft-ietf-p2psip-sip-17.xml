@@ -158,7 +158,7 @@
 
   <middle>
     <section title="Introduction">
-      <t>The REsource LOcation And Discovery (RELOAD) <xref
+      <t>REsource LOcation And Discovery (RELOAD) <xref
       target="RFC6940"></xref> specifies a peer-to-peer (P2P) signaling
       protocol for the general use on the Internet. This document defines a
       SIP Usage of RELOAD that allows SIP <xref target="RFC3261"></xref> user
@@ -260,17 +260,15 @@ ACK -------------------------------------------->
       as described in <xref target="sec-gruus"></xref>.</t>
 
       <t>The SIP Usage for RELOAD addresses a fully distributed deployment of
-      session-based services among overlay peers. Two opposite scenarios of
-      deploying P2P SIP services are in the focus of this document: A highly
-      regulated environment of a "single provider" that admits parties using
-      AORs with domains from controlled namespace(s), only, and an open,
-      multi-party infrastructure that liberally allows a registration and
-      rendezvous for various or any domain namespace. It is noteworthy in this
-      context that - in contrast to regular SIP - domain names play no role in
-      routing to a proxy server. Once connectivity to an overlay is given, any
-      name registration can be technically processed.</t>
-
-      <t></t>
+      session-based services among overlay peers. This RELOAD usage may be
+      relevant in a variety of environments, including a highly regulated
+      environment of a "single provider" that admits parties using AORs with
+      domains from controlled namespace(s) only, or an open, multi-party
+      infrastructure that liberally allows a registration and rendezvous for
+      various or any domain namespace. It is noteworthy in this context that -
+      in contrast to regular SIP - domain names play no role in routing to a
+      proxy server. Once connectivity to an overlay is given, any name
+      registration can be technically processed.</t>
 
       <!-- -->
 
@@ -321,7 +319,7 @@ ACK -------------------------------------------->
         "alice@dht.example.org -&gt; 1234" telling anyone who wants to call
         her to contact node "1234".</t>
 
-        <t>RELOAD peers MAY store two kinds of SIP mappings,</t>
+        <t>RELOAD peers can store two kinds of SIP mappings,</t>
 
         <t><list style="symbols">
             <t>from an AOR to a destination list (a single Node-ID is just a
@@ -406,32 +404,20 @@ ACK -------------------------------------------->
             preferences and a destination list for the peer.</t>
           </list></t>
 
-        <t>The encoding of contact_prefs - the callee's contact preferences -
-        follows the media feature set syntax of <xref target="RFC2533"></xref>
-        (see also <xref target="RFC2738"></xref>). As an example, a voicemail
-        server that is a UA that supports audio and video media types and is
-        not mobile would carry the following feature set description in its
-        contact_prefs attribute:</t>
+        <t>The callee expresses its capabilities within the contact
+        preferences as specified in <xref target="RFC3840"></xref>. It encodes
+        a media feature set comprised of its capabilities as a contact
+        predicate, i.e., a string of feature parameters that appear as part of
+        the Contact header field. Feature parameters are derived from the
+        media feature set syntax of <xref target="RFC2533"></xref> (see also
+        <xref target="RFC2738"></xref>) as described in <xref
+        target="RFC3840"></xref>.</t>
 
-        <t></t>
-
-        <figure>
-          <artwork><![CDATA[(& (sip.audio=TRUE)
-      (sip.video=TRUE)
-      (sip.actor=msg-taker)
-      (sip.automata=TRUE)
-      (sip.mobility=fixed)
-      (| (sip.methods=INVITE) (sip.methods=BYE) (sip.methods=OPTIONS)
-         (sip.methods=ACK) (sip.methods=CANCEL)))]]></artwork>
-        </figure>
-
-        <t></t>
-
-        <t>A callee MAY indicate that it prefers contact via a particular SIP
-        scheme - SIP or SIPS - by using one of the following contact_prefs
-        attribute:</t>
-
-        <t></t>
+        <t>This encoding covers all SIP User Agent capabilities, as defined in
+        <xref target="RFC3840"></xref> and registered in the SIP feature tag
+        registration tree. In particular, a callee can indicate that it
+        prefers contact via a particular SIP scheme - SIP or SIPS - by using
+        one of the following contact_prefs attribute:</t>
 
         <figure>
           <artwork><![CDATA[      (sip.schemes=SIP)
@@ -519,31 +505,40 @@ ACK -------------------------------------------->
         that describe a corresponding domain name syntax.</t>
 
         <t>A RELOAD overlay can be configured to accept store requests for any
-        AOR, or to apply domain name restrictions. For the latter, an
-        enumeration of admissible domain names including wildcarded name
-        patterns of the following form MAY be configured.</t>
+        AOR, or to apply domain name restrictions. To apply restrictions, the
+        overlay configuration document needs to contain a
+        &lt;domain-restrictions&gt; element. The &lt;domain-restrictions&gt;
+        element serves as a container for zero to multiple &lt;pattern&gt;
+        sub-elements. A &lt;pattern&gt; element MAY be present if the "enable"
+        attribute of its parent element is set to true. Each &lt;pattern&gt;
+        element defines a pattern for constructing admissible resource names.
+        It is of type xsd:string and interpreted as a regular expression
+        according to "POSIX Extended Regular Expression" (see the
+        specifications in <xref target="IEEE-Posix"></xref>). Encoding of the
+        domain name complies to the restricted ASCII character set without
+        character escaping as defined in Section 19.1 of <xref
+        target="RFC3261"></xref>. </t>
+
+        <t>Inclusion of a &lt;domain-restrictions&gt; element in an overlay
+        configuration document is OPTIONAL. If the element is not included,
+        the default behavior is to accept any AOR. If the element is included
+        and the &ldquo;enable&rdquo; attribute is not set or set to false, the
+        overlay MUST only accept AORs that match the domain name of the
+        overlay. If the element is included and the &ldquo;enable&rdquo;
+        attribute is set to true, the overlay MUST only accept AORs that match
+        patterns specified in the &lt;domain-restrictions&gt; element. </t>
 
         <figure align="center" suppress-title="true">
           <artwork align="left" xml:space="preserve"><![CDATA[ 
 Example of Domain Patterns:
 dht\.example\.com
-.*\.my\.name
+.*\.my\.example
         ]]></artwork>
         </figure>
 
-        <t></t>
-
         <t>In this example, any AOR will be accepted that is either of the
-        form &lt;user&gt;@dht.example.com, or ends with the domain "my.name".
-        When restrictions apply and in the absence of domain patterns, the
-        default behavior is to accept only AORs that exactly match the domain
-        name of the overlay. Otherwise, i.e., when restrictions are not
-        configured (attribute enable not set), the default behavior is to
-        accept any AOR. In the absence of a &lt;domain-restrictions&gt;
-        element, implementors SHOULD assume this default value. Encoding of
-        the domain name complies to the restricted ASCII character set without
-        character escaping as defined in Section 19.1 of <xref
-        target="RFC3261"></xref>.</t>
+        form &lt;user&gt;@dht.example.com, or ends with the domain
+        "my.example". </t>
 
         <t>The &lt;domain-restrictions&gt; element serves as a container for
         zero to multiple &lt;pattern&gt; sub-elements. A &lt;pattern&gt;
@@ -558,19 +553,19 @@ dht\.example\.com
 
         <figure align="left" anchor="fig-le" suppress-title="true">
           <artwork align="left" xml:space="preserve"><![CDATA[
-<!-- AOR DOMAIN RESTRICTION URN SUB-NAMESPACE -->
+# AOR DOMAIN RESTRICTION URN SUB-NAMESPACE 
 
 namespace sip = "urn:ietf:params:xml:ns:p2p:config-base:sip"
 
-<!--  AOR DOMAIN RESTRICTION ELEMENT -->
+# AOR DOMAIN RESTRICTION ELEMENT 
 
 Kind-parameter &= element sip:domain-restriction {
 
     attribute enable { xsd:boolean }
 
-    <!-- PATTERN ELEMENT -->
+    # PATTERN ELEMENT 
 
-    element pattern { xsd:string }*
+    element sip:pattern { xsd:string }*
 }?
           ]]></artwork>
         </figure>
@@ -637,10 +632,11 @@ Kind-parameter &= element sip:domain-restriction {
         SIP or 5061 for using SIPS. If certificate-based authentication is in
         use, the responding peer MUST present a certificate with a Node-ID
         matching the terminal entry in the destination list. Otherwise, the
-        connection MUST NOT be used and closed. Note that it is possible that
-        the peers already have a RELOAD connection mutually established. This
-        MUST NOT be used for SIP messages unless it is a SIP connection. A
-        previously established SIP connection MAY be used for a new call.</t>
+        connection MUST NOT be used and MUST be closed. Note that it is
+        possible that the peers already have a RELOAD connection mutually
+        established. This MUST NOT be used for SIP messages unless it is a SIP
+        connection. A previously established SIP connection MAY be used for a
+        new call.</t>
 
         <t>Once the AppAttach succeeds, the peer sends plain or (D)TLS
         encrypted SIP messages over the connection as in normal SIP. A caller
@@ -700,7 +696,7 @@ alice@example.com;gr=MDEyMzQ1Njc4OTAxMjM0NTY3ODk~
       <t>GRUUs do not require to store data in the Overlay Instance. Rather
       when a peer needs to route a message to a GRUU in the same P2P overlay,
       it simply uses the destination list and connects to that peer. Because a
-      GRUU contains a destination list, it MAY have the same contents as a
+      GRUU contains a destination list, it can have the same contents as a
       destination list stored elsewhere in the resource dictionary.</t>
 
       <t>Anonymous GRUUs <xref target="RFC5767"></xref> are constructed
@@ -800,7 +796,7 @@ alice@example.com;gr=MDEyMzQ1Njc4OTAxMjM0NTY3ODk~
         <section title="Misuse of AORs">
           <t>A RELOAD overlay and enrollment service that liberally accept
           registrations for AORs of domain names unrelated to the overlay
-          instance and without further justification, eventually store
+          instance and without further authorisation, eventually store
           presence state for misused AORs. An attacker could hijack names,
           register a bogus presence and attract calls dedicated to a victim
           that resides within or outside the Overlay Instance.</t>
@@ -815,9 +811,10 @@ alice@example.com;gr=MDEyMzQ1Njc4OTAxMjM0NTY3ODk~
         </section>
 
         <section title="Privacy Issues">
-          <t>All RELOAD SIP registration data is public. Methods of providing
-          location and identity privacy are still being studied. Location
-          privacy can be gained from using anonymous GRUUs.</t>
+          <t>All RELOAD SIP registration data is visible to all nodes in the
+          overlay. Methods of providing location and identity privacy are
+          still being studied. Location privacy can be gained from using
+          anonymous GRUUs.</t>
         </section>
       </section>
     </section>
@@ -885,13 +882,15 @@ alice@example.com;gr=MDEyMzQ1Njc4OTAxMjM0NTY3ODk~
 
       <?rfc include="reference.RFC.3688"?>
 
+      <?rfc include="reference.RFC.3840"?>
+
+      <?rfc include="reference.RFC.4648"?>
+
       <?rfc include="reference.RFC.5245"?>
 
       <?rfc include="reference.RFC.5626"?>
 
       <?rfc include="reference.RFC.5627"?>
-
-      <?rfc include="reference.RFC.4648"?>
 
       <reference anchor="IEEE-Posix">
         <front>
