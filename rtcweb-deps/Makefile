@@ -1,6 +1,6 @@
 
 NAME=draft-jennings-rtcweb-deps
-VERSION=09
+VERSION=10
 
 MD=mmark --bib-rfc "/Users/fluffy/bibxml/" --bib-id "/Users/fluffy/bibxml/" 
 X2R=xml2rfc
