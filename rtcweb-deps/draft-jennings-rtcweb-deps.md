@@ -319,7 +319,7 @@ draft-ietf-ice-trickle-ice
 
 draft-ietf-ice-dualstack-fairness
 
-draft-shieh-rtcweb-ip-handling
+draft-shieh-rtcweb-ip-handling (this has been adopted as WG draft)
 
 draft-ietf-avtcore-rtp-topologies-update
 
