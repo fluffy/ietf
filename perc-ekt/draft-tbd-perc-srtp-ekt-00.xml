@@ -125,28 +125,6 @@
     </author>
 
 
-<!--
-    <author fullname="Kai Fischer" initials="K." surname="Fischer">
-      <organization abbrev="Siemens Enterprise Communications">Siemens
-      Enterprise Communications GmbH &amp; Co. KG</organization>
-
-      <address>
-        <postal>
-          <street>Hofmannstr. 51</street>
-
-          <city>Munich</city>
-
-          <region>Bavaria</region>
-
-          <code>81739</code>
-
-          <country>Germany</country>
-        </postal>
-
-        <email>kai.fischer@siemens-enterprise.com</email>
-      </address>
-    </author>
--->
 
     <date />
 
@@ -578,60 +556,6 @@
           (i.e., every 2^16 packets).</t>
 
 
-<!--
-        <section anchor="abbreviated" title="Computing the Short Authentication Field">
-<t>
-The Short Authentication Tag format consists only of a single byte with
-all bits set to zero.  
-</t>
-</section>
-
--->
-
-            <!--
-<t>
-The Initial Sequence Number (ISN) field is set to zero unless the SRTP
-master key has been changed, and the EKT fields
-are being carried in an SRTCP packet.  In that case, then
-that field is set to the SRTP sequence number of the initial packet
-that was sent immediately after the current master key was put into
-use.
-</t>
-<t>
-The Security Parameter Index field is set to the value of the SPI
-that is currently in use.
-</t>
-<figure anchor="fig2" title="EKT outbound processing; generating the  
-EKT Ciphertext">
-<artwork>
-                             +<<<<< SRTP master key (plaintext)
-                             |
-                             v
-                       ++++++++++++++
-                       | Encryption |
-                       |  Function  |&lt;, Key Encrypting Key
-                       ++++++++++++++
-                             |
-                             v
-                    EKT Ciphertext (ciphertext)
-</artwork>
-</figure>
-<figure anchor="fig3" title="EKT outbound processing; generating the  
-Authentication Tag">
-<artwork>
-            authenticated portion of SRTCP packet
-                             |
-                             v
-                     ++++++++++++++++++       SRTCP
-                     |  Base SRTCP    |	 authentication
-                     | Tag Generation |&lt;   key
-                     ++++++++++++++++++
-                             |
-                             v
-                     Authentication Tag
-</artwork>
-</figure>
--->
         </section>
 
         <section anchor="inbound" title="Inbound Processing">
@@ -764,41 +688,48 @@ Authentication Tag">
                   minimize computational effort by noting when the SRTP master
                   key is unchanged and avoiding repeating Steps 2 through 6.</t>
                 </list></t>
-            </list><!--
-If the SSRC field in the packet does correspond to a known SRTP
-source, then the packet is processed as follows, or using an
-equivalent set of steps.
-<list style="numbers">
-<t>
-The appropriate parameter set is selected using the Security Parameter
-Index field, as in Step 1 above, and the EKT Ciphertext
-field is decrypted using the Key Encrypting Key as in Step 2 above.
-The resulting plaintext is used as a provisional SRTP master key.
-</t>
-<t>
-If the provisional key matches the key associated with the SSRC (and
-MKI, if one is present), then the packet is processed as follows.  The
-base authentication function is used to check the authenticity of the
-packet, as described in Step 3 above.  If the check passes, the packet
-is accepted, and then the SRTP rollover counter is set to the value of
-the Rollover Counter field.
-</t>
-<t>
-If the provisional key does not match the SRTP master key associated
-with the SRTP source (and MKI, if present), then processing proceeds
-as follows.  The authenticity of the packet is checked using the
-provisional key and base SRTCP authentication function, as in Step 3
-above.  If that check passes, then the packet is accepted, and the
-context associated with the SRTP source is set as described in Step 5
-above.  SRTP master keys can be associated with an initial packet
-index (Section 8.1.1. of <xref target="RFC3711"/>).  The initial
-packet index associated with the new SRTP master key is formed from
-the value of the Initial Sequence Number and Rollover Counter fields
-(considered as an unsigned integer in network byte order), by
-multiplying the ROC by 2^16 then adding the ISN to the result.
-</t>
-</list>
---></t>
+              </list>
+
+              <!--
+                  If the SSRC field in the packet does correspond to a known SRTP
+                  source, then the packet is processed as follows, or using an
+                  equivalent set of steps.
+                  <list style="numbers">
+                  
+                  <t> The appropriate parameter set is selected using the
+                  Security Parameter Index field, as in Step 1 above, and the
+                  EKT Ciphertext field is decrypted using the Key Encrypting Key
+                  as in Step 2 above.  The resulting plaintext is used as a
+                  provisional SRTP master key.  </t>
+                  
+                  <t> If the provisional key matches the key associated with the
+                  SSRC (and MKI, if one is present), then the packet is
+                  processed as follows.  The base authentication function is
+                  used to check the authenticity of the packet, as described in
+                  Step 3 above.  If the check passes, the packet is accepted,
+                  and then the SRTP rollover counter is set to the value of the
+                  Rollover Counter field.  </t>
+                  
+                  <t> If the provisional key does not match the SRTP master key
+                  associated with the SRTP source (and MKI, if present), then
+                  processing proceeds as follows.  The authenticity of the
+                  packet is checked using the provisional key and base SRTCP
+                  authentication function, as in Step 3 above.  If that check
+                  passes, then the packet is accepted, and the context
+                  associated with the SRTP source is set as described in Step 5
+                  above.  SRTP master keys can be associated with an initial
+                  packet index (Section 8.1.1. of <xref target="RFC3711"/>).
+                  The initial packet index associated with the new SRTP master
+                  key is formed from the value of the Initial Sequence Number
+                  and Rollover Counter fields (considered as an unsigned integer
+                  in network byte order), by multiplying the ROC by 2^16 then
+                  adding the ISN to the result.
+                  </t>
+
+                   </list>
+              -->
+
+            </t>
 
 
         </section>
@@ -856,8 +787,7 @@ multiplying the ROC by 2^16 then adding the ISN to the result.
 
         <section anchor="DefaultCipher" title="The Default Cipher">
           <t>
-	    The default EKT Cipher is the Advanced Encryption Standard (AES) <xref
-	    target="FIPS197"/> Key Wrap with Padding <xref target="RFC5649"></xref>
+	    The default EKT Cipher is the Advanced Encryption Standard (AES) Key Wrap with Padding <xref target="RFC5649"></xref>
 	    algorithm.  It requires a plaintext length M that is at least one octet,
 	    and it returns a ciphertext with a length of N = M + 8 octets.  It can
 	    be used with key sizes of L = 16, 24, and 32, and its use with those key
@@ -890,49 +820,42 @@ SEED-128   AESKW_128        26          40            42
 	    corresponding EKT transform MUST be used, unless a stronger
 	    EKT transform is negotiated by key management.</t>
 
-<!--
-The default cipher is the Advanced Encryption Standard (AES)
-          <xref target="FIPS197"></xref> with 128-bit keys, in Electronic
-          Codebook (ECB) Mode. Its parameters are fixed at L=16, M=16, and
-          T=2^48. Note that M matches the size of the SRTP master keys used by
-          the default SRTP key derivation function; if an SRTP cipher with a
-          different SRTP master key length is to be used with EKT, then
-          another EKT cipher must be used. ECB is the simplest mode of
-          operation of a block cipher, in which the block cipher is used in
-          its raw form.</t>
--->
+        <!--
+            The default cipher is the Advanced Encryption Standard (AES) with
+            128-bit keys, in Electronic Codebook (ECB) Mode. Its parameters are
+            fixed at L=16, M=16, and T=2^48. Note that M matches the size of the
+            SRTP master keys used by the default SRTP key derivation function;
+            if an SRTP cipher with a different SRTP master key length is to be
+            used with EKT, then another EKT cipher must be used. ECB is the
+            simplest mode of operation of a block cipher, in which the block
+            cipher is used in its raw form.</t>
+        -->
+        
         </section>
 
-<!--
-	<section title="AES ECB">
-	  <t>
-	    The simplest EKT cipher is the Advanced Encryption
-	    Standard (AES)
-          <xref target="FIPS197"></xref> with 128-bit keys, in
-          Electronic Codebook (ECB) Mode. Its use is indicated as
-          AES_ECB, and its parameters are fixed at L=16, M=16, and
-          T=2^48. Note that M matches the size of the SRTP master keys
-          used by the default SRTP key derivation function; if an SRTP
-          cipher with a different SRTP master key length is to be used
-          with EKT, then another EKT cipher must be used. ECB is the
-          simplest mode of operation of a block cipher, in which the
-          block cipher is used in its raw form.
-	    </t>
-	  </section>
-   
-
--->
-<!--
-     <section anchor="AESKeyWrap" title="The AES Key Wrap Cipher">
-          <t>The AES Key Wrap  defines a cipher
-          that can be used with plaintexts larger than 16 bytes in length. It
-          requires a plaintext length M that is a multiple of eight bytes, and
-          it returns a ciphertext with a length of N = M + 8 bytes. It can be
-          used with key sizes of L = 16, 24, and 32. The key size determines
-          the length of the AES key used by the Key Wrap algorithm. With this
-          cipher, T=2^48.</t>
-        </section>
--->
+        <!--
+	        <section title="AES ECB"> <t> The simplest EKT cipher is the
+	        Advanced Encryption Standard (AES) with 128-bit keys, in Electronic
+	        Codebook (ECB) Mode. Its use is indicated as AES_ECB, and its
+	        parameters are fixed at L=16, M=16, and T=2^48. Note that M matches
+	        the size of the SRTP master keys used by the default SRTP key
+	        derivation function; if an SRTP cipher with a different SRTP master
+	        key length is to be used with EKT, then another EKT cipher must be
+	        used. ECB is the simplest mode of operation of a block cipher, in
+	        which the block cipher is used in its raw form.  </t> </section>
+        -->
+        
+        <!--
+            <section anchor="AESKeyWrap" title="The AES Key Wrap Cipher"> <t>The
+            AES Key Wrap defines a cipher that can be used with plaintexts
+            larger than 16 bytes in length. It requires a plaintext length M
+            that is a multiple of eight bytes, and it returns a ciphertext with
+            a length of N = M + 8 bytes. It can be used with key sizes of L =
+            16, 24, and 32. The key size determines the length of the AES key
+            used by the Key Wrap algorithm. With this cipher, T=2^48.</t>
+            </section>
+        -->
+        
         <section title="Other EKT Ciphers">
           <t>Other specifications may extend this one by defining
           other EKT ciphers per <xref target="iana"></xref>. This
@@ -1405,128 +1328,7 @@ a=dtls-srtp-ekt
 
     </section>
 
-    <section anchor="rationale" title="Design Rationale">
-      
-      <t>From <xref target="RFC3550"></xref>, a primary function of RTCP is to
-      carry the CNAME, a "persistent transport-level identifier for an RTP
-      source" since "receivers require the CNAME to keep track of each
-      participant." EKT works in much the same way but uses SRTP to carry
-      information needed for the proper processing of the SRTP traffic.</t>
-
-      <t>With EKT, SRTP gains the ability to synchronize the creation of
-      cryptographic contexts across all of the participants in a single
-      session. This feature provides some, but not all, of the functionality
-      that is present in IKE phase two (but not phase one). Importantly, EKT
-      does not provide a way to indicate SRTP options.</t>
-
-      <t>With EKT, external signaling mechanisms provide the SRTP options and
-      the EKT Key, but need not provide the key(s) for each individual SRTP
-      source. EKT provides a separation between the signaling mechanisms and
-      the details of SRTP. The signaling system need not coordinate all SRTP
-      streams, nor predict in advance how many sources will be present, nor
-      communicate SRTP-level information (e.g., rollover counters) of current
-      sessions.</t>
-
-      <t>EKT is especially useful for multi-party sessions, and for the case
-      where multiple RTP sessions are sent to the same destination transport
-      address (see the example in the definition of "RTP session" in <xref
-      target="RFC3550"></xref>). A SIP offer that is forked in parallel (sent
-      to multiple endpoints at the same time) can cause multiple RTP sessions
-      to be sent to the same transport address, making EKT useful for use with
-      SIP.</t>
-
-      <t>EKT can also be used in conjunction with a scalable group-key
-      management system like <xref target="RFC6407">GDOI</xref>.  In
-      such a combination GDOI would provide a secure entity
-      authentication method for group members, and a scalable way to
-      revoke group membership; by itself, EKT does not attempt to
-      provide either capability.</t>
-
-
-      <!--
-          There are several scenarios in which there are more than two
-          participants in an SRTP sessions, besides the important case of
-          multi-party conferences.  For example, a session may be recorded (by a
-          voicemail system) or monitored (by a supervisor), or may
-          unintentionally include a third party (for example, a receptionist)
-          due to a race condition in call signaling.  A session can start out as
-          conversational voice, then switch codecs and SSRC values to send a fax
-          transmission.
-      -->
-      
-      <!--
-	<t>Although earlier versions of this specification allowed EKT to be sent
-	over SRTCP, this was found problematic due to RTP mixers combining RTCP
-	packets, lack of fate-sharing between SRTCP packet (containing a new key)
-	and SRTP (encrypted with that new key), and RTCP timing rule limitations.
-	Thus, EKT is only supported over SRTP.</t>
-      -->
-
-
-      <!--      <t>It is natural to use SRTCP to transport encrypted keying material for
-      SRTP, as it provides a secure control channel for (S)RTP. However, there
-      are several different places in SRTCP in which the encrypted SRTP master
-      key and ROC could be conveyed. We briefly review some of the
-      alternatives in order to motivate the particular choice used in this
-      specification. One alternative is to have those values carried as a new
-      SDESC item or RTCP packet. This would require that the normal SRTCP
-      encryption be turned off for the packets containing that SDESC item,
-      since on the receiver's side, SRTCP processing completes before the RTCP
-      processing starts. This tension between encryption and the desire for
-      RTCP privacy is highly undesirable. Additionally, this alternative makes
-      SRTCP dependent upon the parsing of the RTCP compound packet, which adds
-      complexity.
-      -->
-
-      <t>EKT carries the encrypted key in a new SRTP field (at the end of the
-      SRTP packet).  This maintains compatibility with the existing SRTP
-      specification by defining a new crypto function that incorporates the
-      encrypted key, and a new authentication transform to provide implicit
-      authentication of the encrypted key.<!-- Recall that SRTP allows a
-      transform definition to "add steps to the packet processing, or even add
-      fields to the SRTP/SRTCP packets."  --></t>
-
-      <!--
-      <t>An SRTP packet containing an SSRC that has not been seen will be
-      discarded. This practice may induce a burst of packet loss at the outset
-      of an SRTP stream, due to the loss or reorder of the first SRTCP packet
-      with the EKT containing the key and rollover counter for that stream.
-      However, this practice matches the conservative RTP memory-allocation
-      strategy; many existing applications accept this risk of initial packet
-      loss. Alternatively, implementations may wish to delay discarding such
-      packets for a short period of time as described in <xref
-      target="SynchronizingOperation"></xref>.</t>
-      -->
-
-      <!--
-
-      <t>When EKT is carried in SRTCP, it adds eight additional bytes to each
-      SRTCP packet, plus the length of the EKT Ciphertext field. Using
-      the SRTP and EKT defaults, the total overhead is 24 bytes. This overhead
-      does not detract from the total bandwidth used by SRTP, since it is
-      included in the RTCP bandwidth computation. However, it will cause the
-      control protocol to issue packets less frequently.</t>
-
-      -->
-
-      <t>The main motivation for the use of the variable-length EKT format is
-      bandwidth conservation. When EKT is sent over SRTP, there will be a loss
-      of (usable) bandwidth due to the additional EKT bytes in each RTP
-      packet. For some applications, this bandwidth loss is significant.<!-- A
-      data format that uses this approach is defined in <xref
-      target="appendix"/>.  We leave this point open for discussion.  --></t>
-
-      <!--
-     <t> The main motivation for defining the ability to run EKT over SRTP
-     instead of RTCP are the unfortunate facts that RTCP is not always
-     available, and that some firewalls and NAT devices can pass RTP but not
-     RTCP.  </t>
-      -->
-
-    
-    </section>
-
-    <section anchor="sec" title="Security Considerations">
+     <section anchor="sec" title="Security Considerations">
       
       <t>EKT inherits the security properties of the SRTP keying
       it uses: Security Descriptions, DTLS-SRTP, or MIKEY.</t>
@@ -1601,42 +1403,33 @@ a=dtls-srtp-ekt
         in which both ciphertexts and plaintexts can be adaptively chosen and
         adversaries that can query both the encryption and decryption functions
         adaptively.</t>
+        
     </section>
 
     <section anchor="iana" title="IANA Considerations">
      
-     
+     <t> No IANA actions are required. </t>
       
     </section>
 
     <section title="Acknowledgements">
-      <t>Thanks to Lakshminath Dondeti for assistance with earlier
-      versions of this document. </t>
+      
+      <t>Thanks to Lakshminath Dondeti for assistance with earlier versions of
+      this document. </t>
 
-      <t>Thanks to  Kai Fischer, Nermeen Ismail, Eddy Lem,Rob Raymond, and Yi Cheng
-      for fruitful discussions and comments. Thanks to Felix Wyss
-      for his review and comments regarding ciphers.  Thanks to
-      Michael Peck for his review. Thanks to
-      Magnus Westerlund for his review.  Thanks to Michael Peck and 
-      Jonathan Lennox for their review comments.</t>
+      <t>Thanks to Kai Fischer, Nermeen Ismail, Eddy Lem,Rob Raymond, and Yi
+      Cheng for fruitful discussions and comments. Thanks to Felix Wyss for his
+      review and comments regarding ciphers.  Thanks to Michael Peck for his
+      review. Thanks to Magnus Westerlund for his review.  Thanks to Michael
+      Peck and Jonathan Lennox for their review comments.</t>
+      
     </section>
   </middle>
 
   <back>
     <references title="Normative References">
 
-      <reference anchor="FIPS197">
-        <front>
-          <title>The Advanced Encryption Standard (AES)</title>
-          <author>
-            <organization>National Institute of Standards and Technology (NIST)</organization>
-          </author>
-	      <date month="November" year="2001"/>
-        </front>
-        <seriesInfo name="FIPS-197"
-                    value="Federal Information          Processing Standard" />
-      </reference>
-
+ 
       &rfc2119;
       &rfc3264;
       &rfc3550;
