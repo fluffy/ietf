@@ -35,7 +35,7 @@
 <?rfc sortrefs="yes"?>
 <?rfc iprnotified="no" ?>
 <?rfc strict="yes" ?>
-<rfc category="std" docName="draft-ietf-avtcore-srtp-ekt-03" ipr="trust200902">
+<rfc category="std" docName="draft-tbd-perc-srtp-ekt-00" ipr="trust200902">
   <front>
     <title abbrev="EKT SRTP">Encrypted Key Transport for Secure RTP</title>
 
@@ -150,9 +150,9 @@
 
     <date />
 
-    <area>RAI</area>
+    <area>ART</area>
 
-    <workgroup>AVTCORE Working Group</workgroup>
+    <workgroup>PERC Working Group</workgroup>
 
     <keyword>RTP</keyword>
 
@@ -165,14 +165,10 @@
       <t>Encrypted Key Transport (EKT) is an extension to Secure
       Real-time Transport Protocol (SRTP) that provides for the secure
       transport of SRTP master keys, Rollover Counters, and other
-      information.  <!--, within SRTP or SRTCP.--> This facility enables SRTP to
-      work for decentralized conferences with minimal control.
+      information within SRTP or SRTCP. This facility enables SRTP to
+      work for decentralized conferences with minimal control by allowing a
+      common key to be used across multiple endpoints.
       </t>
-
-      <t>This note defines EKT, and also describes how to use it with
-      SDP Security Descriptions, DTLS-SRTP, and MIKEY. With EKT, these
-      other key management protocols provide an EKT key to everyone in
-      a session, and EKT coordinates the SRTP keys within the session.</t>
     </abstract>
   </front>
 
@@ -246,56 +242,7 @@
       burden of tightly coordinating every SRTP source (SSRC) among every SRTP
       participant.</t>
 
-<!--
-      <t>This document is organized as follows. The complete normative
-      definition of EKT is contained in <xref
-      target="normative"></xref>. It mainly consists of packet processing
-      algorithms (<xref target="processing"></xref>) and cryptographic
-      definitions (<xref target="cipher"></xref>). <xref
-      target="sdes"></xref>, <xref target="dtls-srtp-kt"></xref>, and
-      <xref target="mikey"></xref> define the use of EKT with SDP
-      Security Descriptions, DTLS-SRTP, and MIKEY, respectively.
-      <xref target="interop"></xref> explains how EKT can interwork
-      with keying in call signaling.
-      <xref target="rationale"></xref> provides a design rationale.
-      Security Considerations are discussed
-      in <xref target="sec"></xref>, and IANA considerations are
-      provided in
-      <xref target="iana"></xref>.</t>
--->
 
-      <section title="History">
-
-	<t>[[RFC Editor Note:  please remove this section prior to publication
-	  as an RFC.]]</t>
-
-	<t>
-	  A substantial change occurred between the EKT documents
-          draft-ietf-avt-srtp-ekt-03 and
-          draft-ietf-avtcore-srtp-ekt-00.  The change makes it
-          possible for the EKT data to be removed from a packet
-          without affecting the ability of the receiver to correctly
-          process the data that is present in that packet.  This
-          capability facilitates interoperability between SRTP
-          implementations with different SRTP key management methods.
-          The changes also greatly simplify the EKT processing rules,
-          and makes the EKT data that must be carried in SRTP and/or
-          SRTCP packets somewhat larger.
-	</t>
-	<t>In draft-ietf-avtcore-srtp-ekt-02, SRTP
-master keys have to be always generated randomly and not re-used, MKI
-is no longer allowed with EKT (as MKI duplicates some of EKT's functions),
-and text clarifies that EKT must be negotiated during
-call setup.  Some text was consolidated and re-written, notably
-<xref target="timing"></xref> ("Timing and Reliability").  Support
-for re-directing the DTLS-SRTP handshake to another host was
-removed, as it needed NAT traversal support.</t>
-
-<t>In draft-ietf-avtcore-srtp-ekt-03, the SRTCP compound packet
-problem is discussed. Updates and clarifications were made to the SDESC
-and MIKEY sections.</t>
-
-      </section>
 
       <section title="Conventions Used In This Document">
         <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
@@ -322,7 +269,7 @@ and MIKEY sections.</t>
       authentication tag, if that tag is present, or after
       the SRTCP index otherwise.  When added to SRTP, The EKT field
       appears at the end of the SRTP packet, after the authentication
-      tag (if that tag is present), or after <!--the MKI or--> the
+      tag (if that tag is present), or after the
       ciphertext of the encrypted portion of the packet otherwise.</t>
 
       <t>EKT MUST NOT be used in conjunction with SRTP's MKI (Master Key
@@ -332,17 +279,8 @@ and MIKEY sections.</t>
       </t>
 
       <section anchor="EKT" title="EKT Field Formats">
-        <!--
-<t>
-We use the following definitions.  An RTP session consists of the RTP
-packets sent to a particular destination transport address or set of
-such addresses.  An SRTP session is an RTP session protected by SRTP.
-A single session participant may have multiple RTP sources.
-</t>
--->
-
-
-<t>	  The EKT Field uses one of the two formats defined
+ 
+        <t>	  The EKT Field uses one of the two formats defined
 	  below. These two formats can always be unambiguously
 	  distinguished on receipt by examining the final bit of the
 	  EKT Field, which is also the final bit of the SRTP or SRTCP
@@ -367,12 +305,6 @@ Here || denotes concatenation, and '1' and '0' denote single one and
 zero bits, respectively.  These fields and data elements are defined as
 follows:
         <list style="hanging">
-	  <!--
-	  <t hangText="Base Authentication Tag:">This field contains the
-            authentication tag computed by the base authentication function.
-            The value of this field is used to check the authenticity of the
-            packet.</t>
--->
 
 	  <t hangText="EKT_Plaintext:">The data that is input to the EKT 
 	  encryption operation.  This data never appears on the wire, and
@@ -395,17 +327,17 @@ follows:
 	  call setup for SRTP or SRTCP.</t>
 
 	  <t hangText="SSRC:">On the sender side, this field is the
-SSRC for this SRTP source.  The length of this field is
-fixed at 32 bits.</t>
+      SSRC for this SRTP source.  The length of this field is
+      fixed at 32 bits.</t>
 
             <t hangText="Rollover Counter (ROC):">On the sender side,
-this field is set to the current value of the SRTP rollover counter in
-the SRTP context associated with the SSRC in the SRTP or SRTCP packet.
-The length of this field is fixed at 32 bits.
-	    </t>
+            this field is set to the current value of the SRTP rollover counter in
+            the SRTP context associated with the SSRC in the SRTP or SRTCP packet.
+            The length of this field is fixed at 32 bits.
+	        </t>
 
             <t hangText="Initial Sequence Number (ISN):">
-If this field is nonzero, it indicates the RTP sequence
+              If this field is nonzero, it indicates the RTP sequence
       number of the initial RTP packet that is protected using the
       SRTP master key conveyed (in encrypted form) by the EKT
       Ciphertext field of this packet.  When this field is present in
@@ -1234,579 +1166,6 @@ not a multicast session).</t>
       </section>
     </section>
 
-    <section anchor="sdes" title="Use of EKT with SDP Security Descriptions">
-      <t>The SDP Security Descriptions (SDESC) <xref target="RFC4568"></xref>
-      specification defines a generic framework for negotiating security
-      parameters for media streams negotiated via the Session Description
-      Protocol with the "crypto" attribute and the Offer/Answer
-      procedures defined in <xref target="RFC3264"></xref>. In addition to the
-      general framework, SDESC also defines how to use that framework
-      specifically to negotiate security parameters for Secure RTP. Below, we
-      first provide a brief recap of the crypto attribute when used for SRTP
-      and we then explain how it is complementary to EKT. In the rest of this
-      Section, we provide extensions to the crypto attribute and associated
-      offer/answer procedures to define its use with EKT.</t>
-
-      <section title="SDP Security Descriptions Recap">
-        <t>The SRTP crypto attribute defined for SDESC contains a tag followed
-        by three types of parameters (refer to <xref target="RFC4568"></xref>
-        for details): <list style="symbols">
-            <t>Crypto-suite. Identifies the encryption and authentication
-            transform.</t>
-
-            <t>Key parameters. SRTP keying material and parameters.</t>
-
-            <t>Session parameters. Additional (optional) SRTP parameters such
-            as Key Derivation Rate, Forward Error Correction Order, use of
-            unencrypted SRTP, and other parameters defined by SDESC.</t>
-          </list> The crypto attributes in the example SDP in <xref
-        target="figSDP"></xref> illustrate these parameters.</t>
-
-        <figure anchor="figSDP" title="SDP Security Descriptions example">
-          <artwork align="center"><![CDATA[
-v=0
-o=sam 2890844526 2890842807 IN IP4 192.0.2.5
-s=SRTP Discussion
-i=A discussion of Secure RTP
-u=http://www.example.com/seminars/srtp.pdf
-e=marge@example.com (Marge Simpson)
-c=IN IP4 192.0.2.12
-t=2873397496 2873404696
-m=audio 49170 RTP/SAVP 0
-a=crypto:1 AES_CM_128_HMAC_SHA1_80
-   inline:WVNfX19zZW1jdGwgKCkgewkyMjA7fQp9CnVubGVz|2^20
-   FEC_ORDER=FEC_SRTP
-a=crypto:2 F8_128_HMAC_SHA1_80
-   inline:MTIzNDU2Nzg5QUJDREUwMTIzNDU2Nzg5QUJjiiKt|2^20
-   FEC_ORDER=FEC_SRTP
-]]></artwork>
-
-          <postamble></postamble>
-        </figure>
-
-        <t>For legibility the SDP shows line breaks that are not present on
-        the wire.</t>
-
-        <t>The first crypto attribute has the tag "1" and uses the
-        crypto-suite AES_CM_128_HMAC_SHA1_80. The "inline" parameter provides
-        the SRTP master key and salt and the master key lifetime (number of
-        packets). <!-- and the (optional) Master Key Identifier (MKI) whose value
-        is "1" and has a byte length of "4" in the SRTP packets.--> Finally, the
-        FEC_ORDER session parameter indicates the order of Forward Error
-        Correction used (FEC is applied before SRTP processing by the sender
-        of the SRTP media).</t>
-
-        <!-- EDITOR's NOTE: EKT only includes the master key. What
-	about the salt ? -->
-
-        <t>The second crypto attribute has the tag "2", the
-        crypto-suite F8_128_HMAC_SHA1_80, a SRTP master key, and
-        its associated salt. <!--The first one is used with the MKI value 1, whereas
-        the second one is used with the MKI value 2.--> Finally, the FEC_ORDER
-        session parameter indicates the order of Forward Error Correction
-        used.</t>
-      </section>
-
-      <section title="Relationship between EKT and SDESC">
-        <t>SDP Security Descriptions <xref target="RFC4568"></xref> define a
-        generic framework for negotiating security parameters for media
-        streams negotiated via the Session Description Protocol by use of the
-        Offer/Answer procedures defined in <xref target="RFC3264"></xref>. In
-        addition to the general framework, SDESC also defines how to use it
-        specifically to negotiate security parameters for Secure RTP.</t>
-
-        <t>EKT and SDP Security Descriptions are complementary.  SDP Security Descriptions can negotiate several of the
-        SRTP security parameters (e.g., cipher and use of Master Key
-        Identifier<!--/MKI-->) as well as SRTP master keys. SDESC, however, does not
-        negotiate SSRCs and their associated Rollover Counter (ROC). Instead,
-        SDESC relies on a so-called "late binding", where a newly observed
-        SSRC will have its crypto context initialized to a ROC value of zero.
-        Clearly, this does not work for participants joining an SRTP session
-        that has been established for a while and hence has a non-zero ROC. It
-        is impossible to use SDESC to join an SRTP session that is already in
-        progress. In this case, EKT on the endpoint running SDESC can
-        provide the additional signaling necessary to communicate the ROC
-        (Section 6.4.1 of <xref target="RFC4568"></xref>). The use of EKT
-        solves this problem by communicating the ROC associated with the SSRC
-        in the media plane.</t>
-
-        <t>SDP Security Descriptions negotiates different SRTP master keys in
-        the send and receive direction. The offer contains the master key used
-        by the offerer to send media, and the answer contains the master key
-        used by the answerer to send media. Consequently, if media is received
-        by the offerer prior to the answer being received, the offerer does
-        not know the master key being used. Use of SDP security preconditions
-        can solve this problem, however it requires an additional round-trip
-        as well as a more complicated state machine. EKT solves this problem
-        by simply sending the master key used in the media plane thereby
-        avoiding the need for security preconditions.</t>
-
-        <t>If multiple crypto-suites were offered, the offerer also will not
-        know which of the crypto-suites offered was selected until the answer
-        is received. EKT solves this problem by using a correlator, the
-        Security Parameter Index (SPI), which uniquely identifies each crypto
-        attribute in the offer.</t>
-
-        <!--
-EDITOR'S NOTE: How does EKT help solve that ? One solution would be to
-include the "tag" from the selected crypto attribute, however this is
-sdes specific (may need something else for MIKEY). It also does not
-solve the issue of declarative parameters included in the answer,
-which the offerer needs to know about to correctly process incoming
-media. Propose to simply note that as a limitation of the solution (if
-you want the whole nine yards, you need security preconditions).
-  -->
-
-        <t>One of the primary call signaling protocols using offer/answer is
-        the Session Initiation Protocol (SIP) <xref target="RFC3261"></xref>.
-        SIP uses the INVITE message to initiate a media session and typically
-        includes an offer SDP in the INVITE. An INVITE may be "forked" to
-        multiple recipients which potentially can lead to multiple answers
-        being received. SDESC, however, does not properly support this
-        scenario, mainly because SDP and RTP/RTCP does not contain sufficient
-        information to allow for correlation of an incoming RTP/RTCP packet
-        with a particular answer SDP. Note that extensions providing this
-        correlation do exist (e.g., Interactive Connectivity Establishment
-        (ICE)). SDESC addresses this point-to-multipoint problem by moving
-        each answer to a separate RTP transport address thereby turning a
-        point-to-multipoint scenario into multiple point-to-point scenarios.
-        There are however significant disadvantages to doing so. As long as
-        the crypto attribute in the answer does not contain any declarative
-        parameters that differ from those in the offer, EKT solves this
-        problem by use of the SPI correlator and communication of the
-        answerer's SRTP master key in EKT.</t>
-
-        <!--
-EDITOR's NOTE: How does EKT help solve that ? We would need to include
-a correlator that is found in both the SDP and the RTCP packet. It
-should be noted that ICE already provides this.
--->
-
-        <t>As can be seen from the above, the combination of EKT and SDESC
-        provides a better solution to SRTP negotiation for offer/answer than
-        either of them alone. SDESC negotiates the various SRTP crypto
-        parameters (which EKT does not), whereas EKT addresses some of the
-        shortcomings of SDESC.</t>
-      </section>
-
-      <section title="Overview of Combined EKT and SDESC Operation">
-        <t>We define a new session parameter to SDESC to
-        communicate the EKT cipher, EKT key, and Security Parameter
-        Index to the peer. The original SDESC parameters are used as
-        defined in <xref target="RFC4568"></xref>, however the
-        procedures associated with the SRTP master key differ
-        slightly, since both SDESC and EKT communicate an SRTP master
-        key. In particular, the SRTP master key communicated via SDESC
-        is used only if there is currently no crypto context
-        established for the SSRC in question. This will be the case
-        when an entity has received only the offer or answer, but has
-        yet to receive a valid EKT packet from the peer. Once a valid
-        EKT packet is received for the SSRC, the crypto context is
-        initialized accordingly, and the SRTP master key will then be
-        derived from the EKT packet.  Subsequent offer/answer
-        exchanges do not change this: The most recent SRTP master key
-        negotiated via EKT will be used, or, if none is available for
-        the SSRC in question, the most recent SRTP master key
-        negotiated via offer/answer will be used.  This is done to
-        avoid race conditions between the offer/answer exchange and
-        EKT, even though this breaks some offer/answer rules.  Note
-        that with the rules described in this paragraph, once a valid
-        EKT packet has been received for a given SSRC, rekeying for
-        that SSRC can only be done via EKT. The associated SRTP crypto
-        parameters however can be changed via SDESC.<!-- DAM - have
-        not edited this section, shouldn't use default key --></t>
-      </section>
-
-      <section anchor="ext"
-               title="EKT Extensions to SDP Security Descriptions">
-        <t>In order to use EKT and SDESC in conjunction with each other, the
-        new SDESC session parameter "EKT" is defined. It MUST NOT
-        appear more than once in a given crypto attribute. In the Offer/Answer
-        model, the EKT parameter is a negotiated parameter.The "EKT"
-        session parameter consists of three parts (the formal grammar
-        is provided in <xref target="sdesc-grammar"></xref>):</t>
-    
-    
-        <t>"EKT=" &lt;EKT_Cipher&gt; "|" &lt;EKT_Key&gt; "|" &lt;EKT_SPI&gt;</t>
-        
-        <t></t>
-
-        <t>Below are details on each of these attributes.</t>
-
-        <t><list style="hanging">
-            <t hangText="EKT_Cipher:">The (optional) EKT_Cipher field defines the EKT
-                cipher used to encrypt the EKT key within SRTP and SRTCP
-                packets. The default value is "AESKW_128" in accordance
-                with <xref target="DefaultCipher"></xref>.  For the AES Key
-                Wrap cipher, the values "AESKW_128", "AESKW_192", and
-                "AESKW_256" are defined for values of L=16, 24, and 32
-                respectively.</t>
-
-            <t hangText="EKT_Key:">The (mandatory) EKT_Key field is the EKT key used to
-                encrypt the SRTP Master Key within SRTP and SRTCP
-                packets. The value is base64 encoded with "=" padding if
-                padding is necessary (see Section 3.2 and 4
-                of <xref target="RFC4648"></xref>).</t>
-
-            <t hangText="EKT_SPI:">The (mandatory) EKT_SPI field is the Security Parameter
-                Index. It is encoded as an ASCII string representing the hexadecimal
-                value of the Security Parameter Index. The SPI identifies the
-                *offer* crypto attribute (including the EKT Key and Cipher) being
-                used for the associated SRTP session. A crypto attribute corresponds
-                to an EKT Parameter Set and hence the SPI effectively identifies a
-                particular EKT parameter set. Note that the scope of the SPI is the
-                SRTP session, which may or may not be limited to the scope of the
-                associated SIP dialog. In particular, if one of the participants in
-                an SRTP session is an SRTP translator, the scope of the SRTP session
-                is not limited to the scope of a single SIP dialog. However, if all
-                of the participants in the session are endpoints or mixers, the
-                scope of the SRTP session will correspond to a single SIP dialog.</t>
-
-        </list></t>
-      </section>
-
-      <section title="Offer/Answer Considerations">
-        <t>In this section, we provide the offer/answer procedures associated
-        with use of the new SDESC session parameter defined in <xref
-        target="ext"></xref>. Since SDESC is defined only for unicast streams,
-        we provide only offer/answer procedures for unicast streams here as
-        well.</t>
-
-        <section title="Generating the Initial Offer - Unicast Streams">
-          <t>When the initial offer is generated, the offerer MUST follow the
-          steps defined in <xref target="RFC4568"></xref> Section 7.1.1 as
-          well as the following steps.</t>
-
-<t>[[Editor's Note:  following paragraph would benefit from rewording.]]</t>
-
-          <t>For each unicast media line using Security Descriptions and where use of EKT is
-          desired, the offerer MUST include the EKT parameter in at least one "crypto" attribute (see <xref
-          target="RFC4568"></xref>). The EKT paramater MUST contain the EKT_Key and EKT_SPI
-          fields. The EKT_SPI field serves to identify
-          the EKT parameter set used for a particular SRTP or SRTCP packet.
-          Consequently, within a single media line, a given EKT_SPI value MUST
-          NOT be used with multiple crypto attributes. Note that the EKT
-          parameter set to use for the session is not yet established at this
-          point; each offered crypto attribute contains a candidate EKT
-          parameter set. <!--
-Can we be more precise in describing a "crypto attribute" -it's an SDES
-thing, I assume.
-FSA: Right.
---> Furthermore, if the media line refers to an existing SRTP session, then
-          any SPI values used for EKT parameter sets in that session MUST NOT
-          be remapped to any different EKT parameter sets. When an offer
-          describes an SRTP session that is already in progress, the offer
-          SHOULD use an EKT parameter set (including EKT_SPI and EKT_KEY) that is
-          already in use.</t>
-
-<!--
-          <t>If an EKT_Cipher other than the default cipher is to be used,
-          then the EKT_Cipher parameter MUST be included as well.</t>
--->
-
-	  <t>As EKT is not defined for use with MKI, a "crypto" attribute containing the
-          EKT parameter MUST NOT contain MKI.</t>
-
-          <!--
-	EDITOR's NOTE: Do we ever see a need to allow for a remapping
-	? We really just need to make sure there is no ambiguity, and
-	simply cycling the value once we hit 2^32 would be more than
-	enough here.
--->
-
-          <!--
-	EDITOR'S NOTE: Do we need the ability to negotiate different
-	EKT Ciphers in a single O/A exchange ? If so, we will need a
-	way for EKT to tell us which one was actually chosen. For now,
-	no such capability has been included.
--->
-
-          <t><list style="hanging">
-              <t hangText="Important Note:">The scope of the offer/answer
-              exchange is the SIP dialog(s) established as a result of the
-              INVITE, however the scope of EKT is the direct SRTP session,
-              i.e., all the participants that are able to receive SRTP and
-              SRTCP packets directly. If an SRTP session spans multiple SIP
-              dialogs, the EKT parameter sets MUST be synchronized between all
-              the SIP dialogs where SRTP and SRTCP packets can be exchanged.
-              In the case where the SIP entity operates as an RTP mixer (and
-              hence re-originates SRTP and SRTCP packets with its own SSRC),
-              this is not an issue, unless the mixer receives traffic from the
-              various participants on the same destination IP address and
-              port, in which case further coordination of SPI values and
-              crypto parameters may be needed between the SIP dialogs (note
-              that SIP forking with multiple early media senders is an example
-              of this). However, if it operates as a transport translator
-(relay) then 
-              synchronized negotiation of the EKT parameter sets on *all* the
-              involved SIP dialogs will be needed. This is non-trivial in a
-              variety of use cases, and hence use of the combined SDES/EKT
-              mechanism with RTP translators should be considered very
-              carefully. It should be noted, that use of SRTP with RTP
-              translators in general should be considered very carefully as
-              well.</t>
-            </list></t>
-
-          <!-- Editor's Note: Need to dedicate a section to more fully explain
-(and exemplify) the issues here. Need to clarify RTP mixer and RTP
-translator operation. Also need to explain SIP forking with early
-media from multiple entities.
--->
-
-          <!--
-	EDITOR's NOTE: Can we have SRTP session where some
-	participants support EKT, and some do not ? For now, I assume
-	the answer is no.
--->
-
-          <t>The session parameter "EKT" can either be included as an optional or
-          mandatory parameter.</t>
-        </section>
-
-        <section title="Generating the Initial Answer - Unicast Streams">
-          <t>When the initial answer is generated, the answerer MUST follow
-          the steps defined in <xref target="RFC4568"></xref> Section 7.1.2 as
-          well as the following steps.</t>
-
-          <t>For each unicast media line using SDESC, the answerer examines
-          the associated crypto attribute(s) for the presence of the session
-          parameter "EKT". If a mandatory EKT parameter is included with a "crypto"
-          attribute, the answerer MUST support those parameters in order to
-          accept that offered crypto attribute. If an optional EKT parameter is
-          included instead, the answerer MAY accept the offered crypto
-          attribute without using EKT. However, doing so will prevent the
-          offerer from processing any packets received before the answer. If
-          no EKT parameter are included with a
-          crypto attribute, and that crypto attribute is accepted in the
-          answer, EKT MUST NOT be used. If a given a crypto attribute includes
-          a malformed EKT parameter, that crypto attribute MUST be
-          considered invalid.</t>
-
-          <t>When EKT is used with SDESC, the offerer and answerer MUST use
-          the same SRTP master salt. Thus, the SRTP key parameter(s) in the
-          answer crypto attribute MUST use the same master salt as the one
-          accepted from the offer.</t>
- 
-          <t>When the answerer accepts the offered media line and EKT is being
-          used, the crypto attribute included in the answer MUST include the
-          same EKT parameter values as found in the accepted crypto attribute
-          from the offerer (however, if the default EKT cipher is being used, it
-          may be omitted). Furthermore, the EKT parameter included MUST be
-          mandatory (i.e., no "-" prefix).</t>
-
-          <t>Acceptance of a crypto attribute with an EKT parameter leads to
-          establishment of the EKT parameter set for the corresponding SRTP
-          session. Consequently, the answerer MUST send packets in accordance
-          with that particular EKT parameter set only. If the answerer wants
-          to enable the offerer to process SRTP packets received by the
-          offerer before it receives the answer, the answerer MUST NOT include
-          any declarative session parameters that either were not present in
-          the offered crypto attribute, or were present but with a different
-          value. Otherwise, the offerer's view of the EKT parameter set would
-          differ from the answerer's until the answer is received. Similarly,
-          unless the offerer and answerer has other means for correlating an
-          answer with a particular SRTP session, the answer SHOULD NOT include
-          any declarative session parameters that either were not present in
-          the offered crypto attribute, or were present but with a different
-          value. If this recommendation is not followed and the offerer
-          receives multiple answers (e.g., due to SIP forking), the offerer
-          may not be able to process incoming media stream packets
-          correctly.</t>
-
-          <!--
-	EDITOR'S NOTE: It would be sufficient to just include the
-	EKT_SPI as there is enough context to determine what was
-	accepted otherwise. However, sdes has a rule saying negotiated
-	session parameters need to be included in the answer.
--->
-        </section>
-
-        <section title="Processing of the Initial Answer - Unicast Streams">
-          <t>When the offerer receives the answer, it MUST perform the steps
-          in <xref target="RFC4568"></xref> Section 7.1.3 as well as the
-          following steps for each SRTP media stream it offered with one or
-          more crypto lines containing EKT parameters in it.</t>
-
-<t>[[Editor's Note:  following paragraph would benefit from rewording.]]</t>
-
-          <t>If the answer crypto line contains an EKT parameter, and the
-          corresponding crypto line from the offer contained the same EKT
-          values, use of EKT has been negotiated successfully and MUST be used
-          for the media stream. When determining whether the values match,
-          an optional and mandatory parameter MUST be considered equal.
-          Furthermore, if the default EKT cipher is being used, it MAY be
-          either present or absent in the offer and/or answer.</t>
-
-          <t>If the answer crypto line does not contain an EKT parameter, then
-          EKT MUST NOT be used for the corresponding SRTP session. Note that
-          if the accepted crypto attribute contained a mandatory EKT parameter
-          in the offer, and the crypto attribute in the answer does not
-          contain an EKT parameter, then negotiation has failed (<xref
-          target="RFC4568">Section 5.1.3 of</xref>).</t>
-
-          <t>If the answer crypto line contains an EKT parameter but the
-          corresponding offered crypto line did not, or if the values
-          don't match or are invalid, then the offerer MUST consider the
-          crypto line invalid (see <xref target="RFC4568">Section 7.1.3
-          of</xref> for further operation).</t>
-
-          <t>The EKT parameter set is established when the answer is received,
-          however there are a couple of special cases to consider here. First
-          of all, if an SRTP packet containing a Full EKT Field is received prior to the answer, then the
-          EKT parameter set is established provisionally based on the SPI
-          included. Once the answer (which may include declarative session
-          parameters) is received, the EKT parameter set is fully established.
-          The second case involves receipt of multiple answers due to SIP
-          forking. In this case, there will be multiple EKT parameter sets;
-          one for each SRTP session. As mentioned earlier, reliable
-          correlation of SIP dialogs to SRTP sessions requires extensions, and
-          hence if one or more of the answers include declarative session
-          parameters, it may be difficult to fully establish the EKT parameter
-          set for each SRTP session. In the absence of a specific correlation
-          mechanism, it is RECOMMENDED, that such correlation be done based on
-          the signaled receive IP-address in the SDP and the observed source
-          IP-address in incoming SRTP/SRTCP packets, and, if necessary, the
-          signaled receive UDP port and the observed source UDP port.</t>
-        </section>
-      </section>
-
-      <section title="SRTP-Specific Use Outside Offer/Answer">
-        <t>Security Descriptions use for SRTP is not defined outside
-        offer/answer and hence neither does Security Descriptions with
-        EKT.</t>
-      </section>
-
-      <section title="Modifying the Session">
-        <t>When a media stream using the SRTP security descriptions has been
-        established, and a new offer/answer exchange is performed, the offerer
-        and answerer MUST follow the steps in <xref target="RFC4568">Section
-        7.1.4 of</xref> as well as the following steps. SDESC allows for all
-        parameters of the session to be modified, and the EKT session
-        parameter are no exception to that, however, there are a few
-        additional rules to be adhered to when using EKT.</t>
-
-        <t>It is permissible to start a session without the use of EKT, and
-        then subsequently start using EKT, however the converse is not. Thus,
-        once use of EKT has been negotiated on a particular media stream, EKT
-        MUST continue to be used on that media stream in all subsequent
-        offer/answer exchanges.</t>
-
-        <t>The reason for this is that both SDESC and EKT communicate the SRTP
-        master key with EKT communicated master keys taking precedence. Reverting back to
-        an SDESC-controlled master key in a synchronized manner is
-        difficult.</t>
-
-        <t>Once EKT is being used, the salt for the direct SRTP session MUST
-        NOT be changed. Thus, a new offer/answer which does not create a new
-        SRTP session (e.g., because it reuses the same IP address and port)
-        MUST use the same salt for all crypto attributes as is currently used
-        for the direct SRTP session.</t>
-
-<t>[[Editor's Note:  following paragraph would benefit from re-arranging 
-into earlier-described steps.]]</t>
-
-        <t>Finally, subsequent offer/answer exchanges MUST NOT remap a given
-        SPI value to a different EKT parameter set until 2^15 other mappings
-        have been used within the SRTP session. In practice, this requirements
-        is most easily met by using a monotonically increasing SPI value
-        (modulo 2^15 and starting with zero) per direct SRTP session. Note
-        that a direct SRTP session may span multiple SIP dialogs, and in such
-        cases coordination of SPI values across those SIP dialogs will be
-        required. In the simple point-to-point unicast case without
-        translators, the requirement simply applies within each media line in
-        the SDP. In the point-to-multipoint case, the requirement applies
-        across all the associated SIP dialogs.</t>
-
-        <!--
-	EDITOR'S NOTE: I'm not entirely happy and comfortable with
-	this restriction. Should probably take another look and see if
-	we could accommodate this.
--->
-      </section>
-
-      <!--
-<section title="Offer/Answer Example">
-<t>
-To be provided.
-</t>
-</section>
--->
-
-      <section title="Backwards Compatibility Considerations">
-        <t>Backwards compatibility can be achieved in a couple of
-        ways. First of all, Security Descriptions allows for session
-        parameters to be prefixed with "-" to indicate that they are
-        optional. If the answerer does not support the EKT session
-        parameter, such optional parameters will simply be
-        ignored. When the answer is received, absence of the
-        parameter will indicate that EKT is not being used. Receipt
-        of SRTP or SRTCP packets prior to receipt of such an answer
-        will obviously be problematic (as is normally the case for
-        Security Descriptions without EKT).</t>
-
-        <t>Alternatively, Security Descriptions allows for multiple
-        crypto lines to be included for a particular media
-        stream. Thus, two crypto lines that differ in their use of EKT
-        parameters (presence in one, absence in the other) can be used
-        as a way to negotiate use of EKT. When the answer is received,
-        the accepted crypto attribute will indicate whether EKT is
-        being used or not.</t>
-      </section>
-
-      <section anchor="sdesc-grammar" title="Grammar">
-        <t>The <xref target="RFC5234">ABNF</xref> syntax for the one
-        new SDP Security Descriptions session parameter, EKT,
-        comprising three parts is shown
-        in <xref target="figABNF"></xref>.</t>
-
-        <figure anchor="figABNF" title="ABNF for the EKT session parameters"
-		align="center">
-          <artwork align="center"><![CDATA[
-ekt        = "EKT=" cipher "|" key "|" spi
-cipher     = cipher-ext / "AESKW_128" / "AESKW_192" / "AESKW_256"
-cipher-ext = 1*64(ALPHA / DIGIT / "_")
-key        = 1*(base64)    ; See Section 4 of [RFC4648]
-base64     = ALPHA / DIGIT / "+" / "/" / "="
-spi        = 4HEXDIG   ; See [RFC5234]
-]]></artwork>
-        </figure>
-
-<!-- dwing comment:
-To offer EKT with both AES256 and (let's pretend) AES2048, would we do
-this with separate a=crypto lines, or with multiple EKT= on the same
-a=crypto line?  Should we explain this?
--->
-
-        <t>Using the example from <xref target="figABNF"></xref> with the EKT
-        extensions to SDP Security Descriptions results in the following
-        example SDP:</t>
-
-        <figure anchor="figSDPEKT" title="SDP Security Descriptions example with EKT">
-          <artwork align="center"><![CDATA[
-v=0
-o=sam 2890844526 2890842807 IN IP4 192.0.2.5
-s=SRTP Discussion
-i=A discussion of Secure RTP
-u=http://www.example.com/seminars/srtp.pdf
-e=marge@example.com (Marge Simpson)
-c=IN IP4 192.0.2.12
-t=2873397496 2873404696
-m=audio 49170 RTP/SAVP 0
-a=crypto:1 AES_CM_128_HMAC_SHA1_80
-  inline:WVNfX19zZW1jdGwgKCkgewkyMjA7fQp9CnVubGVz|2^20
-  FEC_ORDER=FEC_SRTP EKT=AESKW_128|WWVzQUxvdmVseUVLVGtleQ|AAE0
-a=crypto:2 F8_128_HMAC_SHA1_80
-  inline:MTIzNDU2Nzg5QUJDREUwMTIzNDU2Nzg5QUJjZGVm|2^20
-  FEC_ORDER=FEC_SRTP EKT=AESKW_128|VHdvTG92ZWx5RUtUa2V5cw|AAE1
-]]></artwork>
-
-        <postamble>For legibility the SDP shows line breaks that are
-        not present on the wire.</postamble>
-</figure>
-
-      </section>
-    </section>
-
     <section anchor="dtls-srtp-kt"
              title="Use of EKT with DTLS-SRTP">
       <t>This document defines an extension to DTLS-SRTP called Key
@@ -1932,68 +1291,7 @@ SRTP packets                 <------->      SRTP packets
 ]]></artwork>
         </figure>
 
-<!--
-        <section anchor="section_scaling" title="Scaling to Large Groups">
-          <t>In certain scenarios it is useful to perform DTLS-SRTP
-          with a device that is not the RTP peer. A common scenario is
-          multicast, where it is necessary to distribute the DTLS-SRTP
-          (and EKT distribution) to several devices. To allow for
-          this, a new SDP attribute, dtls-srtp-host, is defined which
-          follows the general syntax specified in Section 5.13
-          of <xref target="RFC4566"></xref>.  When signaled, it
-          indicates this host controls the EKT keying for all group
-          members.  For the dtls-srtp-host
-          attribute: <list style="symbols">
-              <t>the name is the ASCII string "dtls-srtp-host" (lowercase)</t>
 
-              <t>the value is the IP address and port number used for
-              DTLS-SRTP</t>
-
-              <t>This is a media-level attribute and MUST NOT appear at the
-              session level</t>
-            </list>The formal description of the attribute is defined
-          by the following <xref target="RFC5234">ABNF</xref> syntax,
-          and the &lt;nettype&gt;, &lt;space&gt;, &lt;addrtype&gt; rules are
-          from <xref target="RFC4566"></xref>:</t>
-
-          <figure>
-            <artwork><![CDATA[  
-attribute = "a=dtls-srtp-host:" 
-            dtls-srtp-host-info *(SP dtls-srtp-host-info)
-host-info = nettype space addrtype space 
-            connection-address space port CRLF]]></artwork>
-          </figure>
-
-          <t>Multiple IP/port pairs are provided for IPv6/IPv4 interworking,
-          and to allow failover. The receiving host SHOULD attempt to use them
-          in the order provided.</t>
-
-          <figure>
-            <preamble>An example of SDP containing the dtls-srtp-host
-            attribute:</preamble>
-
-            <artwork align="center"><![CDATA[         
-v=0
-o=sam 2890844526 2890842807 IN IP4 192.0.2.5
-s=SRTP Discussion
-i=A discussion of Secure RTP
-u=http://www.example.com/seminars/srtp.pdf
-e=marge@example.com (Marge Simpson)
-c=IN IP4 192.0.2.12
-t=2873397496 2873404696
-m=audio 49170 UDP/TLS/RTP/SAVP 0
-a=fingerprint:SHA-1 
-  4A:AD:B9:B1:3F:82:18:3B:54:02:12:DF:3E:5D:49:6B:19:E5:7C:AB
-a=dtls-srtp-ekt
-a=dtls-srtp-host:IN IP4 192.0.2.13 56789
-]]></artwork>
-
-            <postamble>For legibility the SDP shows line breaks that are not
-            present on the wire.</postamble>
-          </figure>
-        </section>
-
--->
       </section>
 
       <section title="Offer/Answer Considerations">
@@ -2124,274 +1422,9 @@ is received for the matching message_seq.</t>
       </section>
     </section>
 
-    <section anchor="mikey" title="Use of EKT with MIKEY">
-      <t>The advantages outlined in Section 1 are useful in some scenarios in
-      which MIKEY is used to establish SRTP sessions. In this section, we
-      briefly review MIKEY and related work, and discuss these scenarios.</t>
-
-      <t>An SRTP sender or a group controller can use MIKEY to establish a
-      SRTP cryptographic context. This capability includes the distribution of
-      a TEK generation key (TGK) or the TEK itself, security policy payload,
-      crypto session bundle ID (CSB_ID) and a crypto session ID (CS_ID). The
-      TEK directly maps to an SRTP master key, whereas the TGK is used along
-      with the CSB_ID and a CS_ID to generate a TEK. The CS_ID is used to
-      generate multiple TEKs (SRTP master keys) from a single TGK. For a media
-      stream in SDP, MIKEY allocates two consecutive numbers for the crypto
-      session IDs, so that each direction uses a different SRTP master key
-      (see <xref target="RFC4567"></xref>).</t>
-
-      <t>The MIKEY specification <xref target="RFC3830"></xref> defines three
-      modes to exchange keys, associated parameters and to protect the MIKEY
-      message: pre-shared key, public-key encryption and Diffie-Hellman key
-      exchange. In the first two modes the MIKEY initiator only chooses and
-      distributes the TGK or TEK, whereas in the third mode both MIKEY
-      entities (the initiator and responder) contribute to the keys. All three
-      MIKEY modes have in common that for establishing a SRTP session the
-      exchanged key is valid for the send and receive direction. Especially
-      for group communications it is desirable to update the SRTP master key
-      individually per direction. EKT provides this property by distributing
-      the SRTP master key within the SRTP/SRTCP packet.</t>
-
-      <t>MIKEY already supports synchronization of ROC values between
-      the MIKEY initiator and responder. The SSRC / ROC value pair is
-      part of the MIKEY Common Header payload. This allows providing
-      the current ROC value to late joiners of a session. However, in
-      some scenarios a key management based ROC synchronization is not
-      sufficient. For example, in mobile and wireless environments,
-      members may go in and out of coverage and may miss a sequence
-      number overrun. In point-to-multipoint translator scenarios it
-      is desirable to not require the group controller to track the
-      ROC values of each member, but to provide the ROC value by the
-      originator of the SRTP packet. A better alternative to
-      synchronize the ROC values is to send them directly via
-      SRTP/SRTCP as EKT does. A separate SRTP extension 
-      <xref target="RFC4771"></xref> includes the ROC in a modified
-      authentication tag but that extension does not support updating
-      the SRTP master key.</t>
-
-      <t>Besides the ROC, MIKEY synchronizes also the SSRC values of the SRTP
-      streams. Each sender of a stream sends the associated SSRC within the
-      MIKEY message to the other party. If an SRTP session participant starts a
-      new SRTP source (SSRC) or a new participant is added to a group, subsequent SDP
-      offer/answer and MIKEY exchanges are necessary to update the SSRC
-      values. EKT improves these scenarios by updating the keys and SSRC
-      values without coordination on the signaling channel. With EKT, SRTP can
-      handle early media, since the EKT SPI allows the receiver to identify
-      the cryptographic keys and parameters used by the source.</t>
-
-      <t>The MIKEY specification <xref target="RFC3830"></xref> suggests the
-      use of unicast for rekeying. This method does not scale well to large
-      groups or interactive groups. The EKT extension of SRTP/SRTCP provides a
-      solution for rekeying the SRTP master key and for ROC/SSRC
-      synchronization. EKT is not a substitution for MIKEY, but rather a
-      complementary addition to address the above described limitations of
-      MIKEY.</t>
-
-      <t>In the next section we provide an extension to MIKEY for support of
-      EKT. EKT can be used only with the pre-shared key or public-key
-      encryption MIKEY mode of <xref target="RFC3830"></xref>. The
-      Diffie-Hellman exchange mode is not suitable in conjunction with EKT,
-      because it is not possible to establish one common EKT key over multiple
-      EKT entities. Additional MIKEY modes specified in separate documents are
-      not considered for EKT.</t>
-
-      <section title="EKT Extensions to MIKEY">
-        <t>In order to use EKT with MIKEY, the EKT cipher, EKT key and EKT SPI
-        is negotiated in the MIKEY message exchange.</t>
-
-        <t>The following parameters are added to the MIKEY Security Protocol
-        Parameters namespace (<xref target="RFC3830" />, Section 6.10.1). (TBD will be requested from IANA [NOTE TO RFC EDITOR])</t>
-
-        <figure anchor="EKT_SecPolParam"
-                title="MIKEY Security Protocol Parameters">
-          <preamble></preamble>
-
-          <artwork align="center"><![CDATA[
-Type | Meaning                     | Possible values
-----------------------------------------------------
- TBD | EKT cipher                  | see below
- TBD | EKT SPI                     | a 15-bit value
-]]></artwork>
-        </figure>
-
-        <figure anchor="EKT_CipherParam" title="EKT Cipher Parameters">
-          <preamble></preamble>
-
-          <artwork align="center"><![CDATA[
-EKT cipher | Value
--------------------
-(reserved) |  0
-AESKW_128  |  1
-AESKW_192  |  2
-AESKW_256  |  3
-]]></artwork>
-
-          <postamble></postamble>
-        </figure>
-
-        <t>EKT_Key is
-        transported in the MIKEY KEMAC payload within one separate Key Data
-        sub-payload. As specified in Section 6.2 of <xref
-        target="RFC3830"></xref>, the KEMAC payload carries the TEK Generation
-        Key (TGK) or the Traffic Encryption Key (TEK). One or more TGKs or
-        TEKs are carried in individual Key Data sub-payloads within the KEMAC
-        payload. The KEMAC payload is encrypted as part of MIKEY. The Key Data
-        sub- payload, specified in Section 6.13 of <xref
-        target="RFC3830"></xref>, has the following format:</t>
-
-        <figure anchor="Key_Data_subpayload"
-                title="Key Data Sub-Payload of MIKEY">
-          <preamble></preamble>
-
-          <artwork align="center"><![CDATA[
-                     1                   2                   3
- 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-| Next Payload  | Type  |  KV   | Key data length               |
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-:                         Key data                              :
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-: Salt length (optional)        ! Salt data (optional)          :
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-:                        KV data (optional)                     :
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-]]></artwork>
-
-          <postamble></postamble>
-        </figure>
-
-        <t>These fields are described below:<list style="hanging">
-            <t hangText="Type:">4 bits in length, indicates the type
-            of key included in the payload. We define Type = TBD (will
-            be requested from IANA [NOTE TO RFC EDITOR]) to indicate
-            transport of the EKT key.</t>
-
-            <t hangText="KV:">(4 bits): indicates the type of key validity
-            period specified. KV=1 is currently specified as an SPI. We use
-            that value to indicate the KV data contains the EKT_SPI for the
-            key type EKT_Key.  KV data would be 16 bits in length, but it is
-            also possible to interpret the length from the 'Key data len'
-            field. KV data MUST be present for the key type EKT_Key when
-            KV=1.</t>
-
-            <t hangText="Salt length, Salt Data:">These optional fields SHOULD
-            be omitted for the key type EKT_Key, if the SRTP master salt is
-            already present in the TGK or TEK Key Data sub-payload. The
-            EKT_Key sub-payload MUST contain a SRTP master salt, if the SRTP
-            master salt is not already present in the TGK or TEK Key Data
-            sub-payload.</t>
-
-            <t hangText="KV Data:">length determined by Key Data Length
-            field.</t>
-          </list></t>
-      </section>
-
-      <section title="Offer/Answer Considerations ">
-        <t>This section describes Offer/Answer considerations for the use of
-        EKT together with MIKEY for unicast streams. The offerer and answerer
-        MUST follow the procedures specified in <xref target="RFC3830"></xref>
-        and <xref target="RFC4567"></xref> as well as the following ones.</t>
-
-        <section title="Generating the Initial Offer">
-          <t>If it is intended to use MIKEY together with EKT, the offerer
-          MUST include at least one MIKEY key-mgmt attribute with one EKT_Key
-          Key Data sub-payload and the SRTP Security Policy payload (SP) with the policy 
-          parameter EKT SPI. The policy parameter EKT Cipher is OPTIONAL, The default
-          value is "AESKW_128" in accordance with <xref target="DefaultCipher" />.
-          MIKEY can be used on session or media level. On session level, MIKEY
-          provides the keys for multiple SRTP sessions in the SDP offer. The
-          EKT SPI references a EKT parameter set including the Secure RTP
-          parameters as specified in Section 8.2 in <xref
-          target="RFC3711"></xref>. If MIKEY is used on session level, it is
-          only possible to use one EKT SPI value. Therefore, the session-level
-          MIKEY message MUST contain one SRTP Security Policy payload only,
-          which is valid for all related SRTP media lines. If MIKEY is used on
-          media level, different SRTP Security Policy parameters (and
-          consequently different EKT SPI values) can be used for each media
-          line. If MIKEY is used on session and media level, the media level
-          content overrides the session level content.</t>
-
-          <t>EKT requires a single shared SRTP master salt between all
-          participants in the direct SRTP session. If a MIKEY key-mgmt
-          attribute contains more than one TGK or TEK Key Data sub-payload,
-          all the sub-payloads MUST contain the same master salt value.
-          Consequently, the EKT_Key Key Data sub-payload MAY also contain the
-          same salt or MAY omit the salt value. If the SRTP master salt is not
-          present in the TGK and TEK Key Data sub-payloads, the EKT_Key
-          sub-payload MUST contain a master salt.</t>
-        </section>
-
-        <section title="Generating the Initial Answer">
-          <t>For each media line in the offer using MIKEY, provided on session
-          and/or on media level, the answerer examines the related MIKEY
-          key-mgmt attributes for the presence of EKT parameters. In order to
-          accept the offered key-mgmt attribute, the MIKEY message MUST
-          contain one EKT_Key Key Data sub-payload and the SRTP Security
-          Policy payload with policy parameter EKT SPI.
-          The answerer examines also the existence of a SRTP
-          master salt in the TGK/TEK and/or the EKT_Key sub-payloads. If
-          multiple salts are available, all values MUST be equal. If the salt
-          values differ or no salt is present, the key-mgmt attribute MUST be
-          considered as invalid.</t>
-
-          <t>The MIKEY responder message in the SDP answer does not contain a
-          MIKEY KEMAC or Security Policy payload and consequently does not
-          contain any EKT parameters. If a key-mgmt attribute for a media
-          line was accepted by the answerer, the EKT parameter set of the
-          offerer is valid for both directions of the SRTP session.</t>
-        </section>
-
-        <section title="Processing the Initial Answer">
-          <t>On reception of the answer, the offerer examines if EKT has been
-          accepted for the offered media lines. If a MIKEY key-mgmt attribute
-          is received containing a valid MIKEY responder message, EKT has been
-          successfully negotiated. On receipt of a MIKEY error message, EKT
-          negotiation has failed. For example, this may happen if an EKT
-          extended MIKEY initiator message is sent to a MIKEY entity not
-          supporting EKT. A MIKEY error code 'Invalid SPpar' or 'Invalid DT' is
-          returned to indicate that the EKT parameters (EKT Cipher and EKT SPI)
-          in the SRTP Security Policy payload or
-          the EKT_Key sub-payload is not supported. In this case, the offerer
-          may send a second SDP offer with a MIKEY key-mgmt attribute without
-          the additional EKT extensions.</t>
-
-          <t>This behavior can be improved by offering two key-mgmt SDP attributes.
-          One attribute offers MIKEY with SRTP and EKT and the other attribute
-          offers MIKEY with SRTP without EKT.</t>
-        </section>
-
-        <section title="Modifying the Session">
-          <t>Once an SRTP stream has been established, a new offer/answer
-          exchange can modify the session including the EKT parameters. If the
-          EKT key or EKT cipher is modified (i.e., a new EKT parameter set is
-          created) the offerer MUST also provide a new EKT SPI value. The
-          offerer MUST NOT remap an existing EKT SPI value to a new EKT
-          parameter set. Similar, a modification of the SRTP Security Policy
-          leads to a new EKT parameter set and requires a fresh EKT SPI, even
-          if the EKT key or cipher did not change.</t>
-
-          <t>Once EKT is being used, the SRTP master salt for the SRTP session
-          MUST NOT be changed. The salt in the Key Data sub-payloads within
-          the subsequent offers MUST be the same as the one already used.</t>
-<!-- dwing comment
-Do we want to recommend any action if they differ?  Perhaps restart EKT,
-or abort the entire SRTP session immediately?
--->
-
-
-          <t>After EKT has been successfully negotiated for a session and an
-          SRTP master key has been transported by EKT, it is difficult to
-          switch back to a pure MIKEY based key exchange in a synchronized
-          way. Therefore, once EKT is being used for a session, EKT MUST be
-          used also in all subsequent offer/answer exchanges for that
-          session.</t>
-        </section>
-      </section>
-    </section>
-
     <section title="Using EKT for Interoperability between Key Management Systems" anchor="interop">
+
       <t>
-	
 	A media gateway (MGW) can provide interoperability between an
 	SRTP-EKT endpoint and a non-EKT SRTP endpoint.  When doing
 	this function, the MGW can perform non-cryptographic
@@ -2407,10 +1440,8 @@ or abort the entire SRTP session immediately?
 	SIP re-INVITE); likewise, if a new key arrives via Security
 	Descriptions that must be encrypted via EKT and sent in
 	SRTP/SRTCP.
-
       </t>
-      <t>Additional non-normative information can be found in <xref 
-target="appendix_interworking"></xref>.</t>
+      
 
     </section>
 
@@ -2538,52 +1569,26 @@ leave this point open for discussion.
      </t>
 -->
 
-      <section title="Alternatives">
-	<t>
-	  In its current design, EKT requires that the Master Salt be
-	  established out of band.  That requirement is undesirable.
-	  In an offer/answer environment, it forces the answerer to
-	  re-use the same Master Salt value used by the offerer.  The
-	  Master Salt value could be carried in EKT packets though
-	  that would consume yet more bandwidth.
-	</t>
-	<t>
-	  In some scenarios, two SRTP sessions may be combined into a
-	  single session.  When using EKT in such sessions, it is
-	  desirable to have an SPI value that is larger than 15 bits,
-	  so that collisions between SPI values in use in the two
-	  different sessions are unlikely (since each collision would
-	  confuse the members of one of the sessions).
-	  </t>
-	<t>
-	  An alternative that addresses both of these needs is as
-	  follows: the SPI value can be lengthed from 15 bits to 63
-	  bits, and the Master Salt can be identical to, or
-	  constructed from, the SPI value.  SRTP conventionally uses a
-	  14-byte Master Salt, but shorter values are acceptable.
-	  This alternative would add six bytes to each EKT packet;
-	  that overhead may be a reasonable tradeoff for addressing
-	  the problems outlined above.  This is considered too high
-          a bandwidth penalty.
-	  </t>
-      </section>
-
+    
     </section>
 
     <section anchor="sec" title="Security Considerations">
+      
       <t>EKT inherits the security properties of the SRTP keying
       it uses: Security Descriptions, DTLS-SRTP, or MIKEY.</t>
 
-      <t>With EKT, each SRTP sender and receiver MUST generate
-      distinct SRTP master keys. This property avoids any security
-      concern over the re-use of keys, by empowering the SRTP layer to
-      create keys on demand. Note that the inputs of EKT are the same
-      as for SRTP with key-sharing: a single key is provided to
-      protect an entire SRTP session. However, EKT remains secure even
-      in the absence of out-of-band coordination of SSRCs, and even
-      when SSRC values collide.</t>
+      <t>With EKT, each SRTP sender and receiver MUST generate distinct SRTP
+      master keys. This property avoids any security concern over the re-use of
+      keys, by empowering the SRTP layer to create keys on demand. Note that the
+      inputs of EKT are the same as for SRTP with key-sharing: a single key is
+      provided to protect an entire SRTP session. However, EKT remains secure
+      even in the absence of out-of-band coordination of SSRCs, and even when
+      SSRC values collide.</t>
 
-<t>The EKT Cipher includes its own authentication/integrity check. For an attacker to successfully forge a full EKT packet, it would need to defeat the authentication mechanisms of both the EKT Cipher and the SRTP authentication mechanism.</t>
+      <t>The EKT Cipher includes its own authentication/integrity check. For an
+      attacker to successfully forge a full EKT packet, it would need to defeat
+      the authentication mechanisms of both the EKT Cipher and the SRTP
+      authentication mechanism.</t>
 
       <t>
 	The presence of the SSRC in the EKT_Plaintext ensures that an
@@ -2601,105 +1606,61 @@ leave this point open for discussion.
 	This is a minor denial of service vulnerability.   Similarly, an
 	attacker who adds a Full_EKT_Field can disrupt service.  
       </t>
+      
+      <!-- dwing commment
+           Following paragraph in security considerations added by dwing
+      -->
 
-<!-- dwing commment
-Following paragraph in security considerations added by dwing
--->
+      <t>An attacker could send packets containing either Short EKT Field or
+      Full EKT Field, in an attempt to consume additional CPU resources of the
+      receiving system.  In the case of the Short EKT Field, this field is
+      stripped and normal SRTP or SRTCP processing is performed.  In the case of
+      the Full EKT Field, the attacker would have to have guessed or otherwise
+      determined the SPI being used by the receiving system.  If an invalid SPI
+      is provided by the attacker, processing stops.  If a valid SPI is provided
+      by the attacker, the receiving system will decrypt the EKT ciphertext and
+      return an authentication failure (Step 3 of <xref
+      target="inbound"></xref>).</t>
 
-<t>An attacker could send packets containing either Short EKT Field or
-Full EKT Field, in an attempt to consume additional CPU resources of the
-receiving system.  In the case of the Short EKT Field, this field is
-stripped and normal SRTP or SRTCP processing is performed.  In the
-case of the Full EKT Field, the attacker would have to have guessed or
-otherwise determined the SPI being used by the receiving system.  If
-an invalid SPI is provided by the attacker, processing stops.  If a
-valid SPI is provided by the attacker, the receiving system will
-decrypt the EKT ciphertext and return an authentication failure (Step
-3 of <xref target="inbound"></xref>).</t>
+      <t>EKT can rekey an SRTP stream until the SRTP rollover counter (ROC)
+      needs to roll over.  EKT does not extend SRTP's rollover counter (ROC),
+      and like SRTP itself EKT cannot properly handle a ROC rollover.  Thus even
+      if using EKT, new (master or session) keys need to be established after
+      2^48 packets are transmitted in a single SRTP stream as described in
+      Section 3.3.1 of <xref target="RFC3711"></xref>.  Due to the relatively
+      low packet rates of typical RTP sessions, this is not expected to be a
+      burden.</t>
 
-<t>EKT can rekey an SRTP stream until the SRTP rollover counter (ROC)
-needs to roll over.  EKT does not extend SRTP's rollover counter
-(ROC), and like SRTP itself EKT cannot properly handle a ROC rollover.
-Thus even if using EKT, new (master or session) keys need to be
-established after 2^48 packets are transmitted in a single SRTP
-stream as described in Section 3.3.1
-of <xref target="RFC3711"></xref>.  Due to the relatively low packet
-rates of typical RTP sessions, this is not expected to be a
-burden.</t>
-
+      <t>The confidentiality, integrity, and authentication of the EKT cipher
+      MUST be at least as strong as the SRTP cipher.</t>
+      
       <t>
-The confidentiality, integrity, and authentication of the EKT cipher
-MUST be at least as strong as the SRTP cipher.</t>
-      <t>
-	Part of the EKT_Plaintext is known, or easily guessable to an
+	    Part of the EKT_Plaintext is known, or easily guessable to an
 	attacker.  Thus, the EKT Cipher MUST resist known plaintext attacks.
 	In practice, this requirement does not impose any restrictions 
 	on our choices, since the ciphers in use provide high security
 	even when much plaintext is known.
       </t>
+      
         <t>An EKT cipher MUST resist attacks in which both ciphertexts and
-        plaintexts can be adaptively chosen. 
-An EKT cipher MUST resist attacks in which both ciphertexts and plaintexts can be adaptively chosen and adversaries that can query both the encryption and decryption functions adaptively.</t>
+        plaintexts can be adaptively chosen.  An EKT cipher MUST resist attacks
+        in which both ciphertexts and plaintexts can be adaptively chosen and
+        adversaries that can query both the encryption and decryption functions
+        adaptively.</t>
     </section>
 
     <section anchor="iana" title="IANA Considerations">
-      <t>IANA is requested to register EKT
-from <xref target="sdesc-grammar"></xref> into
-the <xref target="iana-sdp-sdesc">Session Description Protocol (SDP)
-Security Descriptions</xref> registry for "SRTP Session Parameters".</t>
-
-<t>IANA is requested to register the following new attributes into
-the <xref target="iana-sdp-attr">SDP Attributes registry</xref>.</t>
-
-<t><list style="hanging" hangIndent="12">
-<t hangText="Attribute name:">dtls-srtp-ekt</t>
-<t hangText="Long form name:">DTLS-SRTP with EKT</t>
-<t hangText="Type of attribute:">Media-level</t>
-<t hangText="Subject to charset:">No</t>
-<t hangText="Purpose:">Indicates support for DTLS-SRTP with EKT</t>
-<t hangText="Appropriate values:">No values</t>
-<t hangText="Contact name:">Dan Wing, dwing@cisco.com</t>
-
-<!--
-<t hangText="Attribute name:">dtls-srtp-host</t>
-<t hangText="Long form name:">Alternate host for DTLS-SRTP</t>
-<t hangText="Type of attribute:">Session-level and media-level</t>
-<t hangText="Subject to charset:">No</t>
-<t hangText="Purpose:">Indicates alternate host for DTLS-SRTP communication</t>
-<t hangText="Appropriate values:">See <xref target="section_scaling"></xref> of this document.</t>
-<t hangText="Contact name:">Dan Wing, dwing@cisco.com</t>
--->
-</list></t>
-
-      <!--MIKEY Registrations-->
-
-      <t>We request the following IANA assignments from the existing
-      <xref target="iana-mikey"/> name spaces in the IETF consensus range (0-240) <xref target="RFC3830"></xref>: <list style="symbols">
-          <t>From the Key Data payload name spaces, a value to indicate the
-          type as the 'EKT_Key'.</t>
-        </list></t>
-
-      <t>Furthermore, we need the following two new IANA registries created,
-      populated with the initial values in this document. New values for both
-      of these registries can be defined via <xref
-      target="RFC5226">Specification Required</xref>. <list style="symbols">
-          <t>EKT parameter type, initially populated with the list from <xref
-          target="EKT_SecPolParam"></xref></t>
-
-          <t>EKT cipher, initially populated with the list from <xref
-          target="EKT_CipherParam"></xref></t>
-        </list></t>
+     
+     
+      
     </section>
 
     <section title="Acknowledgements">
       <t>Thanks to Lakshminath Dondeti for assistance with earlier
-      versions of this document. Thanks to Kai Fischer for writing
-      the MIKEY section.</t>
+      versions of this document. </t>
 
-      <t>Thanks to Nermeen Ismail, Eddy Lem,Rob Raymond, and Yi Cheng
-      for fruitful discussions and comments. <!--Thanks to
-      Romain Biehlmann for his encouragement to add support
-      DTLS-SRTP-EKT key servers for multicast.-->  Thanks to Felix Wyss
+      <t>Thanks to  Kai Fischer, Nermeen Ismail, Eddy Lem,Rob Raymond, and Yi Cheng
+      for fruitful discussions and comments. Thanks to Felix Wyss
       for his review and comments regarding ciphers.  Thanks to
       Michael Peck for his review. Thanks to
       Magnus Westerlund for his review.  Thanks to Michael Peck and 
@@ -2905,200 +1866,6 @@ the <xref target="iana-sdp-attr">SDP Attributes registry</xref>.</t>
 
     </references>
 
-    <!--
- <section anchor="appendix" title="Alternate Format">
-<t>
-In this appendix we describe an alternate Authentication Tag format,
-which is intended for the purposes of discussion.  It allows a sender
-to optionally omit the EKT data from a packet.  As discussed in
-<xref target="rationale"/>, this feature is desirable because it
-allows bandwidth conservation, and it gives the sender the discretion
-of when to send the EKT data, without any need for external
-coordination.
-</t>
-<t>
-The alternate format is shown in <xref target="altFormat"/>.  The top
-diagram shows the format in the case that the final bit is set to one,
-in which case all of the EKT fields are present.  The bottom diagram
-shows the format in the case that the final bit is set to zero, in
-which case the EKT Ciphertext, Rollover Counter, Initial
-Sequence Number, and Security Parameter Index fields are absent.  The
-Reserved field MUST be set to the all-zero value.  These two cases can
-always be unambiguously distinguished by the final bit, or by checking
-to see if the final byte in the packet has the all-zero value.
-</t>
-<figure anchor="altFormat" title="Alternate EKT Field format.">
-<artwork>
-     0                   1                   2                   3
-      0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-     :                   Base Authentication Tag                     :
-     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-     :                     EKT Ciphertext                      :
-     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-     |                       Rollover Counter                        |
-     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-     |    Initial Sequence Number    |   Security Parameter Index  |1|
-     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
-     0                   1                   2                   3
-      0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-     :                   Base Authentication Tag                     :
-     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-     |  Reserved   |0|
-     +-+-+-+-+-+-+-+-+
-</artwork>
-</figure>
-<t> In the alternate format, the SPI field is 15 bits long, instead of
-16 bits long.  Sender-side implementations using the existing format
-can achieve interoperability with the alternate format by selecting
-SPI values have a final bit that is equal to one.  Receiver
-implementations using the existing format can interoperate with the
-alternate format if SPI values ending in one are used, and the sender
-always sends all of the EKT fields.
-</t>
-<t>
-The main motivation for the alternate format is the case when RTCP is
-not available and EKT data is carried by RTP, and bandwidth
-conservation is important.  However, it may be acceptable to use it
-for RTCP as well.
-</t>
-
-</section>
-
--->
-
-    <section anchor="appendix_interworking" title="Using EKT to Optimize Interworking DTLS-SRTP with Security Descriptions">
-      <t>Today, <xref target="RFC4568">SDP Security
-      Descriptions</xref> is used for distributing SRTP keys in
-      several different IP PBX systems.  The IP PBX systems are
-      typically used within a single enterprise.  A Session Border
-      Controller is a reasonable solution to interwork between
-      Security Descriptions in one network and DTLS-SRTP in another
-      network. For example, a mobile operator (or an Enterprise) could
-      operate Security Descriptions within their network and DTLS-SRTP
-      towards the Internet.</t>
-
-      <t>However, due to the way Security Descriptions and DTLS-SRTP manage
-      their SRTP keys, such an SBC has to authenticate, decrypt, re-encrypt,
-      and re-authenticate the SRTP (and SRTCP) packets in one direction, as
-      shown in <xref target="interworking-expensive"></xref>, below. This is
-      computationally expensive.</t>
-
-      <figure anchor="interworking-expensive"
-              title="Interworking Security Descriptions and DTLS-SRTP">
-        <preamble></preamble>
-
-        <artwork align="center"><![CDATA[
-RFC4568 endpoint            SBC            DTLS-SRTP endpoint
-      |                      |                       |
- 1.   |---key=A------------->|                       |
- 2.   |                      |<-DTLS-SRTP handshake->|
- 3.   |<--key=B--------------|                       |
- 4.   |                      |<--SRTP, encrypted w/B-|
- 5.   |<-SRTP, encrypted w/B-|                       |
- 6.   |-SRTP, encrypted w/A->|                       |
- 7.   |            (decrypt, re-encrypt)             |
- 8.   |                      |-SRTP, encrypted w/C-->|
-      |                      |                       |]]></artwork>
-
-        <postamble></postamble>
-      </figure>
-
-      <t>The message flow is as follows (similar steps occur with SRTCP):<list
-          style="numbers">
-          <t>The <xref target="RFC4568">Security Descriptions</xref> endpoint
-          discloses its SRTP key to the SBC, using a=crypto in its SDP.</t>
-
-          <t>SBC completes DTLS-SRTP handshake. From this handshake, the SBC
-          derives the SRTP key for traffic from the DTLS-SRTP endpoint (key B)
-          and to the DTLS-SRTP endpoint (key C).</t>
-
-          <t>The SBC communicates the SRTP encryption key (key B) to the
-          Security Descriptions endpoint (using a=crypto). (There is no way,
-          with DTLS-SRTP, to communicate the Security Descriptions key to the
-          DTLS-SRTP key endpoint.)</t>
-
-          <t>The DTLS-SRTP endpoint sends an SRTP key, encrypted with its key
-          B. This is received by the SBC.</t>
-
-          <t>The received SRTP packet is simply forwarded; the SBC does not
-          need to do anything with this packet as its key (key B) was already
-          communicated in step 3.</t>
-
-          <t>The Security Descriptions endpoint sends an SRTP packet,
-          encrypted with its key A.</t>
-
-          <t>The SBC has to authenticate and decrypt the SRTP packet (using
-          key A), and re-encrypt it and generate an HMAC (using key C).</t>
-
-          <t>The SBC sends the new SRTP packet.</t>
-        </list></t>
-
-      <t>If EKT is deployed on the DTLS-SRTP endpoints, EKT helps to avoid the
-      computationally expensive operation so the SBC does not need to perform
-      any per-packet operations on the SRTP (or SRTCP) packets in either
-      direction. With EKT the SBC can simply forward the SRTP (and SRTCP)
-      packets in both directions without per-packet HMAC or cryptographic
-      operations.</t>
-
-      <t>To accomplish this interworking, DTLS-SRTP EKT must be supported on
-      the DTLS-SRTP endpoint, which allows the SBC to transport the Security
-      Description key to the EKT endpoint and send the DTLS-SRTP key to the
-      Security Descriptions endpoint. This works equally well for both
-      incoming and outgoing calls. An abbreviated message flow is shown in
-      <xref target="interworking-cheap"></xref>, below.</t>
-
-      <figure anchor="interworking-cheap"
-              title="Interworking Security Descriptions and EKT">
-        <preamble></preamble>
-
-        <artwork align="center"><![CDATA[
-RFC4568 endpoint            SBC          DTLS-SRTP endpoint
-      |                      |                       |
- 1.   |---key=A------------->|                       |
- 2.   |                      |<-DTLS-SRTP handshake->|
- 3.   |<--key=B--------------|                       |
- 4.   |                      |--ekt:A--------------->|
- 5.   |                      |<--SRTP, encrypted w/B-|
- 5.   |<-SRTP, encrypted w/B-|                       |
- 6.   |-SRTP, encrypted w/A->|                       |
- 7.   |                      |-SRTP, encrypted w/A-->|
-      |                      |                       |]]></artwork>
-
-        <postamble></postamble>
-      </figure>
-
-      <t>The message flow is as follows (similar steps occur with SRTCP):<list
-          style="numbers">
-          <t>Security Descriptions endpoint discloses its SRTP key to the SBC
-          (a=crypto).</t>
-
-          <t>SBC completes DTLS-SRTP handshake. From this handshake, the SBC
-          derives the SRTP key for traffic from the DTLS-SRTP endpoint (key B)
-          and to the DTLS-SRTP endpoint (key C).</t>
-
-          <t>The SBC communicates the SRTP encryption key (key B) to the
-          Security Descriptions endpoint.</t>
-
-          <t>The SBC sends an EKT packet indicating that SRTP will be
-          encrypted with 'key A' towards the DTLS-SRTP endpoint.</t>
-
-          <t>The DTLS-SRTP endpoint sends an SRTP key, encrypted with its key
-          B. This is received by the SBC.</t>
-
-          <t>The received SRTP packet is simply forwarded; the SBC does not
-          need to do anything with this packet as its key (key B) was
-          communicated in step 3.</t>
-
-          <t>The Security Descriptions endpoint sends an SRTP packet,
-          encrypted with its key A.</t>
-
-          <t>The received SRTP packet is simply forwarded; the SBC does not
-          need to do anything with this packet as its key (key A) was
-          communicated in step 4.</t>
-        </list></t>
-    </section>
   </back>
 </rfc>
