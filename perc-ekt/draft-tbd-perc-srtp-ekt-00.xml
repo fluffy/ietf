@@ -175,11 +175,11 @@
       occur when signaling systems coordinate certain SRTP parameters, such as
       SSRC values and ROCs.</t>
 
-      <t>This document defines Encrypted Key Transport (EKT) for SRTP, an
-      extension to SRTP that fits within the SRTP framework and reduces the
-      amount of external signaling control that is needed in an SRTP
+      <t>This document defines Encrypted Key Transport (EKT) for DTLS-SRTP, an
+      extension to DTLS-SRTP that fits within the SRTP framework and reduces the
+      amount of external signaling control that is needed in an shared SRTP
       session. EKT securely distributes the SRTP master key and other
-      information for each SRTP source (SSRC), using SRTCP or SRTP to transport
+      information for each SRTP source (SSRC), using DTLS and SRTP
       that information. With this method, SRTP entities are free to choose SSRC
       values as they see fit, and to start up new SRTP sources (SSRC) with new
       SRTP master keys (see Section 2.2) within a session without coordinating
@@ -189,12 +189,7 @@
       to control SSRC values closely. An SRTP endpoint using EKT can generate
       new keys whenever an existing SRTP master key has been overused, or start
       up a new SRTP source (SSRC) to replace an old SRTP source that has reached
-      the packet-count limit. However, EKT does not allow SRTP's ROC to
-      rollover; that requires re-keying outside of EKT (e.g., using MIKEY or
-      DTLS-SRTP).  EKT also solves the problem in which the burst loss of the N
-      initial SRTP packets can confuse an SRTP receiver, when the initial RTP
-      sequence number is greater than or equal to 2^16 - N.  These features can
-      simplify many architectures that implement SRTP.</t>
+      the packet-count limit. </t>
 
       <t>EKT provides a way for an SRTP session participant, either a sender or
       receiver, to securely transport its SRTP master key and current SRTP
@@ -208,13 +203,10 @@
       on demand by the SRTP endpoint, or may be dictated by an external
       mechanism such as a signaling agent or a secure group controller.</t>
 
-      <t>EKT is not intended to replace external key establishment mechanisms
-      such as SDP Security Descriptions <xref target="RFC4568"></xref>,
-      DTLS-SRTP <xref target="RFC5764"></xref>, or MIKEY <xref
-      target="RFC3830"></xref><xref target="RFC4563"></xref>. Instead, it is
-      used in conjunction with those methods, and it relieves them of the burden
-      of tightly coordinating every SRTP source (SSRC) among every SRTP
-      participant.</t>
+      <t>EKT is not intended to replace external key establishment mechanisms,
+      Instead, it is used in conjunction with those methods, and it relieves
+      them of the burden of tightly coordinating every SRTP source (SSRC) among
+      every SRTP participant.</t>
 
       <section title="Conventions Used In This Document">
 
@@ -497,10 +489,10 @@
       -->
       
 	  <!--
-  (see <xref target="fig2"/> and
-<xref target="fig3"/>).
--->
-
+          (see <xref target="fig2"/> and
+          <xref target="fig3"/>).
+      -->
+      
 	  <t>
 	    If the Short format is used, an all-zero octet is appended to the
 	    packet.  Otherwise, processing continues as follows.
