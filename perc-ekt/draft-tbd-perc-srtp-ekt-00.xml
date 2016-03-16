@@ -245,12 +245,8 @@
 
       <section anchor="EKT" title="EKT Field Formats">
  
-        <t> The EKT Field uses one of the two formats defined below. These two
-        formats can always be unambiguously distinguished on receipt by
-        examining the final bit of the EKT Field, which is also the final bit of
-        the SRTP or SRTCP packet.  The first format is the Full EKT Field (or
-        Full_EKT_Field), and the second is the Short EKT Field (or
-        Short_EKT_Field).  The formats are defined as</t>
+        <t> The EKT Field uses the format defined below for the Full EKT Field (or
+        Full_EKT_Field).  </t>
 
         <figure anchor="tag_formats"
                 title="EKT data formats">
@@ -260,8 +256,6 @@
      EKT_Ciphertext = EKT_Encrypt(EKT_Key, EKT_Plaintext)
 
      Full_EKT_Field = EKT_Ciphertext || SPI || '1'
-
-     Short_EKT_Field = Reserved || '0'
 ]]></artwork>
         </figure>
 
@@ -355,63 +349,15 @@
 	          </t>
               
               <!--
-            <t hangText="Final bit:">This MUST be 1 in the Full EKT Tag format,
-            and MUST be 0 in the Short EKT Tag format. This flag distinguishes
-            the packet layout between these two cases.</t>
+            <t hangText="Final bit:">This MUST be 1 in the Full EKT Tag format.</t>
               -->
 
               <t hangText="Reserved:">The length of this field is 7 bits.  MUST
               be all zeros on transmission, and MUST be ignored on
               reception.</t>
 
-          </list>
-
-
-          The Full_EKT_Field and Short_EKT_Field formats are shown in <xref
-          target="tag_format_base"></xref> and <xref
-          target="tag_format_abbreviated"></xref>, respectively.  These figures
-          show the on-the-wire data.  The Ciphertext field holds encrypted data,
-          and thus has no apparent inner structure.</t>
-
-        <figure anchor="tag_format_base"
-                title="Full EKT Field format"
-		align="center">
-          <artwork align="center"><![CDATA[
- 0                   1                   2                   3
- 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-:                                                               :
-:                        EKT Ciphertext                         :
-:                                                               :
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|   Security Parameter Index  |1|
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-]]></artwork>
-        </figure>
-
-        <figure anchor="tag_format_abbreviated"
-                title="Short EKT Field format"
-		align="center">
-          <artwork align="center"><![CDATA[
- 0 1 2 3 4 5 6 7 8
-+-+-+-+-+-+-+-+-+-+
-|   Reserved    |0|
-+-+-+-+-+-+-+-+-+-+
-]]></artwork>
-        </figure>
-
-
-
-        <!--
-        <t>The Short EKT Field field contains the following sub-fields: <list
-        style="hanging"> <t hangText="Reserved:">7 bits. MUST be 0 on
-        transmission and MUST be ignored on reception.</t>
-
-            <t hangText="Final Bit:">This MUST be 0. This flag distinguishes
-            the packet layout between<xref target="tag_format_base"></xref> or
-            <xref target="tag_format_abbreviated"></xref>.s</t>
-          </list></t>
-        -->
+            </list>
+          </t>
         
       </section>
 
@@ -437,16 +383,11 @@
     -->
     
     <!--
-	    <t>
-	    A receiver processes an EKT_Ciphertext by decrypting it,
-	    verifying that the SSRC field in the resulting EKT_plaintext
-	    matches the SSRC in the session, and accepting the other
-	    fields if the SSRC values match.
-	    </t>
-	    <t>
-	    The new packet formats are simple: the Full_EKT_Field or the
-	    Short_EKT_Field are appended at the tail end of the SRTP packet.  
-	    </t>
+	    <t> A receiver processes an EKT_Ciphertext by decrypting it, verifying
+	    that the SSRC field in the resulting EKT_plaintext matches the SSRC in
+	    the session, and accepting the other fields if the SSRC values match.
+	    </t> <t> The new packet formats are simple: the Full_EKT_Field it
+	    appended at the tail end of the SRTP packet.  </t>
         
     -->
     
@@ -471,8 +412,7 @@
         <section anchor="outbound" title="Outbound Processing">
 
 	      <t>See <xref target="timing"></xref> which describes when to send an
-	      EKT packet and describes if a Full EKT Field or Short EKT Field is
-	      sent.</t>
+	      EKT packet and  with a Full EKT Field.</t>
 
           <t>When an SRTP or SRTCP packet is to be sent, the EKT field for that
           packet is created as follows, or uses an equivalent set of steps.  The
@@ -493,10 +433,6 @@
           <xref target="fig3"/>).
       -->
       
-	  <t>
-	    If the Short format is used, an all-zero octet is appended to the
-	    packet.  Otherwise, processing continues as follows.
-	  </t>
       
 	  <t>
 	    The Rollover Counter field in the packet is set to the
@@ -553,7 +489,7 @@
         <section anchor="inbound" title="Inbound Processing">
           <t>
 	    When an SRTP or SRTCP packet containing a Full EKT Field
-	    or Short EKT Field is received, it is processed as
+	   , it is processed as
 	    follows or using an equivalent set of steps.  Inbound EKT
 	    processing MUST take place prior to the usual SRTP or
 	    SRTCP processing.  Implementation note: the receiver may
@@ -563,28 +499,25 @@
 	    order.
 	  </t>
 
-          <t><list style="numbers">
+      <t><list style="numbers">
+        
 	    <t>
 	      The final bit is checked to determine which EKT format
-	      is in use.  If the packet contains a Short EKT Field then
-	      the Short EKT Field is removed and 
-	      normal SRTP or SRTCP processing is applied.
-	      If the packet contains a Full EKT Field, then 
+	      is in use.    If the packet contains a Full EKT Field, then 
 	      processing continues as described below.
 	    </t>
-              <t> 
-		The Security Parameter Index (SPI) field is checked to determine
-              which EKT parameter set should be used when processing the
-              packet. If multiple parameter sets have been defined for the SRTP
-              session, then the one that is associated with the value of the SPI
-	      field in the packet is used. This parameter set is called the
-              matching parameter set below. If there is no matching SPI, then
-              the verification function MUST return an indication of
-              authentication failure, and the steps described below are not
-              performed.<!-- If there is
-              only a single session key, it SHOULD be used only if the field is set
-              to the all-null value.
-              --></t>
+
+        <t> 
+		  The Security Parameter Index (SPI) field is checked to determine which
+		  EKT parameter set should be used when processing the packet. If
+		  multiple parameter sets have been defined for the SRTP session, then
+		  the one that is associated with the value of the SPI field in the
+		  packet is used. This parameter set is called the matching parameter
+		  set below. If there is no matching SPI, then the verification function
+		  MUST return an indication of authentication failure, and the steps
+		  described below are not performed.<!-- If there is only a single
+		  session key, it SHOULD be used only if the field is set to the
+		  all-null value.  --></t>
 
 	      <t>
 		The EKT_Ciphertext is decrypted using the EKT_Key and
@@ -1359,10 +1292,9 @@ a=dtls-srtp-ekt
            Following paragraph in security considerations added by dwing
       -->
 
-      <t>An attacker could send packets containing either Short EKT Field or
+      <t>An attacker could send packets containing a
       Full EKT Field, in an attempt to consume additional CPU resources of the
-      receiving system.  In the case of the Short EKT Field, this field is
-      stripped and normal SRTP or SRTCP processing is performed.  In the case of
+      receiving system.  In the case of
       the Full EKT Field, the attacker would have to have guessed or otherwise
       determined the SPI being used by the receiving system.  If an invalid SPI
       is provided by the attacker, processing stops.  If a valid SPI is provided
