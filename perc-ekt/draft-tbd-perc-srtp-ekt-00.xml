@@ -124,8 +124,6 @@
       </address>
     </author>
 
-
-
     <date />
 
     <area>ART</area>
@@ -1104,135 +1102,28 @@ SRTP packets                 <------->      SRTP packets
       </section>
 
       <section title="Offer/Answer Considerations">
-        <t>This section describes Offer/Answer considerations for the use of EKT
-        together with DTLS-SRTP for unicast and multicast streams. The offerer
-        and answerer MUST follow the procedures specified in <xref
-        target="RFC5764"></xref> as well as the following ones.</t>
 
-        <t>As most DTLS-SRTP processing is performed on the media channel,
-        rather than in SDP, there is little processing performed in SDP other
-        than informational and to redirect DTLS-SRTP to an alternate host.
-        Advertising support for the extension is necessary in SDP because in
-        some cases it is required to establish an SRTP call. For example, a
-        mixer may be able to only support SRTP listeners if those listeners
-        implement DTLS Key Transport (because it lacks the CPU cycles necessary
-        to encrypt SRTP uniquely for each listener).</t>
-
-        <section title="Generating the Initial Offer">
-          <t>The initial offer contains a new SDP attribute, "dtls-srtp-ekt",
-          which contains no value. This attribute MUST only appear at the media
-          level.  This attribute indicates the offerer is capable of supporting
-          DTLS-SRTP with EKT extensions, and indicates the desire to use the
-          "ekt" extension during the DTLS-SRTP handshake.
-
-          <!--If the offerer wants another host to perform DTLS-SRTP-EKT
-               processing, it also includes the dtls-srtp-host attribute in its
-               offer (<xref target="dtls-srtp-extensions"></xref>).-->
-          </t>
-
-          <figure>
-            <preamble>An example of SDP containing the dtls-srtp-ekt
-            attribute::</preamble>
-
-            <artwork align="center"><![CDATA[         
-v=0
-o=sam 2890844526 2890842807 IN IP4 192.0.2.5
-s=SRTP Discussion
-i=A discussion of Secure RTP
-u=http://www.example.com/seminars/srtp.pdf
-e=marge@example.com (Marge Simpson)
-c=IN IP4 192.0.2.12
-t=2873397496 2873404696
-m=audio 49170 UDP/TLS/RTP/SAVP 0
-a=fingerprint:SHA-1 
-  4A:AD:B9:B1:3F:82:18:3B:54:02:12:DF:3E:5D:49:6B:19:E5:7C:AB
-a=dtls-srtp-ekt
-]]></artwork>
-
-            <postamble>For legibility the SDP shows line breaks that are not
-            present on the wire.</postamble>
-          </figure>
-
-          <t></t>
-        </section>
-
-        <section title="Generating the Initial Answer">
-
-          <t>Upon receiving the initial offer, the presence of the dtls-srtp-ekt
-          attribute indicates a desire to receive the EKT extension in the
-          DTLS-SRTP handshake. <!--The presence of the dtls-srtp-host attribute
-          indicates an alternate host to send the DTLS-SRTP handshake (instead
-          of the host on the c/m lines).--> DTLS messages should be constructed
-          according to those two attributes.</t>
-
-	      <t>If the answerer does not wish to perform EKT, it MUST NOT include
-	      a=dtls-srtp-ekt in the SDP answer, and it MUST NOT negotiate EKT
-	      during its DTLS-SRTP exchange.</t>
-
-          <t>Otherwise, the dtls-srtp-ekt attribute SHOULD be included in the
-          answer, and EKT SHOULD be negotiated in the DTLS-SRTP handshake.</t>
-
-          <!--It should only contain the dtls-srtp-host attribute if the
-               answerer also wishes to offload its DTLS-SRTP processing to
-               another host.-->
-          
-        </section>
-
-        <section title="Processing the Initial Answer">
-          
-          <t>The presence of the dtls-srtp-ekt attribute indicates a desire by
-          the answerer to perform DTLS-SRTP with EKT extensions.<!-- , and the
-          dtls-srtp-host attribute indicates an alternate host for DTLS-SRTP
-          processing.--> There are two indications the remote peer does not want
-          to do EKT: the dtls-srtp-ekt attribute is not present in the answer,
-          or the DTLS-SRTP exchange fails to negotiate the EKT extension.  If
-          the dtls-srtp-ekt attribute is not present in the answer, the
-          DTLS-SRTP exchange MUST NOT attempt to negotiate the EKT extension.
-          If the dtls-srtp-ekt attribute is present in the answer but the
-          DTLS-SRTP exchange fails to negotiate the EKT extension, EKT MUST NOT
-          be used with that media stream.</t>
-
-          <t>After successful DTLS negotiation of the EKT extension, the
-          DTLS client and server MAY exchange SRTP packets, encrypted using
-          the KDF described in <xref target="RFC5764"></xref>. This is normal
-          and expected, even if Key Transport was negotiated by both sides, as
-          neither side may (yet) have a need to alter the SRTP key. However,
-          it is also possible that one (or both) peers will immediately send
-          an EKT packet before sending any SRTP, and also possible that
-          SRTP, encrypted with an unknown key, may be received before the
-          EKT packet is received.</t>
-        </section>
-
-        <section title="Sending DTLS EKT Key Reliably">
-          
-          <t>In the absence of a round trip time estimate, the DTLS ekt_key
-          message is sent using an exponential backoff initialized to 250ms, so
-          that if the first message is sent at time 0, the next transmissions
-          are at 250ms, 500ms, 1000ms, and so on.  If a recent round trip time
-          estimate is available, exponential backoff is used with the first
-          transmission at 1.5 times the round trip time estimate.  In either
-          case, re-transmission stops when ekt_key_ack or ekt_key_error message
-          is received for the matching message_seq.</t>
-        </section>
-
-        <section title="Modifying the Session">
-          
-          <t>As DTLS-SRTP-EKT processing is done on the DTLS-SRTP channel (media
-          channel) rather than signaling, no special processing for modifying
-          the session is necessary.</t>
-
-	  <t>If the initial offer and initial answer both contained EKT attributes
-	  (indicating the answerer desired to perform EKT), a subsequent
-	  offer/answer exchange MUST also contain those same EKT attributes.  If
-	  not, operation is undefined and the sesion MAY be terminated.  If the
-	  initial offer and answer failed to negotiate EKT (that is, the answer did
-	  not contain EKT attributes), EKT negotiation failed and a subsequent offer
-	  SHOULD NOT include EKT attributes.</t>
-      
-        </section>
+        <t> When using EKT with DTLS-SRTP, the negoatiaon to use EKT is done at
+        the DTLS handshake level and does not change the Offer / Answer </t>
+       
       </section>
     </section>
 
+    <section title="Sending the DTLS EKT_Key Reliably">
+      
+      <t>In the absence of a round trip time estimate, the DTLS ekt_key 
+      message is sent using an exponential backoff initialized to 250ms, so 
+      that if the first message is sent at time 0, the next transmissions 
+      are at 250ms, 500ms, 1000ms, and so on.  If a recent round trip time 
+      estimate is available, exponential backoff is used with the first 
+      transmission at 1.5 times the round trip time estimate.  In either 
+      case, re-transmission stops when ekt_key_ack or ekt_key_error message 
+      is received for the matching message_seq.</t>
+      
+    </section>
+    
+
+        
     <section title="Using EKT for Interoperability between Key Management Systems" anchor="interop">
 
       <t>
