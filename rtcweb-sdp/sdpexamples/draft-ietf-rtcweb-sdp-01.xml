@@ -3559,8 +3559,8 @@ Alice                                                 Bob
         <t>One video source corresponds to VP8 encoding, while the other
         corresponds to H.264 encoding. </t>
         <t><xref target="I-D.ietf-mmusic-rid"/> framework is used 
-        to specify futher constrain the media format encodings and map 
-        the payload types (PT) to 'rid' identifiers. </t>
+        to further constrain the media format encodings and map 
+        the payload types (PT) to the 'rid' identifiers. </t>
         <t> <xref target="I-D.ietf-mmusic-sdp-simulcast"/> framework identifies
         the simulcast streams via their 'rid' identifiers.</t>
         <t>bundle-only framework is used along with BUNDLE grouping framework
@@ -3699,7 +3699,7 @@ Alice                                            Bob
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
           <c>a=bundle-only</c>
-          <c><xref target="UNIFIED-PLAN"/> </c>
+          <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/> </c>
           <c>a=rtcp-fb:98 nack</c>
           <c><xref target="RFC5104"></xref> </c>
           <c>a=rtcp-fb:98 nack pli</c>
@@ -3754,7 +3754,7 @@ Alice                                            Bob
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
           <c>a=bundle-only</c>
-          <c><xref target="UNIFIED-PLAN"/> </c>
+          <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/> </c>
           <c>a=rtcp-fb:101 nack</c>
           <c><xref target="RFC5104"></xref> </c>
           <c>a=rtcp-fb:101 nack pli</c>
@@ -3877,7 +3877,7 @@ Alice                                            Bob
           <c>a=rtcp-mux </c>
           <c><xref target="RFC5576"/> </c>
           <c>a=bundle-only</c>
-          <c><xref target="UNIFIED-PLAN"/> </c>
+          <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/> </c>
           <c>a=rtcp-rsize</c>
           <c><xref target="RFC5506"></xref></c>
           <c>m=video 49203 UDP/TLS/RTP/SAVPF 101 102</c>
@@ -3928,7 +3928,7 @@ Alice                                            Bob
           <c>a=rtcp-mux </c>
           <c><xref target="RFC5576"/></c>
           <c>a=bundle-only</c>
-          <c><xref target="UNIFIED-PLAN"/> </c>
+          <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/> </c>
           <c>a=rtcp-rsize</c>
           <c><xref target="RFC5506"></xref></c>
         </texttable>
@@ -4069,7 +4069,7 @@ Alice                                            Bob
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
           <c>a=bundle-only</c>
-          <c><xref target="UNIFIED-PLAN"/> </c>
+          <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/> </c>
           <c>a=ssrc:1732846380 cname:axzo1278npDlAzM73</c>
           <c><xref target="RFC5576"></xref></c>
           <c>a=ssrc:1732846381 cname:axzo1278npDlAzM73</c>
@@ -4181,7 +4181,7 @@ Alice                                            Bob
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
           <c>a=bundle-only</c>
-          <c><xref target="UNIFIED-PLAN"/> </c>
+          <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/> </c>
           <c>a=ssrc:4638117328 cname:axzo1278npDlAzM73</c>
           <c><xref target="RFC5576"></xref></c>
           <c>a=rtcp-rsize</c>
@@ -4194,7 +4194,7 @@ Alice                                            Bob
         simulcast scenario with 3 resolutions and has
         <xref target="RFC4588"></xref> style re-transmission flows.</t>
         <t><xref target="I-D.ietf-mmusic-rid"/> framework is used to specify
-        all the (3) resolution constraints mapped to a single Payload Type(98).</t>
+        all the (3) resolution constraints mapped to a single Payload Type (98).</t>
         <t><xref target="I-D.ietf-mmusic-sdp-simulcast"/> framework identifies the 
         simulcast streams via their 'rid' identifiers.</t>
         <figure>
@@ -4218,7 +4218,7 @@ Alice                                                    Bob
 |<--------------------------------------------------------|
 |                                                         |
 |                                                         |
-|One-Way 1 Opus, 2 VP8 and RTX video streams,all muxed    |
+|One-Way 1 Opus, 3 VP8 and RTX video streams,all muxed    |
 |.........................................................|
 |                                                         |
 |                                                         |
@@ -4334,7 +4334,7 @@ Alice                                                    Bob
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"/></c>
           <c>a=bundle-only</c>
-          <c><xref target="UNIFIED-PLAN"/> </c>
+          <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/> </c>
           <c>a=rtcp-fb:* nack</c>
           <c><xref target="RFC5104"></xref> </c>
           <c>a=rtcp-fb:* nack pli</c>
@@ -4451,7 +4451,7 @@ Alice                                                    Bob
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
           <c>a=bundle-only</c>
-          <c><xref target="UNIFIED-PLAN"/> </c>
+          <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/> </c>
           <c>a=rtcp-fb:* nack</c>
           <c><xref target="RFC5104"></xref> </c>
           <c>a=rtcp-fb:* nack pli</c>
@@ -4618,7 +4618,7 @@ Alice                                                    Bob
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
           <c>a=bundle-only</c>
-          <c><xref target="UNIFIED-PLAN"/> </c>
+          <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/> </c>
           <c>a=rtcp-fb:* nack</c>
           <c><xref target="RFC5104"></xref> </c>
           <c>a=rtcp-fb:* nack pli</c>
@@ -4731,7 +4731,7 @@ Alice                                                    Bob
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
           <c>a=bundle-only</c>
-          <c><xref target="UNIFIED-PLAN"/> </c>
+          <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/> </c>
           <c>a=rtcp-rsize</c>
           <c><xref target="RFC5506"></xref></c>
         </texttable>
@@ -4741,7 +4741,7 @@ Alice                                                    Bob
         <t>This section shows an SDP Offer/Answer exchange for Simulcast
         video stream at two resolutions and and has
         <xref target="RFC5956"></xref> style FEC flows.</t>
-         <t> On completion of the Offer/Answer exchange mechanism we end up
+        <t> On completion of the Offer/Answer exchange mechanism we end up
          one audio stream, 2 simulcast video streams and 2 associated
          FEC streams are sent over a single 5-tuple.</t>
         <figure>
@@ -4890,7 +4890,7 @@ Alice                                                            Bob
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
           <c>a=bundle-only</c>
-          <c><xref target="UNIFIED-PLAN"/> </c>
+          <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/> </c>
           <c>a=rtcp-fb:* nack</c>
           <c><xref target="RFC5104"></xref> </c>
           <c>a=rtcp-fb:* nack pli</c>
@@ -4995,7 +4995,7 @@ Alice                                                            Bob
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
           <c>a=bundle-only</c>
-          <c><xref target="UNIFIED-PLAN"/> </c>
+          <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/> </c>
           <c>a=ice-ufrag:074c6550</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
@@ -5493,7 +5493,7 @@ Alice                                                       Bob
           <c>a=ssrc:12345 cname:axzo1278npDlAzM73</c>
           <c><xref target="RFC5576"></xref></c>
           <c>a=bundle-only</c>
-          <c><xref target="UNIFIED-PLAN"/> </c>
+          <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/> </c>
           <c>a=sendrecv</c>
           <c><xref target="RFC3264"></xref></c>
           <c>a=rtcp-rsize</c>
@@ -5517,7 +5517,7 @@ Alice                                                       Bob
           <c>a=ssrc:67890 cname:axzo1278npDlAzM73</c>
           <c><xref target="RFC5576"/></c>
           <c>a=bundle-only</c>
-          <c><xref target="UNIFIED-PLAN"/> </c>
+          <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/> </c>
           <c>a=sendrecv</c>
           <c><xref target="RFC3264"></xref></c>
           <c>a=rtcp-rsize</c>
@@ -5844,6 +5844,12 @@ Alice                                                          Bob
     </section>
     <section title="Change Log">
       <t>[RFC EDITOR NOTE: Please remove this section when publishing]</t>
+      <t>Changes from draft-ietf-rtcweb-sdp-00
+          <list style="symbols">
+              <t> Updated Simulcast/FEC/RTX examples to use RID framework</t>
+              <t> Fixed BUNDLE references for a=bundle-only</t>
+         </list>
+      </t>
       <t>Changes from draft-nandakumar-rtcweb-sdp-08
           <list style="symbols">
               <t> Fixed typos </t>
@@ -5970,25 +5976,6 @@ Alice                                                          Bob
           <date year="" month=""/>
         </front>
         <seriesInfo name="&lt;http://dev.w3.org/2011/webrtc/editor/webrtc.html&gt;" value=""/>
-      </reference>
-      <reference anchor="UNIFIED-PLAN">
-        <front>
-          <title> A Unified Plan for Using SDP with Large Numbers of Media Flows</title>
-          <author fullname="Adam B Roach" initials="A.B." surname="Roach">
-            <organization></organization>
-          </author>
-          <author fullname="Justin Uberti" initials="J." surname="Uberti">
-            <organization></organization>
-          </author>
-          <author fullname="Martin Thomson" initials="M." surname="Thomson">
-            <organization></organization>
-          </author>
-          <date month="July" year="2013" />
-        </front>
-        <seriesInfo name="Internet-Draft"
-          value="draft-roach-mmusic-unified-plan" />
-        <format target="http://tools.ietf.org/html/draft-roach-mmusic-unified-plan-00"
-          type="TXT" />
       </reference>
       </references>
   </back>
