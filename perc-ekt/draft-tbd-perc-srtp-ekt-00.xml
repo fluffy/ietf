@@ -440,8 +440,8 @@ Short_EKT_Field = '0000000' || EKT_Type_Short
           target="cipher"></xref>. Implementations MAY cache the value of this
           field to avoid recomputing it for each packet that is sent.  Then the
           EKT Ciphertext field is computed using the EKT cipher's encryption
-          function.  The SRTP master key corresponding to the SSRC (and MKI, if
-          present) in the packet is the plaintext input, and the Key Encrypting
+          function.  The SRTP master key corresponding to the SSRC
+          in the packet is the plaintext input, and the Key Encrypting
           Key is used as its key.  <list style="empty"> <t> Note: the value of
           the EKT Ciphertext field is identical in successive packets protected
           by the same KEK and SRTP master key.  This value MAY be cached by an
@@ -531,9 +531,7 @@ Short_EKT_Field = '0000000' || EKT_Type_Short
 		        Otherwise, the ROC in the SRTP context is set to the value of
 		        the ROC from the EKT_Plaintext, and the SRTP Master Key from the
 		        EKT_Plaintext is accepted as the SRTP master key corresponding
-		        to the SSRC indicated in the EKT_Plaintext.  If
-		        an MKI is present in the packet, then the master key corresponds
-		        to the particular SSRC and MKI combination.</t>
+		        to the SSRC indicated in the EKT_Plaintext. </t>
 		   
                 <t>If there is already an SRTP crypto context associated with
                 the SSRC in the packet, and replay protection is in use, then
@@ -548,7 +546,7 @@ Short_EKT_Field = '0000000' || EKT_Type_Short
 
                 <t>The newly accepted SRTP master key, the SRTP parameters from
                 the matching parameter set, and the SSRC from the packet,
-                and the MKI from the packet, if one is present, are stored in
+                are stored in
                 the crypto context associated with the SRTP source (SSRC). The
                 SRTP Key Derivation algorithm is run in order to compute the
                 SRTP encryption and authentication keys, and those keys are
@@ -585,7 +583,7 @@ Short_EKT_Field = '0000000' || EKT_Type_Short
                   provisional SRTP master key.  </t>
                   
                   <t> If the provisional key matches the key associated with the
-                  SSRC (and MKI, if one is present), then the packet is
+                  SSRC, then the packet is
                   processed as follows.  The base authentication function is
                   used to check the authenticity of the packet, as described in
                   Step 3 above.  If the check passes, the packet is accepted,
@@ -593,7 +591,7 @@ Short_EKT_Field = '0000000' || EKT_Type_Short
                   Rollover Counter field.  </t>
                   
                   <t> If the provisional key does not match the SRTP master key
-                  associated with the SRTP source (and MKI, if present), then
+                  associated with the SRTP source, then
                   processing proceeds as follows.  The authenticity of the
                   packet is checked using the provisional key and base SRTCP
                   authentication function, as in Step 3 above.  If that check
