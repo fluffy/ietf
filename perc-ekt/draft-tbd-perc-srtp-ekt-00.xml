@@ -554,17 +554,16 @@ Full_EKT_Field = EKT_Ciphertext || SPI || '1'
 		        an MKI is present in the packet, then the master key corresponds
 		        to the particular SSRC and MKI combination.</t>
 		   
-                    <t>If there is already an SRTP crypto context associated
-                    with the SSRC in the packet, and replay protection is in
-                    use, then the receiver performs the replay check described
-                    in Section 3.3.2 of <xref target="RFC3711"></xref>. If the
-                    EKT fields are conveyed in an RTCP packet, then the packet
-                    index used in that check is formed from the Rollover Counter
-                    and the Initial Sequence Number fields in that packet. If
-                    the EKT fields are conveyed in an SRTP packet, then the
-                    packet index used in that check is formed from the EKT
-                    Rollover Counter field and the RTP Sequence Number in that
-                    packet.</t>
+                <t>If there is already an SRTP crypto context associated with
+                the SSRC in the packet, and replay protection is in use, then
+                the receiver performs the replay check described in Section
+                3.3.2 of <xref target="RFC3711"></xref>. If the EKT fields are
+                conveyed in an RTCP packet, then the packet index used in that
+                check is formed from the Rollover Counter and the Initial
+                Sequence Number fields in that packet. If the EKT fields are
+                conveyed in an SRTP packet, then the packet index used in that
+                check is formed from the EKT Rollover Counter field and the RTP
+                Sequence Number in that packet.</t>
 
                 <t>The newly accepted SRTP master key, the SRTP parameters from
                 the matching parameter set, and the SSRC from the packet,
