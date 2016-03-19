@@ -199,7 +199,8 @@ Right now security normatively depends on
 {{I-D.ietf-rtcweb-overview }}.
 
 The drafts webrtc currently normatively depends on that are not WG drafts are:
-{{I-D.shieh-rtcweb-ip-handling}}
+{{I-D.shieh-rtcweb-ip-handling}} has been adoped by WG but not
+published yet. 
 
 A few key drafts that the work informatively depends on:
 {{I-D.alvestrand-rtcweb-gateways}}, 

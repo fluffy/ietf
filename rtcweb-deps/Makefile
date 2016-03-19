@@ -1,30 +1,30 @@
 
-NAME=draft-jennings-rtcweb-deps-09
-MD=kramdown-rfc2629
+NAME=draft-jennings-rtcweb-deps
+VERSION=09
+
+MD=mmark --bib-rfc "/Users/fluffy/bibxml/" --bib-id "/Users/fluffy/bibxml/" 
 X2R=xml2rfc
 CF=cupsfilter
 
 all: txt html
 
-txt: $(NAME).txt
-html: $(NAME).html
-pdf: $(NAME).pdf
+txt: $(NAME)-$(VERSION).txt
+html: $(NAME)-$(VERSION).html
+pdf: $(NAME)-$(VERSION).pdf
 
 clean:
-	if [ -e $(NAME).xml  ]; then rm $(NAME).xml ; fi
-	if [ -e $(NAME).txt  ]; then rm $(NAME).txt ; fi
-	if [ -e $(NAME).html ]; then rm $(NAME).html; fi
-	if [ -e $(NAME).pdf  ]; then rm $(NAME).pdf ; fi
+	rm -f $(NAME)-??.txt $(NAME)-??.xml $(NAME)-??.html $(NAME)-??.pdf
 
-$(NAME).pdf: $(NAME).txt
-	$(CF) $(NAME).txt >$(NAME).pdf
 
-$(NAME).txt: $(NAME).xml
-	$(X2R) $(NAME).xml --text 
+$(NAME)-$(VERSION).pdf: $(NAME)-$(VERSION).txt
+	$(CF) $(NAME)-$(VERSION).txt >$(NAME)-$(VERSION).pdf
 
-$(NAME).html: $(NAME).xml
-	$(X2R) $(NAME).xml --html
+$(NAME)-$(VERSION).txt: $(NAME)-$(VERSION).xml
+	$(X2R) $(NAME)-$(VERSION).xml --text 
 
-$(NAME).xml: $(NAME).md
-	$(MD) <$(NAME).md >$(NAME).xml
+$(NAME)-$(VERSION).html: $(NAME)-$(VERSION).xml
+	$(X2R) $(NAME)-$(VERSION).xml --html
+
+$(NAME)-$(VERSION).xml: $(NAME).md
+	$(MD)  -xml2 -page $(NAME).md > $(NAME)-$(VERSION).xml
 
