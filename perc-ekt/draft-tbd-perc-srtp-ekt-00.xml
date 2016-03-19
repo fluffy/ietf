@@ -35,7 +35,7 @@
 <?rfc sortrefs="yes"?>
 <?rfc iprnotified="no" ?>
 <?rfc strict="yes" ?>
-<rfc category="std" docName="draft-tbd-perc-srtp-ekt-00" ipr="trust200902">
+<rfc category="std" docName="draft-jennings-perc-srtp-ekt-diet-00" ipr="trust200902">
   <front>
     <title abbrev="EKT SRTP">Encrypted Key Transport for Secure RTP</title>
 
