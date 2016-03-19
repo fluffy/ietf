@@ -273,17 +273,24 @@
         
       <section anchor="EKT" title="EKT Field Formats">
         
-        <t> The EKT Field uses the format defined below for the Full EKT Field
-        (or Full_EKT_Field).  </t>
+        <t> The EKT Field uses the format defined below for the Full_EKT_Field
+        and Short_EKT_Field.  </t>
 
         <figure anchor="tag_formats"
                 title="EKT data formats">
 <artwork align="left"><![CDATA[
+
+EKT_Type_Full = 1  
+EKT_Type_Short = 0  
+
 EKT_Plaintext = SRTP_Master_Key || SSRC || ROC 
 
 EKT_Ciphertext = EKT_Encrypt(EKT_Key, EKT_Plaintext)
 
-Full_EKT_Field = EKT_Ciphertext || SPI || '1'
+Full_EKT_Field = EKT_Ciphertext || SPI ||  EKT_Type_Full
+
+Short_EKT_Field = '0000000' || EKT_Type_Short
+
 ]]></artwork>
         </figure>
 
@@ -358,11 +365,10 @@ Full_EKT_Field = EKT_Ciphertext || SPI || '1'
           associated with an EKT cipher and an SRTP parameter set.  
 	        </t>
             
-          
-                <t hangText="Final bit:">This MUST be 1 in the Full EKT Tag
-                format.</t>
-       
-      
+            <t hangText="Final bit:"> The last bit is used to indicate the
+            type of the Field. This MUST be 1 in the Full EKT Field
+            format and 0 in Short EKT Field.</t>
+                  
 
           </list>
         </t>
@@ -392,12 +398,14 @@ Full_EKT_Field = EKT_Ciphertext || SPI || '1'
 	    values match.  </t>
         
         <t> The new packet formats are simple: the
-	    Full_EKT_Field it appended at the tail end of the SRTP packet.  </t>
+	    Full_EKT_Field or  Short_EKT_Field is appended at the tail end of the SRTP packet.  </t>
          
         <section anchor="outbound" title="Outbound Processing">
 
 	      <t>See <xref target="timing"></xref> which describes when to send an
-	      EKT packet with a Full EKT Field.</t>
+	      EKT packet with a Full EKT Field. If a Full EKT Field is not being
+          sent, then a Short EKT Field needs to be sent so the receiver can
+          correctly parse that this packet does contain a Full EKT Field. </t>
 
           <t>When an SRTP or SRTCP packet is to be sent, the EKT field for that
           packet is created as follows, or uses an equivalent set of steps.  The
@@ -407,8 +415,7 @@ Full_EKT_Field = EKT_Ciphertext || SPI || '1'
 	      </t>
 
           <!-- 
-               Question: should we encourage sending the Full EKT twice (or even
-               three times) to accomodate packet loss?
+               Open Issue: should we encourage sending the Full EKT five times to accomodate packet loss?
           -->
          
 	      <t>
@@ -416,17 +423,6 @@ Full_EKT_Field = EKT_Ciphertext || SPI || '1'
 	        of the SRTP rollover counter (represented as an unsigned integer in
 	        network byte order).</t>
 
-          <t>The Initial Sequence Number field is set to zero, if the initial
-          RTP packet protected using the current SRTP master key for this source
-          preceded, or was concurrent with, the last roll-over of the RTP
-          sequence number. Otherwise, that field is set to the value of the RTP
-          sequence number of the initial RTP packet that was or will be
-          protected by that key. See "rekey" in <xref target="timing"></xref>.
-          The rekeying event MUST NOT change the value of ROC (otherwise, the
-          current value of the ROC would not be known to late joiners of
-          existing sessions).  This means rekeying near the end of sequence
-          number space (e.g., 100 packets before sequence number 65535) is not
-          possible because ROC needs to roll over.</t>
 
           <t>The Security Parameter Index field is set to the value of the
           Security Parameter Index that is associated with the outbound
@@ -465,9 +461,9 @@ Full_EKT_Field = EKT_Ciphertext || SPI || '1'
         </section>
 
         <section anchor="inbound" title="Inbound Processing">
-          <t>
-	        When an SRTP or SRTCP packet containing a Full EKT Field , it is
-	        processed as follows or using an equivalent set of steps.  Inbound
+         
+
+          <t> Inbound
 	        EKT processing MUST take place prior to the usual SRTP or SRTCP
 	        processing.  Implementation note: the receiver may want to have a
 	        sliding window to retain old master keys for some brief period of
@@ -479,8 +475,10 @@ Full_EKT_Field = EKT_Ciphertext || SPI || '1'
             
 	        <t>
 	          The final bit is checked to determine which EKT format is in use.
-	          If the packet contains a Full EKT Field, then processing continues
-	          as described below.
+	          When an SRTP or SRTCP packet contains a Short EKT Field, the Short
+	          EKT Field is removed from the packet then normal SRTP or SRTCP
+	          processing occurs.  If the packet contains a Full EKT Field, then
+	          processing continues as described below.
 	        </t>
 
             <t> 
