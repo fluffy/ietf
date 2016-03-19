@@ -686,9 +686,10 @@ Full_EKT_Field = EKT_Ciphertext || SPI || '1'
 transform   transform    plaintext  ciphertext  Full EKT Field
  ---------  ------------  ---------  ----------  --------------
 AES-128    AESKW_128 (m)    26          40            42
-AES-192    AESKW_192        34          48            50
 AES-256    AESKW_256        42          56            58
 ]]></artwork></figure>
+
+<!-- Open Issue: do we need a AES-192 transform -->
 
               <t>The mandatory to implement transform is AESKW_128, indicated by (m).</t>
 
