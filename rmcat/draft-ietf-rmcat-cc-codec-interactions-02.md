@@ -1,8 +1,8 @@
 ---
 title: "Congestion Control and Codec interactions in RTP Applications"
 abbrev: i3c
-docname:  draft-ietf-rmcat-cc-codec-interactions-00
-date: 2015-09-17
+docname:  draft-ietf-rmcat-cc-codec-interactions-02
+date: 2016-03-18
 category: std
 ipr: trust200902
 
@@ -294,8 +294,8 @@ Allowed Rate (from CC to Codec): The max transmit rate allowed over
 This section identifies certain advanced interactions that if implemented 
 by an RMCAT solution shall provide more granular control over the
 congestion control state and the encoder behavior. As of today,
-these interactions are optional to implemnt and future evaluations of
-the exisiting/upcoming codecs might result in considering some or
+these interactions are optional to implement and future evaluations of
+the existing/upcoming codecs might result in considering some or
 all of these as Mandatory interactions.
 
 
@@ -317,25 +317,8 @@ Media Elasticity (from Codec to CC): Many live media encoders are
 
 ###  Startup Ramp
 
-Startup Ramp (from Codec to CC, and from CC to Codec): Startup is an
-    important moment in a conversation.  Rapid rate adaptation during
-    startup is therefore important.  The codec should minimize its
-    startup media rate as much as possible without adversely impacting
-    the user experience, and support a strategy for rapid rate ramp.  The
-    CC should allow the highest startup media rate as possible without
-    adversely impacting network conditions, and also support rapid rate
-    ramp until stabilizing on the available bandwidth.  Startup can be
-    viewed as a negotiation between the codec and the CC.  The codec
-    requests a startup rate and ramp, and the CC responds with the
-    allowable parameters which may be lower/slower.  The RMCAT
-    requirements also include the possibility of bandwidth history to
-    further accelerate or even eliminate startup ramp time.  While this
-    is highly desirable from an application viewpoint, it may be less
-    acceptable to network operators, since it is in essence a gamble on
-    current congestion state matching historical state, with the
-    potential for significant congestion contribution if the gamble was
-    wrong.  Note that startup can often commence before user interaction
-    or conversation to reduce the chance of clipped media.
+Startup Ramp (from Codec to CC, and from CC to Codec): Startup is an 
+    important moment in a conversation.  Rapid rate adaptation during startup is therefore important.  The codec should minimize its startup media rate as much as possible without adversely impacting the user experience, and support a strategy for rapid rate ramp.  The CC should allow the highest startup media rate as possible without adversely impacting network conditions, and also support rapid rate ramp until stabilizing on the available bandwidth.  Startup can be viewed as a negotiation between the codec and the CC.  The specification of the ramp may take a number of forms depending on the interface to the codec; for example, a percentage bit rate increase per RTT (or other time interval), or an increased transmit window (in number of packets and/or octets allowed outstanding) are all potential forms.  The codec requests a startup rate and ramp, and the CC responds with the allowable parameters which may be lower/slower.  The RMCAT requirements also include the possibility of bandwidth history to further accelerate or even eliminate startup ramp time. While this acceleration or elimination in ramp time is beneficial to the session user experience when bandwidth is sufficient, it can be detrimental if significant congestion results (the user experience of this session and all other sessions traversing the point of congestion may unnecessarily degrade).  Therefore, it is recommended that use of potentially stale congestion state for acceleration or elimination in ramp up be limited to topologies or deployments believed to have sufficient bandwidth margin or those in which the potential transient congestion risk is acceptable.  Note that startup can often commence before user interaction or conversation to reduce the chance of clipped media.
 
 ###  Delay Tolerance
 
@@ -398,7 +381,9 @@ Rate Stability (from Codec to CC): The CC algorithm must strike a
 
 #  Acknowledgements
 
-The RMCAT design team discussions contributed to this memo.
+The RMCAT design team discussions contributed to this memo. The authors
+would also like to thank Michael Ramalho for reviewing and suggesting 
+text improvements.
 
 #  IANA Considerations
 

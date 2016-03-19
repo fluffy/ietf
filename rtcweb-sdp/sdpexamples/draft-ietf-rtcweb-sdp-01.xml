@@ -31,7 +31,9 @@
 <!ENTITY I-D.ietf-mmusic-sdp-bundle-negotiation
 		SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-mmusic-sdp-bundle-negotiation.xml">
 <!ENTITY I-D.ietf-mmusic-sdp-simulcast
-		SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-mmusic-sdp-simulcast.xml">
+    SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-mmusic-sdp-simulcast.xml">
+<!ENTITY I-D.ietf-mmusic-rid
+		SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-mmusic-rid.xml">
 <!ENTITY I-D.ietf-payload-rtp-opus
 		SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-payload-rtp-opus.xml">
 <!ENTITY I-D.ietf-payload-vp8
@@ -46,6 +48,8 @@
 		SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-mmusic-sctp-sdp.xml">
 <!ENTITY I-D.ietf-rtcweb-data-channel
 		SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-rtcweb-data-channel.xml">
+<!ENTITY I-D.ietf-payload-flexible-fec-scheme
+    SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-payload-flexible-fec-scheme.xml">   
 ]>
 <?xml-stylesheet type="text/xsl" href="rfc2629.xslt" ?>
 <?rfc toc="yes" ?>
@@ -57,7 +61,7 @@
 <?rfc colonspace="yes" ?>
 <?rfc rfcedstyle="no" ?>
 <?rfc tocdepth="4"?>
-<rfc category="info" docName="draft-ietf-rtcweb-sdp-00"
+<rfc category="info" docName="draft-ietf-rtcweb-sdp-01"
      ipr="trust200902">
   <front>
     <title abbrev="SDP4WebRTC">SDP for the WebRTC</title>
@@ -104,7 +108,7 @@
       </address>
     </author>
 
-    <date day="17" month="September" year="2015" />
+    <date day="17" month="March" year="2016" />
 
     <area>RAI</area>
 
@@ -3554,6 +3558,11 @@ Alice                                                 Bob
         resolutions.</t>
         <t>One video source corresponds to VP8 encoding, while the other
         corresponds to H.264 encoding. </t>
+        <t><xref target="I-D.ietf-mmusic-rid"/> framework is used 
+        to further constrain the media format encodings and map 
+        the payload types (PT) to the 'rid' identifiers. </t>
+        <t> <xref target="I-D.ietf-mmusic-sdp-simulcast"/> framework identifies
+        the simulcast streams via their 'rid' identifiers.</t>
         <t>bundle-only framework is used along with BUNDLE grouping framework
         to enable multiplexing of all the 5 streams
         (1 audio stream + 4 video streams) over a single RTP Session.</t>
@@ -3661,19 +3670,22 @@ Alice                                            Bob
           <c><xref target="RFC5888"></xref> Video m=line part of BUNDLE group</c>
           <c>a=rtpmap:98 VP8/90000</c>
           <c><xref target="I-D.ietf-payload-vp8"></xref></c>
-          <c>a=rtpmap:100 VP8/90000</c>
-          <c><xref target="I-D.ietf-payload-vp8"></xref></c>
-          <c>a=imageattr:98 [x=1280,y=720]</c>
-          <c><xref target="RFC6236"></xref>Camera-1,Encoding-1 Resolution</c>
           <c>a=fmtp:98 max-fr=30</c>
           <c><xref target="RFC4566"></xref></c>
-          <c>a=imageattr:100 [x=640,y=480]</c>
-          <c><xref target="RFC6236"></xref> Camera-1,Encoding-2 Resolution</c>
+          <c>a=rtpmap:100 VP8/90000</c>
+          <c><xref target="I-D.ietf-payload-vp8"></xref></c>
           <c>a=fmtp:100 max-fr=15</c>
           <c><xref target="RFC4566"></xref></c>
-          <c>a=simulcast: send 98;100</c>
+          <c>a=rid:1 send pt=98;max-width=1280;max-height=720;</c>
+          <c><xref target="I-D.ietf-mmusic-rid"></xref>
+          1:1 rid mapping to payload type and specify resolution constraints</c>
+          <c>a=rid:2 send pt=100;max-width=640;max-height=480;</c>
+          <c><xref target="I-D.ietf-mmusic-rid"></xref>
+          1:1 rid mapping to payload type and specify resolution constraints</c>
+          <c>a=simulcast: send 1;~2</c>
           <c><xref target="I-D.ietf-mmusic-sdp-simulcast"></xref>
-          Alice can send 2 resolutions</c>
+          Alice can send 2 resolutions identified by the 'rid' identifiers
+          Also, the second stream is initially paused.</c>
           <c>a=ssrc:12345 cname:axzo1278npDlAzM73</c>
           <c><xref target="RFC5576"></xref>
           <xref target="RFC7022"></xref>
@@ -3687,7 +3699,7 @@ Alice                                            Bob
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
           <c>a=bundle-only</c>
-          <c><xref target="UNIFIED-PLAN"/> </c>
+          <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/> </c>
           <c>a=rtcp-fb:98 nack</c>
           <c><xref target="RFC5104"></xref> </c>
           <c>a=rtcp-fb:98 nack pli</c>
@@ -3716,12 +3728,19 @@ Alice                                            Bob
           <c><xref target="RFC3984"></xref></c>
           <c>a=rtpmap:102 H264/90000</c>
           <c><xref target="RFC3984"></xref></c>
-          <c>a=fmtp:101 profile-level-id=4d0028;packetization-mode=1;max-fr=30 </c>
-          <c><xref target="RFC3984"></xref>Camera-2,Encoding-1 Resolution</c>
-          <c>a=fmtp:102 profile-level-id=4d0028;packetization-mode=1;max-fr=15</c>
-          <c><xref target="RFC3984"></xref>Camera-2,Encoding-2 Resolution</c>
-          <c>a=simulcast: send 101;102</c>
-          <c><xref target="I-D.ietf-mmusic-sdp-simulcast"></xref></c>
+          <c>a=fmtp:101 profile-level-id=42401f;packetization-mode=0;max-fr=30 </c>
+          <c><xref target="RFC3984"></xref>Camera-2,Encoding-1</c>
+          <c>a=fmtp:102 profile-level-id=42401f;packetization-mode=1;max-fr=15</c>
+          <c><xref target="RFC3984"></xref>Camera-2,Encoding-2</c>
+          <c>a=rid:3 send pt=101;max-width=1280;max-height=720;</c>
+          <c><xref target="I-D.ietf-mmusic-rid"></xref>
+          1:1 rid mapping to payload type and specify resolution constraints</c>
+          <c>a=rid:4 send pt=102;max-width=640;max-height=360;</c>
+          <c><xref target="I-D.ietf-mmusic-rid"></xref>
+          1:1 rid mapping to payload type and specify resolution constraints</c>
+          <c>a=simulcast: send 3;4</c>
+          <c><xref target="I-D.ietf-mmusic-sdp-simulcast"></xref>
+          Alice can send 2 resolutions identified by the 'rid' identifiers</c>
           <c>a=ssrc:67890 cname:axzo1278npDlAzM73</c>
           <c><xref target="RFC5576"></xref>
           <xref target="RFC7022"></xref>
@@ -3735,7 +3754,7 @@ Alice                                            Bob
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
           <c>a=bundle-only</c>
-          <c><xref target="UNIFIED-PLAN"/> </c>
+          <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/> </c>
           <c>a=rtcp-fb:101 nack</c>
           <c><xref target="RFC5104"></xref> </c>
           <c>a=rtcp-fb:101 nack pli</c>
@@ -3823,18 +3842,22 @@ Alice                                            Bob
           <c><xref target="I-D.ietf-payload-vp8"></xref></c>
           <c>a=rtpmap:100 VP8/90000</c>
           <c><xref target="I-D.ietf-payload-vp8"></xref></c>
-          <c>a=imageattr:98 [x=1280,y=720]</c>
-          <c><xref target="RFC6236"></xref>Camera-1,Encoding-1 Resolution</c>
           <c>a=fmtp:98 max-fr=30</c>
           <c><xref target="RFC4566"></xref></c>
-          <c>a=imageattr:100 [x=640,y=480]</c>
-          <c><xref target="RFC6236"></xref> Camera-1,Encoding-2 Resolution</c>
           <c>a=fmtp:100 max-fr=15</c>
           <c><xref target="RFC4566"></xref></c>
+          <c>a=rid:1 recv pt=98;max-width=1280;max-height=720;</c>
+          <c><xref target="I-D.ietf-mmusic-rid"></xref>
+          Bob accepts the offered payload format constraints</c>
+          <c>a=rid:2 recv pt=100;max-width=640;max-height=480;</c>
+          <c><xref target="I-D.ietf-mmusic-rid"></xref>
+          Bob accepts the offered payload format constraints</c>
+          <c>a=simulcast: recv 1;2</c>
+          <c><xref target="I-D.ietf-mmusic-sdp-simulcast"></xref>
+          Bob accepts the offered simulcast streams and removes the
+          paused state of stream with 'rid' value 2.</c>
           <c>a=recvonly</c>
           <c><xref target="RFC3264"></xref> - receive only video stream</c>
-          <c>a=simulcast: recv 98;100</c>
-          <c><xref target="I-D.ietf-mmusic-sdp-simulcast"></xref></c>
           <c>a=ssrc:54321 cname:y8/C90alEocUG1f0fcg</c>
           <c><xref target="RFC5576"/> </c>
           <c>a=ice-ufrag:c300d85b</c>
@@ -3854,10 +3877,10 @@ Alice                                            Bob
           <c>a=rtcp-mux </c>
           <c><xref target="RFC5576"/> </c>
           <c>a=bundle-only</c>
-          <c><xref target="UNIFIED-PLAN"/> </c>
+          <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/> </c>
           <c>a=rtcp-rsize</c>
           <c><xref target="RFC5506"></xref></c>
-          <c>m=video 54609 UDP/TLS/RTP/SAVPF 101 102</c>
+          <c>m=video 49203 UDP/TLS/RTP/SAVPF 101 102</c>
           <c> BUNDLE accepted with port repeated from the audio port </c>
           <c>c=IN IP4 98.248.92.77</c>
           <c><xref target="RFC4566"></xref></c>
@@ -3873,13 +3896,19 @@ Alice                                            Bob
           <c><xref target="RFC3984"></xref></c>
           <c>a=recvonly</c>
           <c><xref target="RFC3264"></xref></c>
-          <c>a=fmtp:101 profile-level-id=4d0028;packetization-mode=1;max-fr=30 </c>
+          <c>a=fmtp:101 profile-level-id=42401f;packetization-mode=1;max-fr=30 </c>
           <c><xref target="RFC3984"></xref></c>
-          <c>a=fmtp:102 profile-level-id=4d0028;packetization-mode=1;max-fr=15</c>
+          <c>a=fmtp:102 profile-level-id=42401f;packetization-mode=1;max-fr=15</c>
           <c><xref target="RFC3984"></xref></c>
-          <c>a=simulcast: recv 101;102</c>
+          <c>a=rid:3 recv pt=101;max-width=1280;max-height=720;</c>
+          <c><xref target="I-D.ietf-mmusic-rid"></xref>
+          Bob accepts the offered payload format constraints</c>
+          <c>a=rid:4 recv pt=102;max-width=640;max-height=360;</c>
+          <c><xref target="I-D.ietf-mmusic-rid"></xref>
+          Bob accepts the offered payload format constraints</c>
+          <c>a=simulcast: recv 3;4</c>
           <c><xref target="I-D.ietf-mmusic-sdp-simulcast"></xref>
-          Bob accepts to receieve the offered simulcast streams</c>
+          Bob accepts the offered simulcast streams.</c>
           <c>a=ssrc:90876 cname:axzo1278npDlAzM73</c>
           <c><xref target="RFC5576"></xref></c>
           <c>a=ice-ufrag:ufrag:c300d85b</c>
@@ -3899,7 +3928,7 @@ Alice                                            Bob
           <c>a=rtcp-mux </c>
           <c><xref target="RFC5576"/></c>
           <c>a=bundle-only</c>
-          <c><xref target="UNIFIED-PLAN"/> </c>
+          <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/> </c>
           <c>a=rtcp-rsize</c>
           <c><xref target="RFC5506"></xref></c>
         </texttable>
@@ -4040,7 +4069,7 @@ Alice                                            Bob
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
           <c>a=bundle-only</c>
-          <c><xref target="UNIFIED-PLAN"/> </c>
+          <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/> </c>
           <c>a=ssrc:1732846380 cname:axzo1278npDlAzM73</c>
           <c><xref target="RFC5576"></xref></c>
           <c>a=ssrc:1732846381 cname:axzo1278npDlAzM73</c>
@@ -4111,7 +4140,7 @@ Alice                                            Bob
           <c><xref target="RFC5245"></xref></c>
           <c>a=rtcp-rsize</c>
           <c><xref target="RFC5506"></xref></c>
-          <c>m=video 54609 UDP/TLS/RTP/SAVPF 96 100</c>
+          <c>m=video 49203 UDP/TLS/RTP/SAVPF 96 100</c>
           <c> BUNDLE accepted Bundle address same as audio m=line.</c>
           <c>c=IN IP4 98.248.92.77</c>
           <c><xref target="RFC4566"></xref></c>
@@ -4152,7 +4181,7 @@ Alice                                            Bob
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
           <c>a=bundle-only</c>
-          <c><xref target="UNIFIED-PLAN"/> </c>
+          <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/> </c>
           <c>a=ssrc:4638117328 cname:axzo1278npDlAzM73</c>
           <c><xref target="RFC5576"></xref></c>
           <c>a=rtcp-rsize</c>
@@ -4162,13 +4191,17 @@ Alice                                            Bob
       	<section anchor="sec.successful-simulcast-rtx"
         title="Successful Simulcast Video Session with Retransmission">
         <t>This section shows an SDP Offer/Answer exchange for a
-        simulcast scenario with 2 two resolutions and has
+        simulcast scenario with 3 resolutions and has
         <xref target="RFC4588"></xref> style re-transmission flows.</t>
+        <t><xref target="I-D.ietf-mmusic-rid"/> framework is used to specify
+        all the (3) resolution constraints mapped to a single Payload Type (98).</t>
+        <t><xref target="I-D.ietf-mmusic-sdp-simulcast"/> framework identifies the 
+        simulcast streams via their 'rid' identifiers.</t>
         <figure>
           <artwork alt="Successful-Session Simulcast RTX">
 <![CDATA[
 
-      Simulcast Streams with Retransmission
+        Simulcast Streams with Retransmission
 
 Alice                                                    Bob
 |                                                         |
@@ -4176,7 +4209,7 @@ Alice                                                    Bob
 |Alice offers single audio and simulcasted video streams  |
 |                                                         |
 |                                                         |
-|    Offer(Audio:Opus Video:VP8 with 2 resolutions)       |
+|    Offer(Audio:Opus Video:VP8 with 3 resolutions)       |
 |    & RTX stream                                         |
 |-------------------------------------------------------->|
 |                                                         |
@@ -4185,7 +4218,7 @@ Alice                                                    Bob
 |<--------------------------------------------------------|
 |                                                         |
 |                                                         |
-|One-Way 1 Opus, 2 VP8 and RTX video streams,all muxed    |
+|One-Way 1 Opus, 3 VP8 and RTX video streams,all muxed    |
 |.........................................................|
 |                                                         |
 |                                                         |
@@ -4257,7 +4290,7 @@ Alice                                                    Bob
           <c><xref target="RFC5245"></xref></c>
           <c>a=rtcp-rsize</c>
           <c><xref target="RFC5506"></xref></c>
-          <c>m=video 0 UDP/TLS/RTP/SAVPF 98 100 101 103</c>
+          <c>m=video 0 UDP/TLS/RTP/SAVPF 98 103</c>
           <c>bundle-only video line with port number set to zero</c>
           <c>c=IN IP4 24.23.204.141</c>
           <c><xref target="RFC4566"></xref></c>
@@ -4269,22 +4302,21 @@ Alice                                                    Bob
           <c><xref target="RFC5888"></xref></c>
           <c>a=rtpmap:98 VP8/90000</c>
           <c><xref target="I-D.ietf-payload-vp8"></xref></c>
-          <c>a=rtpmap:100 VP8/90000</c>
-          <c><xref target="I-D.ietf-payload-vp8"></xref></c>
-          <c>a=rtpmap:101 VP8/90000</c>
-          <c><xref target="I-D.ietf-payload-vp8"></xref></c>
-          <c>a=rtpmap:103 VP8/90000</c>
-          <c><xref target="I-D.ietf-payload-vp8"></xref></c>
-          <c>a=fmtp:98 max-fr=30;max-fs=8040</c>
+          <c>a=fmtp:98 max-fr=30;max-fs=3600</c>
           <c><xref target="RFC4566"></xref></c>
-          <c>a=fmtp:100 max-fr=15;max-fs=1200</c>
-          <c><xref target="RFC4566"></xref></c>
-          <c>a=fmtp:101 apt=98;rtx-time=3000</c>
+          <c>a=rtpmap:103 rtx/90000</c>
           <c><xref target="RFC4588"></xref></c>
-          <c>a=fmtp:103 apt=100;rtx-time=3000</c>
+          <c>a=fmtp:103 apt=98;rtx-time=200</c>
           <c><xref target="RFC4588"></xref></c>
-          <c>a=simulast: send 98;100 </c>
-          <c><xref target="I-D.ietf-mmusic-sdp-simulcast"></xref></c>
+          <c>a=rid:1 send pt=98;max-fs=921600;max-fr=30;</c>
+          <c><xref target="I-D.ietf-mmusic-rid"></xref></c>
+          <c>a=rid:2 send pt=98;max-fs=614400;max-fr=15;</c>
+          <c><xref target="I-D.ietf-mmusic-rid"></xref></c>
+          <c>a=rid:3 send pt=98;max-fs=230400;max-fr=30;</c>
+          <c><xref target="I-D.ietf-mmusic-rid"></xref></c>
+          <c>a=simulast: send 5;6;7 </c>
+          <c><xref target="I-D.ietf-mmusic-sdp-simulcast"></xref>
+          Alice can send all the simulcast streams</c>
           <c>a=ssrc-group:FID 12345 34567 </c>
           <c><xref target="RFC5888"/> </c>
           <c>a=ssrc-group:FID 78990 90887 </c>
@@ -4302,7 +4334,7 @@ Alice                                                    Bob
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"/></c>
           <c>a=bundle-only</c>
-          <c><xref target="UNIFIED-PLAN"/> </c>
+          <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/> </c>
           <c>a=rtcp-fb:* nack</c>
           <c><xref target="RFC5104"></xref> </c>
           <c>a=rtcp-fb:* nack pli</c>
@@ -4328,7 +4360,7 @@ Alice                                                    Bob
           <c><xref target="I-D.ietf-mmusic-msid"></xref></c>
           <c>a=group:BUNDLE m0 m1 </c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref>
-          Alice supports grouping of m=lines under BUNDLE semantics</c>
+          Bob supports grouping of m=lines under BUNDLE semantics</c>
           <c>a=ice-options:trickle</c>
           <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>m=audio 49203 UDP/TLS/RTP/SAVPF 109 </c>
@@ -4383,20 +4415,21 @@ Alice                                                    Bob
           <c><xref target="RFC5888"></xref> Video m=line part of BUNDLE group</c>
           <c>a=rtpmap:98 VP8/90000</c>
           <c><xref target="I-D.ietf-payload-vp8"></xref></c>
-          <c>a=rtpmap:100 VP8/90000</c>
-          <c><xref target="I-D.ietf-payload-vp8"></xref></c>
-          <c>a=rtpmap:101 VP8/90000</c>
-          <c><xref target="I-D.ietf-payload-vp8"></xref></c>
-          <c>a=rtpmap:103 VP8/90000</c>
-          <c><xref target="I-D.ietf-payload-vp8"></xref></c>
-          <c>a=fmtp:98 max-fr=30;max-fs=8040</c>
+          <c>a=fmtp:98 max-fr=30;max-fs=3600</c>
           <c><xref target="RFC4566"></xref></c>
-          <c>a=fmtp:100 max-fr=15;max-fs=1200</c>
-          <c><xref target="RFC4566"></xref></c>
-          <c>a=fmtp:101 apt=98;rtx-time=3000</c>
+          <c>a=rtpmap:103 rtx/90000</c>
           <c><xref target="RFC4588"></xref></c>
-          <c>a=fmtp:103 apt=100;rtx-time=3000</c>
+          <c>a=fmtp:103 apt=98;rtx-time=200</c>
           <c><xref target="RFC4588"></xref></c>
+          <c>a=rid:1 recv pt=98;max-fs=921600;max-fr=30;</c>
+          <c><xref target="I-D.ietf-mmusic-rid"></xref></c>
+          <c>a=rid:2 recv pt=98;max-fs=614400;max-fr=15;</c>
+          <c><xref target="I-D.ietf-mmusic-rid"></xref></c>
+          <c>a=rid:3 recv pt=98;max-fs=230400;max-fr=30;</c>
+          <c><xref target="I-D.ietf-mmusic-rid"></xref></c>
+          <c>a=simulast: recv 5;6;7 </c>
+          <c><xref target="I-D.ietf-mmusic-sdp-simulcast"></xref>
+          Bob accepts the offered simulcast streams</c>
           <c>a=ice-ufrag:074c6550</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
@@ -4418,7 +4451,7 @@ Alice                                                    Bob
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
           <c>a=bundle-only</c>
-          <c><xref target="UNIFIED-PLAN"/> </c>
+          <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/> </c>
           <c>a=rtcp-fb:* nack</c>
           <c><xref target="RFC5104"></xref> </c>
           <c>a=rtcp-fb:* nack pli</c>
@@ -4548,19 +4581,25 @@ Alice                                                    Bob
           <c><xref target="I-D.ietf-payload-vp8"></xref></c>
           <c>a=rtpmap:100 VP8/90000</c>
           <c><xref target="I-D.ietf-payload-vp8"></xref></c>
-          <c>a=rtpmap:101 VP8/90000</c>
-          <c><xref target="I-D.ietf-payload-vp8"></xref></c>
-          <c>a=rtpmap:103 VP8/90000</c>
-          <c><xref target="I-D.ietf-payload-vp8"></xref></c>
+          <c>a=rtpmap:101 rtx/90000</c>
+          <c><xref target="RFC4588"></xref></c>
+          <c>a=rtpmap:103 rtx/90000</c>
+          <c><xref target="RFC4588"></xref></c>
           <c>a=fmtp:98 max-fr=30;max-fs=8040</c>
           <c><xref target="RFC4566"></xref></c>
           <c>a=fmtp:100 max-fr=15;max-fs=1200</c>
           <c><xref target="RFC4566"></xref></c>
-          <c>a=fmtp:101 apt=98;rtx-time=3000</c>
+          <c>a=fmtp:101 apt=98;rtx-time=200</c>
           <c><xref target="RFC4588"></xref></c>
-          <c>a=fmtp:103 apt=100;rtx-time=3000</c>
+          <c>a=fmtp:103 apt=100;rtx-time=200</c>
           <c><xref target="RFC4588"></xref></c>
-          <c>a=simulcast: send 98;100 </c>
+          <c>a=rid:1 send pt=98;</c>
+          <c><xref target="I-D.ietf-mmusic-rid"></xref>
+          1:1 mapping between the PT and the 'rid' identifier</c>
+          <c>a=rid:2 send pt=100;</c>
+          <c><xref target="I-D.ietf-mmusic-rid"></xref>
+          1:1 mapping between the PT and the 'rid' identifier</c>
+          <c>a=simulcast: send 1;2 </c>
           <c><xref target="I-D.ietf-mmusic-sdp-simulcast"/></c>
           <c>a=ssrc-group:FID 12345 34567 </c>
           <c><xref target="RFC5888"/> </c>
@@ -4579,7 +4618,7 @@ Alice                                                    Bob
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
           <c>a=bundle-only</c>
-          <c><xref target="UNIFIED-PLAN"/> </c>
+          <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/> </c>
           <c>a=rtcp-fb:* nack</c>
           <c><xref target="RFC5104"></xref> </c>
           <c>a=rtcp-fb:* nack pli</c>
@@ -4605,7 +4644,7 @@ Alice                                                    Bob
           <c><xref target="I-D.ietf-mmusic-msid"></xref></c>
           <c>a=group:BUNDLE m0 m1 </c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref>
-          Alice supports grouping of m=lines under BUNDLE semantics</c>
+          Bob supports grouping of m=lines under BUNDLE semantics</c>
           <c>a=ice-options:trickle</c>
           <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>m=audio 49203 UDP/TLS/RTP/SAVPF 109 </c>
@@ -4660,8 +4699,14 @@ Alice                                                    Bob
           <c><xref target="I-D.ietf-payload-vp8"></xref></c>
           <c>a=fmtp:98 max-fr=30;max-fs=8040</c>
           <c><xref target="RFC4566"></xref></c>
-          <c>a=fmtp:101 apt=98;rtx-time=3000</c>
+          <c>a=fmtp:101 apt=98;rtx-time=200</c>
           <c><xref target="RFC4588"></xref></c>
+          <c>a=rid:1 recv pt=98;</c>
+          <c><xref target="I-D.ietf-mmusic-rid"></xref></c>
+          <c>a=simulcast: recv 1 </c>
+          <c><xref target="I-D.ietf-mmusic-sdp-simulcast"/>
+          Bob rejects the second simulcast stream and the associated
+          rtx stream.</c>
           <c>a=ice-ufrag:074c6550</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
@@ -4686,7 +4731,7 @@ Alice                                                    Bob
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
           <c>a=bundle-only</c>
-          <c><xref target="UNIFIED-PLAN"/> </c>
+          <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/> </c>
           <c>a=rtcp-rsize</c>
           <c><xref target="RFC5506"></xref></c>
         </texttable>
@@ -4696,7 +4741,7 @@ Alice                                                    Bob
         <t>This section shows an SDP Offer/Answer exchange for Simulcast
         video stream at two resolutions and and has
         <xref target="RFC5956"></xref> style FEC flows.</t>
-         <t> On completion of the Offer/Answer exchange mechanism we end up
+        <t> On completion of the Offer/Answer exchange mechanism we end up
          one audio stream, 2 simulcast video streams and 2 associated
          FEC streams are sent over a single 5-tuple.</t>
         <figure>
@@ -4808,28 +4853,26 @@ Alice                                                            Bob
           <c><xref target="I-D.ietf-payload-vp8"></xref></c>
           <c>a=rtpmap:100 VP8/90000</c>
           <c><xref target="I-D.ietf-payload-vp8"></xref></c>
-          <c>a=rtpmap:101 1d-interleaved-parityfec/90000</c>
+          <c>a=rtpmap:101 flexfec/90000</c>
           <c><xref target="RFC5956"></xref></c>
-          <c>a=rtpmap:103 1d-interleaved-parityfec/90000</c>
+          <c>a=rtpmap:103 flexfec/90000</c>
           <c><xref target="RFC5956"></xref></c>
           <c>a=fmtp:98 max-fr=30;max-fs=8040</c>
           <c><xref target="RFC4566"></xref></c>
           <c>a=fmtp:100 max-fr=15;max-fs=1200</c>
           <c><xref target="RFC4566"></xref></c>
-          <c>a=fmtp:101 L=5; D=10; repair-window=200000</c>
+          <c>a=fmtp:101 L=5; D=10; ToP=2; repair-window=200000</c>
           <c><xref target="RFC5956"></xref></c>
-          <c>a=fmtp:103 L=5; D=10; repair-window=200000</c>
+          <c>a=fmtp:103 L=5; D=10; ToP=2; repair-window=200000</c>
           <c><xref target="RFC5956"></xref></c>
-          <c>a=simulcast: send 98;100 </c>
+          <c>a=rid:1 send pt=98;</c>
+          <c><xref target="I-D.ietf-mmusic-rid"></xref>
+          1:1 mapping between the PT and the 'rid' identifier</c>
+          <c>a=rid:2 send pt=100;</c>
+          <c><xref target="I-D.ietf-mmusic-rid"></xref>
+          1:1 mapping between the PT and the 'rid' identifier</c>
+          <c>a=simulcast: send 1;2 </c>
           <c><xref target="I-D.ietf-mmusic-sdp-simulcast"/></c>
-          <c>a=depend:98 fec m1:101</c>
-		  <c>TBD</c>
-          <c>a=depend:100 fec m1:103</c>
-          <c>TBD</c>
-          <c>a=ssrc-group:FEC-FR 12345 34567 </c>
-          <c><xref target="RFC5888"/> </c>
-          <c>a=ssrc-group:FEC-FR 78990 90887 </c>
-          <c><xref target="RFC5888"/></c>
           <c>a=ssrc:12345 cname:Q/NWs1ao1HmN4Xa5</c>
           <c><xref target="RFC5576"/></c>
           <c>a=ssrc:78990 cname:Q/NWs1ao1HmN4Xa5</c>
@@ -4838,12 +4881,16 @@ Alice                                                            Bob
           <c><xref target="RFC5576"/></c>
           <c>a=ssrc:90887 cname:Q/NWs1ao1HmN4Xa5</c>
           <c><xref target="RFC5576"/></c>
+          <c>a=ssrc-group:FEC-FR 12345 34567 </c>
+          <c><xref target="RFC5956"/> </c>
+          <c>a=ssrc-group:FEC-FR 78990 90887 </c>
+          <c><xref target="RFC5956"/></c>
           <c>a=sendonly</c>
           <c><xref target="RFC3264"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
           <c>a=bundle-only</c>
-          <c><xref target="UNIFIED-PLAN"/> </c>
+          <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/> </c>
           <c>a=rtcp-fb:* nack</c>
           <c><xref target="RFC5104"></xref> </c>
           <c>a=rtcp-fb:* nack pli</c>
@@ -4895,8 +4942,6 @@ Alice                                                            Bob
           <c><xref target="RFC4145"></xref> </c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
-          <c>a=ssrc:33333 cname:Y9/cZke09JAtpl98</c>
-          <c><xref target="RFC5576"></xref></c>
           <c>a=ice-ufrag:074c6550</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
@@ -4925,24 +4970,24 @@ Alice                                                            Bob
           <c><xref target="I-D.ietf-payload-vp8"></xref></c>
           <c>a=rtpmap:100 VP8/90000</c>
           <c><xref target="I-D.ietf-payload-vp8"></xref></c>
-          <c>a=rtpmap:101 1d-interleaved-parityfec/90000</c>
+          <c>a=rtpmap:101 flexfec/90000</c>
           <c><xref target="RFC5956"></xref></c>
-          <c>a=rtpmap:103 1d-interleaved-parityfec/90000</c>
+          <c>a=rtpmap:103 flexfec/90000</c>
           <c><xref target="RFC5956"></xref></c>
           <c>a=fmtp:98 max-fr=30;max-fs=8040</c>
           <c><xref target="RFC4566"></xref></c>
           <c>a=fmtp:100 max-fr=15;max-fs=1200</c>
           <c><xref target="RFC4566"></xref></c>
-          <c>a=fmtp:101 L=5; D=10; repair-window=200000</c>
+          <c>a=fmtp:101 L=5; D=10; ToP=2; repair-window=200000</c>
           <c><xref target="RFC5956"></xref></c>
-          <c>a=fmtp:103 L=5; D=10; repair-window=200000</c>
+          <c>a=fmtp:103 L=5; D=10; ToP=2; repair-window=200000</c>
           <c><xref target="RFC5956"></xref></c>
-          <c>a=simulcast: recv 98;100 </c>
+          <c>a=rid:1 recv pt=98;</c>
+          <c><xref target="I-D.ietf-mmusic-rid"></xref></c>
+          <c>a=rid:2 recv pt=100;</c>
+          <c><xref target="I-D.ietf-mmusic-rid"></xref></c>
+          <c>a=simulcast: recv 1;2 </c>
           <c><xref target="I-D.ietf-mmusic-sdp-simulcast"/></c>
-          <c>a=depend:98 fec m1:101</c>
-		  <c>TBD</c>
-          <c>a=depend:100 fec m1:103</c>
-          <c>TBD</c>
           <c>a=recvonly</c>
           <c><xref target="RFC3264"></xref></c>
           <c>a=setup:active</c>
@@ -4950,7 +4995,7 @@ Alice                                                            Bob
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
           <c>a=bundle-only</c>
-          <c><xref target="UNIFIED-PLAN"/> </c>
+          <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/> </c>
           <c>a=ice-ufrag:074c6550</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
@@ -5448,7 +5493,7 @@ Alice                                                       Bob
           <c>a=ssrc:12345 cname:axzo1278npDlAzM73</c>
           <c><xref target="RFC5576"></xref></c>
           <c>a=bundle-only</c>
-          <c><xref target="UNIFIED-PLAN"/> </c>
+          <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/> </c>
           <c>a=sendrecv</c>
           <c><xref target="RFC3264"></xref></c>
           <c>a=rtcp-rsize</c>
@@ -5472,7 +5517,7 @@ Alice                                                       Bob
           <c>a=ssrc:67890 cname:axzo1278npDlAzM73</c>
           <c><xref target="RFC5576"/></c>
           <c>a=bundle-only</c>
-          <c><xref target="UNIFIED-PLAN"/> </c>
+          <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/> </c>
           <c>a=sendrecv</c>
           <c><xref target="RFC3264"></xref></c>
           <c>a=rtcp-rsize</c>
@@ -5799,6 +5844,12 @@ Alice                                                          Bob
     </section>
     <section title="Change Log">
       <t>[RFC EDITOR NOTE: Please remove this section when publishing]</t>
+      <t>Changes from draft-ietf-rtcweb-sdp-00
+          <list style="symbols">
+              <t> Updated Simulcast/FEC/RTX examples to use RID framework</t>
+              <t> Fixed BUNDLE references for a=bundle-only</t>
+         </list>
+      </t>
       <t>Changes from draft-nandakumar-rtcweb-sdp-08
           <list style="symbols">
               <t> Fixed typos </t>
@@ -5902,6 +5953,7 @@ Alice                                                          Bob
       &RFC7022;
       &I-D.ietf-mmusic-sdp-bundle-negotiation;
       &I-D.ietf-mmusic-sdp-simulcast;
+      &I-D.ietf-mmusic-rid;
       &I-D.ietf-payload-rtp-opus;
       &I-D.ietf-payload-vp8;
       &I-D.ietf-rtcweb-jsep;
@@ -5909,6 +5961,7 @@ Alice                                                          Bob
       &I-D.ietf-mmusic-msid;
       &I-D.ietf-mmusic-sctp-sdp;
     	&I-D.ietf-rtcweb-data-channel;
+      &I-D.ietf-payload-flexible-fec-scheme;
 
       <reference anchor="WebRTC">
         <front>
@@ -5923,25 +5976,6 @@ Alice                                                          Bob
           <date year="" month=""/>
         </front>
         <seriesInfo name="&lt;http://dev.w3.org/2011/webrtc/editor/webrtc.html&gt;" value=""/>
-      </reference>
-      <reference anchor="UNIFIED-PLAN">
-        <front>
-          <title> A Unified Plan for Using SDP with Large Numbers of Media Flows</title>
-          <author fullname="Adam B Roach" initials="A.B." surname="Roach">
-            <organization></organization>
-          </author>
-          <author fullname="Justin Uberti" initials="J." surname="Uberti">
-            <organization></organization>
-          </author>
-          <author fullname="Martin Thomson" initials="M." surname="Thomson">
-            <organization></organization>
-          </author>
-          <date month="July" year="2013" />
-        </front>
-        <seriesInfo name="Internet-Draft"
-          value="draft-roach-mmusic-unified-plan" />
-        <format target="http://tools.ietf.org/html/draft-roach-mmusic-unified-plan-00"
-          type="TXT" />
       </reference>
       </references>
   </back>

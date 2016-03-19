@@ -48,8 +48,8 @@
 			</address>
 		</author>
 
-		<date year="2015" />
-
+		<date month="March" day="18" year="2016"/>
+		
 		<area>RAI</area>
 
 		<workgroup>MMUSIC</workgroup>
@@ -150,8 +150,9 @@
 				<t>
 					The default candidates are added to the SDP as the default destination for media.
 					For streams based on RTP, this is done by placing the IP address and port of the RTP candidate into the "c=" and "m=" lines, respectively.
-					If the agent is utilizing RTCP, it MUST encode the RTCP candidate using the a=rtcp attribute as defined in <xref target="RFC3605">RFC 3605</xref>.
-					If RTCP is not in use, the agent MUST signal that using b=RS:0 and b=RR:0 as defined in <xref target="RFC3556">RFC 3556</xref>.
+					If the agent is utilizing RTCP and if RTCP candidate is present and is not equal to the same address and the next higher port number of the RTP candidate, the agent MUST encode 
+					the RTCP candidate using the a=rtcp attribute as defined in 
+					<xref target="RFC3605">RFC 3605</xref>. If RTCP is not in use, the agent MUST signal that using b=RS:0 and b=RR:0 as defined in <xref target="RFC3556">RFC 3556</xref>.
 				</t>
 
 				<t>The transport addresses that will be the default destination for media when communicating with non-ICE peers MUST also be present as candidates in one or more a=candidate lines.</t>
