@@ -200,12 +200,10 @@
       occur when signaling systems coordinate certain SRTP parameters, such as
       SSRC values and ROCs.</t>
 
-      <t>This document defines Encrypted Key Transport (EKT) for DTLS-SRTP, an
-      extension to DTLS-SRTP that fits within the SRTP framework and reduces the
+      <t>This document defines Encrypted Key Transport (EKT) for SRTP and reduces the
       amount of external signaling control that is needed in an shared SRTP
       session. EKT securely distributes the SRTP master key and other
-      information for each SRTP source (SSRC), using DTLS and SRTP that
-      information. With this method, SRTP entities are free to choose SSRC
+      information for each SRTP source. With this method, SRTP entities are free to choose SSRC
       values as they see fit, and to start up new SRTP sources (SSRC) with new
       SRTP master keys (see Section 2.2) within a session without coordinating
       with other entities via external signaling or other external means. This
