@@ -327,8 +327,7 @@ Full_EKT_Field = EKT_Ciphertext || SPI || '1'
             appropriate EKT key and other parameters for the receiver to use
             when processing the packet. It is an "index" into a table of
             possibilities (which are established via signaling or some other
-            out-of-band means), much like the IPsec Security Parameter Index
-            <xref target="RFC4301"></xref>. The length of this field is fixed at
+            out-of-band means). The length of this field is fixed at
             15 bits.  The parameters identified by this field are: <list
             style="symbols">
             
@@ -984,7 +983,8 @@ SRTP packets                 <------->      SRTP packets
         <section title="Offer/Answer Considerations">
 
           <t> When using EKT with DTLS-SRTP, the negoatiaon to use EKT is done
-          at the DTLS handshake level and does not change the Offer / Answer
+          at the DTLS handshake level and does not change the <xref
+          target="RFC3264"></xref> Offer / Answer messaging. 
           </t>
           
         </section>
@@ -1096,15 +1096,10 @@ SRTP packets                 <------->      SRTP packets
     <back>
       <references title="Normative References">
 
-        
         &rfc2119;
-        &rfc3264;
-        &rfc3550;
         &rfc3711;
         &rfc4086;
-        &rfc4563;
-        &rfc4568;
-        &rfc5234;
+        &rfc5649;
         &rfc5764;
         &rfc6347; 
         
@@ -1112,12 +1107,8 @@ SRTP packets                 <------->      SRTP packets
 
       <references title="Informative References">
         
-        &rfc3261;
-        &rfc3830;
-        &rfc4301;
-        &rfc4771;
-        &rfc5649;
-        &rfc6407;
+        &rfc3264;
+        &rfc3550;
 
       </references>
 
