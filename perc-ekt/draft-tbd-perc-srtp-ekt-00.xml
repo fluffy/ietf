@@ -387,17 +387,14 @@ Full_EKT_Field = EKT_Ciphertext || SPI || '1'
 	    according to <xref target="RFC4086"></xref>, and MUST NOT be equal to or
 	    derived from other SRTP master keys.</t>
 
-      
-	        <t> A receiver processes an EKT_Ciphertext by decrypting it,
-	        verifying that the SSRC field in the resulting EKT_plaintext matches
-	        the SSRC in the session, and accepting the other fields if the SSRC
-	        values match.  </t>
-
-            <t> The new packet formats are simple: the
-	        Full_EKT_Field it appended at the tail end of the SRTP packet.  </t>
-           
-      
- 
+  	    <t> A receiver processes an EKT_Ciphertext by decrypting it,
+	    verifying that the SSRC field in the resulting EKT_plaintext matches
+	    the SSRC in the session, and accepting the other fields if the SSRC
+	    values match.  </t>
+        
+        <t> The new packet formats are simple: the
+	    Full_EKT_Field it appended at the tail end of the SRTP packet.  </t>
+         
         <section anchor="outbound" title="Outbound Processing">
 
 	      <t>See <xref target="timing"></xref> which describes when to send an
