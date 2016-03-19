@@ -124,7 +124,28 @@
       </address>
     </author>
 
-    <date />
+      <author fullname="Cullen Jennings" initials="C." surname="Jennings">
+      <organization abbrev="Cisco">Cisco Systems, Inc.</organization>
+
+      <address>
+        <postal>
+        <street></street>
+
+          <city>Calgary</city>
+
+          <region>AB</region>
+
+          <code></code>
+
+          <country>Canada</country>
+       </postal>
+
+        <email>fluffy@iii.ca</email>
+      </address>
+    </author>
+
+      <date month="March" day="19" year="2016"/>
+
 
     <area>ART</area>
 
@@ -142,7 +163,7 @@
       draft-ietf-avtcore-srtp-ekt-03 to help discussion about the key parts of
       EKT for the PERC WG. Any changes decided here would be synchronized with
       the draft-ietf-avtcore-srtp-ekt draft. Nearly all the text here came from
-      draft-ietf-avtcore-srtp-ekt. </t>
+      draft-ietf-avtcore-srtp-ekt and the authors of that draft. </t>
       
       <t>Encrypted Key Transport (EKT) is an extension to Secure Real-time
       Transport Protocol (SRTP) that provides for the secure transport of SRTP
