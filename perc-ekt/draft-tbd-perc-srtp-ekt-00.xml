@@ -268,7 +268,9 @@
 
       <!-- open issue: move the 1,0 to a full byte command at end. Reserve 1
            for pre standard uses -->
-      
+
+        <!-- open issue: Do we need a non encrypted version of the ROC -->
+        
       <section anchor="EKT" title="EKT Field Formats">
         
         <t> The EKT Field uses the format defined below for the Full EKT Field
@@ -394,22 +396,7 @@ Full_EKT_Field = EKT_Ciphertext || SPI || '1'
             <t> The new packet formats are simple: the
 	        Full_EKT_Field it appended at the tail end of the SRTP packet.  </t>
            
-            <t>We next review SRTP authentication and show how the EKT
-            authentication method is built on top of a base authentication
-            method.  An SRTP or SRTCP authentication method consists of a
-            tag-generation function and a verification function. The
-            tag-generation function takes as input a secret key, the data to be
-            authenticated, and the packet index. It provides an authentication
-            tag as its sole output, and is used in the processing of outbound
-            packets. The verification function takes as input a secret key, the
-            data to be authenticated, the packet index, and the authentication
-            tag. It returns an indication of whether or not the data, index, and
-            tag are valid or not. It is used in the processing of inbound
-            packets. EKT defines a tag-generation function in terms of the base
-            tag-generation function, and defines a verification function in
-            terms of the base verification function. The tag-generation function
-            is used to process outbound packets, and the verification function
-            is used to process inbound packets.</t>
+      
  
         <section anchor="outbound" title="Outbound Processing">
 
@@ -622,9 +609,6 @@ Full_EKT_Field = EKT_Ciphertext || SPI || '1'
 
                 </list>
               </t>
-
-
-
 
           </section>
         </section>
@@ -866,7 +850,7 @@ AES-256    AESKW_256        42          56            58
 
           <t>New receiver: When a new receiver joins a session it does not need
           to communicate its sending SRTP master key (because it is a receiver).
-        When a new receiver joins a session the
+          When a new receiver joins a session the
           sender is generally unaware of the receiver joining the session.
           Thus, senders SHOULD periodically transmit the Full EKT Field.  That
           interval depends on how frequently new receivers join the session, the
