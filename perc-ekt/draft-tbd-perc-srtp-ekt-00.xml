@@ -427,7 +427,7 @@ Short_EKT_Field = '0000000' || EKT_Type_Short
           <t>The Security Parameter Index field is set to the value of the
           Security Parameter Index that is associated with the outbound
           parameter set.  If only one Key Encrypting Key is provided for the
-          session, then an all-null value for the identifier SHOULD be
+          session, then an SPI value of zero SHOULD be
           used. </t>
 
 	      <t>The EKT_Plaintext field is computed from the SRTP Master Key, SSRC,
