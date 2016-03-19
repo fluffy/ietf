@@ -266,6 +266,9 @@
       functions of EKT.
       </t>
 
+      <!-- open issue: move the 1,0 to a full byte command at end. Reserve 1
+           for pre standard uses -->
+      
       <section anchor="EKT" title="EKT Field Formats">
         
         <t> The EKT Field uses the format defined below for the Full EKT Field
@@ -274,7 +277,7 @@
         <figure anchor="tag_formats"
                 title="EKT data formats">
 <artwork align="left"><![CDATA[
-EKT_Plaintext = SRTP_Master_Key || SSRC || ROC || ISN
+EKT_Plaintext = SRTP_Master_Key || SSRC || ROC 
 
 EKT_Ciphertext = EKT_Encrypt(EKT_Key, EKT_Plaintext)
 
@@ -316,19 +319,6 @@ Full_EKT_Field = EKT_Ciphertext || SPI || '1'
             context associated with the SSRC in the SRTP or SRTCP packet.  The
             length of this field is fixed at 32 bits.
 	        </t>
-
-            <t hangText="Initial Sequence Number (ISN):">
-              If this field is nonzero, it indicates the RTP sequence number of
-              the initial RTP packet that is protected using the SRTP master key
-              conveyed (in encrypted form) by the EKT Ciphertext field of this
-              packet.  When this field is present in an RTCP packet it indicates
-              the RTP sequence number of the first RTP packet encrypted by this
-              master key.  If the ISN field is zero, it indicates that the
-              initial RTP/RTCP packet protected using the SRTP master key
-              conveyed in this packet preceded, or was concurrent with, the last
-              roll-over of the RTP sequence number, and thus should be used as
-              the current master key for processing this packet.  The length of
-              this field is fixed at 16 bits.</t>
 
             <t hangText="Security Parameter Index (SPI):">This field is included
             in SRTP and SRTCP packets when EKT is in use.  It indicates the
@@ -462,7 +452,7 @@ Full_EKT_Field = EKT_Ciphertext || SPI || '1'
           used. </t>
 
 	      <t>The EKT_Plaintext field is computed from the SRTP Master Key, SSRC,
-	      ROC, and ISN fields, as shown in <xref target="tag_formats"/>.
+	      and ROC fields, as shown in <xref target="tag_formats"/>.
 	      </t>
 
           <t>The EKT_Ciphertext field is set to the ciphertext created by
@@ -539,7 +529,7 @@ Full_EKT_Field = EKT_Ciphertext || SPI || '1'
 		        packet processing halts with an indication of failure.
 		        Otherwise, the resulting EKT_Plaintext is parsed as described in
 		        <xref target="tag_formats"/>, to recover the SRTP Master Key,
-		        SSRC, ROC, and ISN fields.
+		        SSRC, and ROC fields.
 	          </t>
 
 	          <t>
@@ -560,11 +550,9 @@ Full_EKT_Field = EKT_Ciphertext || SPI || '1'
 		        Otherwise, the ROC in the SRTP context is set to the value of
 		        the ROC from the EKT_Plaintext, and the SRTP Master Key from the
 		        EKT_Plaintext is accepted as the SRTP master key corresponding
-		        to the SSRC indicated in the EKT_Plaintext, beginning at the
-		        sequence number indicated by the ISN (see next step).  If
+		        to the SSRC indicated in the EKT_Plaintext.  If
 		        an MKI is present in the packet, then the master key corresponds
 		        to the particular SSRC and MKI combination.</t>
-
 		   
                     <t>If there is already an SRTP crypto context associated
                     with the SSRC in the packet, and replay protection is in
@@ -577,19 +565,6 @@ Full_EKT_Field = EKT_Ciphertext || SPI || '1'
                     packet index used in that check is formed from the EKT
                     Rollover Counter field and the RTP Sequence Number in that
                     packet.</t>
-
-
-                <t>If the ISN from the EKT_Plaintext is less than the RTP
-                sequence number of an authenticated received SRTP packet, then
-                EKT processing halts (as this is a replay).  If the Initial
-                Sequence Number field is nonzero, then the initial sequence
-                number for the SRTP master key is set to the packet index
-                created by appending that field to the current rollover counter
-                and treating the result as a 48-bit unsigned integer. The
-                initial sequence number for the master key is equivalent to the
-                "From" value of the &lt;From, To&gt; pair of indices (Section
-                8.1.1 of <xref target="RFC3711"></xref>) that can be associated
-                with a master key.</t>
 
                 <t>The newly accepted SRTP master key, the SRTP parameters from
                 the matching parameter set, and the SSRC from the packet,
@@ -609,7 +584,7 @@ Full_EKT_Field = EKT_Ciphertext || SPI || '1'
 
                   <t>Implementation note: the value of the EKT Ciphertext field
                   is identical in successive packets protected by the same EKT
-                  parameter set and the same SRTP master key, ROC, and ISN.
+                  parameter set and the same SRTP master key, and ROC.
                   This ciphertext value MAY be cached by an SRTP receiver to
                   minimize computational effort by noting when the SRTP master
                   key is unchanged and avoiding repeating Steps 2 through 6.</t>
@@ -644,13 +619,7 @@ Full_EKT_Field = EKT_Ciphertext || SPI || '1'
                   authentication function, as in Step 3 above.  If that check
                   passes, then the packet is accepted, and the context
                   associated with the SRTP source is set as described in Step 5
-                  above.  SRTP master keys can be associated with an initial
-                  packet index (Section 8.1.1. of <xref target="RFC3711"/>).
-                  The initial packet index associated with the new SRTP master
-                  key is formed from the value of the Initial Sequence Number
-                  and Rollover Counter fields (considered as an unsigned integer
-                  in network byte order), by multiplying the ROC by 2^16 then
-                  adding the ISN to the result.  </t>
+                  above.   </t>
 
                 </list>
               </t>
