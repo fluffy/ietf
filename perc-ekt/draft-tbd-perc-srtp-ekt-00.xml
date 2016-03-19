@@ -1081,14 +1081,18 @@ SRTP packets                 <------->      SRTP packets
 
       <section title="Acknowledgements">
         
-        <t>Thanks to Lakshminath Dondeti for assistance with earlier versions of
-        this document. </t>
-
-        <t>Thanks to Kai Fischer, Nermeen Ismail, Eddy Lem,Rob Raymond, and Yi
-        Cheng for fruitful discussions and comments. Thanks to Felix Wyss for
-        his review and comments regarding ciphers.  Thanks to Michael Peck for
-        his review. Thanks to Magnus Westerlund for his review.  Thanks to
-        Michael Peck and Jonathan Lennox for their review comments.</t>
+        <t>Thanks to
+        Eddy Lem,
+        Felix Wyss,
+        Jonathan Lennox,
+        Kai Fischer,
+        Lakshminath Dondeti,
+        Magnus Westerlund,
+        Michael Peck,
+        Nermeen Ismail,
+        Rob Raymond, and
+        Yi Cheng
+        for fruitful discussions, comments, and contributions to this document.</t>
         
       </section>
     </middle>
