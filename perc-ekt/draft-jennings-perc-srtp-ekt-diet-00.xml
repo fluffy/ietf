@@ -30,7 +30,7 @@
 <!ENTITY rfc4086 PUBLIC "" "http://xml.resource.org/public/rfc/bibxml/reference.RFC.4086.xml">
 ]>
 <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
-<?rfc toc="yes" ?>
+<?rfc toc="no" ?>
 <?rfc symrefs="yes" ?>
 <?rfc sortrefs="yes"?>
 <?rfc iprnotified="no" ?>
@@ -735,7 +735,7 @@ AES-256    AESKW_256        42          56            58
           
           <t><!--EKT MUST be used over SRTCP, whenever RTCP is in use.--> EKT
           SHOULD be used over SRTP, and other specification MAY define
-	  how ot use it over SRTCP.  SRTP is
+	  how to use it over SRTCP.  SRTP is
           preferred because it shares fate with transmitted media, because SRTP
           rekeying can occur without concern for RTCP transmission limits, and
           to avoid SRTCP compound packets with RTP translators and
@@ -806,7 +806,7 @@ AES-256    AESKW_256        42          56            58
           
           <t><xref target="RFC5764">DTLS-SRTP</xref> uses an extended DTLS
           exchange between two peers to exchange keying material, algorithms,
-          and parapeters for SRTP.  The SRTP flow operates over the same
+          and parameters for SRTP.  The SRTP flow operates over the same
           transport as the DTLS-SRTP exchange (i.e., the same 5-tuple).
           DTLS-SRTP combines the performance and encryption flexibility benefits
           of SRTP with the flexibility and convenience of DTLS-integrated key
