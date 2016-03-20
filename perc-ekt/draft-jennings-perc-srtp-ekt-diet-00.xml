@@ -965,13 +965,11 @@ SRTP packets                 <------->      SRTP packets
         <t>The confidentiality, integrity, and authentication of the EKT cipher
         MUST be at least as strong as the SRTP cipher.</t>
         
-        <t>
-	      Part of the EKT_Plaintext is known, or easily guessable to an
-	      attacker.  Thus, the EKT Cipher MUST resist known plaintext attacks.
-	      In practice, this requirement does not impose any restrictions on our
-	      choices, since the ciphers in use provide high security even when much
-	      plaintext is known.
-        </t>
+        <t> Part of the EKT_Plaintext is known, or easily guessable to
+        an attacker.  Thus, the EKT Cipher MUST resist known plaintext
+        attacks.  In practice, this requirement does not impose any
+        restrictions on our choices, since the ciphers in use provide
+        high security even when much plaintext is known.</t>
         
         <t>An EKT cipher MUST resist attacks in which both ciphertexts and
         plaintexts can be adaptively chosen.  An EKT cipher MUST resist attacks
