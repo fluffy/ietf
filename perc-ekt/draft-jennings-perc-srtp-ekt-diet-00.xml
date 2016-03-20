@@ -368,8 +368,8 @@ Short_EKT_Field = '0000000' || EKT_Type_Short
         
         <section anchor="outbound" title="Outbound Processing">
 
-	      <t>See <xref target="timing"></xref> which describes when to send an
-	      EKT packet with a Full EKT Field. If a Full EKT Field is not being
+	  <t>See <xref target="timing"></xref> which describes when to send an
+	  EKT packet with a Full EKT Field. If a Full EKT Field is not being
           sent, then a Short EKT Field needs to be sent so the receiver can
           correctly parse that this packet does contain a Full EKT Field. </t>
 
@@ -379,12 +379,8 @@ Short_EKT_Field = '0000000' || EKT_Type_Short
           processing.  
 	      </t>
 
-          <!-- 
-               Open Issue: should we encourage sending the Full EKT
-	       five times to accomodate packet loss? THis is dealt
-	       with in seciton 2.6 
-          -->
-        
+          <t><list style="numbers">
+	    
           <t>The Security Parameter Index field is set to the value of the
           Security Parameter Index that is associated with the outbound
           parameter set. </t>
@@ -392,43 +388,43 @@ Short_EKT_Field = '0000000' || EKT_Type_Short
 	  <t>The EKT_Plaintext field is computed from the SRTP Master
 	  Key, SSRC, and ROC fields, as shown in <xref
 	  target="tag_formats"/>.  The ROC, SRTP Master Key, and SSRC
-	  used in EKT processing MUST be the same as the one used in
-	  the SRTP processing.
+	  used in EKT processing SHOULD be the same as the one used in
+	  the SRTP processing. 
 	  </t>
 
           <t>The EKT_Ciphertext field is set to the ciphertext created by
           encrypting the EKT_Plaintext with the EKT cipher, using the EKT Key as
           the encryption key. The encryption process is detailed in <xref
-          target="cipher"></xref>. Implementations MAY cache the value of this
-          field to avoid recomputing it for each packet that is sent.  Then the
-          EKT Ciphertext field is computed using the EKT cipher's encryption
-          function.  The SRTP master key corresponding to the SSRC
-          in the packet is the plaintext input, and the Key Encrypting
-          Key is used as its key.  <list style="empty"> <t> Note: the value of
-          the EKT Ciphertext field is identical in successive packets protected
-          by the same KEK and SRTP master key.  This value MAY be cached by an
-          SRTP sender to minimize computational effort.  
-        </t>
+          target="cipher"></xref>.
+	  <!-- ADD BACK LATER Implementations MAY cache the value of this
+          field to avoid recomputing it for each packet that is sent. -->
+	  </t>
 
-      </list>
-
-      The computed value of the EKT Ciphertext field is written
-          into the packet.  </t>
-
+	  <t> Then the Full EKT Field is formed using the EKT Ciphertext
+	  and the SPI associated with the EKT Key used above.
+	  <!-- ADD BACK LATER
+	       <list style="empty"> <t> Note: the value of
+	       the EKT Ciphertext field is identical in successive packets protected
+	       by the same KEK and SRTP master key.  This value MAY be cached by an
+	       SRTP sender to minimize computational effort.  </t></list>
+	  -->
+	  The computed value of the Full EKT Field, is written into
+	  the packet.  </t>
+	  
+	  <!-- ADD BACK LATER
           <t>Implementation note: Because of the format of the Full EKT Field, a
           packet containing the Full EKT Field MUST be sent when the ROC changes
           (i.e., every 2^16 packets).</t>
-
-
+	  -->
+	  
+	  </list></t>
+	  
         </section>
 
         <section anchor="inbound" title="Inbound Processing">
          
           <t> Inbound EKT processing MUST take place prior to the
-          usual SRTP or SRTCP processing.  Implementation note: the
-          receiver may want to have a sliding window to retain old
-          master keys for some brief period of time, so that out of
-          order packets can be processed.  The following steps show
+          usual SRTP or SRTCP processing.   The following steps show
           processing as packets are received in order.
 	  </t>
 
@@ -441,43 +437,29 @@ Short_EKT_Field = '0000000' || EKT_Type_Short
 	    packet contains a Full EKT Field, then processing
 	    continues as described below.</t>
 
-	    <t>The Security Parameter Index (SPI) field is checked to
-	    determine which EKT parameter set should be used when
-	    processing the packet. If multiple parameter sets have
-	    been defined for the SRTP session, then the one that is
-	    associated with the value of the SPI field in the packet
-	    is used. This parameter set is called the matching
-	    parameter set below. If there is no matching SPI, then the
+	    <t>The combination of the SSRC and the Security Parameter Index (SPI) field is used to
+	    find which EKT parameter set should be used when
+	    processing the packet.  If there is no matching SPI, then the
 	    verification function MUST return an indication of
 	    authentication failure, and the steps described below are
-	    not performed. </t>
+	    not performed. EKT parameter set contains the EKT Key, EKT
+	    Cipher, and SRTP Master Salt. </t>
 
-	    <t> The EKT_Ciphertext is decrypted using the EKT_Key and
-	    EKT_Cipher in the matching parameter set, as described in
-	    <xref target="cipher"/>.  If the EKT decryption operation
-	    returns an authentication failure, then the
-                
-            <!-- dwing comment: The text immediately above assumes the
-                 "decryption operation" provides authentication, too.
-                 That's true if running GCM, but not true if we're
-                 running AES with a separate authentication tag.  Can
-                 you tweak the above text to accomodate both styles?
-                 I don't know how to best make that change.
-            -->
+	    <t> The EKT Ciphertext authentication is checked and
+	    it is decrypted, as described in <xref target="cipher"/>, using
+	    the EKT Key and EKT Cipher found in the previous step.  If
+	    the EKT decryption operation returns an authentication
+	    failure, then the packet processing stops.  </t>
 
-	    packet processing halts with an indication of failure.
-	    ggOtherwise, the resulting EKT_Plaintext is parsed as
-	    described in <xref target="tag_formats"/>, to recover the
-	    SRTP Master Key, SSRC, and ROC fields.</t>
-
-	    <t> The SSRC field output from the decryption operation is
+	    <!--
+	    <t> JUNK THIS The SSRC field output from the decryption operation is
 	    compared to the SSRC field from the SRTP header if EKT was
 	    received over SRTP, or from the SRTCP header if EKT was
 	    received over SRTCP.  If the values of the two fields do
 	    not match, then packet processing halts with an indication
-	    of failure.  Otherwise, it continues as follows.</t>
-	          
-	    <t> If an SRTP context associated with the SSRC in the
+	    of failure.  Otherwise, it continues as follows.</t> -->
+
+	    <!-- JUNK THIS <t> If an SRTP context associated with the SSRC in the
 	    previous step already exists and the ROC from the
 	    EKT_Plaintext is less than the ROC in the SRTP context,
 	    then EKT processing halts and the packet is processed as
@@ -487,8 +469,9 @@ Short_EKT_Field = '0000000' || EKT_Type_Short
 	    of the ROC from the EKT_Plaintext, and the SRTP Master Key
 	    from the EKT_Plaintext is accepted as the SRTP master key
 	    corresponding to the SSRC indicated in the
-	    EKT_Plaintext. </t>
-		   
+	    EKT_Plaintext. </t> -->
+
+	    <!-- JUNK THIS 
             <t>If there is already an SRTP crypto context associated
             with the SSRC in the packet, and replay protection is in
             use, then the receiver performs the replay check described
@@ -499,9 +482,20 @@ Short_EKT_Field = '0000000' || EKT_Type_Short
             packet. If the EKT fields are conveyed in an SRTP packet,
             then the packet index used in that check is formed from
             the EKT Rollover Counter field and the RTP Sequence Number
-            in that packet.</t>
-
-            <t>The newly accepted SRTP master key, the SRTP parameters
+            in that packet.</t> -->
+	    
+	    <t> The resulting EKT Plaintext is parsed as described in
+	    <xref target="tag_formats"/>, to recover the SRTP Master
+	    Key, SSRC, and ROC fields.</t>
+		    
+	    <t> The SSTP Master Key and ROC found in the EKT
+	    Plaintext, along with the Master Salt associated with the
+	    EKT Key used to decrypt the EKT Plaintext are saved in a
+	    map indexed by the SSRC found in the EKT Plaintext and
+	    used for any future inbound or about crypto operations on
+	    packets with the that SSRC. </t>
+	    
+            <!-- JUNK THIS <t>The newly accepted SRTP master key, the SRTP parameters
             from the matching parameter set, and the SSRC from the
             packet, are stored in the crypto context associated with
             the SRTP source (SSRC). The SRTP Key Derivation algorithm
@@ -510,61 +504,74 @@ Short_EKT_Field = '0000000' || EKT_Type_Short
             SRTP processing of inbound packets. The Key Derivation
             algorithm takes as input the newly accepted SRTP master
             key, along with the Master Salt from the matching
-            parameter set. </t>
+            parameter set. </t> -->
 
             <t>At this point, EKT processing has successfully
             completed, and the normal SRTP or SRTCP processing takes
-            place.
+            place including replay protection.
 
-            <list style="empty">
-
-              <t>Implementation note: the value of the EKT Ciphertext
-              field is identical in successive packets protected by
-              the same EKT parameter set and the same SRTP master key,
-              and ROC.  This ciphertext value MAY be cached by an SRTP
-              receiver to minimize computational effort by noting when
-              the SRTP master key is unchanged and avoiding repeating
-              the above steps.</t>
-                  
-            </list></t>
+	    <!-- ADD THIS BACK LATER
+		 <list style="empty">
+		 <t>Implementation note: the value of the EKT Ciphertext
+		 field is identical in successive packets protected by
+		 the same EKT parameter set and the same SRTP master key,
+		 and ROC.  This ciphertext value MAY be cached by an SRTP
+		 receiver to minimize computational effort by noting when
+		 the SRTP master key is unchanged and avoiding repeating
+		 the above steps.</t>
+                 </list>  -->
+	    
+	    </t>
           </list>
         </t>
-            
+
+	<t> Implementation note: the receiver may want to have a
+	sliding window to retain old SRTP master keys (and related
+	context) for some brief period of time, so that out of order
+	packets can be processed as well as packets sent during the
+	time keys are changing. </t>
+	
+	<!-- JUNK THIS 
         <t> If the SSRC field in the packet does correspond to a known
         SRTP source, then the packet is processed as follows, or using
-        an equivalent set of steps.  <list style="numbers">
-                  
-        <t> The appropriate parameter set is selected using the
-        Security Parameter Index field, as in Step 1 above, and the
-        EKT Ciphertext field is decrypted using the Key Encrypting Key
-        as in Step 2 above.  The resulting plaintext is used as a
-        provisional SRTP master key.  </t>
-                  
-        <t> If the provisional key matches the key associated with the
-        SSRC, then the packet is processed as follows.  The base
-        authentication function is used to check the authenticity of
-        the packet, as described in Step 3 above.  If the check
-        passes, the packet is accepted, and then the SRTP rollover
-        counter is set to the value of the Rollover Counter field.
-        </t>
-                  
-        <t> If the provisional key does not match the SRTP master key
-        associated with the SRTP source, then processing proceeds as
-        follows.  The authenticity of the packet is checked using the
-        provisional key and base SRTCP authentication function, as in
-        Step 3 above.  If that check passes, then the packet is
-        accepted, and the context associated with the SRTP source is
-        set as described in Step 5 above.  </t>
+        an equivalent set of steps.
 
-      </list>
+	<list style="numbers">
+                  
+          <t> The appropriate parameter set is selected using the
+          Security Parameter Index field, as in Step 1 above, and the
+          EKT Ciphertext field is decrypted using the Key Encrypting Key
+          as in Step 2 above.  The resulting plaintext is used as a
+          provisional SRTP master key.  </t>
+          
+          <t> If the provisional key matches the key associated with the
+          SSRC, then the packet is processed as follows.  The base
+          authentication function is used to check the authenticity of
+          the packet, as described in Step 3 above.  If the check
+          passes, the packet is accepted, and then the SRTP rollover
+          counter is set to the value of the Rollover Counter field.
+          </t>
+          
+          <t> If the provisional key does not match the SRTP master key
+          associated with the SRTP source, then processing proceeds as
+          follows.  The authenticity of the packet is checked using the
+          provisional key and base SRTCP authentication function, as in
+          Step 3 above.  If that check passes, then the packet is
+          accepted, and the context associated with the SRTP source is
+          set as described in Step 5 above.  </t>
+	  
+	</list>
         </t>
+	-->
+	
 
       </section>
     </section>
 
     <section anchor="cipher" title="Ciphers">
           
-          <t>EKT uses an authenticated cipher to encrypt the EKT Plaintext. We
+          <t>EKT uses an authenticated cipher to encrypt and
+	  authenticate the EKT Plaintext. We
           first specify the interface to the cipher, in order to abstract the
           interface away from the details of that function. We then define the
           cipher that is used in EKT by default. The default cipher described in
@@ -572,10 +579,13 @@ Short_EKT_Field = '0000000' || EKT_Type_Short
           cipher that conforms to this interface MAY be used, in which case its
           use MUST be coordinated by external means (e.g., key management).</t>
 
-          <t>The master salt length for the offered cipher suites MUST be the
+          <t>The SRTP master salt length for the offered cipher suites MUST be the
           same.  In practice the easiest way to achieve this is by offering the
           same crypto suite.</t>
 
+	  <!-- OPEN issue : is there a problem with salt lengths when
+	       using double -->
+	  
           <t>An EKT cipher consists of an encryption function and a decryption
           function. The encryption function E(K, P) takes the following inputs:
           <list style="symbols">
