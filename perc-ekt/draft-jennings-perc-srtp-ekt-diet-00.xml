@@ -314,8 +314,8 @@ Short_EKT_Field = '0000000' || EKT_Type_Short
 
             <t hangText="Security Parameter Index (SPI):">This field indicates the
             appropriate EKT Key and other parameters for the receiver to use
-            when processing the packet. Each time a differnt EKT Key
-	    is received, it will have a differnt SPI. The length of this field is
+            when processing the packet. Each time a different EKT Key
+	    is received, it will have a different SPI. The length of this field is
             15 bits.  The parameters identified by this field are:
 
 	    <list
@@ -371,7 +371,8 @@ Short_EKT_Field = '0000000' || EKT_Type_Short
 	      <t>See <xref target="timing"></xref> which describes when to send an
 	      EKT packet with a Full EKT Field. If a Full EKT Field is not being
           sent, then a Short EKT Field needs to be sent so the receiver can
-          correctly parse that this packet does contain a Full EKT Field. </t>
+          correctly
+	  determine how to process the packet. </t>
 
           <t>When an SRTP packet is to be sent, the EKT field for that
           packet is created as follows, or uses an equivalent set of steps.  The
@@ -382,7 +383,7 @@ Short_EKT_Field = '0000000' || EKT_Type_Short
           <!-- 
                Open Issue: should we encourage sending the Full EKT
 	       five times to accomodate packet loss? THis is dealt
-	       with in seciton 2.6 
+	       with in section 2.6 
           -->
         
           <t>The Security Parameter Index field is set to the value of the
@@ -406,7 +407,7 @@ Short_EKT_Field = '0000000' || EKT_Type_Short
           in the packet is the plaintext input, and the Key Encrypting
           Key is used as its key.  <list style="empty"> <t> Note: the value of
           the EKT Ciphertext field is identical in successive packets protected
-          by the same KEK and SRTP master key.  This value MAY be cached by an
+          by the same EKT Key and SRTP master key.  This value MAY be cached by an
           SRTP sender to minimize computational effort.  
         </t>
 
@@ -466,7 +467,7 @@ Short_EKT_Field = '0000000' || EKT_Type_Short
             -->
 
 	    packet processing halts with an indication of failure.
-	    ggOtherwise, the resulting EKT_Plaintext is parsed as
+	    Otherwise, the resulting EKT_Plaintext is parsed as
 	    described in <xref target="tag_formats"/>, to recover the
 	    SRTP Master Key, SSRC, and ROC fields.</t>
 
@@ -621,7 +622,7 @@ Short_EKT_Field = '0000000' || EKT_Type_Short
 	          It requires a plaintext length M that is at least one octet, and
 	          it returns a ciphertext with a length of N = M + 8 octets.  It can
 	          be used with key sizes of L = 16, 24, and 32 octets, and its use with
-	          those key sizes is indicated as AESKW_128, AESKW_192, and
+	          those key sizes is indicated as AESKW_128, or
 	          AESKW_256, respectively.  The key size determines the length of
 	          the AES key used by the Key Wrap algorithm.  With this cipher,
 	          T=2^48.
@@ -715,7 +716,7 @@ AES-256    AESKW_256        42          56            58
         </list>
 
         These compound SRTCP packets might have an SSRC that does not match the
-        EKT SSRC.  To reduce the occasion of this occuring, EKT-aware RTP mixers
+        EKT SSRC.  To reduce the occasion of this occurring, EKT-aware RTP mixers
         and translators which are generating SRTCP compound packets SHOULD
         attempt to place an SRTCP payload containing an EKT tag at the front of
         the compound packet (so that the EKT receiver will process it), and MAY
@@ -736,7 +737,7 @@ AES-256    AESKW_256        42          56            58
 
 
 	      <t>The Full EKT Field is appended to the SRTP or SRTCP payload and is
-	      42, 50, or 58 octets long for AES-128, AES-192, or AES-256,
+	      42 or 58 octets long for AES-128 or AES-256,
 	      respectively.  This length impacts the maximum payload size of the
 	      SRTP (or SRTCP) packet itself.  To remain below the network path MTU,
 	      senders SHOULD constrain the SRTP (or SRTCP) payload size by this
@@ -776,7 +777,7 @@ AES-256    AESKW_256        42          56            58
           <t>New sender: A new sender SHOULD send a packet containing the Full
           EKT Field as soon as possible, always before or coincident with
           sending its initial SRTP packet.  To accommodate packet loss, it is
-          RECOMMENDED that three consectutive packets contain the Full EKT Field
+          RECOMMENDED that three consecutive packets contain the Full EKT Field
           be transmitted. </t>
 
 
@@ -918,7 +919,7 @@ SRTP packets                 <------->      SRTP packets
 
         <section title="Offer/Answer Considerations">
 
-          <t> When using EKT with DTLS-SRTP, the negoatiaon to use EKT is done
+          <t> When using EKT with DTLS-SRTP, the negotiation to use EKT is done
           at the DTLS handshake level and does not change the <xref
           target="RFC3264"></xref> Offer / Answer messaging. 
           </t>
