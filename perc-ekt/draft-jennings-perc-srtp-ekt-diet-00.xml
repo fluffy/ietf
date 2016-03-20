@@ -521,7 +521,7 @@ Short_EKT_Field = '0000000' || EKT_Type_Short
             in that packet.</t> -->
 	    
 	    <t> The resulting EKT Plaintext is parsed as described in
-	    <xref target="tag_formats"/>, to recover the SRTP Master
+	    <xref target="EKT"/>, to recover the SRTP Master
 	    Key, SSRC, and ROC fields.</t>
 		    
 	    <t> The SSTP Master Key and ROC found in the EKT
