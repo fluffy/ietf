@@ -238,7 +238,7 @@
       <t>EKT defines a new method of providing SRTP master keys to an endpoint.
       In order to convey the ciphertext of the SRTP master key, and other
       additional information, an additional EKT field is added to SRTP
-      packets.  When added to SRTP, The EKT field appears at the
+      packets.  When added to SRTP, the EKT field appears at the
       end of the SRTP packet, after the authentication tag (if that tag is
       present), or after the ciphertext of the encrypted portion of the packet
       otherwise.</t>
@@ -327,8 +327,8 @@ Short_EKT_Field = '0000000' || EKT_Type_Short
 	        The length of this field is variable, and is equal to the ciphertext
 	        size N defined in <xref target="cipher"></xref>. Note that the
 	        length of the field is inferable from the SPI field,
-		since the SPI will indicate the crypto being used and
-		thus the size..
+		since the SPI will indicate the cipher being used and
+		thus the size.
 	        </t>
 
 	        <t hangText="SRTP_Master_Key:">On the sender side, the SRTP Master
@@ -407,11 +407,10 @@ Short_EKT_Field = '0000000' || EKT_Type_Short
           correctly
 	  determine how to process the packet. </t>
 
-          <t>When an SRTP packet is to be sent, the EKT field for that
+          <t>When an SRTP packet is to be sent with a Full EKT Field, the EKT field for that
           packet is created as follows, or uses an equivalent set of steps.  The
-          creation of the EKT field MUST precede the normal SRTP or SRTCP packet
-          processing.  
-	      </t>
+          creation of the EKT field MUST precede the normal SRTP packet
+          processing.  </t>
 
           <t><list style="numbers">
 	    
@@ -424,7 +423,8 @@ Short_EKT_Field = '0000000' || EKT_Type_Short
 	  target="EKT"/>.  The ROC, SRTP Master Key, and SSRC
 	  used in EKT processing SHOULD be the same as the one used in
 	  the SRTP processing. 
-
+	  <!-- really do me SHOULD not MUST here - ping me to discuss
+	       some time - Cullen --> 
 	  </t>
 
           <t>The EKT_Ciphertext field is set to the ciphertext created by
@@ -444,7 +444,7 @@ Short_EKT_Field = '0000000' || EKT_Type_Short
 	       by the same KEK and SRTP master key.  This value MAY be cached by an
 	       SRTP sender to minimize computational effort.  </t></list>
 	  -->
-	  The computed value of the Full EKT Field, is written into
+	  The computed value of the Full EKT Field is written into
 	  the packet.  </t>
 	  
 	  <!-- ADD BACK LATER
@@ -454,6 +454,10 @@ Short_EKT_Field = '0000000' || EKT_Type_Short
 	  -->
 	  
 	  </list></t>
+
+	  <t> When a packet is sent with the Short EKT Field, the
+	  Short EKF Field is simply appended to the packet. </t>
+	  
 	  
         </section>
 
@@ -521,12 +525,13 @@ Short_EKT_Field = '0000000' || EKT_Type_Short
             in that packet.</t> -->
 	    
 	    <t> The resulting EKT Plaintext is parsed as described in
-	    <xref target="EKT"/>, to recover the SRTP Master
-	    Key, SSRC, and ROC fields.</t>
+	    <xref target="EKT"/>, to recover the SRTP Master Key,
+	    SSRC, and ROC fields. The Master Salt that is assocted
+	    with the EKT Keys used to do the decription is also
+	    retreived. </t>
 		    
-	    <t> The SSTP Master Key and ROC found in the EKT
-	    Plaintext, along with the Master Salt associated with the
-	    EKT Key used to decrypt the EKT Plaintext are saved in a
+	    <t> The SRTP Master Key, ROC, and Master Salt from the
+	    prevous step are saved in a
 	    map indexed by the SSRC found in the EKT Plaintext and
 	    used for any future inbound or about crypto operations on
 	    packets with the that SSRC. </t>
@@ -615,10 +620,12 @@ Short_EKT_Field = '0000000' || EKT_Type_Short
           cipher that conforms to this interface MAY be used, in which case its
           use MUST be coordinated by external means (e.g., key management).</t>
 
-          <t>The SRTP master salt length for the offered cipher suites MUST be the
-          same.  In practice the easiest way to achieve this is by offering the
-          same crypto suite.</t>
-
+          <!-- JUNK this or ADD ???
+	       <t>The SRTP master salt length for the offered cipher suites MUST be the
+               same.  In practice the easiest way to achieve this is by offering the
+               same crypto suite.</t>
+	  -->
+	  
 	  <!-- OPEN issue : is there a problem with salt lengths when
 	       using double -->
 	  
@@ -784,7 +791,7 @@ AES-256    AESKW_256        42          56            58
           acceptable delay before those receivers can start processing SRTP
           packets, and the acceptable overhead of sending the Full EKT Field.
           The RECOMMENDED frequency is the same as the key frame frequency if
-          sending video and every 100ms seconds for audio.  </t>
+          sending video and every 100ms for audio.  </t>
 
 
         </section>
@@ -820,7 +827,7 @@ AES-256    AESKW_256        42          56            58
           
           <t>This document adds a new TLS negotiated extension called "ekt".
           This adds a new TLS content type, EKT, and a new negotiated extension
-          EKT. The DTLS server "ekt" in its TLS ServerHello message. If a DTLS
+          EKT. The DTLS server includes "ekt" in its TLS ServerHello message. If a DTLS
           client includes "ekt" in its ClientHello, but does not receive "ekt"
           in the ServerHello, the DTLS client MUST NOT send DTLS packets with
           the "ekt" content-type.</t>
@@ -867,11 +874,7 @@ struct {
             </figure>
 
             <t>The diagram below shows a message flow of DTLS client and DTLS
-            server using the DTLS-SRTP Key Transport extension. SRTP packets
-            exchanged prior to the ekt_message are encrypted using the SRTP
-            master key derived from the normal DTLS-SRTP key derivation
-            function. After the ekt_key message, they can be encrypted using the
-            SRTP key carried by EKT.</t>
+            server using the DTLS-SRTP Key Transport extension. </t>
 
             <figure anchor="tls_handshake_message_flow"
                     title="Handshake Message Flow">
@@ -893,9 +896,10 @@ CertificateVerify*
 Finished                     -------->
                                         [ChangeCipherSpec]
                              <--------            Finished
+ekt_key                      --------> 
 SRTP packets                 <------->      SRTP packets
 SRTP packets                 <------->      SRTP packets
-ekt_key                      -------->
+ekt_key (rekey)              --------> 
 SRTP packets                 <------->      SRTP packets
 SRTP packets                 <------->      SRTP packets
 ]]></artwork>
@@ -915,16 +919,10 @@ SRTP packets                 <------->      SRTP packets
       </section>
 
       <section title="Sending the DTLS EKT_Key Reliably">
-        
-        <t>In the absence of a round trip time estimate, the DTLS ekt_key
-        message is sent using an exponential backoff initialized to 250ms, so
-        that if the first message is sent at time 0, the next transmissions are
-        at 250ms, 500ms, 1000ms, and so on.  If a recent round trip time
-        estimate is available, exponential backoff is used with the first
-        transmission at 1.5 times the round trip time estimate.  In either case,
-        re-transmission stops when ekt_key_ack or ekt_key_error message is
-        received for the matching message_seq.</t>
-        
+
+	<t> The DTLS ekt_key is sent using the retransmiions specified
+	in Section 4.2.4. of <xref target="RFC6347">DTLS</xref>. </t>
+      	
       </section>
 
       <section anchor="sec" title="Security Considerations">
@@ -1043,10 +1041,8 @@ SRTP packets                 <------->      SRTP packets
       <references title="Informative References">
         
         &rfc3264;
-        &rfc3550;
 
       </references>
 
 
-    </back>
-  </rfc>
+    </back> </rfc>
