@@ -709,14 +709,7 @@ AES-256    AESKW_256        42          56            58
         <section anchor="SynchronizingOperation" title="Synchronizing
                                                         Operation">
           
-          <t>A participant in a session MAY opt to use a particular EKT
-          parameter set to protect outbound packets after it accepts that EKT
-          parameter set for protecting inbound traffic. In this case, the fact
-          that one participant has changed to using a new EKT key for outbound
-          traffic can trigger other participants to switch to using the same
-          key.</t>
-
-          <t>If a source has its EKT key changed by key management, it MUST also
+          <t>If a source has its EKT key changed by the key management, it MUST also
           change its SRTP master key, which will cause it to send out a new Full
           EKT Field.  This ensures that if key management thought the EKT key
           needs changing (due to a participant leaving or joining) and
@@ -724,69 +717,17 @@ AES-256    AESKW_256        42          56            58
           change its SRTP master key, so that traffic can be decrypted only by
           those who know the current EKT key.</t>
 
-          <t>The use of EKT MUST be negotiated during key management or call
-          setup (e.g., using DTLS-SRTP or
-          similar).</t>
-
         </section>
 
         <section anchor="srtp" title="Transport">
           
           <t><!--EKT MUST be used over SRTCP, whenever RTCP is in use.--> EKT
-          SHOULD be used over SRTP, and MAY be used over SRTCP.  SRTP is
+          SHOULD be used over SRTP, and other specification MAY define
+	  how ot use it over SRTCP.  SRTP is
           preferred because it shares fate with transmitted media, because SRTP
           rekeying can occur without concern for RTCP transmission limits, and
-          to avoid SRTCP compound packets with RTP translators and mixers.  This
-          specification requires the EKT SSRC match the SSRC in the RTCP header,
-          but Section 6.1 of <xref target="RFC3550"></xref> encourages creating
-          SRTCP compound packets: <list style="empty">
-
-          <t>It is RECOMMENDED that translators and mixers combine individual
-          RTCP packets from the multiple sources they are forwarding into one
-          compound packet whenever feasible in order to amortize the packet
-          overhead (see Section 7).</t>
-          
-        </list>
-
-        These compound SRTCP packets might have an SSRC that does not match the
-        EKT SSRC.  To reduce the occasion of this occurring, EKT-aware RTP mixers
-        and translators which are generating SRTCP compound packets SHOULD
-        attempt to place an SRTCP payload containing an EKT tag at the front of
-        the compound packet (so that the EKT receiver will process it), and MAY
-        be even more robust and implement more sophisticated algorithms to
-        ensure all EKT tags from different senders are sent at the front of the
-        compound packet.  However, no robust algorithm exists which ensures
-        robust EKT delivery in conjunction with SRTCP compound packets.  This
-        impact to RTP translators and mixers, and the inability to reliably
-        determine an RTP translator or mixer might be involved in an RTP
-        session, provides further incentive to send EKT over RTP.</t>
-
-
-
-          <t>The packet processing, state machine, and Authentication Tag format
-          for EKT over SRTP are nearly identical to that for EKT over SRTCP.
-          Differences are highlighted in <xref target="outbound"></xref> and
-          <xref target="inbound"></xref>.</t>
-
-
-	      <t>The Full EKT Field is appended to the SRTP or SRTCP payload and is
-	      42 or 58 octets long for AES-128 or AES-256,
-	      respectively.  This length impacts the maximum payload size of the
-	      SRTP (or SRTCP) packet itself.  To remain below the network path MTU,
-	      senders SHOULD constrain the SRTP (or SRTCP) payload size by this
-	      length of the Full EKT Field.</t>
-
-          <t>EKT can be transported over SRTCP, but some of the information that
-          it conveys is used for SRTP processing; some elements of the EKT
-          parameter set apply to both SRTP and SRTCP. Furthermore, SRTCP packets
-          can be lost and both SRTP and SRTCP packets may be delivered out of
-          order. This can lead to various race conditions if EKT is transported
-          over SRTCP but not SRTP, which we review below.</t>
-
-          <t>The ROC signaled via EKT over SRTCP may be off by one when it is
-          received by the other party(ies) in the session. In order to deal with
-          this, receivers should simply follow the SRTP packet index estimation
-          procedures defined in <xref target="RFC3711">Section 3.3.1</xref>.</t>
+          to avoid SRTCP compound packets with RTP translators and
+	  mixers. </t>
 
         </section>
 
