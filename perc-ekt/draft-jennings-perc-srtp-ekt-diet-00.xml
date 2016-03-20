@@ -925,33 +925,25 @@ SRTP packets                 <------->      SRTP packets
         of keys, by empowering the SRTP layer to create keys on demand. Note
         that the inputs of EKT are the same as for SRTP with key-sharing: a
         single key is provided to protect an entire SRTP session. However, EKT
-        remains secure even in the absence of out-of-band coordination of SSRCs,
-        and even when SSRC values collide.</t>
+        remains secure even when SSRC values collide.</t>
 
         <t>The EKT Cipher includes its own authentication/integrity check. For
         an attacker to successfully forge a full EKT packet, it would need to
-        defeat the authentication mechanisms of both the EKT Cipher and the SRTP
-        authentication mechanism.</t>
+        defeat the authentication mechanisms of the EKT Cipher
+	authentication mechanism.</t>
 
         <t> The presence of the SSRC in the EKT_Plaintext ensures that
         an attacker cannot substitute an EKT_Ciphertext from one SRTP
-        stream into another SRTP stream, even if those two streams are
-        using the same SRTP master key.  </t>
+        stream into another SRTP stream.  </t>
         
-        <t> An attacker who strips a Full_EKT_Field from an SRTP
-        packet may prevent the intended receiver of that packet from
+        <t> An attacker who tampers with the bits in  Full_EKT_Field can prevent the intended receiver of that packet from
         being able to decrypt it.  This is a minor denial of service
-        vulnerability.  Similarly, an attacker who adds a
-        Full_EKT_Field can disrupt service.  </t>
+        vulnerability.  </t>
   
-        <t>An attacker could send packets containing a Full EKT Field, in an
-        attempt to consume additional CPU resources of the receiving system.  In
-        the case of the Full EKT Field, the attacker would have to have guessed
-        or otherwise determined the SPI being used by the receiving system.  If
-        an invalid SPI is provided by the attacker, processing stops.  If a
-        valid SPI is provided by the attacker, the receiving system will decrypt
-        the EKT ciphertext and return an authentication failure (Step 3 of <xref
-        target="inbound"></xref>).</t>
+        <t>An attacker could send packets containing a Full EKT Field,
+        in an attempt to consume additional CPU resources of the
+        receiving system by causing the receiving system will decrypt
+        the EKT ciphertext and detect an authentication failure </t>
 
         <t>EKT can rekey an SRTP stream until the SRTP rollover counter (ROC)
         needs to roll over.  EKT does not extend SRTP's rollover counter (ROC),
@@ -971,10 +963,9 @@ SRTP packets                 <------->      SRTP packets
         restrictions on our choices, since the ciphers in use provide
         high security even when much plaintext is known.</t>
         
-        <t>An EKT cipher MUST resist attacks in which both ciphertexts and
-        plaintexts can be adaptively chosen.  An EKT cipher MUST resist attacks
-        in which both ciphertexts and plaintexts can be adaptively chosen and
-        adversaries that can query both the encryption and decryption functions
+        <t>An EKT cipher MUST resist attacks in which both ciphertexts
+        and plaintexts can be adaptively chosen and adversaries that
+        can query both the encryption and decryption functions
         adaptively.</t>
         
       </section>
