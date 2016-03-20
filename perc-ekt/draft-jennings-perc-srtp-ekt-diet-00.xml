@@ -733,11 +733,12 @@ AES-256    AESKW_256        42          56            58
 
         <section anchor="timing" title="Timing and Reliability Consideration">
 
-	      <t>A system using EKT has the SRTP master keys distributed with EKT,
-	      rather than with call signaling.  A receiver can immediately decrypt
-	      an SRTP (or SRTCP packet) using that new key, provided the SRTP packet
-	      (or SRTCP packet) also contains a Full EKT Field.</t>
-
+	  <t>A system using EKT learns the SRTP master keys
+	  distributed with Full EKT Fields send with the SRTP,
+	  rather than with call signaling.  A receiver can immediately decrypt
+	  an SRTP provided the SRTP packet
+	  contains a Full EKT Field.</t>
+	  
           <t>This section describes how to reliably and expediently deliver new
           SRTP master keys to receivers.</t>
 
@@ -754,13 +755,13 @@ AES-256    AESKW_256        42          56            58
           RECOMMENDED that three consecutive packets contain the Full EKT Field
           be transmitted. </t>
 
-
           <t>Rekey: By sending EKT over SRTP, the rekeying event
           shares fate with the SRTP packets protected with that new SRTP master
-          key.  To avoid sending large SRTP packets (such as video key frames)
+          key.
+	  <!-- ADD LATER To avoid sending large SRTP packets (such as video key frames)
           with the Full EKT Field, it can be advantageous to send smaller SRTP
-          packets with the Full EKT Field.</t>
-
+          packets with the Full EKT Field.-->
+	  </t>
 
           <t>New receiver: When a new receiver joins a session it does not need
           to communicate its sending SRTP master key (because it is a receiver).
@@ -771,7 +772,7 @@ AES-256    AESKW_256        42          56            58
           acceptable delay before those receivers can start processing SRTP
           packets, and the acceptable overhead of sending the Full EKT Field.
           The RECOMMENDED frequency is the same as the key frame frequency if
-          sending video or every 100ms seconds.  </t>
+          sending video and every 100ms seconds for audio.  </t>
 
 
         </section>
