@@ -293,9 +293,9 @@ Short_EKT_Field = '0000000' || EKT_Type_Short
 	        This field is included in SRTP packets when EKT is in use.
 	        The length of this field is variable, and is equal to the ciphertext
 	        size N defined in <xref target="cipher"></xref>. Note that the
-	        length of the field is inferable from the SPI field, since the
-	        particular EKT cipher used by the sender of a packet can be inferred
-	        from that field.
+	        length of the field is inferable from the SPI field,
+		since the SPI will indicate the crypto being used and
+		thus the size..
 	        </t>
 
 	        <t hangText="SRTP_Master_Key:">On the sender side, the SRTP Master
@@ -313,39 +313,27 @@ Short_EKT_Field = '0000000' || EKT_Type_Short
 	        </t>
 
             <t hangText="Security Parameter Index (SPI):">This field indicates the
-            appropriate EKT key and other parameters for the receiver to use
-            when processing the packet. It is an "index" into a table of
-            possibilities (which are established via signaling or some other
-            out-of-band means). The length of this field is
-            15 bits.  The parameters identified by this field are: <list
-            style="symbols">
-            
-            <t>The EKT key used to process the packet.</t>
-            
-            <t>The EKT cipher used to process the packet.</t>
-            
-            <t>The Secure RTP parameters associated with the SRTP Master
-            Key carried by the packet and the SSRC value in the packet.
-            Section 8.2. of <xref target="RFC3711"></xref> summarizes the
-            parameters defined by that specification.</t>
-            
-            <t>The Master Salt associated with the Master Key. (This value
-            is part of the parameters mentioned above, but we call it out
-            for emphasis.) The Master Salt is communicated separately, via
-            signaling, typically along with the EKT key.</t>
-          </list>
-          
-          <!-- dwing comment Is there an advantage to using two names, "SPI" and
-               "EKT parameter set", for these same fields?  Seems unnecessarily
-               confusing.  Can we reduce it to one name?
-          -->
+            appropriate EKT Key and other parameters for the receiver to use
+            when processing the packet. Each time a differnt EKT Key
+	    is received, it will have a differnt SPI. The length of this field is
+            15 bits.  The parameters identified by this field are:
 
-          Together, these data elements are called an EKT parameter set.  Within
-          each SRTP session, each distinct EKT parameter set that may be used
-          MUST be associated with a distinct SPI value, to avoid ambiguity. 
-          Each value MUST be associated with a Key Encrypting Key, and MAY be
-          associated with an EKT cipher and an SRTP parameter set.  
-	        </t>
+	    <list
+		style="symbols">
+            
+              <t>The EKT cipher used to process the packet.</t>
+
+              <t>The EKT Key used to process the packet.</t>
+                      
+              <t>The SRTP Master Salt associated with any Master Key
+              encrypted with this EKT Key.</t>
+	      
+            </list>
+          
+            Together, these data elements are called an EKT parameter set.  Within
+            each SRTP session, each distinct EKT parameter set that may be used
+            MUST be associated with a distinct SPI value, to avoid ambiguity. 
+	    </t>
             
             <t hangText="Final bit:"> The last bit is used to indicate the
             type of the Field. This MUST be 1 in the Full EKT Field
@@ -361,7 +349,8 @@ Short_EKT_Field = '0000000' || EKT_Type_Short
         
         <t>At any given time, each SRTP/SRTCP source (SSRC) has associated with
         it a single EKT parameter set. This parameter set is used to process all
-        outbound packets, and is called the outbound parameter set. There may be
+        outbound packets, and is called the outbound parameter set for
+	that SSRC. There may be
         other EKT parameter sets that are used by other SRTP/SRTCP sources in
         the same session, including other SRTP/SRTCP sources on the same
         endpoint (e.g., one endpoint with voice and video might have two EKT
@@ -398,9 +387,7 @@ Short_EKT_Field = '0000000' || EKT_Type_Short
         
           <t>The Security Parameter Index field is set to the value of the
           Security Parameter Index that is associated with the outbound
-          parameter set.  If only one Key Encrypting Key is provided for the
-          session, then an SPI value of zero SHOULD be
-          used. </t>
+          parameter set. </t>
 
 	  <t>The EKT_Plaintext field is computed from the SRTP Master
 	  Key, SSRC, and ROC fields, as shown in <xref
@@ -465,8 +452,7 @@ Short_EKT_Field = '0000000' || EKT_Type_Short
 		      matching parameter set below. If there is no matching SPI, then
 		      the verification function MUST return an indication of
 		      authentication failure, and the steps described below are not
-		      performed. If there is only a single session key, it SHOULD be
-		      used only if the field is set to the all-null value. </t>
+		      performed. </t>
 
 	          <t>
 		        The EKT_Ciphertext is decrypted using the EKT_Key and EKT_Cipher
