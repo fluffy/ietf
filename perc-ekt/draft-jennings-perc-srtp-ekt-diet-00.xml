@@ -259,6 +259,36 @@
         <t> The EKT Field uses the format defined below for the Full_EKT_Field
         and Short_EKT_Field.  </t>
 
+	<figure anchor="tag_format_base"
+                title="Full EKT Field format"
+		align="center">
+          <artwork align="center">
+	    <![CDATA[
+ 0                   1                   2                   3
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+:                                                               :
+:                        EKT Ciphertext                         :
+:                                                               :
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|   Security Parameter Index  |1|
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+]]></artwork>
+
+	</figure>
+	
+        <figure anchor="tag_format_abbreviated"
+                title="Short EKT Field format"
+		align="center">
+          <artwork align="center"><![CDATA[
+ 0 1 2 3 4 5 6 7 
++-+-+-+-+-+-+-+-+
+|0 0 0 0 0 0 0|0|
++-+-+-+-+-+-+-+-+
+]]></artwork>
+        </figure>
+
+	<!--
         <figure anchor="tag_formats"
                 title="EKT data formats">
 <artwork align="left"><![CDATA[
@@ -276,10 +306,13 @@ Short_EKT_Field = '0000000' || EKT_Type_Short
 
 ]]></artwork>
         </figure>
-
+	-->
+	
         <t>
-          Here || denotes concatenation, and '1' and '0' denote single one and
-          zero bits, respectively.  These fields and data elements are defined
+          <!-- Here || denotes concatenation, and '1' and '0' denote single one and
+               zero bits, respectively. -->
+	  
+	  These fields and data elements are defined
           as follows:
           <list style="hanging">
 
@@ -392,7 +425,7 @@ Short_EKT_Field = '0000000' || EKT_Type_Short
 
 	  <t>The EKT_Plaintext field is computed from the SRTP Master
 	  Key, SSRC, and ROC fields, as shown in <xref
-	  target="tag_formats"/>.  The ROC, SRTP Master Key, and SSRC
+	  target="EKT"/>.  The ROC, SRTP Master Key, and SSRC
 	  used in EKT processing MUST be the same as the one used in
 	  the SRTP processing.
 	  </t>
@@ -406,7 +439,7 @@ Short_EKT_Field = '0000000' || EKT_Type_Short
           function.  The SRTP master key corresponding to the SSRC
           in the packet is the plaintext input, and the Key Encrypting
           Key is used as its key.  <list style="empty"> <t> Note: the value of
-          the EKT Ciphertext field is identical in successive packets protected
+          the EKT Ciphertext field is identical in successive SRTP packets protected
           by the same EKT Key and SRTP master key.  This value MAY be cached by an
           SRTP sender to minimize computational effort.  
         </t>
@@ -468,7 +501,7 @@ Short_EKT_Field = '0000000' || EKT_Type_Short
 
 	    packet processing halts with an indication of failure.
 	    Otherwise, the resulting EKT_Plaintext is parsed as
-	    described in <xref target="tag_formats"/>, to recover the
+	    described in <xref target="EKT"/>, to recover the
 	    SRTP Master Key, SSRC, and ROC fields.</t>
 
 	    <t> The SSRC field output from the decryption operation is
