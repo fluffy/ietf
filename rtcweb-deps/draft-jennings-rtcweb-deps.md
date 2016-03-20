@@ -36,9 +36,8 @@ IETF dependencies from the W3C WebRTC documents.
 Dependencies
 ============
 
-The key IETF specifications that the W3C GetUserMedia specification normatively depends on is:
-[@!I-D.ietf-rtcweb-security-arch] and 
-[@!RFC2119].
+The key IETF drafts that the W3C GetUserMedia specification normatively depends on is:
+[@!I-D.ietf-rtcweb-security-arch].
 
 The key IETF specifications that the W3C WebRTC specification normatively
 depended on are:
@@ -52,19 +51,7 @@ depended on are:
 [@!I-D.ietf-rtcweb-transports],
 [@!I-D.ietf-rtcweb-video],
 [@!I-D.ietf-tram-turn-third-party-authz],
-[@!I-D.ietf-tsvwg-rtcweb-qos],
-[@!RFC2119],
-[@!RFC4566],
-[@!RFC5389],
-[@!RFC5888],
-[@!RFC6236],
-[@!RFC6464],
-[@!RFC6465],
-[@!RFC6544],
-[@!RFC7064],
-[@!RFC7065]
-[@!RFC3264],
-[@!RFC5245], 
+[@!I-D.ietf-tsvwg-rtcweb-qos]
 and informatively depends on 
 [@I-D.ietf-rtcweb-overview], 
 [@I-D.ietf-rtcweb-security],
@@ -108,11 +95,15 @@ draft-ietf-avtcore-multi-media-rtp-session normatively depends on
  
 draft-ietf-avtcore-rtp-multi-stream normatively depends on
 [@!I-D.ietf-avtcore-rtp-multi-stream]
+[@!I-D.ietf-mmusic-sdp-mux-attributes]
  
 draft-ietf-avtcore-rtp-multi-stream-optimisation normatively depends on
 [@!I-D.ietf-avtcore-rtp-multi-stream]
+[@!I-D.ietf-mmusic-sdp-mux-attributes]
  
 draft-ietf-mmusic-msid normatively depends on
+[@!I-D.ietf-mmusic-rfc4566bis]
+[@!I-D.ietf-mmusic-sdp-mux-attributes]
 [@!I-D.ietf-rtcweb-jsep]
  
 draft-ietf-mmusic-mux-exclusive normatively depends on
@@ -185,7 +176,7 @@ draft-ietf-rtcweb-rtp-usage normatively depends on
 [@!I-D.ietf-avtcore-rtp-circuit-breakers]
 [@!I-D.ietf-avtcore-rtp-multi-stream]
 [@!I-D.ietf-avtcore-rtp-multi-stream-optimisation]
-[@!I-D.ietf-avtcore-rtp-topologies-update]
+[@!I-D.ietf-mmusic-mux-exclusive]
 [@!I-D.ietf-mmusic-sdp-bundle-negotiation]
 [@!I-D.ietf-rtcweb-audio]
 [@!I-D.ietf-rtcweb-fec]
@@ -233,35 +224,35 @@ Status
 
 Status of key drafts as of Feb 25, 2016.
 
-draft-ietf-avtcore-srtp-encrypted-header-ext   [@!RFC6904]
+draft-ietf-avtcore-srtp-encrypted-header-ext   is RFC6904
 
-draft-ietf-avtcore-avp-codecs   [@!RFC7007]
+draft-ietf-avtcore-avp-codecs   is RFC7007
 
-draft-ietf-avtcore-6222bis   [@!RFC7022]
+draft-ietf-avtcore-6222bis   is RFC7022
 
-draft-nandakumar-rtcweb-stun-uri   [@!RFC7064]
+draft-nandakumar-rtcweb-stun-uri   is RFC7064
 
-draft-petithuguenin-behave-turn-uris   [@!RFC7065]
+draft-petithuguenin-behave-turn-uris   is RFC7065
 
-draft-ietf-avtext-multiple-clock-rates   [@!RFC7160]
+draft-ietf-avtext-multiple-clock-rates   is RFC7160
 
-draft-ietf-tls-applayerprotoneg   [@!RFC7301]
+draft-ietf-tls-applayerprotoneg   is RFC7301
 
-draft-ietf-tram-stun-dtls   [@!RFC7350]
+draft-ietf-tram-stun-dtls   is RFC7350
 
-draft-ietf-tram-alpn   [@!RFC7443]
+draft-ietf-tram-alpn   is RFC7443
 
-draft-ietf-tsvwg-sctp-prpolicies   [@!RFC7496]
+draft-ietf-tsvwg-sctp-prpolicies   is RFC7496
 
-draft-ietf-jose-json-web-algorithms  [@!RFC7518]
+draft-ietf-jose-json-web-algorithms  is RFC7518
 
-draft-ietf-payload-rtp-opus   [@!RFC7587]
+draft-ietf-payload-rtp-opus   is RFC7587
 
-draft-ietf-tram-turn-third-party-authz  [@!RFC7635]
+draft-ietf-tram-turn-third-party-authz  is RFC7635
 
-draft-ietf-httpbis-tunnel-protocol  [@!RFC7639]
+draft-ietf-httpbis-tunnel-protocol  is RFC7639
 
-draft-ietf-rtcweb-stun-consent-freshness   [@!RFC7675]
+draft-ietf-rtcweb-stun-consent-freshness   is RFC7675
 
 draft-ietf-payload-vp8   Auth 48
 
