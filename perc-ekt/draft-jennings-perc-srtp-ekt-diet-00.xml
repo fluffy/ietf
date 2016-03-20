@@ -202,8 +202,8 @@
       SSRC values and ROCs.</t>
 
       <t>This document defines Encrypted Key Transport (EKT) for SRTP and reduces the
-      amount of external signaling control that is needed in an shared SRTP
-      session. EKT securely distributes the SRTP master key and other
+      amount of external signaling control that is needed in a SRTP
+      session that is shared with multiple receivers. EKT securely distributes the SRTP master key and other
       information for each SRTP source. With this method, SRTP entities are free to choose SSRC
       values as they see fit, and to start up new SRTP sources (SSRC) with new
       SRTP master keys (see Section 2.2) within a session without coordinating
