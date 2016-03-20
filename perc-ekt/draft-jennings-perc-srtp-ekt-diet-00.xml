@@ -202,8 +202,8 @@
       SSRC values and ROCs.</t>
 
       <t>This document defines Encrypted Key Transport (EKT) for SRTP and reduces the
-      amount of external signaling control that is needed in an shared SRTP
-      session. EKT securely distributes the SRTP master key and other
+      amount of external signaling control that is needed in a SRTP
+      session that is shared with multiple receivers. EKT securely distributes the SRTP master key and other
       information for each SRTP source. With this method, SRTP entities are free to choose SSRC
       values as they see fit, and to start up new SRTP sources (SSRC) with new
       SRTP master keys (see Section 2.2) within a session without coordinating
@@ -259,6 +259,36 @@
         <t> The EKT Field uses the format defined below for the Full_EKT_Field
         and Short_EKT_Field.  </t>
 
+	<figure anchor="tag_format_base"
+                title="Full EKT Field format"
+		align="center">
+          <artwork align="center">
+	    <![CDATA[
+ 0                   1                   2                   3
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+:                                                               :
+:                        EKT Ciphertext                         :
+:                                                               :
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|   Security Parameter Index  |1|
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+]]></artwork>
+
+	</figure>
+	
+        <figure anchor="tag_format_abbreviated"
+                title="Short EKT Field format"
+		align="center">
+          <artwork align="center"><![CDATA[
+ 0 1 2 3 4 5 6 7 
++-+-+-+-+-+-+-+-+
+|0 0 0 0 0 0 0|0|
++-+-+-+-+-+-+-+-+
+]]></artwork>
+        </figure>
+
+	<!--
         <figure anchor="tag_formats"
                 title="EKT data formats">
 <artwork align="left"><![CDATA[
@@ -276,10 +306,13 @@ Short_EKT_Field = '0000000' || EKT_Type_Short
 
 ]]></artwork>
         </figure>
-
+	-->
+	
         <t>
-          Here || denotes concatenation, and '1' and '0' denote single one and
-          zero bits, respectively.  These fields and data elements are defined
+          <!-- Here || denotes concatenation, and '1' and '0' denote single one and
+               zero bits, respectively. -->
+	  
+	  These fields and data elements are defined
           as follows:
           <list style="hanging">
 
@@ -314,8 +347,8 @@ Short_EKT_Field = '0000000' || EKT_Type_Short
 
             <t hangText="Security Parameter Index (SPI):">This field indicates the
             appropriate EKT Key and other parameters for the receiver to use
-            when processing the packet. Each time a differnt EKT Key
-	    is received, it will have a differnt SPI. The length of this field is
+            when processing the packet. Each time a different EKT Key
+	    is received, it will have a different SPI. The length of this field is
             15 bits.  The parameters identified by this field are:
 
 	    <list
@@ -371,7 +404,8 @@ Short_EKT_Field = '0000000' || EKT_Type_Short
 	  <t>See <xref target="timing"></xref> which describes when to send an
 	  EKT packet with a Full EKT Field. If a Full EKT Field is not being
           sent, then a Short EKT Field needs to be sent so the receiver can
-          correctly parse that this packet does contain a Full EKT Field. </t>
+          correctly
+	  determine how to process the packet. </t>
 
           <t>When an SRTP packet is to be sent, the EKT field for that
           packet is created as follows, or uses an equivalent set of steps.  The
@@ -387,9 +421,10 @@ Short_EKT_Field = '0000000' || EKT_Type_Short
 
 	  <t>The EKT_Plaintext field is computed from the SRTP Master
 	  Key, SSRC, and ROC fields, as shown in <xref
-	  target="tag_formats"/>.  The ROC, SRTP Master Key, and SSRC
+	  target="EKT"/>.  The ROC, SRTP Master Key, and SSRC
 	  used in EKT processing SHOULD be the same as the one used in
 	  the SRTP processing. 
+
 	  </t>
 
           <t>The EKT_Ciphertext field is set to the ciphertext created by
@@ -399,6 +434,7 @@ Short_EKT_Field = '0000000' || EKT_Type_Short
 	  <!-- ADD BACK LATER Implementations MAY cache the value of this
           field to avoid recomputing it for each packet that is sent. -->
 	  </t>
+
 
 	  <t> Then the Full EKT Field is formed using the EKT Ciphertext
 	  and the SPI associated with the EKT Key used above.
@@ -631,7 +667,7 @@ Short_EKT_Field = '0000000' || EKT_Type_Short
 	          It requires a plaintext length M that is at least one octet, and
 	          it returns a ciphertext with a length of N = M + 8 octets.  It can
 	          be used with key sizes of L = 16, 24, and 32 octets, and its use with
-	          those key sizes is indicated as AESKW_128, AESKW_192, and
+	          those key sizes is indicated as AESKW_128, or
 	          AESKW_256, respectively.  The key size determines the length of
 	          the AES key used by the Key Wrap algorithm.  With this cipher,
 	          T=2^48.
@@ -685,14 +721,7 @@ AES-256    AESKW_256        42          56            58
         <section anchor="SynchronizingOperation" title="Synchronizing
                                                         Operation">
           
-          <t>A participant in a session MAY opt to use a particular EKT
-          parameter set to protect outbound packets after it accepts that EKT
-          parameter set for protecting inbound traffic. In this case, the fact
-          that one participant has changed to using a new EKT key for outbound
-          traffic can trigger other participants to switch to using the same
-          key.</t>
-
-          <t>If a source has its EKT key changed by key management, it MUST also
+          <t>If a source has its EKT key changed by the key management, it MUST also
           change its SRTP master key, which will cause it to send out a new Full
           EKT Field.  This ensures that if key management thought the EKT key
           needs changing (due to a participant leaving or joining) and
@@ -700,79 +729,28 @@ AES-256    AESKW_256        42          56            58
           change its SRTP master key, so that traffic can be decrypted only by
           those who know the current EKT key.</t>
 
-          <t>The use of EKT MUST be negotiated during key management or call
-          setup (e.g., using DTLS-SRTP, Security Descriptions, MIKEY, or
-          similar).</t>
-
         </section>
 
         <section anchor="srtp" title="Transport">
           
           <t><!--EKT MUST be used over SRTCP, whenever RTCP is in use.--> EKT
-          SHOULD be used over SRTP, and MAY be used over SRTCP.  SRTP is
+          SHOULD be used over SRTP, and other specification MAY define
+	  how ot use it over SRTCP.  SRTP is
           preferred because it shares fate with transmitted media, because SRTP
           rekeying can occur without concern for RTCP transmission limits, and
-          to avoid SRTCP compound packets with RTP translators and mixers.  This
-          specification requires the EKT SSRC match the SSRC in the RTCP header,
-          but Section 6.1 of <xref target="RFC3550"></xref> encourages creating
-          SRTCP compound packets: <list style="empty">
-
-          <t>It is RECOMMENDED that translators and mixers combine individual
-          RTCP packets from the multiple sources they are forwarding into one
-          compound packet whenever feasible in order to amortize the packet
-          overhead (see Section 7).</t>
-          
-        </list>
-
-        These compound SRTCP packets might have an SSRC that does not match the
-        EKT SSRC.  To reduce the occasion of this occuring, EKT-aware RTP mixers
-        and translators which are generating SRTCP compound packets SHOULD
-        attempt to place an SRTCP payload containing an EKT tag at the front of
-        the compound packet (so that the EKT receiver will process it), and MAY
-        be even more robust and implement more sophisticated algorithms to
-        ensure all EKT tags from different senders are sent at the front of the
-        compound packet.  However, no robust algorithm exists which ensures
-        robust EKT delivery in conjunction with SRTCP compound packets.  This
-        impact to RTP translators and mixers, and the inability to reliably
-        determine an RTP translator or mixer might be involved in an RTP
-        session, provides further incentive to send EKT over RTP.</t>
-
-
-
-          <t>The packet processing, state machine, and Authentication Tag format
-          for EKT over SRTP are nearly identical to that for EKT over SRTCP.
-          Differences are highlighted in <xref target="outbound"></xref> and
-          <xref target="inbound"></xref>.</t>
-
-
-	      <t>The Full EKT Field is appended to the SRTP or SRTCP payload and is
-	      42, 50, or 58 octets long for AES-128, AES-192, or AES-256,
-	      respectively.  This length impacts the maximum payload size of the
-	      SRTP (or SRTCP) packet itself.  To remain below the network path MTU,
-	      senders SHOULD constrain the SRTP (or SRTCP) payload size by this
-	      length of the Full EKT Field.</t>
-
-          <t>EKT can be transported over SRTCP, but some of the information that
-          it conveys is used for SRTP processing; some elements of the EKT
-          parameter set apply to both SRTP and SRTCP. Furthermore, SRTCP packets
-          can be lost and both SRTP and SRTCP packets may be delivered out of
-          order. This can lead to various race conditions if EKT is transported
-          over SRTCP but not SRTP, which we review below.</t>
-
-          <t>The ROC signaled via EKT over SRTCP may be off by one when it is
-          received by the other party(ies) in the session. In order to deal with
-          this, receivers should simply follow the SRTP packet index estimation
-          procedures defined in <xref target="RFC3711">Section 3.3.1</xref>.</t>
+          to avoid SRTCP compound packets with RTP translators and
+	  mixers. </t>
 
         </section>
 
         <section anchor="timing" title="Timing and Reliability Consideration">
 
-	      <t>A system using EKT has the SRTP master keys distributed with EKT,
-	      rather than with call signaling.  A receiver can immediately decrypt
-	      an SRTP (or SRTCP packet) using that new key, provided the SRTP packet
-	      (or SRTCP packet) also contains a Full EKT Field.</t>
-
+	  <t>A system using EKT learns the SRTP master keys
+	  distributed with Full EKT Fields send with the SRTP,
+	  rather than with call signaling.  A receiver can immediately decrypt
+	  an SRTP provided the SRTP packet
+	  contains a Full EKT Field.</t>
+	  
           <t>This section describes how to reliably and expediently deliver new
           SRTP master keys to receivers.</t>
 
@@ -786,16 +764,16 @@ AES-256    AESKW_256        42          56            58
           <t>New sender: A new sender SHOULD send a packet containing the Full
           EKT Field as soon as possible, always before or coincident with
           sending its initial SRTP packet.  To accommodate packet loss, it is
-          RECOMMENDED that three consectutive packets contain the Full EKT Field
+          RECOMMENDED that three consecutive packets contain the Full EKT Field
           be transmitted. </t>
-
 
           <t>Rekey: By sending EKT over SRTP, the rekeying event
           shares fate with the SRTP packets protected with that new SRTP master
-          key.  To avoid sending large SRTP packets (such as video key frames)
+          key.
+	  <!-- ADD LATER To avoid sending large SRTP packets (such as video key frames)
           with the Full EKT Field, it can be advantageous to send smaller SRTP
-          packets with the Full EKT Field.</t>
-
+          packets with the Full EKT Field.-->
+	  </t>
 
           <t>New receiver: When a new receiver joins a session it does not need
           to communicate its sending SRTP master key (because it is a receiver).
@@ -806,7 +784,7 @@ AES-256    AESKW_256        42          56            58
           acceptable delay before those receivers can start processing SRTP
           packets, and the acceptable overhead of sending the Full EKT Field.
           The RECOMMENDED frequency is the same as the key frame frequency if
-          sending video or every 100ms seconds.  </t>
+          sending video and every 100ms seconds for audio.  </t>
 
 
         </section>
@@ -928,7 +906,7 @@ SRTP packets                 <------->      SRTP packets
 
         <section title="Offer/Answer Considerations">
 
-          <t> When using EKT with DTLS-SRTP, the negoatiaon to use EKT is done
+          <t> When using EKT with DTLS-SRTP, the negotiation to use EKT is done
           at the DTLS handshake level and does not change the <xref
           target="RFC3264"></xref> Offer / Answer messaging. 
           </t>
@@ -951,45 +929,33 @@ SRTP packets                 <------->      SRTP packets
 
       <section anchor="sec" title="Security Considerations">
         
-        <t>EKT inherits the security properties of the SRTP keying it uses:
-        Security Descriptions, DTLS-SRTP, or MIKEY.</t>
+        <t>EKT inherits the security properties of the DTLS-SRTP (or
+        other) keying it uses.</t>
 
         <t>With EKT, each SRTP sender and receiver MUST generate distinct SRTP
         master keys. This property avoids any security concern over the re-use
         of keys, by empowering the SRTP layer to create keys on demand. Note
         that the inputs of EKT are the same as for SRTP with key-sharing: a
         single key is provided to protect an entire SRTP session. However, EKT
-        remains secure even in the absence of out-of-band coordination of SSRCs,
-        and even when SSRC values collide.</t>
+        remains secure even when SSRC values collide.</t>
 
         <t>The EKT Cipher includes its own authentication/integrity check. For
         an attacker to successfully forge a full EKT packet, it would need to
-        defeat the authentication mechanisms of both the EKT Cipher and the SRTP
-        authentication mechanism.</t>
+        defeat the authentication mechanisms of the EKT Cipher
+	authentication mechanism.</t>
 
-        <t>
-	      The presence of the SSRC in the EKT_Plaintext ensures that an attacker
-	      cannot substitute an EKT_Ciphertext from one SRTP stream into another
-	      SRTP stream, even if those two streams are using the same SRTP master
-	      key.  This is important because some applications may use the same
-	      master key for multiple streams.
-        </t>
+        <t> The presence of the SSRC in the EKT_Plaintext ensures that
+        an attacker cannot substitute an EKT_Ciphertext from one SRTP
+        stream into another SRTP stream.  </t>
         
-        <t>
-	      An attacker who strips a Full_EKT_Field from an SRTP packet may
-	      prevent the intended receiver of that packet from being able to
-	      decrypt it.  This is a minor denial of service vulnerability.
-	      Similarly, an attacker who adds a Full_EKT_Field can disrupt service.
-        </t>
+        <t> An attacker who tampers with the bits in  Full_EKT_Field can prevent the intended receiver of that packet from
+        being able to decrypt it.  This is a minor denial of service
+        vulnerability.  </t>
   
-        <t>An attacker could send packets containing a Full EKT Field, in an
-        attempt to consume additional CPU resources of the receiving system.  In
-        the case of the Full EKT Field, the attacker would have to have guessed
-        or otherwise determined the SPI being used by the receiving system.  If
-        an invalid SPI is provided by the attacker, processing stops.  If a
-        valid SPI is provided by the attacker, the receiving system will decrypt
-        the EKT ciphertext and return an authentication failure (Step 3 of <xref
-        target="inbound"></xref>).</t>
+        <t>An attacker could send packets containing a Full EKT Field,
+        in an attempt to consume additional CPU resources of the
+        receiving system by causing the receiving system will decrypt
+        the EKT ciphertext and detect an authentication failure </t>
 
         <t>EKT can rekey an SRTP stream until the SRTP rollover counter (ROC)
         needs to roll over.  EKT does not extend SRTP's rollover counter (ROC),
@@ -1003,22 +969,41 @@ SRTP packets                 <------->      SRTP packets
         <t>The confidentiality, integrity, and authentication of the EKT cipher
         MUST be at least as strong as the SRTP cipher.</t>
         
-        <t>
-	      Part of the EKT_Plaintext is known, or easily guessable to an
-	      attacker.  Thus, the EKT Cipher MUST resist known plaintext attacks.
-	      In practice, this requirement does not impose any restrictions on our
-	      choices, since the ciphers in use provide high security even when much
-	      plaintext is known.
-        </t>
+        <t> Part of the EKT_Plaintext is known, or easily guessable to
+        an attacker.  Thus, the EKT Cipher MUST resist known plaintext
+        attacks.  In practice, this requirement does not impose any
+        restrictions on our choices, since the ciphers in use provide
+        high security even when much plaintext is known.</t>
         
-        <t>An EKT cipher MUST resist attacks in which both ciphertexts and
-        plaintexts can be adaptively chosen.  An EKT cipher MUST resist attacks
-        in which both ciphertexts and plaintexts can be adaptively chosen and
-        adversaries that can query both the encryption and decryption functions
+        <t>An EKT cipher MUST resist attacks in which both ciphertexts
+        and plaintexts can be adaptively chosen and adversaries that
+        can query both the encryption and decryption functions
         adaptively.</t>
         
       </section>
 
+       <section anchor="open-issues" title="Open Issues">
+        
+         <t> What length should the SPI be?  </t>
+
+	 <t> Should we limit the number of saved SPI for a given SSRC?
+	 Or limit the lifetime of old ones after a new one is
+	 received? At some level this may not matter because even if
+	 the a SRTP packet is injected with an old value, it will be
+	 discards by the RTP stack for being old. It is more important
+	 that new things are encrypted with the most recent EKT Key.
+	 </t>
+
+	 <t> How many bits to differentiate different types of packets
+	 and allow for extensibility? </t>
+
+	 <t> Given the amount of old EKT deployed, should the Full EKT
+	 use a a different code point than the "1" at the end? </t>
+
+	 <t> Do we need AES-192? </t>
+        
+       </section>
+       
       <section anchor="iana" title="IANA Considerations">
         
         <t> No IANA actions are required. </t>
