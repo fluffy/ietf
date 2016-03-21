@@ -57,7 +57,7 @@
 
 
     <author fullname="David A. McGrew" initials="D.A.M." surname="McGrew">
-      <organization abbrev="Cisco">Cisco Systems, Inc.</organization>
+      <organization abbrev="Cisco">Cisco Systems</organization>
 
       <address>
         <postal>
@@ -82,7 +82,7 @@
 
 
     <author fullname="Dan Wing" initials="D." surname="Wing">
-      <organization abbrev="Cisco">Cisco Systems, Inc.</organization>
+      <organization abbrev="Cisco">Cisco Systems</organization>
 
       <address>
         <postal>
@@ -105,7 +105,7 @@
 
 
     <author fullname="Flemming Andreason" initials="F.A." surname="Andreasen">
-      <organization abbrev="Cisco">Cisco Systems, Inc.</organization>
+      <organization abbrev="Cisco">Cisco Systems</organization>
 
       <address>
         <postal>
@@ -125,7 +125,7 @@
     </author>
 
       <author fullname="Cullen Jennings" initials="C." surname="Jennings">
-      <organization abbrev="Cisco">Cisco Systems, Inc.</organization>
+      <organization abbrev="Cisco">Cisco Systems</organization>
 
       <address>
         <postal>
@@ -1022,7 +1022,11 @@ SRTP packets                 <------->      SRTP packets
         Rob Raymond, and
         Yi Cheng
         for fruitful discussions, comments, and contributions to this document.</t>
-        
+
+	<t> This draft is a cut down version of
+	draft-ietf-avtcore-srtp-ekt-03 and most of the text here
+	came from that draft. </t>
+	
       </section>
     </middle>
 
