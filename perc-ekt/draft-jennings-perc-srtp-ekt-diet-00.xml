@@ -1011,6 +1011,7 @@ SRTP packets                 <------->      SRTP packets
       <section title="Acknowledgements">
         
         <t>Thanks to
+	David Benham,
         Eddy Lem,
         Felix Wyss,
         Jonathan Lennox,
@@ -1019,6 +1020,7 @@ SRTP packets                 <------->      SRTP packets
         Magnus Westerlund,
         Michael Peck,
         Nermeen Ismail,
+	Paul Jones,
         Rob Raymond, and
         Yi Cheng
         for fruitful discussions, comments, and contributions to this document.</t>
