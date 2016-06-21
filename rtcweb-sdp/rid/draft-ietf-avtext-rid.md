@@ -1,7 +1,7 @@
 ---
 title: "RTP Stream Identifier Source Description (SDES)"
 abbrev: RtpStreamId SDES
-docname:  draft-ietf-avtext-rid-03
+docname:  draft-ietf-avtext-rid-04
 date: 2016-06-21
 category: std
 ipr: trust200902
@@ -66,8 +66,8 @@ To address this situation, we define a new RTCP SDES identifier, RtpStreamId,
 that uniquely identifies a single RTP stream. A key motivator for defining
 this identifier is the ability to differentiate among different encodings of a
 single Source Stream that are sent simultaneously (i.e., simulcast). This need
-for unique identification extends to dependent streams (i.e., layers used by a
-layered codec).
+for unique identification extends to dependent streams (e.g., where layers
+used by a layered codec are transmitted on separate streams).
 
 At the same time, when redundancy RTP streams are in use, we also need an
 identifier that connects such streams to the RTP stream for which they are
