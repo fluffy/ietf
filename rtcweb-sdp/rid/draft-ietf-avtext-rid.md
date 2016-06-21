@@ -1,8 +1,8 @@
 ---
-title: "RTP Stream Identifier (RID) Source Description (SDES)"
-abbrev: RID SDES
-docname:  draft-ietf-avtext-rid-00
-date: 2016-02-18
+title: "RTP Stream Identifier Source Description (SDES)"
+abbrev: RtpStreamId SDES
+docname:  draft-ietf-avtext-rid-03
+date: 2016-06-21
 category: std
 ipr: trust200902
 
@@ -27,21 +27,22 @@ author:
     email: pthatcher@google.com
 
 normative:
-  RFC2119:
   RFC3550:
   RFC5285:
   RFC7656:
   I-D.ietf-avtext-sdes-hdr-ext:
 
 informative:
-  I-D.ietf-mmusic-rid:
   I-D.ietf-mmusic-msid:
 
 
 --- abstract
 
-This document defines and registers an RTCP SDES item, RID, for identification
-of RTP streams associated with Encoded Streams and Dependent Streams.
+This document defines and registers two new RTCP SDES items.  One, named
+RtpStreamId, is used for unique identification of RTP streams. The other,
+RepairedRtpStreamId, can be used to identify which stream a redundancy RTP
+stream is to be used to repair.
+
 
 --- middle
 
@@ -61,132 +62,153 @@ systems that use PT to uniquely identify every potential combination of
 codec configuration and unique stream, it is possible to simply run
 out of values.
 
-To address this situation, we define a new RTCP SDES identifier that
-uniquely identifies a single stream. A key motivator for defining
-this identifier is the ability to differentiate among different
-encodings of a single Source Stream that are sent simultaneously
-(i.e., simulcast). This need for unique identification extends to
-Dependent Streams (i.e., layers used by a layered codec).
+To address this situation, we define a new RTCP SDES identifier, RtpStreamId,
+that uniquely identifies a single RTP stream. A key motivator for defining
+this identifier is the ability to differentiate among different encodings of a
+single Source Stream that are sent simultaneously (i.e., simulcast). This need
+for unique identification extends to dependent streams (i.e., layers used by a
+layered codec).
 
-At the same time, when Redundancy RTP Streams are in use, we also need an
+At the same time, when redundancy RTP streams are in use, we also need an
 identifier that connects such streams to the RTP stream for which they are
-providing redundancy. To that end, when this new identifier is in use, it
-appears (and contains the same value) in both in the Redundancy RTP Stream as
-well as the stream it is correcting.
-
-For lack of a better term, we have elected to call this term "RID,"
-which loosely stands for "RTP stream IDentifier." It should be noted
-that this isn't an overly-precise use of the term "RTP Stream," due
-to the lack of an existing well-defined term for the construct we
-are attempting to identify. See {{sec-term}} for a formal definition
-of the exact scope of a RID.
-
-The use of RIDs in SDP is described in {{I-D.ietf-mmusic-rid}}.
-
-# Key Words for Requirements
-
-The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
-"SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
-document are to be interpreted as described in {{RFC2119}}
+providing redundancy. For this purpose, we define an additional SDES identifier,
+RepairedRtpStreamId. This identifier can appear only in packets associated
+with a redundancy RTP stream. They carry the same value as the RtpStreamId
+of the RTP stream that the redundant RTP stream is correcting.
 
 # Terminology {#sec-term}
 
-In this document, the terms "Source Stream", "Encoded Stream," "RTP Stream",
-"Source RTP Stream", "Dependent Stream", "Received RTP Stream", and
-"Redundancy RTP Stream" are used as defined in {{RFC7656}}.
+In this document, the terms "source stream", "encoded stream," "RTP stream",
+"source RTP stream", "dependent stream", "received RTP stream", and
+"redundancy RTP stream" are used as defined in {{RFC7656}}.
 
-For Encoded Streams, the RID refers to the "Source RTP Stream" as defined by
-{{RFC7656}} Section 2.1.10.  For Dependent Streams, it refers to the RTP Stream
-that, like the Source RTP Stream of an Encoded Stream, is the RTP Stream that
-is not a Redundancy RTP Stream. For conciseness, we define the term
-"RID RTP Stream" to refer to this construct.
-
-For clarity, when RID is used, Redundancy RTP Streams that can be used to
-repair Received RTP Streams will use the same RID value as the Received
-RTP Stream they are intended to be combined with.
-
-# Usage of 'rid' in RTP and RTCP
+# Usage of RtpStreamId and RepairedRtpStreamId in RTP and RTCP
 
 The RTP fixed header includes the payload type number and the SSRC values of
 the RTP stream.  RTP defines how you de-multiplex streams within an RTP
 session; however, in some use cases, applications need further identifiers in
-order to effectively map the individual RID RTP Streams to their equivalent
+order to effectively map the individual RTP Streams to their equivalent
 payload configurations in the SDP.
 
-This specification defines a new RTCP SDES item {{RFC3550}}, 'RID', which is
-used to carry these identifiers within RTCP SDES packets.  This makes it
+This specification defines two new RTCP SDES items {{RFC3550}}.
+The first item is 'RtpStreamId', which is
+used to carry RTP stream identifiers within RTCP SDES packets.  This makes it
 possible for a receiver to associate received RTP packets (identifying the
-RID RTP Stream) with a media description having the format constraint
-specified.
+RTP stream) with a media description having the format constraint
+specified. The second is 'RepairedRtpStreamId', which can be used in redundancy
+RTP streams to indicate the RTP stream repaired by a redundancy RTP stream.
+
+To be clear: the value carried in a RepairedRtpStreamId will always match the
+RtpStreamId value from another RTP stream in the same session. For example,
+if a source RTP stream is identified by RtpStreamId "A", then any
+redundancy RTP stream that repairs that source RTP stream will contain
+a RepairedRtpStreamId of "A" (if this mechanism is being used to perform
+such correlation). These redundant RTP streams may also contain their own
+unique RtpStreamId.
 
 This specification also uses the RTP header extension for RTCP SDES items
-{{I-D.ietf-avtext-sdes-hdr-ext}} to allow carrying RID information in RTP
-packets. This allowes correlation at stream startup, or after stream changes
+{{I-D.ietf-avtext-sdes-hdr-ext}} to allow carrying RtpStreamId and
+RepairedRtpStreamId values in RTP
+packets. This allows correlation at stream startup, or after stream changes
 where the use of RTCP may not be sufficiently responsive.
 
-## RTCP 'RID' SDES Extension
+## RTCP 'RtpStreamId' SDES Extension
 
 ~~~~~~~
 
      0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |      RID=TBD  |     length    | rid                         ...
+    |RtpStreamId=TBD|     length    | RtpStreamId                 ...
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 ~~~~~~~
 
-The rid payload is UTF-8 encoded and is not null-terminated.
+The RtpStreamId payload is UTF-8 encoded and is not null-terminated.
+
+>RFC EDITOR NOTE: Please replace TBD with the assigned SDES identifier value.
+
+## RTCP 'RepairedRtpStreamId' SDES Extension
+
+~~~~~~~
+
+     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |Repaired...=TBD|     length    | RepairRtpStreamId           ...
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+~~~~~~~
+
+The RepairedRtpStreamId payload is UTF-8 encoded and is not null-terminated.
 
 >RFC EDITOR NOTE: Please replace TBD with the assigned SDES identifier value.
 
 
-## RTP 'RID' Header Extension
+## RTP 'RtpStreamId' and 'RepairedRtpStreamId' Header Extensions
 
-Because recipients of RTP packets will typically need to know which "a=rid"
-constraints they correspond to immediately upon receipt, this specification
-also defines a means of carrying RID identifiers in RTP extension headers,
-using the technique described in {{I-D.ietf-avtext-sdes-hdr-ext}}.
+Because recipients of RTP packets will typically need to know which streams
+they correspond to immediately upon receipt, this specification
+also defines a means of carrying RtpStreamId and RepairedRtpStreamId
+identifiers in RTP extension headers, using the technique described in
+{{I-D.ietf-avtext-sdes-hdr-ext}}.
 
 As described in that document, the header extension element can be encoded
 using either the one-byte or two-byte header, and the
 identification-tag payload is UTF-8 encoded, as in SDP.
 
-As the identification-tag is included in an RTP header extension, there should
-be some consideration about the packet expansion caused by the
-identification-tag. To avoid Maximum Transmission Unit (MTU) issues for the
+As the identifier is included in an RTP header extension, there should
+be some consideration given to the packet expansion caused by the
+identifier. To avoid Maximum Transmission Unit (MTU) issues for the
 RTP packets, the header extension's size needs to be taken into account when
 the encoding media.  Note that set of header extensions included in the packet
 needs to be padded to the next 32-bit boundary {{RFC5285}}.
 
-It is RECOMMENDED that the identification-tag is kept short.  In many cases, a
-one-byte tag will be sufficient; it is RECOMMENDED that implementations use
+In many cases, a one-byte identifier will be sufficient to distinguish streams
+in a session; implementations are strongly encouraged to use
 the shortest identifier that fits their purposes.
 
 # IANA Considerations {#sec-iana}
 
-## New SDES item
+## New RtpStreamId SDES item
 
 >RFC EDITOR NOTE: Please replace RFCXXXX with the RFC number of this document.
 
 >RFC EDITOR NOTE: Please replace TBD with the assigned SDES identifier value.
 
-This document adds the MID SDES item to the IANA "RTCP SDES item types"
+This document adds the RtpStreamId SDES item to the IANA "RTCP SDES item types"
 registry as follows:
 
 ~~~~~~~~~~~~~~~
 
            Value:          TBD
-           Abbrev.:        RID
+           Abbrev.:        RtpStreamId
            Name:           RTP Stream Identifier
+           Reference:      RFCXXXX
+
+~~~~~~~~~~~~~~~
+
+## New RepairRtpStreamId SDES item
+
+>RFC EDITOR NOTE: Please replace RFCXXXX with the RFC number of this document.
+
+>RFC EDITOR NOTE: Please replace TBD with the assigned SDES identifier value.
+
+This document adds the RepairedRtpStreamId SDES item to the IANA "RTCP SDES item types"
+registry as follows:
+
+~~~~~~~~~~~~~~~
+
+           Value:          TBD
+           Abbrev.:        RepairedRtpStreamId
+           Name:           Repaired RTP Stream Identifier
            Reference:      RFCXXXX
 
 ~~~~~~~~~~~~~~~
 
 # Security Considerations
 
-The actual identifiers used for RIDs are expected to be opaque. As such, they
-are not expected to contain information that would be sensitive, were it
-observed by third-parties.
+The actual identifiers used for RtpStreamIds (and therefore RepairedRtpStreamIds)
+are expected to be opaque. As such, they are not expected to contain
+information that would be sensitive, were it observed by third-parties.
 
 #  Acknowledgements
 Many thanks for review and input from Cullen Jennings, Magnus Westerlund,

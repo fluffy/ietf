@@ -2,7 +2,7 @@
 title: "RTP Stream Identifier (RID) Source Description (SDES)"
 abbrev: RID SDES
 docname:  draft-roach-avtext-rid-02
-date: 2016-02-03
+date: 2016-04-25
 category: std
 ipr: trust200902
 
@@ -34,14 +34,15 @@ normative:
   I-D.ietf-avtext-sdes-hdr-ext:
 
 informative:
-  I-D.ietf-mmusic-rid:
   I-D.ietf-mmusic-msid:
 
 
 --- abstract
 
-This document defines and registers an RTCP SDES item, RID, for identification
-of RTP streams associated with Encoded Streams and Dependent Streams.
+This document defines and registers two new RTCP SDES items.
+One, named RtpStreamId, is used for unique identification
+of RTP streams. The other, RepairedRtpStreamId, can be used
+to identify which stream a repair stream is to be used to repair.
 
 --- middle
 
@@ -61,27 +62,19 @@ systems that use PT to uniquely identify every potential combination of
 codec configuration and unique stream, it is possible to simply run
 out of values.
 
-To address this situation, we define a new RTCP SDES identifier that
-uniquely identifies a single stream. A key motivator for defining
-this identifier is the ability to differentiate among different
-encodings of a single Source Stream that are sent simultaneously
-(i.e., simulcast). This need for unique identification extends to
-Dependent Streams (i.e., layers used by a layered codec).
+To address this situation, we define a new RTCP SDES identifier, RtpStreamId,
+that uniquely identifies a single RTP stream. A key motivator for defining
+this identifier is the ability to differentiate among different encodings of a
+single Source Stream that are sent simultaneously (i.e., simulcast). This need
+for unique identification extends to dependent streams (i.e., layers used by a
+layered codec).
 
-At the same time, when Redundancy RTP Streams are in use, we also need an
+At the same time, when redundancy RTP streams are in use, we also need an
 identifier that connects such streams to the RTP stream for which they are
-providing redundancy. To that end, when this new identifier is in use, it
-appears (and contains the same value) in both in the Redundancy RTP Stream as
-well as the stream it is correcting.
-
-For lack of a better term, we have elected to call this term "RID,"
-which loosely stands for "RTP stream IDentifier." It should be noted
-that this isn't an overly-precise use of the term "RTP Stream," due
-to the lack of an existing well-defined term for the construct we
-are attempting to identify. See {{sec-term}} for a formal definition
-of the exact scope of a RID.
-
-The use of RIDs in SDP is described in {{I-D.ietf-mmusic-rid}}.
+providing redundancy. For this purpose, we define an additional SDES identifier,
+RepairedRtpStreamId. This identifier can appear only in packets associated
+with a redundancy RTP stream. They carry the same value as the RtpStreamId
+of the RTP stream that the redundant RTP stream is correcting.
 
 # Key Words for Requirements
 
@@ -91,19 +84,9 @@ document are to be interpreted as described in {{RFC2119}}
 
 # Terminology {#sec-term}
 
-In this document, the terms "Source Stream", "Encoded Stream," "RTP Stream",
-"Source RTP Stream", "Dependent Stream", "Received RTP Stream", and
-"Redundancy RTP Stream" are used as defined in {{RFC7656}}.
-
-For Encoded Streams, the RID refers to the "Source RTP Stream" as defined by
-{{RFC7656}} Section 2.1.10.  For Dependent Streams, it refers to the RTP Stream
-that, like the Source RTP Stream of an Encoded Stream, is the RTP Stream that
-is not a Redundancy RTP Stream. For conciseness, we define the term
-"RID RTP Stream" to refer to this construct.
-
-For clarity, when RID is used, Redundancy RTP Streams that can be used to
-repair Received RTP Streams will use the same RID value as the Received
-RTP Stream they are intended to be combined with.
+In this document, the terms "source stream", "encoded stream," "RTP stream",
+"source RTP stream", "dependent stream", "received RTP stream", and
+"redundancy RTP stream" are used as defined in {{RFC7656}}.
 
 # Usage of 'rid' in RTP and RTCP
 
