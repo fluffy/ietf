@@ -106,7 +106,7 @@
       </address>
     </author>
 
-    <date day="25" month="JuJunely" year="2016"/>
+    <date day="25" month="June" year="2016"/>
 
     <area>MMUSIC</area>
 
@@ -206,15 +206,14 @@
           such as grouping framework <xref target="RFC5888"/></t>
        </list>
       </t>
-      <t>The proposed framework defines categories for the SDP attributes
+      <t>The proposed framework analyzes the SDP attributes usage 
        under multiplexing and assigns each SDP attribute to an appropriate
        multiplexing category. Since the multiplexing categories defined in
        this specification are independent of any informal semantic groupings
-       of the SDP attributes, the categorizations assigned against each attribute
-       are normative.</t>
+       of the SDP attributes, the categorizations assigned are normative.</t>
 
       <section title="Category: NORMAL">
-        <t>The attributes in the NORMAL cateogry can be independently 
+        <t>The attributes in the NORMAL category can be independently 
         specified when multiplexed and they retain their original 
         semantics.</t>
          <t>&nbsp;</t>
@@ -244,7 +243,7 @@
       </section>
       <section title="Category: NOT-RECOMMENDED">
         <t>The attributes in the NOT-RECOMMENDED category are not 
-        advised agasint multiplexing since their usage under multiplexing 
+        advised against multiplexing since their usage under multiplexing 
         might lead to incorrect behavior.</t>
         <t>&nbsp;</t>
         <t>Example: Multiplexing media descriptions over a single
@@ -749,8 +748,7 @@
           used in addition to RFC5762, the port in the "m=" line is a
           DCCP port. DCCP being a connection oriented protocol, it does
           not allow multiple connections on the same
-          5-tuple&nbsp;</c> <c>M&nbsp;</c><c>NOT
-          RECOMMENDED&nbsp;</c><c>&nbsp;</c>
+          5-tuple&nbsp;</c> <c>M&nbsp;</c><c>NOT-RECOMMENDED&nbsp;</c><c>&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
         </texttable>
@@ -779,8 +777,8 @@
 
           <c>dccp-port&nbsp;</c><c> Multiplexing MUST NOT be performed
           due to potential conflict between the port used for DCCP
-          en/decapsulation and the RTP&nbsp;</c> <c>M&nbsp;</c><c>NOT
-          RECOMMENDED&nbsp;</c>
+          en/decapsulation and the RTP&nbsp;</c> <c>M&nbsp;</c>
+          <c>NOT-RECOMMENDED&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
         </texttable>
@@ -1248,8 +1246,8 @@
         <t>
          NOTE: The attributes (a=cparmin and a=cparmax) define minimum
          and maximum numerical values associated with the attributes
-         describe in a=cpar.</t> 
-         <t>Since a cpar attribute can either define
+         described in a=cpar.</t> 
+         <t>Since the cpar attribute can either define
          a 'b=' attribute or any 'a=' attribute, the multiplexing category 
          depends on actual attribute being encapsulated and the implications 
          of the numerical values assigned. Hence it is recommended to consult 
@@ -2613,7 +2611,7 @@
          <ttcol align='left'>Mux Category</ttcol>
 
          <c>bwtype:TIAS&nbsp;</c><c>The usage of TIAS is not 
-         defined Offer/Answer usage.&nbsp;</c>
+         defined under Offer/Answer usage.&nbsp;</c>
          <c>B</c><c>SPECIAL&nbsp;</c>
          <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
          <c>maxprate&nbsp;</c><c>The usage of TIAS and maxprate
@@ -2893,7 +2891,7 @@
          <ttcol align='left'>Level</ttcol>
          <ttcol align='left'>Mux Category</ttcol>
 
-         <c>group:ANAT&nbsp;</c><c>ANAT semantics is obseleted&nbsp;</c>
+         <c>group:ANAT&nbsp;</c><c>ANAT semantics is obsoleted &nbsp;</c>
          <c>S&nbsp;</c>
          <c>NOT-RECOMMENDED&nbsp;</c>
          <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
@@ -4071,9 +4069,19 @@ a=pcfg:4 m=5 pt=5:101
         Qin Wu (5.47 PM-Dir review), Hans Stokking(5.43,5.16),
         Christian Groves (5.48,5.55), Thomas Stach.
       </t>
+      <t>
+       Thanks to Ben Campbell for AD review suggestions.
+      </t>
     </section>
     <section title="Change Log">
       <t>[RFC EDITOR NOTE: Please remove this section when publishing]</t>
+      <t>Changes from draft-ietf-mmusic-sdp-mux-attributes-10 - draft-ietf-mmusic-sdp-mux-attributes-13
+          <list style="symbols">
+              <t>
+                Incorporated Comments from WGLC review and AD Evaluation
+              </t>
+          </list>
+      </t>
       <t>Changes from draft-ietf-mmusic-sdp-mux-attributes-10
           <list style="symbols">
               <t>
