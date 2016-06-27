@@ -8,7 +8,7 @@ clean:
 	-rm -f $(draft).txt $(draft).html $(draft).xml
 
 %.xml: %.md
-	mmark -xml2 -page  $< > $@
+	./mmark -xml2 -page  $< > $@
 
 %.txt: %.xml
 	xml2rfc --text $< 
