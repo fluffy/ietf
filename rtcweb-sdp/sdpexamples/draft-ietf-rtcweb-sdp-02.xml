@@ -1588,12 +1588,16 @@ Alice                                                 Bob
           <c><xref target="RFC4566"></xref></c>
           <c>a=group:BUNDLE audio video</c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
+          <c>a=ice-options:trickle</c>
+          <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** Audio m=line *********</c>
           <c>*****************************</c>
           <c>m=audio 49203 UDP/TLS/RTP/SAVPF 109</c>
           <c><xref target="RFC4566"></xref></c>
           <c>c=IN IP4 98.248.92.77</c>
           <c><xref target="RFC4566"></xref></c>
+          <c>a=rtcp:49203 IN IP4 24.23.204.141</c>
+          <c><xref target="RFC3605"></xref> - Port for RTCP data</c>
           <c>a=mid:audio</c>
           <c><xref target="RFC5888"></xref></c>
           <c>a=msid:ma ta </c>
@@ -1603,7 +1607,7 @@ Alice                                                 Bob
           <c>a=rtpmap:109 opus/48000/2</c>
           <c><xref target="I-D.ietf-payload-rtp-opus"></xref></c>
           <c>a=maxptime:100</c>
-          <c><xref target="RFC4566"/></c><c>a=recvonly</c>
+          <c><xref target="RFC4566"/></c>
           <c>a=ice-ufrag:c300d85b</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=ice-pwd:de4e99bd291c325921d5d47efbabd9a2</c>
@@ -1620,6 +1624,8 @@ Alice                                                 Bob
           <c><xref target="RFC5761"></xref></c>
 		  <c>a=rtcp-rsize</c>
           <c><xref target="RFC5506"></xref></c>
+          <c>a=rtcp-fb:109 nack</c>
+          <c><xref target="RFC5104"></xref></c>
           <c>a=extmap:1 urn:ietf:params:rtp-hdrext:ssrc-audio-level</c>
           <c><xref target="RFC6464"></xref></c>
           <c>a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:mid</c>
@@ -1662,6 +1668,12 @@ Alice                                                 Bob
           <c><xref target="RFC5761"></xref></c>
           <c>a=rtcp-rsize</c>
           <c><xref target="RFC5506"></xref></c>
+          <c>a=rtcp-fb:120 nack</c>
+          <c><xref target="RFC5104"></xref> </c>
+          <c>a=rtcp-fb:120 nack pli</c>
+          <c><xref target="RFC5104"></xref> </c>
+          <c>a=rtcp-fb:120 ccm fir</c>
+          <c><xref target="RFC5104"></xref></c>
           <c>a=extmap:3 urn:ietf:params:rtp-hdrext:sdes:mid</c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=ssrc:1366781083 cname:EocUG1f0fcg/yvY7</c>
@@ -1733,34 +1745,27 @@ Alice                                                 Bob
           <c>a=group:BUNDLE audio video</c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref>
           Alice supports grouping of m=lines under BUNDLE semantics</c>
+          <c>a=ice-options:trickle</c>
+          <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** Audio m=line *********</c>
           <c>*****************************</c>
           <c>m=audio 54609 UDP/TLS/RTP/SAVPF 109</c>
           <c><xref target="RFC4566"></xref></c>
           <c>c=IN IP4 24.23.204.141</c>
           <c><xref target="RFC4566"></xref></c>
+          <c>a=rtcp:54609 IN IP4 24.23.204.141</c>
+          <c><xref target="RFC3605"></xref></c>
           <c>a=mid:audio</c>
           <c><xref target="RFC5888"></xref> Audio m=line part of BUNDLE group
           with a unique port number</c>
           <c>a=msid:ma ta </c>
-          <c> Identifies RTCMediaStream ID (ma) and RTCMediaStreamTrack ID (ta)
-          </c>
-          <c>a=rtcp-mux</c>
-          <c><xref target="RFC5761"></xref></c>
-          <c>a=rtcp:54609 IN IP4 24.23.204.141</c>
-          <c><xref target="RFC3605"></xref></c>
+          <c> Identifies RTCMediaStream ID (ma) and RTCMediaStreamTrack ID (ta)</c>
+          <c>a=sendrecv</c>
+          <c><xref target="RFC3264"></xref></c>
           <c>a=rtpmap:109 opus/48000/2</c>
           <c><xref target="I-D.ietf-payload-rtp-opus"></xref></c>
-          <c>a=extmap:1 urn:ietf:params:rtp-hdrext:ssrc-audio-level</c>
-          <c><xref target="RFC6464"></xref></c>
           <c>a=maxptime:100</c>
-          <c><xref target="RFC4566"/></c><c>a=sendrecv</c>
-          <c><xref target="RFC3264"></xref></c>
-          <c>a=setup:actpass</c>
-          <c><xref target="RFC4145"></xref> - Alice can perform DTLS before
-          Answer arrives</c>
-          <c>a=ssrc:11111 cname:EocUG1f0fcg/yvY7</c>
-          <c><xref target="RFC5576"></xref></c>
+          <c><xref target="RFC4566"/></c>
           <c>a=ice-ufrag:074c6550</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
@@ -1770,6 +1775,21 @@ Alice                                                 Bob
              :BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
           </c>
           <c><xref target="RFC5245"></xref></c>
+          <c>a=setup:actpass</c>
+          <c><xref target="RFC4145"></xref> - Alice can perform DTLS before
+          Answer arrives</c>
+          <c>a=rtcp-mux</c>
+          <c><xref target="RFC5761"></xref></c>
+          <c>a=rtcp-rsize</c>
+          <c><xref target="RFC5506"></xref></c>
+          <c>a=rtcp-fb:109 nack</c>
+          <c><xref target="RFC5104"></xref></c>
+          <c>a=extmap:1 urn:ietf:params:rtp-hdrext:ssrc-audio-level</c>
+          <c><xref target="RFC6464"></xref></c>
+          <c>a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:mid</c>
+          <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
+          <c>a=ssrc:11111 cname:EocUG1f0fcg/yvY7</c>
+          <c><xref target="RFC5576"></xref></c>
           <c>a=candidate:0 1 UDP  2122194687 192.168.1.4 54609 typ host</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=candidate:0 2 UDP 2122194687 192.168.1.4 54609 typ host</c>
@@ -1780,37 +1800,23 @@ Alice                                                 Bob
           <c>a=candidate:1 2 UDP  1685987071 24.23.204.141 54609 typ srflx
           raddr 192.168.1.4 rport 54609</c>
           <c><xref target="RFC5245"></xref></c>
-          <c>a=rtcp-fb:109 nack</c>
-          <c><xref target="RFC5104"></xref></c>
-          <c>a=rtcp-rsize</c>
-          <c><xref target="RFC5506"></xref></c>
-          <c>a=ice-options:trickle</c>
-          <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** Video m=line *********</c>
           <c>*****************************</c>
           <c>m=video 62537 UDP/TLS/RTP/SAVPF 120</c>
           <c><xref target="RFC4566"></xref></c>
           <c>c=IN IP4 24.23.204.141</c>
           <c><xref target="RFC4566"></xref></c>
+          <c>a=rtcp:62537 IN IP4 24.23.204.141</c>
+          <c><xref target="RFC3605"></xref> - Port for RTCP data</c>
           <c>a=mid:video</c>
           <c><xref target="RFC5888"></xref> Video m=line part of the
           Bundle group with a unique port number</c>
           <c>a=msid:ma tb </c>
-          <c> Identifies RTCMediaStream ID (ma) and RTCMediaStreamTrack ID (tb)
-          </c>
-          <c>a=rtcp-mux</c>
-          <c><xref target="RFC5761"></xref></c>
-          <c>a=rtcp:62537 IN IP4 24.23.204.141</c>
-          <c><xref target="RFC3605"></xref> - Port for RTCP data</c>
-          <c>a=rtpmap:120 VP8/90000</c>
-          <c><xref target="I-D.ietf-payload-vp8"></xref></c>
+          <c> Identifies RTCMediaStream ID (ma) and RTCMediaStreamTrack ID (tb)</c>
           <c>a=sendrecv</c>
           <c><xref target="RFC3264"></xref></c>
-          <c>a=setup:actpass</c>
-          <c><xref target="RFC4145"></xref> - Alice can perform DTLS before
-          Answer arrives</c>
-          <c>a=ssrc:22222 cname:Q/NWs1ao1HmN4Xa5</c>
-          <c><xref target="RFC5576"></xref></c>
+          <c>a=rtpmap:120 VP8/90000</c>
+          <c><xref target="I-D.ietf-payload-vp8"></xref></c>
           <c>a=ice-ufrag:6550074c</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=ice-pwd:74af08a068a28a397a4c3f31747d1ee34</c>
@@ -1820,6 +1826,23 @@ Alice                                                 Bob
              :BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
            </c>
           <c><xref target="RFC5245"></xref></c>
+          <c>a=setup:actpass</c>
+          <c><xref target="RFC4145"></xref> - Alice can perform DTLS before
+          Answer arrives</c>
+          <c>a=rtcp-mux</c>
+          <c><xref target="RFC5761"></xref></c>
+          <c>a=rtcp-rsize</c>
+          <c><xref target="RFC5506"></xref></c>
+          <c>a=rtcp-fb:120 nack</c>
+          <c><xref target="RFC5104"></xref> </c>
+          <c>a=rtcp-fb:120 nack pli</c>
+          <c><xref target="RFC5104"></xref> </c>
+          <c>a=rtcp-fb:120 ccm fir</c>
+          <c><xref target="RFC5104"></xref></c>
+          <c>a=extmap:3 urn:ietf:params:rtp-hdrext:sdes:mid</c>
+          <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
+          <c>a=ssrc:22222 cname:Q/NWs1ao1HmN4Xa5</c>
+          <c><xref target="RFC5576"></xref></c>
           <c>a=candidate:0 1 UDP  2122194687 192.168.1.4 62537 typ host</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=candidate:0 2 2122194687 192.168.1.4 62537 typ host</c>
@@ -1830,16 +1853,6 @@ Alice                                                 Bob
           <c>a=candidate:1 2 UDP 1685987071 24.23.204.141 62537 typ srflx
           raddr 192.168.1.4 rport 62537</c>
           <c><xref target="RFC5245"></xref></c>
-          <c>a=rtcp-fb:120 nack</c>
-          <c><xref target="RFC5104"></xref> </c>
-          <c>a=rtcp-fb:120 nack pli</c>
-          <c><xref target="RFC5104"></xref> </c>
-          <c>a=rtcp-fb:120 ccm fir</c>
-          <c><xref target="RFC5104"></xref></c>
-          <c>a=rtcp-rsize</c>
-          <c><xref target="RFC5506"></xref></c>
-          <c>a=ice-options:trickle</c>
-          <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
         </texttable>
         <t><vspace blankLines='1'></vspace></t>
         <texttable anchor="table_2waybundle_2"
@@ -1857,34 +1870,26 @@ Alice                                                 Bob
           <c>a=group:BUNDLE audio video</c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref>
           Bob supports BUNDLE semantics.</c>
+          <c>a=ice-options:trickle</c>
+          <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** Audio m=line *********</c>
           <c>*****************************</c>
           <c>m=audio 49203 UDP/TLS/RTP/SAVPF 109</c>
           <c><xref target="RFC4566"></xref></c>
           <c>c=IN IP4 98.248.92.77</c>
           <c><xref target="RFC4566"></xref></c>
+          <c>a=rtcp:49203 IN IP4 98.248.92.77</c>
+          <c><xref target="RFC3605"></xref></c>
           <c>a=msid:ma ta </c>
-          <c> Identifies RTCMediaStream ID (ma) and RTCMediaStreamTrack ID (ta)
-          </c>
+          <c> Identifies RTCMediaStream ID (ma) and RTCMediaStreamTrack ID (ta) </c>
           <c>a=mid:audio</c>
-          <c><xref target="RFC5888"></xref> Audio m=line part of the
-          BUNDLE group</c>
+          <c><xref target="RFC5888"></xref> Audio m=line part of the BUNDLE group</c>
+          <c>a=sendrecv</c>
+          <c><xref target="RFC3264"></xref></c>
           <c>a=rtpmap:109 opus/48000/2</c>
           <c><xref target="I-D.ietf-payload-rtp-opus"></xref></c>
           <c>a=maxptime:100</c>
-          <c><xref target="RFC4566"/></c><c>a=extmap:1 urn:ietf:params:rtp-hdrext:ssrc-audio-level</c>
-          <c><xref target="RFC6464"></xref></c>
-          <c>a=sendrecv</c>
-          <c><xref target="RFC3264"></xref></c>
-          <c>a=setup:active</c>
-          <c><xref target="RFC4145"></xref> - Bob carries out DTLS Handshake
-          in parallel</c>
-          <c>a=rtcp-fb:109 nack</c>
-          <c><xref target="RFC5104"></xref></c>
-          <c>a=rtcp-mux</c>
-          <c><xref target="RFC5761"></xref></c>
-          <c>a=ssrc:33333 cname:Q/1HmN4Xa5NWs1ao</c>
-          <c><xref target="RFC5576"></xref></c>
+          <c><xref target="RFC4566"/></c>
           <c>a=ice-ufrag:c300d85b</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=ice-pwd:de4e99bd291c325921d5d47efbabd9a2</c>
@@ -1894,38 +1899,43 @@ Alice                                                 Bob
             :DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
           </c>
           <c><xref target="RFC5245"></xref></c>
+          <c>a=setup:active</c>
+          <c><xref target="RFC4145"></xref> - Bob carries out DTLS Handshake
+          in parallel</c>
+          <c>a=rtcp-mux</c>
+          <c><xref target="RFC5761"></xref></c>
+          <c>a=rtcp-rsize</c>
+          <c><xref target="RFC5506"></xref></c>
+          <c>a=rtcp-fb:109 nack</c>
+          <c><xref target="RFC5104"></xref></c>
+          <c>a=extmap:1 urn:ietf:params:rtp-hdrext:ssrc-audio-level</c>
+          <c><xref target="RFC6464"></xref></c>
+          <c>a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:mid</c>
+          <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
+          <c>a=ssrc:33333 cname:Q/1HmN4Xa5NWs1ao</c>
+          <c><xref target="RFC5576"></xref></c>
           <c>a=candidate:0 1 UDP 2122194687 192.168.1.7 49203 typ host</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=candidate:1 1 UDP 1685987071 98.248.92.77 49203 typ srflx
           raddr 192.168.1.7 rport 49203</c>
           <c><xref target="RFC5245"></xref></c>
-          <c>a=rtcp-rsize</c>
-          <c><xref target="RFC5506"></xref></c>
-          <c>a=ice-options:trickle</c>
-          <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** Video m=line *********</c>
           <c>*****************************</c>
           <c>m=video 49203 UDP/TLS/RTP/SAVPF 120</c>
           <c><xref target="RFC4566"></xref> </c>
           <c>c=IN IP4 98.248.92.77</c>
           <c><xref target="RFC4566"></xref></c>
+          <c>a=rtcp:49203 IN IP4 98.248.92.77</c>
+          <c><xref target="RFC3605"></xref></c>
           <c>a=mid:video</c>
           <c><xref target="RFC5888"></xref> Video m=line part of the
           BUNDLE group with the port from audio line repeated </c>
           <c>a=msid:ma tb </c>
-          <c> Identifies RTCMediaStream ID (ma) and RTCMediaStreamTrack ID (tb)
-          </c>
-          <c>a=rtpmap:120 VP8/90000</c>
-          <c><xref target="I-D.ietf-payload-vp8"></xref></c>
+          <c> Identifies RTCMediaStream ID (ma) and RTCMediaStreamTrack ID (tb)</c>
           <c>a=sendrecv</c>
           <c><xref target="RFC3264"></xref></c>
-          <c>a=setup:active</c>
-          <c><xref target="RFC4145"></xref> - Bob carries out DTLS Handshake
-          in parallel</c>
-          <c>a=rtcp-mux</c>
-          <c><xref target="RFC5761"></xref></c>
-          <c>a=ssrc:44444 cname:Q/2AqlmN4Xa5NWs</c>
-          <c><xref target="RFC5576"></xref></c>
+          <c>a=rtpmap:120 VP8/90000</c>
+          <c><xref target="I-D.ietf-payload-vp8"></xref></c>
           <c>a=ice-ufrag:85bc300d</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=ice-pwd:bd2de4e9991c325921d5d47efbabd9a2</c>
@@ -1935,21 +1945,28 @@ Alice                                                 Bob
             :DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
           </c>
           <c><xref target="RFC5245"></xref></c>
-          <c>a=candidate:0 1 UDP 2122194687 192.168.1.7 49203 typ host</c>
-          <c><xref target="RFC5245"></xref></c>
-          <c>a=candidate:1 1 UDP 1685987071 98.248.92.77 49203 typ srflx
-          raddr 192.168.1.7 rport 49203</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c>a=setup:active</c>
+          <c><xref target="RFC4145"></xref> - Bob carries out DTLS Handshake
+          in parallel</c>
+          <c>a=rtcp-mux</c>
+          <c><xref target="RFC5761"></xref></c>
+          <c>a=rtcp-rsize</c>
+          <c><xref target="RFC5506"></xref></c>
           <c>a=rtcp-fb:120 nack</c>
           <c><xref target="RFC5104"></xref> </c>
           <c>a=rtcp-fb:120 nack pli</c>
           <c><xref target="RFC5104"></xref> </c>
           <c>a=rtcp-fb:120 ccm fir</c>
           <c><xref target="RFC5104"></xref></c>
-          <c>a=rtcp-rsize</c>
-          <c><xref target="RFC5506"></xref></c>
-          <c>a=ice-options:trickle</c>
-          <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
+          <c>a=extmap:3 urn:ietf:params:rtp-hdrext:sdes:mid</c>
+          <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
+          <c>a=ssrc:44444 cname:Q/2AqlmN4Xa5NWs</c>
+          <c><xref target="RFC5576"></xref></c>
+          <c>a=candidate:0 1 UDP 2122194687 192.168.1.7 49203 typ host</c>
+          <c><xref target="RFC5245"></xref></c>
+          <c>a=candidate:1 1 UDP 1685987071 98.248.92.77 49203 typ srflx
+          raddr 192.168.1.7 rport 49203</c>
+          <c><xref target="RFC5245"></xref></c>
         </texttable>
         <t><vspace blankLines='1'></vspace></t>
         </section>
@@ -2220,29 +2237,26 @@ Alice                                       Bob
           <c><xref target="RFC4566"></xref></c>
           <c>a=group:BUNDLE audio video data</c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref> </c>
+          <c>a=ice-options:trickle</c>
+          <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** Audio m=line *********</c>
           <c>*****************************</c>
           <c>m=audio 54609 UDP/TLS/RTP/SAVPF 109</c>
           <c><xref target="RFC4566"></xref></c>
           <c>c=IN IP4 24.23.204.141</c>
           <c><xref target="RFC4566"></xref></c>
-          <c>a=msid:ma ta </c>
-          <c> Identifies RTCMediaStream ID (ma) and RTCMediaStreamTrack ID (ta) </c>
           <c>a=rtcp:54609 IN IP4 24.23.204.141</c>
           <c><xref target="RFC3605"></xref></c>
+          <c>a=msid:ma ta </c>
+          <c> Identifies RTCMediaStream ID (ma) and RTCMediaStreamTrack ID (ta) </c>
           <c>a=mid:audio</c>
           <c><xref target="RFC5888"></xref></c>
+          <c>a=sendrecv</c>
+          <c><xref target="RFC3264"></xref></c>
           <c>a=rtpmap:109 opus/48000/2</c>
           <c><xref target="I-D.ietf-payload-rtp-opus"></xref></c>
-          <c>a=extmap:1 urn:ietf:params:rtp-hdrext:ssrc-audio-level</c>
-          <c><xref target="RFC6464"></xref></c>
           <c>a=maxptime:100</c>
-          <c><xref target="RFC4566"/></c><c>a=sendrecv</c>
-          <c><xref target="RFC3264"></xref></c>
-          <c>a=setup:actpass</c>
-          <c><xref target="RFC4145"></xref></c>
-          <c>a=rtcp-mux</c>
-          <c><xref target="RFC5761"></xref></c>
+          <c><xref target="RFC4566"/></c>
           <c>a=ice-ufrag:074c6550</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
@@ -2252,6 +2266,20 @@ Alice                                       Bob
              :BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
 		  </c>
           <c><xref target="RFC5245"></xref> </c>
+          <c>a=setup:actpass</c>
+          <c><xref target="RFC4145"></xref></c>
+          <c>a=rtcp-mux</c>
+          <c><xref target="RFC5761"></xref></c>
+          <c>a=rtcp-rsize</c>
+          <c><xref target="RFC5506"></xref></c>
+          <c>a=rtcp-fb:109 nack</c>
+          <c><xref target="RFC5104"></xref> </c>
+          <c>a=extmap:1 urn:ietf:params:rtp-hdrext:ssrc-audio-level</c>
+          <c><xref target="RFC6464"></xref></c>
+          <c>a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:mid</c>
+          <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
+          <c>a=ssrc:11111 cname:Q/NWs1ao1HmN4Xa5</c>
+          <c><xref target="RFC5576"></xref></c>
           <c>a=candidate:0 1 UDP  2122194687 192.168.1.4 54609 typ host</c>
           <c><xref target="RFC5245"></xref> </c>
           <c>a=candidate:0 2 UDP 2122194687 192.168.1.4 64678 typ host</c>
@@ -2262,34 +2290,22 @@ Alice                                       Bob
           <c>a=candidate:1 2 UDP  1685987071 24.23.204.141 54609 typ srflx
           raddr 192.168.1.4 rport 54609</c>
           <c><xref target="RFC5245"></xref></c>
-          <c>a=rtcp-fb:109 nack</c>
-          <c><xref target="RFC5104"></xref> </c>
-          <c>a=ssrc:11111 cname:Q/NWs1ao1HmN4Xa5</c>
-          <c><xref target="RFC5576"></xref></c>
-          <c>a=rtcp-rsize</c>
-          <c><xref target="RFC5506"></xref></c>
-          <c>a=ice-options:trickle</c>
-          <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** Video m=line *********</c>
           <c>*****************************</c>
           <c>m=video 54609 UDP/TLS/RTP/SAVPF 120</c>
           <c><xref target="RFC4566"></xref> </c>
           <c>c=IN IP4 24.23.204.141</c>
           <c><xref target="RFC4566"></xref></c>
-          <c>a=msid:ma tb </c>
-          <c> Identifies RTCMediaStream ID (ma) and RTCMediaStreamTrack ID (tb) </c>
           <c>a=rtcp:54609 IN IP4 24.23.204.141</c>
           <c><xref target="RFC3605"></xref></c>
           <c>a=mid:video</c>
           <c><xref target="RFC5888"></xref></c>
-          <c>a=rtpmap:120 VP8/90000</c>
-          <c><xref target="I-D.ietf-payload-vp8"></xref> </c>
+          <c>a=msid:ma tb </c>
+          <c> Identifies RTCMediaStream ID (ma) and RTCMediaStreamTrack ID (tb) </c>
           <c>a=sendrecv</c>
           <c><xref target="RFC3264"></xref> </c>
-          <c>a=setup:actpass</c>
-          <c><xref target="RFC4145"></xref> </c>
-          <c>a=rtcp-mux</c>
-          <c><xref target="RFC5761"></xref></c>
+          <c>a=rtpmap:120 VP8/90000</c>
+          <c><xref target="I-D.ietf-payload-vp8"></xref> </c>
           <c>a=ice-ufrag:074c6550</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
@@ -2299,6 +2315,22 @@ Alice                                       Bob
              :BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
 		  </c>
           <c><xref target="RFC5245"></xref></c>
+          <c>a=setup:actpass</c>
+          <c><xref target="RFC4145"></xref> </c>
+          <c>a=rtcp-mux</c>
+          <c><xref target="RFC5761"></xref></c>
+          <c>a=rtcp-rsize</c>
+          <c><xref target="RFC5506"></xref></c>
+          <c>a=rtcp-fb:120 nack</c>
+          <c><xref target="RFC5104"></xref></c>
+          <c>a=rtcp-fb:120 nack pli</c>
+          <c><xref target="RFC5104"></xref></c>
+          <c>a=rtcp-fb:120 ccm fir</c>
+          <c><xref target="RFC5104"></xref></c>
+          <c>a=extmap:3 urn:ietf:params:rtp-hdrext:sdes:mid</c>
+          <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
+          <c>a=ssrc:22222 cname:Q/aoNWs11HmN4Xa5</c>
+          <c><xref target="RFC5576"></xref></c>
           <c>a=candidate:0 1 UDP  2122194687 192.168.1.4 54609 typ host</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=candidate:0 2 UDP 2122194687 192.168.1.4 54609 typ host</c>
@@ -2309,18 +2341,6 @@ Alice                                       Bob
           <c>a=candidate:1 2 UDP  1685987071 24.23.204.141 54609 typ srflx
           raddr 192.168.1.4 rport 54609</c>
           <c><xref target="RFC5245"></xref></c>
-          <c>a=rtcp-fb:120 nack</c>
-          <c><xref target="RFC5104"></xref></c>
-          <c>a=rtcp-fb:120 nack pli</c>
-          <c><xref target="RFC5104"></xref></c>
-          <c>a=rtcp-fb:120 ccm fir</c>
-          <c><xref target="RFC5104"></xref></c>
-          <c>a=ssrc:22222 cname:Q/aoNWs11HmN4Xa5</c>
-          <c><xref target="RFC5576"></xref></c>
-          <c>a=rtcp-rsize</c>
-          <c><xref target="RFC5506"></xref></c>
-          <c>a=ice-options:trickle</c>
-          <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** Application m=line *********</c>
           <c>*****************************</c>
           <c>m=application 54609 UDP/DTLS/SCTP webrtc-datachannel</c>
@@ -2348,13 +2368,13 @@ Alice                                       Bob
              :BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
 		  </c>
           <c><xref target="RFC5245"></xref></c>
+          <c>a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:mid</c>
+          <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=candidate:0 1 UDP  2122194687 192.168.1.4 54609 typ host</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=candidate:1 1 UDP  1685987071 24.23.204.141 54609 typ srflx
           raddr 192.168.1.4 rport 54609</c>
           <c><xref target="RFC5245"></xref></c>
-          <c>a=ice-options:trickle</c>
-          <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
         </texttable>
         <t><vspace blankLines='1'></vspace></t>
         <texttable anchor="table_avd-2way_2" title="5.2.8 SDP Answer">
@@ -2373,29 +2393,26 @@ Alice                                       Bob
           <c>a=ice-options:trickle</c>
           <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref>
            Bob's trickle support support is indicated at the session level</c>
+           <c>a=ice-options:trickle</c>
+          <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** Audio m=line *********</c>
           <c>*****************************</c>
           <c>m=audio 49203 UDP/TLS/RTP/SAVPF 109</c>
           <c><xref target="RFC4566"></xref></c>
           <c>c=IN IP4 98.248.92.77</c>
           <c><xref target="RFC4566"></xref></c>
+          <c>a=rtcp:49203 IN IP4 98.248.92.77</c>
+          <c><xref target="RFC3605"></xref></c>
           <c>a=msid:ma ta </c>
           <c> Identifies RTCMediaStream ID (ma) and RTCMediaStreamTrack ID (ta) </c>
           <c>a=mid:audio</c>
           <c><xref target="RFC5888"></xref></c>
+          <c>a=sendrecv</c>
+          <c><xref target="RFC3264"></xref> </c>
           <c>a=rtpmap:109 opus/48000/2</c>
           <c><xref target="I-D.ietf-payload-rtp-opus"></xref></c>
-          <c>a=extmap:1 urn:ietf:params:rtp-hdrext:ssrc-audio-level</c>
-          <c><xref target="RFC6464"></xref></c>
           <c>a=maxptime:100</c>
-          <c><xref target="RFC4566"/></c><c>a=sendrecv</c>
-          <c><xref target="RFC3264"></xref> </c>
-          <c>a=setup:active</c>
-          <c><xref target="RFC4145"></xref> </c>
-          <c>a=rtcp-mux</c>
-          <c><xref target="RFC5761"></xref> </c>
-          <c>a=rtcp-fb:109 nack</c>
-          <c><xref target="RFC5104"></xref> </c>
+          <c><xref target="RFC4566"/></c>
           <c>a=ice-ufrag:c300d85b</c>
           <c><xref target="RFC5245"></xref> </c>
           <c>a=ice-pwd:de4e99bd291c325921d5d47efbabd9a2</c>
@@ -2405,33 +2422,41 @@ Alice                                       Bob
             :DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
           </c>
           <c><xref target="RFC5245"></xref> </c>
+          <c>a=setup:active</c>
+          <c><xref target="RFC4145"></xref> </c>
+          <c>a=rtcp-mux</c>
+          <c><xref target="RFC5761"></xref> </c>
+          <c>a=rtcp-rsize</c>
+          <c><xref target="RFC5506"></xref></c>
+          <c>a=rtcp-fb:109 nack</c>
+          <c><xref target="RFC5104"></xref> </c>
+          <c>a=extmap:1 urn:ietf:params:rtp-hdrext:ssrc-audio-level</c>
+          <c><xref target="RFC6464"></xref></c>
+          <c>a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:mid</c>
+          <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
+          <c>a=ssrc:33333 cname:L/aoNWs11HmN4Xa5</c>
+          <c><xref target="RFC5576"></xref></c>
           <c>a=candidate:0 1 UDP 2122194687 192.168.1.7 49203 typ host</c>
           <c><xref target="RFC5245"></xref> </c>
           <c>a=candidate:1 1 UDP 1685987071 98.248.92.77 49203 typ srflx
 					raddr 192.168.1.7 rport 49203</c>
           <c><xref target="RFC5245"></xref> </c>
-          <c>a=ssrc:33333 cname:L/aoNWs11HmN4Xa5</c>
-          <c><xref target="RFC5576"></xref></c>
-          <c>a=rtcp-rsize</c>
-          <c><xref target="RFC5506"></xref></c>
           <c>****** Video m=line *********</c>
           <c>*****************************</c>
           <c>m=video 49203 UDP/TLS/RTP/SAVPF 120</c>
           <c><xref target="RFC4566"></xref> </c>
           <c>c=IN IP4 98.248.92.77</c>
           <c><xref target="RFC4566"></xref></c>
-          <c>a=msid:ma tb </c>
-          <c> Identifies RTCMediaStream ID (ma) and RTCMediaStreamTrack ID (tb) </c>
+          <c>a=rtcp:49203 IN IP4 98.248.92.77</c>
+          <c><xref target="RFC3605"></xref></c>
           <c>a=mid:video</c>
           <c><xref target="RFC5888"></xref></c>
-          <c>a=rtpmap:120 VP8/90000</c>
-          <c><xref target="I-D.ietf-payload-vp8"></xref> </c>
+          <c>a=msid:ma tb </c>
+          <c> Identifies RTCMediaStream ID (ma) and RTCMediaStreamTrack ID (tb) </c>
           <c>a=sendrecv</c>
           <c><xref target="RFC3264"></xref></c>
-          <c>a=setup:active</c>
-          <c><xref target="RFC4145"></xref> </c>
-          <c>a=rtcp-mux</c>
-          <c><xref target="RFC5761"></xref></c>
+          <c>a=rtpmap:120 VP8/90000</c>
+          <c><xref target="I-D.ietf-payload-vp8"></xref> </c>
           <c>a=ice-ufrag:c300d85b</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=ice-pwd:de4e99bd291c325921d5d47efbabd9a2</c>
@@ -2441,21 +2466,27 @@ Alice                                       Bob
             :DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
           </c>
           <c><xref target="RFC5245"></xref></c>
-          <c>a=candidate:0 1 UDP 2122194687 192.168.1.7 49203 typ host</c>
-          <c><xref target="RFC5245"></xref></c>
-          <c>a=candidate:1 1 UDP 1685987071 98.248.92.77 49203 typ srflx
-          raddr 192.168.1.7 rport 49203</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c>a=setup:active</c>
+          <c><xref target="RFC4145"></xref> </c>
+          <c>a=rtcp-mux</c>
+          <c><xref target="RFC5761"></xref></c>
+          <c>a=rtcp-rsize</c>
+          <c><xref target="RFC5506"></xref></c>
           <c>a=rtcp-fb:120 nack</c>
           <c><xref target="RFC5104"></xref> </c>
           <c>a=rtcp-fb:120 nack pli</c>
           <c><xref target="RFC5104"></xref> </c>
           <c>a=rtcp-fb:120 ccm fir</c>
           <c><xref target="RFC5104"></xref></c>
+          <c>a=extmap:3 urn:ietf:params:rtp-hdrext:sdes:mid</c>
+          <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
+          <c>a=candidate:0 1 UDP 2122194687 192.168.1.7 49203 typ host</c>
+          <c><xref target="RFC5245"></xref></c>
           <c>a=ssrc:44444 cname:EocUG1f0fcg/yvY7</c>
           <c><xref target="RFC5576"></xref></c>
-          <c>a=rtcp-rsize</c>
-          <c><xref target="RFC5506"></xref></c>
+          <c>a=candidate:1 1 UDP 1685987071 98.248.92.77 49203 typ srflx
+          raddr 192.168.1.7 rport 49203</c>
+          <c><xref target="RFC5245"></xref></c>
           <c>****** Application m=line *********</c>
           <c>*****************************</c>
           <c>m=application 49203 UDP/DTLS/SCTP webrtc-datachannel</c>
@@ -2481,6 +2512,8 @@ Alice                                       Bob
             :DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
           </c>
           <c><xref target="RFC5245"></xref> </c>
+          <c>a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:mid</c>
+          <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=candidate:0 1 UDP 2122194687 192.168.1.7 49203 typ host</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=candidate:1 1 UDP 1685987071 98.248.92.77 49203 typ srflx
@@ -2765,7 +2798,8 @@ Alice                                                 Bob
           <c>a=extmap:1 urn:ietf:params:rtp-hdrext:ssrc-audio-level</c>
           <c><xref target="RFC6464"></xref></c>
           <c>a=maxptime:100</c>
-          <c><xref target="RFC4566"/></c><c>a=setup:actpass</c>
+          <c><xref target="RFC4566"/></c>
+          <c>a=setup:actpass</c>
           <c><xref target="RFC4145"></xref> - Alice can perform DTLS before
           Answer arrives</c>
           <c>a=sendrecv</c>
@@ -2879,7 +2913,8 @@ Alice                                                 Bob
           <c>a=extmap:1 urn:ietf:params:rtp-hdrext:ssrc-audio-level</c>
           <c><xref target="RFC6464"></xref></c>
           <c>a=maxptime:100</c>
-          <c><xref target="RFC4566"/></c><c>a=setup:active</c>
+          <c><xref target="RFC4566"/></c>
+          <c>a=setup:active</c>
           <c><xref target="RFC4145"></xref> - Bob carries out DTLS Handshake
           in parallel</c>
           <c>a=sendrecv</c>
@@ -3020,7 +3055,8 @@ Alice                                                 Bob
           <c>a=extmap:1 urn:ietf:params:rtp-hdrext:ssrc-audio-level</c>
           <c><xref target="RFC6464"></xref></c>
           <c>a=maxptime:100</c>
-          <c><xref target="RFC4566"/></c><c>a=sendrecv</c>
+          <c><xref target="RFC4566"/></c>
+          <c>a=sendrecv</c>
           <c><xref target="RFC3264"></xref></c>
           <c>a=setup:actpass</c>
           <c><xref target="RFC4145"></xref></c>
@@ -3149,7 +3185,8 @@ Alice                                                 Bob
           <c>a=extmap:1 urn:ietf:params:rtp-hdrext:ssrc-audio-level</c>
           <c><xref target="RFC6464"></xref></c>
           <c>a=maxptime:100</c>
-          <c><xref target="RFC4566"/></c><c>a=sendrecv</c>
+          <c><xref target="RFC4566"/></c>
+          <c>a=sendrecv</c>
           <c><xref target="RFC3264"></xref> </c>
           <c>a=setup:active</c>
           <c><xref target="RFC4145"></xref> </c>
@@ -3314,7 +3351,8 @@ Alice                                                 Bob
           <c>a=extmap:1 urn:ietf:params:rtp-hdrext:ssrc-audio-level</c>
           <c><xref target="RFC6464"></xref></c>
           <c>a=maxptime:100</c>
-          <c><xref target="RFC4566"/></c><c>a=sendrecv</c>
+          <c><xref target="RFC4566"/></c>
+          <c>a=sendrecv</c>
           <c><xref target="RFC3264"></xref></c>
           <c>a=setup:actpass</c>
           <c><xref target="RFC4145"></xref></c>
@@ -3379,7 +3417,8 @@ Alice                                                 Bob
           <c>a=rtpmap:109 opus/48000/2</c>
           <c><xref target="I-D.ietf-payload-rtp-opus"></xref></c>
           <c>a=maxptime:100</c>
-          <c><xref target="RFC4566"/></c><c>a=sendrecv</c>
+          <c><xref target="RFC4566"/></c>
+          <c>a=sendrecv</c>
           <c><xref target="RFC3264"></xref> </c>
           <c>a=setup:active</c>
           <c><xref target="RFC4145"></xref> </c>
@@ -3440,7 +3479,8 @@ Alice                                                 Bob
           <c>a=rtpmap:109 opus/48000/2</c>
           <c><xref target="I-D.ietf-payload-rtp-opus"></xref></c>
           <c>a=maxptime:100</c>
-          <c><xref target="RFC4566"/></c><c>a=sendrecv</c>
+          <c><xref target="RFC4566"/></c>
+          <c>a=sendrecv</c>
           <c><xref target="RFC3264"></xref></c>
           <c>a=setup:actpass</c>
           <c><xref target="RFC4145"></xref></c>
@@ -3554,7 +3594,8 @@ Alice                                                 Bob
           <c>a=extmap:1 urn:ietf:params:rtp-hdrext:ssrc-audio-level</c>
           <c><xref target="RFC6464"></xref></c>
           <c>a=maxptime:100</c>
-          <c><xref target="RFC4566"/></c><c>a=sendrecv</c>
+          <c><xref target="RFC4566"/></c>
+          <c>a=sendrecv</c>
           <c><xref target="RFC3264"></xref> </c>
           <c>a=setup:active</c>
           <c><xref target="RFC4145"></xref> </c>
@@ -3712,7 +3753,8 @@ Alice                                            Bob
           <c>a=extmap:1 urn:ietf:params:rtp-hdrext:ssrc-audio-level</c>
           <c><xref target="RFC6464"></xref></c>
           <c>a=maxptime:100</c>
-          <c><xref target="RFC4566"/></c><c>a=sendonly</c>
+          <c><xref target="RFC4566"/></c>
+          <c>a=sendonly</c>
           <c><xref target="RFC3264"></xref></c>
           <c>a=setup:actpass</c>
           <c><xref target="RFC4145"></xref></c>
@@ -3895,7 +3937,8 @@ Alice                                            Bob
           <c>a=rtcp-fb:109 nack</c>
           <c><xref target="RFC5104"></xref> </c>
           <c>a=maxptime:100</c>
-          <c><xref target="RFC4566"/></c><c>a=recvonly</c>
+          <c><xref target="RFC4566"/></c>
+          <c>a=recvonly</c>
           <c><xref target="RFC3264"></xref></c>
           <c>a=setup:active</c>
           <c><xref target="RFC4145"></xref> </c>
@@ -4105,7 +4148,8 @@ Alice                                            Bob
           <c>a=extmap:1 urn:ietf:params:rtp-hdrext:ssrc-audio-level</c>
           <c><xref target="RFC6464"></xref></c>
           <c>a=maxptime:100</c>
-          <c><xref target="RFC4566"/></c><c>a=sendonly</c>
+          <c><xref target="RFC4566"/></c>
+          <c>a=sendonly</c>
           <c><xref target="RFC3264"></xref></c>
           <c>a=rtcp-fb:109 nack</c>
           <c><xref target="RFC5104"></xref> </c>
@@ -4221,7 +4265,8 @@ Alice                                            Bob
           <c>a=extmap:1 urn:ietf:params:rtp-hdrext:ssrc-audio-level</c>
           <c><xref target="RFC6464"></xref></c>
           <c>a=maxptime:100</c>
-          <c><xref target="RFC4566"/></c><c>a=rtcp-fb:109 nack</c>
+          <c><xref target="RFC4566"/></c>
+          <c>a=rtcp-fb:109 nack</c>
           <c><xref target="RFC5104"></xref> </c>
           <c>a=recvonly</c>
           <c><xref target="RFC3264"></xref></c>
@@ -4370,7 +4415,8 @@ Alice                                                    Bob
           <c>a=extmap:1 urn:ietf:params:rtp-hdrext:ssrc-audio-level</c>
           <c><xref target="RFC6464"></xref></c>
           <c>a=maxptime:100</c>
-          <c><xref target="RFC4566"/></c><c>a=rtcp-fb:109 nack</c>
+          <c><xref target="RFC4566"/></c>
+          <c>a=rtcp-fb:109 nack</c>
           <c><xref target="RFC5104"></xref> </c>
           <c>a=sendonly</c>
           <c><xref target="RFC3264"></xref></c>
@@ -4492,7 +4538,8 @@ Alice                                                    Bob
           <c>a=extmap:1 urn:ietf:params:rtp-hdrext:ssrc-audio-level</c>
           <c><xref target="RFC6464"></xref></c>
           <c>a=maxptime:100</c>
-          <c><xref target="RFC4566"/></c><c>a=rtcp-fb:109 nack</c>
+          <c><xref target="RFC4566"/></c>
+          <c>a=rtcp-fb:109 nack</c>
           <c><xref target="RFC5104"></xref> </c>
           <c>a=recvonly</c>
           <c><xref target="RFC3264"></xref></c>
@@ -4657,7 +4704,8 @@ Alice                                                    Bob
           <c>a=extmap:1 urn:ietf:params:rtp-hdrext:ssrc-audio-level</c>
           <c><xref target="RFC6464"></xref></c>
           <c>a=maxptime:100</c>
-          <c><xref target="RFC4566"/></c><c>a=rtcp-fb:109 nack</c>
+          <c><xref target="RFC4566"/></c>
+          <c>a=rtcp-fb:109 nack</c>
           <c><xref target="RFC5104"></xref> </c>
           <c>a=sendonly</c>
           <c><xref target="RFC3264"></xref></c>
@@ -4786,7 +4834,8 @@ Alice                                                    Bob
           <c>a=extmap:1 urn:ietf:params:rtp-hdrext:ssrc-audio-level</c>
           <c><xref target="RFC6464"></xref></c>
           <c>a=maxptime:100</c>
-          <c><xref target="RFC4566"/></c><c>a=recvonly</c>
+          <c><xref target="RFC4566"/></c>
+          <c>a=recvonly</c>
           <c><xref target="RFC3264"></xref></c>
           <c>a=setup:active</c>
           <c><xref target="RFC4145"></xref></c>
@@ -4939,7 +4988,8 @@ Alice                                                            Bob
           <c>a=extmap:1 urn:ietf:params:rtp-hdrext:ssrc-audio-level</c>
           <c><xref target="RFC6464"></xref></c>
           <c>a=maxptime:100</c>
-          <c><xref target="RFC4566"/></c><c>a=rtcp-fb:109 nack</c>
+          <c><xref target="RFC4566"/></c>
+          <c>a=rtcp-fb:109 nack</c>
           <c><xref target="RFC5104"></xref> </c>
           <c>a=sendonly</c>
           <c><xref target="RFC3264"></xref></c>
@@ -5067,7 +5117,8 @@ Alice                                                            Bob
           <c>a=extmap:1 urn:ietf:params:rtp-hdrext:ssrc-audio-level</c>
           <c><xref target="RFC6464"></xref></c>
           <c>a=maxptime:100</c>
-          <c><xref target="RFC4566"/></c><c>a=rtcp-fb:109 nack</c>
+          <c><xref target="RFC4566"/></c>
+          <c>a=rtcp-fb:109 nack</c>
           <c><xref target="RFC5104"></xref> </c>
           <c>a=recvonly </c>
           <c><xref target="RFC3264"></xref></c>
@@ -5232,7 +5283,8 @@ Alice                                                            Bob
           <c>a=rtpmap:109 opus/48000/2</c>
           <c><xref target="I-D.ietf-payload-rtp-opus"></xref></c>
           <c>a=maxptime:100</c>
-          <c><xref target="RFC4566"/></c><c>a=rtpmap:0 PCMU/8000</c>
+          <c><xref target="RFC4566"/></c>
+          <c>a=rtpmap:0 PCMU/8000</c>
           <c><xref target="RFC3551"></xref></c>
           <c>a=rtpmap:0 PCMA/8000</c>
           <c><xref target="RFC3551"></xref></c>
@@ -5302,7 +5354,8 @@ Alice                                                            Bob
           <c><xref target="I-D.ietf-payload-rtp-opus"></xref> - Bob accepts
           only Opus Codec</c>
           <c>a=maxptime:100</c>
-          <c><xref target="RFC4566"/></c><c>a=rtpmap:0 PCMU/8000</c>
+          <c><xref target="RFC4566"/></c>
+          <c>a=rtpmap:0 PCMU/8000</c>
           <c><xref target="RFC3551"></xref> PCMU Audio Codec</c>
           <c>a=rtpmap:0 PCMA/8000</c>
           <c><xref target="RFC3551"></xref> PCMA Audio Codec</c>
@@ -5405,7 +5458,8 @@ Alice                                    Mixer
           <c>a=rtpmap:109 opus/48000/2</c>
           <c><xref target="I-D.ietf-payload-rtp-opus"></xref></c>
           <c>a=maxptime:100</c>
-          <c><xref target="RFC4566"/></c><c>a=rtpmap:0 PCMU/8000</c>
+          <c><xref target="RFC4566"/></c>
+          <c>a=rtpmap:0 PCMU/8000</c>
           <c><xref target="RFC3551"></xref> PCMU Audio Codec</c>
           <c>a=rtpmap:0 PCMA/8000</c>
           <c><xref target="RFC3551"></xref> PCMA Audio Codec</c>
@@ -5474,7 +5528,8 @@ Alice                                    Mixer
           <c>a=rtpmap:109 opus/48000/2</c>
           <c><xref target="I-D.ietf-payload-rtp-opus"></xref></c>
           <c>a=maxptime:100</c>
-          <c><xref target="RFC4566"/></c><c>a=rtpmap:0 PCMU/8000</c>
+          <c><xref target="RFC4566"/></c>
+          <c>a=rtpmap:0 PCMU/8000</c>
           <c><xref target="RFC3551"></xref> PCMU Audio Codec</c>
           <c>a=rtpmap:0 PCMA/8000</c>
           <c><xref target="RFC3551"></xref> PCMA Audio Codec</c>
@@ -5592,7 +5647,8 @@ Alice                                                       Bob
           <c>a=extmap:1 urn:ietf:params:rtp-hdrext:ssrc-audio-level</c>
           <c><xref target="RFC6464"></xref></c>
           <c>a=maxptime:100</c>
-          <c><xref target="RFC4566"/></c><c>a=rtcp-fb:109 nack</c>
+          <c><xref target="RFC4566"/></c>
+          <c>a=rtcp-fb:109 nack</c>
           <c><xref target="RFC5104"></xref> </c>
           <c>a=sendrecv</c>
           <c><xref target="RFC3264"></xref></c>
@@ -5701,7 +5757,8 @@ Alice                                                       Bob
           <c>a=extmap:1 urn:ietf:params:rtp-hdrext:ssrc-audio-level</c>
           <c><xref target="RFC6464"></xref></c>
           <c>a=maxptime:100</c>
-          <c><xref target="RFC4566"/></c><c>a=rtcp-fb:109 nack</c>
+          <c><xref target="RFC4566"/></c>
+          <c>a=rtcp-fb:109 nack</c>
           <c><xref target="RFC5104"></xref> </c>
           <c>a=sendrecv</c>
           <c><xref target="RFC3264"></xref></c>
