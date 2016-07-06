@@ -310,10 +310,9 @@
         <t>In all the examples, Alice and Bob are assumed to be the WebRTC
         peers.</t>
         <t>It is assumed that for most of the examples, the support for
-			  <xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/> is known
-				apriori either via out-of-band or as a consequence of successful
-				Offer/Answer negotiation between Alice and Bob unless explicitly
-				stated otherwise.</t>
+			  <xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/> is
+				established apriori either out-of-band or as a consequence of
+				successful Offer/Answer negotiation between Alice and Bob, unless explicitly stated otherwise.</t>
         <t>Call-flow diagrams that accompany the use-cases capture only the
         prominent aspects of the system behavior and intentionally is not
         detailed to improve readability.</t>
@@ -361,7 +360,7 @@
            <t> RTP header extension indicating audio-levels from client to the
            	mixer</t>
          </list>
-        For specific details, readers are recommended to refer to
+        For specific details, readers must refer to
 				<xref target="I-D.ietf-rtcweb-jsep"/> specification.</t>
         <t>The term "Session" is used rather loosely in this document to refer to
         either a "Communication Session" or a "RTP Session" or a "RTP Stream"
@@ -371,7 +370,7 @@
         uniformity.</t>
         <t>In the actual use the values that represent SSRCs, ICE candidate
         foundations, WebRTC Mediastream and MediaStreamTrack Ids shall be much
-        larger and random than the ones shown in the examples.</t>
+        larger and/or random than the ones shown in the examples.</t>
        </list>
       </t>
       </section>
@@ -468,10 +467,10 @@ Alice                                Bob
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=ssrc:12345 cname:EocUG1f0fcg/yvY7</c>
           <c><xref target="RFC5576"></xref></c>
-          <c>a=candidate:0 1 UDP  2122194687 192.168.1.4 54609 typ host</c>
+          <c>a=candidate:0 1 UDP  2122194687 192.168.1.4 61665 typ host</c>
           <c><xref target="RFC5245"></xref> - RTP/RTCP Host Candidate</c>
-          <c>a=candidate:1 1 UDP  1685987071 24.23.204.141 64678 typ srflx
-          raddr 192.168.1.4 rport 64509</c>
+          <c>a=candidate:1 1 UDP  1685987071 24.23.204.141 54609 typ srflx
+          raddr 192.168.1.4 rport 61665</c>
           <c><xref target="RFC5245"></xref> - RTP/RTCP Server Reflexive
           ICE Candidate</c>
           <c>a=end-of-candidates</c>
@@ -543,10 +542,10 @@ Alice                                Bob
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=ssrc:54321 cname:NWs1ao1HmN4Xa5/yvY7</c>
           <c><xref target="RFC5576"></xref></c>
-          <c>a=candidate:0 1 UDP 2122194687 192.168.1.7 49203 typ host</c>
+          <c>a=candidate:0 1 UDP 2122194687 192.168.1.7 51556 typ host</c>
           <c><xref target="RFC5245"></xref> - RTP/RTCP Host ICE Candidate</c>
-          <c>a=candidate:1 1 UDP 1685987071 98.248.92.77 60654 typ srflx
-          raddr 192.168.1.7 rport 49203</c>
+          <c>a=candidate:1 1 UDP 1685987071 98.248.92.77 49203 typ srflx
+          raddr 192.168.1.7 rport 51556</c>
           <c><xref target="RFC5245"></xref>
        		- RTP/RTCP Server Reflexive ICE Candidate</c>
           <c>a=end-of-candidates</c>
@@ -645,10 +644,10 @@ Alice                                       Bob
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=ssrc:12345 cname:EocUG1f0fcg/yvY7</c>
           <c><xref target="RFC5576"></xref></c>
-          <c>a=candidate:0 1 UDP  2122194687 192.168.1.4 54609 typ host</c>
+          <c>a=candidate:0 1 UDP  2122194687 192.168.1.4 61665 typ host</c>
           <c><xref target="RFC5245"></xref> - RTP/RTCP Host Candidate</c>
-          <c>a=candidate:1 1 UDP  1685987071 24.23.204.141 64678 typ srflx
-          raddr 192.168.1.4 rport 54609</c>
+          <c>a=candidate:1 1 UDP  1685987071 24.23.204.141 54609 typ srflx
+          raddr 192.168.1.4 rport 61665</c>
           <c><xref target="RFC5245"></xref> - RTP/RTCP Server Reflexive ICE Candidate</c>
           <c>a=end-of-candidates</c>
           <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
@@ -770,8 +769,8 @@ Alice                                       Bob
           <c><xref target="RFC5576"></xref></c>
           <c>a=candidate:0 1 UDP 3618095783 192.168.1.7 49203 typ host</c>
           <c><xref target="RFC5245"></xref> - RTP/RTCP Host ICE Candidate</c>
-          <c>a=candidate:1 1 UDP 565689203 98.248.92.77 60065 typ srflx
-          raddr 192.168.1.7 rport 49203</c>
+          <c>a=candidate:1 1 UDP 565689203 98.248.92.77 49203 typ srflx
+          raddr 192.168.1.7 rport 51556</c>
           <c><xref target="RFC5245"></xref> - RTP/RTCP Server Reflexive ICE
           Candidate</c>
           <c>a=end-of-candidates</c>
@@ -871,7 +870,7 @@ Alice                            Bob
           <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** Application m=line *********</c>
           <c>*****************************</c>
-          <c>m=application 56966 UDP/DTLS/SCTP webrtc-datachannel</c>
+          <c>m=application 54609 UDP/DTLS/SCTP webrtc-datachannel</c>
           <c><xref target="I-D.ietf-rtcweb-data-channel"></xref> </c>
           <c>c=IN IP4 24.23.204.141</c>
           <c><xref target="RFC4566"></xref></c>
@@ -901,7 +900,7 @@ Alice                            Bob
           SRTP</c>
           <c>a=candidate:0 1 UDP 2113667327 192.168.1.7 56966 typ host</c>
           <c><xref target="RFC5245"></xref></c>
-          <c>a=candidate:1 1 UDP 1694302207 24.23.204.141 56966 typ srflx
+          <c>a=candidate:1 1 UDP 1694302207 24.23.204.141 54609 typ srflx
           raddr 192.168.1.7 rport 56966</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=end-of-candidates</c>
@@ -923,7 +922,7 @@ Alice                            Bob
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>****** Application m=line *********</c>
           <c>*****************************</c>
-          <c>m=application 55700 UDP/DTLS/SCTP webrtc-datachannel</c>
+          <c>m=application 49203 UDP/DTLS/SCTP webrtc-datachannel</c>
           <c><xref target="I-D.ietf-mmusic-sctp-sdp"></xref> </c>
           <c>c=IN IP4 98.248.92.771</c>
           <c><xref target="RFC4566"></xref></c>
@@ -951,7 +950,7 @@ Alice                            Bob
           SRTP</c>
           <c>a=candidate:0 1 UDP 2113667327 192.168.1.7 55700 typ host</c>
           <c><xref target="RFC5245"></xref></c>
-          <c>a=candidate:1 1 UDP 1694302207 98.248.92.77 55700 typ srflx raddr
+          <c>a=candidate:1 1 UDP 1694302207 98.248.92.77 49203 typ srflx raddr
           192.168.1.7 rport 55700</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=end-of-candidates</c>
@@ -1046,10 +1045,10 @@ Alice                            Bob
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=ssrc:3229706345 cname:Q/NWs1ao1HmN4Xa5</c>
           <c><xref target="RFC5576"></xref></c>
-          <c>a=candidate:0 1 UDP  2113667327 192.168.1.4 54609 typ host</c>
+          <c>a=candidate:0 1 UDP  2113667327 192.168.1.4 61665 typ host</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=candidate:1 1 UDP  1685987071 24.23.204.141 54609 typ srflx
-          raddr 192.168.1.4 rport 54609</c>
+          raddr 192.168.1.4 rport 61665</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=end-of-candidates</c>
           <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
@@ -1110,10 +1109,10 @@ Alice                            Bob
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
 					<c>a=ssrc:1366781083 cname:EocUG1f0fcg/yvY7</c>
 					<c><xref target="RFC5576"/></c>
-					<c>a=candidate:0 2 UDP  2113667327 192.168.1.4 49203 typ host</c>
+					<c>a=candidate:0 2 UDP  2113667327 192.168.1.4 51556 typ host</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=candidate:1 2 UDP  1685987071 24.23.204.141 49203 typ srflx
-          raddr 192.168.1.4 rport 49203</c>
+          raddr 192.168.1.4 rport 51556</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=end-of-candidates</c>
         </texttable>
@@ -1213,10 +1212,10 @@ Alice                                              Bob
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=ssrc:3229706345 cname:Q/NWs1ao1HmN4Xa5</c>
           <c><xref target="RFC5576"></xref></c>
-          <c>a=candidate:0 1 UDP  2122194687 192.168.1.4 54609 typ host</c>
+          <c>a=candidate:0 1 UDP  2122194687 192.168.1.4 61665 typ host</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=candidate:1 1 UDP  1685987071 24.23.204.141 54609 typ srflx
-          raddr 192.168.1.4 rport 54609</c>
+          raddr 192.168.1.4 rport 61665</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=end-of-candidates</c>
           <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
@@ -1317,10 +1316,10 @@ Alice                                              Bob
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=ssrc:0634322975 cname:Q/o1HmN4XNWs1aa5</c>
           <c><xref target="RFC5576"></xref></c>
-          <c>a=candidate:0 1 UDP 2122194687 192.168.1.7 49203 typ host</c>
+          <c>a=candidate:0 1 UDP 2122194687 192.168.1.7 51556 typ host</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=candidate:1 1 UDP 1685987071 98.248.92.77 49203 typ srflx
-          raddr 192.168.1.7 rport 49203</c>
+          raddr 192.168.1.7 rport 51556</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=end-of-candidates</c>
           <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
@@ -1711,15 +1710,15 @@ Alice                                                 Bob
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=ssrc:11111 cname:EocUG1f0fcg/yvY7</c>
           <c><xref target="RFC5576"></xref></c>
-          <c>a=candidate:0 1 UDP  2122194687 192.168.1.4 54609 typ host</c>
+          <c>a=candidate:0 1 UDP  2122194687 192.168.1.4 61665 typ host</c>
           <c><xref target="RFC5245"></xref></c>
-          <c>a=candidate:0 2 UDP 2122194687 192.168.1.4 65409 typ host</c>
+					<c>a=candidate:1 1 UDP  1685987071 24.23.204.141 54609 typ srflx
+					raddr 192.168.1.4 rport 61665</c>
+					<c>a=candidate:0 2 UDP 2122194687 192.168.1.4 51556 typ host</c>
           <c><xref target="RFC5245"></xref></c>
-          <c>a=candidate:1 1 UDP  1685987071 24.23.204.141 54609 typ srflx
-          raddr 192.168.1.4 rport 54609</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=candidate:1 2 UDP  1685987071 24.23.204.141 65409 typ srflx
-          raddr 192.168.1.4 rport 65409</c>
+          raddr 192.168.1.4 rport 51556</c>
           <c><xref target="RFC5245"></xref></c>
           <c>****** Video m=line *********</c>
           <c>*****************************</c>
@@ -1764,15 +1763,15 @@ Alice                                                 Bob
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=ssrc:22222 cname:Q/NWs1ao1HmN4Xa5</c>
           <c><xref target="RFC5576"></xref></c>
-          <c>a=candidate:0 1 UDP  2122194687 192.168.1.4 62537 typ host</c>
-          <c><xref target="RFC5245"></xref></c>
-          <c>a=candidate:0 2 2122194687 192.168.1.4 52637 typ host</c>
+          <c>a=candidate:0 1 UDP  2122194687 192.168.1.4 61886 typ host</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=candidate:1 1 UDP  1685987071 24.23.204.141 62537 typ srflx
-          raddr 192.168.1.4 rport 62537</c>
+          raddr 192.168.1.4 rport 61886</c>
           <c><xref target="RFC5245"></xref></c>
-          <c>a=candidate:1 2 UDP 1685987071 24.23.204.141 52637 typ srflx
-          raddr 192.168.1.4 rport 52637</c>
+					<c>a=candidate:0 2 2122194687 192.168.1.4 51885 typ host</c>
+					<c><xref target="RFC5245"></xref></c>
+					<c>a=candidate:1 2 UDP 1685987071 24.23.204.141 52637 typ srflx
+          raddr 192.168.1.4 rport 51885</c>
           <c><xref target="RFC5245"></xref></c>
         </texttable>
         <t><vspace blankLines='1'></vspace></t>
@@ -1837,7 +1836,7 @@ Alice                                                 Bob
           <c><xref target="RFC5576"></xref></c>
           <c>a=candidate:0 1 UDP 2122194687 192.168.1.7 49203 typ host</c>
           <c><xref target="RFC5245"></xref></c>
-          <c>a=candidate:1 1 UDP 1685987071 98.248.92.77 49203 typ srflx
+          <c>a=candidate:1 1 UDP 1685987071 98.248.92.77 51556 typ srflx
           raddr 192.168.1.7 rport 49203</c>
           <c><xref target="RFC5245"></xref></c>
           <c>****** Video m=line *********</c>
@@ -2192,10 +2191,10 @@ Alice                                       Bob
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=ssrc:11111 cname:Q/NWs1ao1HmN4Xa5</c>
           <c><xref target="RFC5576"></xref></c>
-          <c>a=candidate:0 1 UDP  2122194687 192.168.1.4 54609 typ host</c>
+          <c>a=candidate:0 1 UDP  2122194687 192.168.1.4 61665 typ host</c>
           <c><xref target="RFC5245"></xref> </c>
           <c>a=candidate:1 1 UDP  1685987071 24.23.204.141 54609 typ srflx
-          raddr 192.168.1.4 rport 54609</c>
+          raddr 192.168.1.4 rport 61665</c>
           <c><xref target="RFC5245"></xref></c>
 					<c>a=end-of-candidates</c>
 					<c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
@@ -2263,7 +2262,7 @@ Alice                                       Bob
              :BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
 		      </c>
           <c><xref target="RFC5245"></xref></c>
-          <c>a=extmap:3 urn:ietf:params:rtp-hdrext:sdes:mid</c>
+          <c>a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:mid</c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
         </texttable>
         <t><vspace blankLines='1'></vspace></t>
@@ -2326,10 +2325,10 @@ Alice                                       Bob
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=ssrc:33333 cname:L/aoNWs11HmN4Xa5</c>
           <c><xref target="RFC5576"></xref></c>
-          <c>a=candidate:0 1 UDP 2122194687 192.168.1.7 49203 typ host</c>
+          <c>a=candidate:0 1 UDP 2122194687 192.168.1.7 51556 typ host</c>
           <c><xref target="RFC5245"></xref> </c>
           <c>a=candidate:1 1 UDP 1685987071 98.248.92.77 49203 typ srflx
-					raddr 192.168.1.7 rport 49203</c>
+					raddr 192.168.1.7 rport 51556</c>
           <c><xref target="RFC5245"></xref> </c>
 					<c>a=end-of-candidates</c>
 					<c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
@@ -2697,15 +2696,15 @@ Alice                                                 Bob
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=ssrc:11111 cname:EocUG1f0fcg/yvY7</c>
           <c><xref target="RFC5576"></xref></c>
-          <c>a=candidate:0 1 UDP  2122194687 192.168.1.4 54609 typ host</c>
+          <c>a=candidate:0 1 UDP  2122194687 192.168.1.4 61665 typ host</c>
           <c><xref target="RFC5245"></xref></c>
-          <c>a=candidate:0 2 UDP 2122194687 192.168.1.4 55232 typ host</c>
+          <c>a=candidate:0 2 UDP 2122194687 192.168.1.4 61666 typ host</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=candidate:1 1 UDP  1685987071 24.23.204.141 54609 typ srflx
-          raddr 192.168.1.4 rport 54609</c>
+          raddr 192.168.1.4 rport 61665</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=candidate:1 2 UDP  1685987071 24.23.204.141 55232 typ srflx
-          raddr 192.168.1.4 rport 55232</c>
+          raddr 192.168.1.4 rport 61666</c>
           <c><xref target="RFC5245"></xref></c>
           <c>****** Video m=line *********</c>
           <c>*****************************</c>
@@ -2750,15 +2749,15 @@ Alice                                                 Bob
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=ssrc:22222 cname:yvY7/EocUG1f0fcg</c>
           <c><xref target="RFC5576"></xref></c>
-          <c>a=candidate:0 1 UDP  2122194687 192.168.1.4 54332 typ host</c>
+          <c>a=candidate:0 1 UDP  2122194687 192.168.1.4 71775 typ host</c>
           <c><xref target="RFC5245"></xref></c>
-          <c>a=candidate:0 2 2122194687 192.168.1.4 60052 typ host</c>
+          <c>a=candidate:0 2 2122194687 192.168.1.4 71775 typ host</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=candidate:1 1 UDP  1685987071 24.23.204.141 54332 typ srflx
-          raddr 192.168.1.4 rport 54332</c>
+          raddr 192.168.1.4 rport 71775</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=candidate:1 2 UDP 1685987071 24.23.204.141 60052 typ srflx
-          raddr 192.168.1.4 rport 60052</c>
+          raddr 192.168.1.4 rport 71776</c>
           <c><xref target="RFC5245"></xref></c>
         </texttable>
         <t><vspace blankLines='1'></vspace></t>
@@ -2812,15 +2811,15 @@ Alice                                                 Bob
           <c><xref target="RFC6464"></xref></c>
 					<c>a=ssrc:33333 cname:L/aoNWs11HmN4Xa5</c>
           <c><xref target="RFC5576"></xref> </c>
-          <c>a=candidate:0 1 UDP 2122194687 192.168.1.7 53214 typ host</c>
+          <c>a=candidate:0 1 UDP 2122194687 192.168.1.7 51556 typ host</c>
           <c><xref target="RFC5245"></xref></c>
 					<c>a=candidate:0 2 UDP 2122194687 192.168.1.7 60065 typ host</c>
 					<c><xref target="RFC5245"></xref></c>
-					<c>a=candidate:1 1 UDP 1685987071 98.248.92.77 53214 typ srflx
-          raddr 192.168.1.7 rport 53214</c>
+					<c>a=candidate:1 1 UDP 1685987071 98.248.92.77 51558 typ srflx
+          raddr 192.168.1.7 rport 51556</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=candidate:1 2 UDP 1685987071 98.248.92.77 60065 typ srflx
-          raddr 192.168.1.7 rport 60065</c>
+          raddr 192.168.1.7 rport 51558</c>
           <c><xref target="RFC5245"></xref></c>
           <c>****** Video m=line *********</c>
           <c>*****************************</c>
@@ -2858,15 +2857,15 @@ Alice                                                 Bob
           <c><xref target="RFC5104"></xref></c>
           <c>a=ssrc:44444 cname:EocUG1f0fcg/yvY7</c>
           <c><xref target="RFC5576"/></c>
-          <c>a=candidate:0 1 UDP 2122194687 192.168.1.7 58679 typ host</c>
+          <c>a=candidate:0 1 UDP 2122194687 192.168.1.7 61556 typ host</c>
           <c><xref target="RFC5245"></xref></c>
-					<c>a=candidate:0 1 UDP 2122194687 192.168.1.7 56507 typ host</c>
-					<c><xref target="RFC5245"></xref></c>
 					<c>a=candidate:1 1 UDP 1685987071 98.248.92.77 58679 typ srflx
-          raddr 192.168.1.7 rport 58679</c>
-          <c><xref target="RFC5245"></xref></c>
-          <c>a=candidate:1 1 UDP 1685987071 98.248.92.77 56507 typ srflx
-          raddr 192.168.1.7 rport 58679</c>
+					raddr 192.168.1.7 rport 61556</c>
+					<c><xref target="RFC5245"></xref></c>
+					<c>a=candidate:0 1 UDP 2122194687 192.168.1.7 61558 typ host</c>
+					<c><xref target="RFC5245"></xref></c>
+					<c>a=candidate:1 1 UDP 1685987071 98.248.92.77 56507 typ srflx
+          raddr 192.168.1.7 rport 61558</c>
           <c><xref target="RFC5245"></xref></c>
         </texttable>
         <t><vspace blankLines='1'></vspace></t>
@@ -3262,15 +3261,15 @@ Alice                                                 Bob
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=ssrc:11111 cname:Q/NWs1ao1HmN4Xa5</c>
           <c><xref target="RFC5576"></xref></c>
-          <c>a=candidate:0 1 UDP  2113667327 192.168.1.4 54609 typ host</c>
+          <c>a=candidate:0 1 UDP  2113667327 192.168.1.4 61665 typ host</c>
           <c><xref target="RFC5245"></xref> </c>
-					<c>a=candidate:0 2 UDP 2113667326 192.168.1.4 64678 typ host</c>
-					<c><xref target="RFC5245"></xref></c>
 					<c>a=candidate:1 1 UDP  694302207 24.23.204.141 54609 typ srflx
-          raddr 192.168.1.4 rport 54609</c>
-          <c><xref target="RFC5245"></xref></c>
-          <c>a=candidate:1 2 UDP  1694302206 24.23.204.141 64678 typ srflx
-          raddr 192.168.1.4 rport 64678</c>
+					raddr 192.168.1.4 rport 61665</c>
+					<c><xref target="RFC5245"></xref></c>
+					<c>a=candidate:0 2 UDP 2113667326 192.168.1.4 61667 typ host</c>
+					<c><xref target="RFC5245"></xref></c>
+					<c>a=candidate:1 2 UDP  1694302206 24.23.204.141 64678 typ srflx
+          raddr 192.168.1.4 rport 61667</c>
           <c><xref target="RFC5245"></xref></c>
 					<c>a=end-of-candidates</c>
 					<c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
@@ -3332,10 +3331,10 @@ Alice                                                 Bob
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=ssrc:33333 cname:L/aoNWs11HmN4Xa5</c>
           <c><xref target="RFC5576"></xref></c>
-          <c>a=candidate:0 1 UDP 2113667327 192.168.1.7 49203 typ host</c>
+          <c>a=candidate:0 1 UDP 2113667327 192.168.1.7 51556 typ host</c>
           <c><xref target="RFC5245"></xref> </c>
           <c>a=candidate:1 1 UDP 1694302207 98.248.92.77 49203 typ srflx
-          raddr 192.168.1.7 rport 49203</c>
+          raddr 192.168.1.7 rport 51556</c>
           <c><xref target="RFC5245"></xref> </c>
 					<c>a=end-of-candidates</c>
 					<c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
@@ -3397,10 +3396,10 @@ Alice                                                 Bob
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=ssrc:11111 cname:Q/NWs1ao1HmN4Xa5</c>
           <c><xref target="RFC5576"></xref></c>
-          <c>a=candidate:0 1 UDP  2113667327 192.168.1.4 54609 typ host</c>
+          <c>a=candidate:0 1 UDP  2113667327 192.168.1.4 61665 typ host</c>
           <c><xref target="RFC5245"></xref> </c>
           <c>a=candidate:1 1 UDP  694302207 24.23.204.141 54609 typ srflx
-          raddr 192.168.1.4 rport 54609</c>
+          raddr 192.168.1.4 rport 61665</c>
           <c><xref target="RFC5245"></xref></c>
 					<c>a=end-of-candidates</c>
 					<c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
@@ -3499,10 +3498,10 @@ Alice                                                 Bob
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=ssrc:33333 cname:L/aoNWs11HmN4Xa5</c>
           <c><xref target="RFC5576"></xref></c>
-          <c>a=candidate:0 1 UDP 2113667327 192.168.1.7 49203 typ host</c>
+          <c>a=candidate:0 1 UDP 2113667327 192.168.1.7 51556 typ host</c>
           <c><xref target="RFC5245"></xref> </c>
           <c>a=candidate:1 1 UDP 1694302207 98.248.92.77 49203 typ srflx
-          raddr 192.168.1.7 rport 49203</c>
+          raddr 192.168.1.7 rport 51556</c>
           <c><xref target="RFC5245"></xref> </c>
 					<c>a=end-of-candidates</c>
 					<c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
@@ -3657,10 +3656,10 @@ Alice                                            Bob
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=ssrc:11111 C90alEocUG1f0fcg</c>
           <c><xref target="RFC5576"/></c>
-          <c>a=candidate:0 1 UDP  2113667327 192.168.1.4 54609 typ host</c>
+          <c>a=candidate:0 1 UDP  2113667327 192.168.1.4 61665 typ host</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=candidate:1 1 UDP  694302207 24.23.204.141 54609 typ srflx
-          raddr 192.168.1.4 rport 54609</c>
+          raddr 192.168.1.4 rport 61665</c>
           <c><xref target="RFC5245"></xref></c>
 					<c>a=end-of-candidates</c>
 					<c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
@@ -3853,10 +3852,10 @@ Alice                                            Bob
 					<c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
 					<c>a=ssrc:22222 cname:y8/C90alEocUG1f0fcg</c>
           <c><xref target="RFC5576"/></c>
-          <c>a=candidate:0 2 UDP  2113667327 192.168.1.7 49203 typ host</c>
+          <c>a=candidate:0 2 UDP  2113667327 192.168.1.7 61665 typ host</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=candidate:1 2 UDP  694302207 98.248.92.77 49203 typ srflx
-          raddr 192.168.1.4 rport 49203</c>
+          raddr 192.168.1.4 rport 61665</c>
           <c><xref target="RFC5245"></xref></c>
 					<c>a=end-of-candidates</c>
 					<c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
@@ -4071,10 +4070,10 @@ Alice                                            Bob
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
 					<c>a=ssrc:67890 cname:axzo1278npDlAzM73</c>
           <c><xref target="RFC5576"/></c>
-					<c>a=candidate:0 1 UDP  2113667327 192.168.1.4 54609 typ host</c>
+					<c>a=candidate:0 1 UDP  2113667327 192.168.1.4 61665 typ host</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=candidate:1 1 UDP  694302207 24.23.204.141 54609 typ srflx
-          raddr 192.168.1.4 rport 54609</c>
+          raddr 192.168.1.4 rport 61665</c>
           <c><xref target="RFC5245"></xref></c>
 					<c>a=end-of-candidates</c>
 					<c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
@@ -4194,10 +4193,10 @@ Alice                                            Bob
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
     			<c>a=ssrc:22222 cname:y8/C90alEocUG1f0fcg	</c>
 					<c><xref target="RFC5576"/></c>
-					<c>a=candidate:0 2 UDP 2113667326 192.168.1.7 49203 typ host</c>
+					<c>a=candidate:0 2 UDP 2113667326 192.168.1.7 51556 typ host</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=candidate:1 2 UDP  1694302206 98.248.92.77 49203 typ srflx
-          raddr 192.168.1.5 rport 49203</c>
+          raddr 192.168.1.5 rport 51556</c>
           <c><xref target="RFC5245"></xref></c>
 					<c>a=end-of-candidates</c>
 					<c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
@@ -4341,10 +4340,10 @@ Alice                                                    Bob
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=ssrc:11111 cname:EocUG1f0fcg/yvY7</c>
           <c><xref target="RFC5576"/></c>
-          <c>a=candidate:0 1 UDP  2113667327 192.168.1.4 54609 typ host</c>
+          <c>a=candidate:0 1 UDP  2113667327 192.168.1.4 6165 typ host</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=candidate:1 1 UDP  694302207 24.23.204.141 54609 typ srflx
-          raddr 192.168.1.4 rport 54609</c>
+          raddr 192.168.1.4 rport 61665</c>
           <c><xref target="RFC5245"></xref></c>
 					<c>a=end-of-candidates</c>
 					<c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
@@ -4465,10 +4464,10 @@ Alice                                                    Bob
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=ssrc:33333 cname:L/HmN4Xa5NWs1ao1</c>
           <c><xref target="RFC5576"/></c>
-          <c>a=candidate:0 2 UDP 2113667326 192.168.1.7 49203 typ host</c>
+          <c>a=candidate:0 2 UDP 2113667326 192.168.1.7 51556 typ host</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=candidate:1 2 UDP  1694302206 98.248.92.77 49203 typ
-          srflx raddr 192.168.1.7 rport 49203</c>
+          srflx raddr 192.168.1.7 rport 51556</c>
           <c><xref target="RFC5245"></xref></c>
 					<c>a=end-of-candidates</c>
 					<c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
@@ -4624,10 +4623,10 @@ Alice                                                    Bob
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=ssrc:11111 cname:LP/NWs1ao1HmN4Xa5</c>
           <c><xref target="RFC5576"/></c>
-          <c>a=candidate:0 1 UDP  2113667327 192.168.1.4 54609 typ host</c>
+          <c>a=candidate:0 1 UDP  2113667327 192.168.1.4 61665 typ host</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=candidate:1 1 UDP  694302207 24.23.204.141 54609 typ srflx
-          raddr 192.168.1.4 rport 54609</c>
+          raddr 192.168.1.4 rport 61665</c>
           <c><xref target="RFC5245"></xref></c>
 					<c>a=end-of-candidates</c>
 					<c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
@@ -4753,10 +4752,10 @@ Alice                                                    Bob
           <c><xref target="RFC6464"></xref></c>
 					<c>a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:mid</c>
 					<c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
-          <c>a=candidate:0 2 UDP 2113667326 192.168.1.7 49203 typ host</c>
+          <c>a=candidate:0 2 UDP 2113667326 192.168.1.7 51556 typ host</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=candidate:1 2 UDP  1694302206 98.248.92.77 49203 typ srflx
-          raddr 192.168.1.7 rport 49203</c>
+          raddr 192.168.1.7 rport 51556</c>
           <c><xref target="RFC5245"></xref></c>
 					<c>a=end-of-candidates</c>
 					<c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
@@ -4908,10 +4907,10 @@ Alice                                                            Bob
 					<c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=ssrc:11111 cname:Q/NWs1ao1HmN4Xa5</c>
           <c><xref target="RFC5576"></xref></c>
-          <c>a=candidate:0 1 UDP  2113667327 192.168.1.4 54609 typ host</c>
+          <c>a=candidate:0 1 UDP  2113667327 192.168.1.4 61665 typ host</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=candidate:1 1 UDP  694302207 24.23.204.141 54609 typ
-          srflx raddr 192.168.1.4 rport 54609</c>
+          srflx raddr 192.168.1.4 rport 61665</c>
           <c><xref target="RFC5245"></xref></c>
 					<c>a=end-of-candidates</c>
 					<c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
@@ -5022,7 +5021,7 @@ Alice                                                            Bob
 					<c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
 					<c><xref target="RFC5245"></xref></c>
 					<c>a=fingerprint:sha-256
-					6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35
+					  6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35
 						:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
 					</c>
 					<c><xref target="RFC5245"></xref></c>
@@ -5038,10 +5037,10 @@ Alice                                                            Bob
           <c><xref target="RFC6464"></xref></c>
 					<c>a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:mid</c>
 					<c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
-          <c>a=candidate:0 2 UDP 2113667326 192.168.1.7 49203 typ host</c>
+          <c>a=candidate:0 2 UDP 2113667326 192.168.1.7 51556 typ host</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=candidate:1 2 UDP  1694302206 98.248.92.77 49203 typ srflx
-          raddr 192.168.1.7 rport 49203</c>
+          raddr 192.168.1.7 rport 51556</c>
           <c><xref target="RFC5245"></xref></c>
 					<c>a=end-of-candidates</c>
 					<c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
@@ -5203,10 +5202,10 @@ Alice                                                            Bob
 					<c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
 					<c>a=ssrc:11111 cname:QCL/1HmN4Xa5CClapa</c>
 					<c><xref target="RFC5576"/></c>
-          <c>a=candidate:0 1 UDP  2113667327 192.168.1.4 54609 typ host</c>
+          <c>a=candidate:0 1 UDP  2113667327 192.168.1.4 61665 typ host</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=candidate:1 1 UDP  694302207 24.23.204.141 54609 typ srflx
-          raddr 192.168.1.4 rport 54609</c>
+          raddr 192.168.1.4 rport 61665</c>
           <c><xref target="RFC5245"></xref></c>
 					<c>a=end-of-candidates</c>
 					<c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
@@ -5273,10 +5272,10 @@ Alice                                                            Bob
 					<c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=ssrc:1732846380 cname:EocUG1f0fcg/yvY7</c>
           <c><xref target="RFC5576"/></c>
-					<c>a=candidate:0 1 UDP 2113667327 192.168.1.7 49203 typ host</c>
+					<c>a=candidate:0 1 UDP 2113667327 192.168.1.7 51556 typ host</c>
 					<c><xref target="RFC5245"></xref> </c>
 					<c>a=candidate:1 1 UDP 1694302207 98.248.92.77 49203 typ srflx
-					raddr 192.168.1.7 rport 49203</c>
+					raddr 192.168.1.7 rport 51556</c>
 					<c><xref target="RFC5245"></xref> </c>
 					<c>a=end-of-candidates</c>
 					<c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
@@ -5381,10 +5380,10 @@ Alice                                    Mixer
 					<c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=ssrc:11111 cname:QCL/1HmN4Xa5CClapa</c>
           <c><xref target="RFC5576"/></c>
-					<c>a=candidate:0 1 UDP  2113667327 192.168.1.4 54609 typ host</c>
+					<c>a=candidate:0 1 UDP  2113667327 192.168.1.4 61665 typ host</c>
           <c><xref target="RFC5245"></xref> </c>
           <c>a=candidate:1 1 UDP  694302207 24.23.204.141 54609 typ srflx
-          raddr 192.168.1.4 rport 54609</c>
+          raddr 192.168.1.4 rport 61665</c>
           <c><xref target="RFC5245"></xref> </c>
 					<c>a=end-of-candidates</c>
 					<c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
@@ -5450,10 +5449,10 @@ Alice                                    Mixer
 					<c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=ssrc:2222 cname:HmN4Xa5CC/lapa</c>
           <c><xref target="RFC5576"/></c>
-					<c>a=candidate:0 1 UDP 2113667327 192.168.1.7 49203 typ host</c>
+					<c>a=candidate:0 1 UDP 2113667327 192.168.1.7 51556 typ host</c>
           <c><xref target="RFC5245"></xref> </c>
           <c>a=candidate:1 1 UDP 1694302207 98.248.92.77 49203 typ srflx
-          raddr 192.168.1.7 rport 49203</c>
+          raddr 192.168.1.7 rport 51556</c>
           <c><xref target="RFC5245"></xref> </c>
 					<c>a=end-of-candidates</c>
 					<c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
@@ -5569,15 +5568,15 @@ Alice                                                       Bob
 					<c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=ssrc:11111 cname:axzo1278npDlAzM73</c>
           <c><xref target="RFC5576"></xref>E</c>
-					<c>a=candidate:0 1 UDP  2113667327 192.168.1.4 54609 typ host</c>
+					<c>a=candidate:0 1 UDP  2113667327 192.168.1.4 61665 typ host</c>
 					<c><xref target="RFC5245"></xref></c>
 					<c>a=candidate:1 1 UDP  694302207 24.23.204.141 54609 typ srflx
-					raddr 192.168.1.4 rport 54609</c>
+					raddr 192.168.1.4 rport 61665</c>
 					<c><xref target="RFC5245"></xref></c>
-					<c>a=candidate:0 2 UDP 2113667326 192.168.1.4 64678 typ host</c>
+					<c>a=candidate:0 2 UDP 2113667326 192.168.1.4 61667 typ host</c>
 					<c><xref target="RFC5245"></xref></c>
 					<c>a=candidate:1 2 UDP  1694302206 24.23.204.141 64678 typ srflx
-					raddr 192.168.1.4 rport 64678</c>
+					raddr 192.168.1.4 rport 61667</c>
 					<c><xref target="RFC5245"></xref></c>
           <c>****** Video m=line *********</c>
           <c>*****************************</c>
@@ -5671,15 +5670,15 @@ Alice                                                       Bob
           <c><xref target="RFC5104"></xref> </c>
 					<c>a=extmap:1 urn:ietf:params:rtp-hdrext:ssrc-audio-level</c>
           <c><xref target="RFC6464"></xref></c>
-          <c>a=candidate:0 1 UDP  2113667327 192.168.1.7 49203 typ host</c>
+          <c>a=candidate:0 1 UDP  2113667327 192.168.1.7 51556 typ host</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=candidate:1 1 UDP  694302207 98.248.92.77 49203 typ srflx
-          raddr 192.168.1.7 rport 49203</c>
+          raddr 192.168.1.7 rport 51556</c>
           <c><xref target="RFC5245"></xref></c>
-          <c>a=candidate:0 2 UDP 2113667326 192.168.1.7 60065 typ host</c>
+          <c>a=candidate:0 2 UDP 2113667326 192.168.1.7 51558 typ host</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=candidate:1 2 UDP  1694302206 98.248.92.77 60065 typ srflx
-          raddr 192.168.1.7 rport 60065</c>
+          raddr 192.168.1.7 rport 51558</c>
           <c><xref target="RFC5245"></xref></c>
           <c>****** Video m=line *********</c>
           <c>*****************************</c>
