@@ -19,7 +19,7 @@ VCS = svn
 # for SVN it’s the SVN version number, for git it’s the <rev> parameter
 PV = HEAD
 # Should use web tools for XML2RFC and RFCDIFF instead of local tools? 1 = true, 0 = false.
-WEB=1
+WEB=0
 
 # where to find/store the local references
 REFS = ../bibxml
