@@ -1,8 +1,8 @@
 ---
 title: "RTP Stream Identifier Source Description (SDES)"
 abbrev: RtpStreamId SDES
-docname:  draft-ietf-avtext-rid-04
-date: 2016-06-21
+docname:  draft-ietf-avtext-rid-05
+date: 2016-07-06
 category: std
 ipr: trust200902
 
@@ -110,7 +110,9 @@ This specification also uses the RTP header extension for RTCP SDES items
 {{I-D.ietf-avtext-sdes-hdr-ext}} to allow carrying RtpStreamId and
 RepairedRtpStreamId values in RTP
 packets. This allows correlation at stream startup, or after stream changes
-where the use of RTCP may not be sufficiently responsive.
+where the use of RTCP may not be sufficiently responsive. This speed
+of response is necessary since, in many cases, the stream cannot be properly
+processed until it can be identified.
 
 ## RTCP 'RtpStreamId' SDES Extension
 
@@ -164,7 +166,13 @@ needs to be padded to the next 32-bit boundary {{RFC5285}}.
 
 In many cases, a one-byte identifier will be sufficient to distinguish streams
 in a session; implementations are strongly encouraged to use
-the shortest identifier that fits their purposes.
+the shortest identifier that fits their purposes. Implementors are warned,
+in particular, not to include any information in the identifier that is
+derived from potentially user-identifying information, such as user ID
+or IP address. To avoid identification of specific implementations based
+on their pattern of tag generation, implementations are encouraged to use
+a simple scheme that starts with the ASCII digit "1", and increments by one
+for each subsequent identifier.
 
 # IANA Considerations {#sec-iana}
 
@@ -203,6 +211,42 @@ registry as follows:
            Reference:      RFCXXXX
 
 ~~~~~~~~~~~~~~~
+
+## New RtpStreamId Header Extension URI
+
+>RFC EDITOR NOTE: Please replace RFCXXXX with the RFC number of this document.
+
+This document defines a new extension URI in the RTP SDES Compact
+Header Extensions sub-registry of the RTP Compact Header Extensions
+registry sub-registry, as follows
+
+
+  Extension URI: urn:ietf:params:rtp-hdrext:sdes:rtp-stream-id
+  Description:   RTP Stream Identifier
+  Contact:       adam@nostrum.com
+  Reference:     RFCXXXX
+
+The SDES item does not reveal privacy information about the user or
+the session contents. It serves only to bind the identity of a stream
+to corresponding data in a session description.
+
+## New RepairRtpStreamId Header Extension URI
+
+>RFC EDITOR NOTE: Please replace RFCXXXX with the RFC number of this document.
+
+This document defines a new extension URI in the RTP SDES Compact
+Header Extensions sub-registry of the RTP Compact Header Extensions
+registry sub-registry, as follows
+
+
+  Extension URI: urn:ietf:params:rtp-hdrext:sdes:repair-rtp-sream-id
+  Description:   RTP Repaired Stream Identifier
+  Contact:       adam@nostrum.com
+  Reference:     RFCXXXX
+
+The SDES item does not reveal privacy information about the user or
+the session contents. It serves only to bind redundancy stream to the
+streams they provide repair data for.
 
 # Security Considerations
 
