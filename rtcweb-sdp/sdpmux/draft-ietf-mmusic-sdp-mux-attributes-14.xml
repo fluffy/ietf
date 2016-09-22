@@ -3464,14 +3464,15 @@ a=pcfg:4 m=5 pt=5:101
      <section title="IANA Considerations">
       <t>[RFC EDITOR NOTE: Please replace RFCXXXX with the RFC number
         of this document.]</t>
-      <t> <xref target="sec-mux-cat-iana"/> defines a new subregistry for
-       identifying the initial registrations for various multiplexing
-       categories applicable, as proposed in this document.</t>
-       <t>IANA is requested to add a new column named "Mux Category"
+      <t> <xref target="sec-mux-cat-iana"/> defines a new subregistry to be
+       added by the IANA for identifying the initial registrations for
+       various multiplexing categories applicable, as proposed in this document.</t>
+       <t>IANA is also requested to add a new column named "Mux Category"
        to several of the subregistries in the "Session Description Protocol
        (SDP) Parameters" registry. The tables in <xref target="sec-mux-cat-values-iana"/>
        identify name of an entry in the existing subregistry and specify the
-       value to put in the new "Mux Category" column of the associated IANA registry.</t>
+       value to be put in the new "Mux Category" column of the associated IANA
+       registry.</t>
        <section title="New 'Multiplexing Categories' subregistry " anchor="sec-mux-cat-iana">
           <t>A new sub-registry needs to be defined called  the
           "Multiplexing Categories", with the following registrations
@@ -3495,23 +3496,31 @@ a=pcfg:4 m=5 pt=5:101
         </texttable>
 
         <t> Further entries can be registered using Standard Actions policies
-         outlined in <xref target="RFC5226"/>, which requires IESG review and approval and standards-track IETF RFC publication.</t>
+         outlined in <xref target="RFC5226"/>, which requires IESG review and
+         approval and standards-track IETF RFC publication.</t>
         <t> Each registration needs to indicate the multiplexing category value
          to be added to the "Multiplexing Categories" subregistry as defined
          in this section.</t>
         <t> Such a registration MUST also indicate the applicability of the
-         newly defined multiplexing category value to various subregistries defined at "Session Description Protocol (SDP) Parameters".</t>
+         newly defined multiplexing category value to various subregistries
+         defined at the "Session Description Protocol (SDP) Parameters" registry.</t>
       </section>
        <section title="'Mux Category' column for subregistries"
                 anchor="sec-mux-cat-values-iana" toc="default">
         <t> Each sub-section identifies a subregistry in the "Session Description
-        Protocol (SDP) Parameters" registry. The tables list the column that identifies the SDP attribute name/Token/Value from the corresponding subregistries and the values to be used for the new "Mux Category" column
+        Protocol (SDP) Parameters" registry. The tables list the column that
+        identifies the SDP attribute name/Token/Value from the corresponding
+        subregistries and the values to be used for the new "Mux Category" column
         to be added.</t>
-        <t> The entries in the existing tables that do not have a value for the
-        "Mux Category" specified in this specification will get a value of "TBD".
-        Future updates to the "Mux Category" column values will follow the existing registration policy of the affected table (Section 8.2.4.2 of <xref target="I-D.ietf-mmusic-rfc4566bis"/>).</t>
-        <t>Also, the procedures from Section 8.2.4.1 of <xref target="I-D.ietf-mmusic-rfc4566bis"/> needs to be followed when
-        assigning "Mux Category" value for newly defined SDP attributes.</t>
+        <t> For the entries in the existing subregistries, under the "Session Description
+        Protocol (SDP) Parameters" registry, that lack a value for the
+        "Mux Category" in this specification will get a value of "TBD".</t>
+        <t> Any future updates to the "Mux Category" column values needs to follow
+        the existing registration policy of the affected table (Section 8.2.4.2
+        of <xref target="I-D.ietf-mmusic-rfc4566bis"/>).</t>
+        <t>Also, the procedures from Section 8.2.4.1 of
+        <xref target="I-D.ietf-mmusic-rfc4566bis"/> needs to be followed when
+        assigning "Mux Category" value for the newly defined SDP attributes.</t>
        <section title="Table: SDP bwtype">
          <t>The following values are to be added to the 'SDP bwtype' subregistry
          in the "Session Description Protocol (SDP) Parameters" registry.
@@ -4051,7 +4060,8 @@ a=pcfg:4 m=5 pt=5:101
         is described in <xref target="RFC3550"/> and <xref target="RFC3711"/>.
       </t>
 	    <t>
-       When multiplexing SDP attributes with the category "CAUTION", the implementations should be aware of possible issues as described in
+       When multiplexing SDP attributes with the category "CAUTION", the
+       implementations should be aware of possible issues as described in
        this specification.
       </t>
       </section>
@@ -4081,8 +4091,8 @@ a=pcfg:4 m=5 pt=5:101
         Christian Groves (5.48,5.55), Thomas Stach.
       </t>
       <t>
-        I would like to thank Chris Lonvick for SECDIR review and Dan Romascanu
-        for the Gen-ART review.
+        I would like to thank Chris Lonvick for the SECDIR review, Dan Romascanu
+        for th Gen-ART review and Sabrina Tanamal for the IANA review.
       </t>
       <t>
        Thanks to Ben Campbell for AD review suggestions.
