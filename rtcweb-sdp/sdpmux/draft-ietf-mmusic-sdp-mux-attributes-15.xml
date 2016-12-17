@@ -86,7 +86,7 @@
 <?rfc rfcedstyle="no" ?>
 <?rfc tocdepth="4"?>
 
-<rfc category="std" docName="draft-ietf-mmusic-sdp-mux-attributes-14"
+<rfc category="std" docName="draft-ietf-mmusic-sdp-mux-attributes-15"
      ipr="trust200902">
   <front>
     <title abbrev="SDP Attribute Multiplexing">A Framework for SDP Attributes
@@ -112,7 +112,7 @@
       </address>
     </author>
 
-    <date day="22" month="September" year="2016"/>
+    <date day="16" month="December" year="2016"/>
 
     <area>MMUSIC</area>
 
@@ -483,7 +483,7 @@
         <list style="symbols">
           <t>S -- Session level</t>
           <t>M -- Media level</t>
-          <t>B -- Both</t>
+          <t>B -- Both (Implies either a session level or a media level attribute)</t>
           <t>SR -- Source-level (for a single SSRC) <xref target="RFC5576"/></t>
         </list>
       </t>
@@ -1660,9 +1660,10 @@
           <ttcol align='left'>Level</ttcol>
           <ttcol align='left'>Mux Category</ttcol>
 
-          <c>fingerprint&nbsp;</c><c>fingerprint value from the "m=" line
-          defining the underlying transport is
-          chosen&nbsp;</c><c>B</c><c>TRANSPORT&nbsp;</c>
+          <c>fingerprint&nbsp;</c><c>fingerprint value MUST be the
+          one that corresponds to the "m=" line chosen for 
+          setting up the underlying transport flow&nbsp;</c>
+          <c>B</c><c>TRANSPORT&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
         </texttable>
@@ -3515,12 +3516,11 @@ a=pcfg:4 m=5 pt=5:101
         <t> For the entries in the existing subregistries, under the "Session Description
         Protocol (SDP) Parameters" registry, that lack a value for the
         "Mux Category" in this specification will get a value of "TBD".</t>
-        <t> Any future updates to the "Mux Category" column values needs to follow
-        the existing registration policy of the affected table (Section 8.2.4.2
-        of <xref target="I-D.ietf-mmusic-rfc4566bis"/>).</t>
-        <t>Also, the procedures from Section 8.2.4.1 of
-        <xref target="I-D.ietf-mmusic-rfc4566bis"/> needs to be followed when
-        assigning "Mux Category" value for the newly defined SDP attributes.</t>
+        <t> The registration policy for updates to the 'Mux Category' column values 
+        for existing parameters, or when registering new parameters, are beyond the 
+        scope of this document. The registration policy  for the affected table is 
+        defined in <xref target="I-D.ietf-mmusic-rfc4566bis"/>.</t>
+
        <section title="Table: SDP bwtype">
          <t>The following values are to be added to the 'SDP bwtype' subregistry
          in the "Session Description Protocol (SDP) Parameters" registry.
@@ -4050,19 +4050,13 @@ a=pcfg:4 m=5 pt=5:101
     </section>
       <section title="Security Considerations">
       <t>
-       This document does not add any new security considerations beyond
-       the existing considerations in the RTP RFCs (<xref target="RFC3550"/>
-       and <xref target="RFC3711"/>) that are referenced by this
-       specification.
-     </t>
-      <t>
         The primary security for RTP including the way it is used here
         is described in <xref target="RFC3550"/> and <xref target="RFC3711"/>.
       </t>
-	    <t>
-       When multiplexing SDP attributes with the category "CAUTION", the
-       implementations should be aware of possible issues as described in
-       this specification.
+	   <t>
+        When multiplexing SDP attributes with the category "CAUTION", the
+        implementations should be aware of possible issues as described in
+        this specification.
       </t>
       </section>
       <section title="Acknowledgments">
@@ -4095,11 +4089,30 @@ a=pcfg:4 m=5 pt=5:101
         for th Gen-ART review and Sabrina Tanamal for the IANA review.
       </t>
       <t>
-       Thanks to Ben Campbell for AD review suggestions.
+       Thanks to Ben Campbell for AD review suggestions. Thanks to Spencer Dawkins, 
+       Stephen Farrel, Alissa Cooper, Mirja Kuehlewind and the entire IESG experts
+       for their reviews.
       </t>
     </section>
     <section title="Change Log">
       <t>[RFC EDITOR NOTE: Please remove this section when publishing]</t>
+      <t>Changes draft-ietf-mmusic-sdp-mux-attributes-14
+          <list style="symbols">
+              <t>
+                Incorporated Comments from IESG review :
+                <list style="symbols">
+                  <t>Updated security considerations section to fix the 
+                     incositencies (Spencer's review)</t>
+                  <t>Updated section 5.36 to align the text with 5.39 
+                     (Stephen's review)</t>   
+                  <t>Updated IANA registration section to make RFC4566bis 
+                    a informative dependency (IETF 98 followup)</t>
+                  <t>Updated Section 5 to expand 'B' level SDP attributes
+                     (Dan's review)</t>
+                </list>
+              </t>
+          </list>
+      </t>
       <t>Changes from draft-ietf-mmusic-sdp-mux-attributes-10 - draft-ietf-mmusic-sdp-mux-attributes-13
           <list style="symbols">
               <t>
@@ -4313,7 +4326,6 @@ a=pcfg:4 m=5 pt=5:101
       &RFC4566;
       &RFC5226;
       &I-D.ietf-mmusic-sdp-bundle-negotiation;
-      &I-D.ietf-mmusic-rfc4566bis;
 
       <reference anchor="RFC2119">
         <front>
@@ -4428,6 +4440,7 @@ a=pcfg:4 m=5 pt=5:101
       &RFC7273;
       &RFC7266;
       &RFC7657;
+      &I-D.ietf-mmusic-rfc4566bis;
 
       <reference anchor='IANA'
         target="http://www.iana.org/assignments/sdp-parameters/sdp-parameters.xml">
