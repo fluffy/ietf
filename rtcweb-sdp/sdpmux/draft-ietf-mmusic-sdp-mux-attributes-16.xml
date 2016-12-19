@@ -86,7 +86,7 @@
 <?rfc rfcedstyle="no" ?>
 <?rfc tocdepth="4"?>
 
-<rfc category="std" docName="draft-ietf-mmusic-sdp-mux-attributes-15"
+<rfc category="std" docName="draft-ietf-mmusic-sdp-mux-attributes-16"
      ipr="trust200902">
   <front>
     <title abbrev="SDP Attribute Multiplexing">A Framework for SDP Attributes
@@ -112,7 +112,7 @@
       </address>
     </author>
 
-    <date day="16" month="December" year="2016"/>
+    <date day="19" month="December" year="2016"/>
 
     <area>MMUSIC</area>
 
@@ -1305,7 +1305,7 @@
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
         </texttable>
-        <t>NOTE: As per section 9.1 of
+        <t>NOTE: As per section 9 of
          <xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/>, there
          exists no publicly available specification that
          defines procedures for multiplexing/demultiplexing MRSP flows
@@ -1327,9 +1327,8 @@
           <ttcol align='left'>Mux Category</ttcol>
 
           <c>floorctrl&nbsp;</c>
-          <c>The attribute MUST be repeated across all the multiplexed
-          "m=" lines&nbsp;</c>
-          <c>M&nbsp;</c><c>IDENTICAL&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
+          <c>Refer to notes below&nbsp;</c>
+          <c>M&nbsp;</c><c>TBD&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
           <c>&nbsp;</c><c>&nbsp;</c>
 
           <c>confid&nbsp;</c><c>Not Impacted&nbsp;</c><c>M&nbsp;</c>
@@ -1345,6 +1344,13 @@
           <c>&nbsp;</c><c>&nbsp;</c>
 
         </texttable>
+        <t>NOTE: As per section 9 of
+         <xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/>, there
+         exists no publicly available specification that
+         defines procedures for multiplexing/demultiplexing BFCP streams
+         over a single 5-tuple. Once such a specification is available,
+         the multiplexing categories assignments for the attributes in this
+         section could be revisited.</t>
       </section>
 
       <section title="RFC5547: SDP Offer/Answer for File Transfer">
@@ -1383,7 +1389,7 @@
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
         </texttable>
-        <t>NOTE: As per section 9.1 of
+        <t>NOTE: As per section 9 of
          <xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/>,
          there exists no publicly available specification that
          defines procedures for multiplexing/demultiplexing MRSP flows
@@ -2436,7 +2442,7 @@
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
         </texttable>
-         <t>NOTE: As per section 9.1 of
+         <t>NOTE: As per section 9 of
           <xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/>,
           there exists no publicly available specification that defines
           procedures for multiplexing/demultiplexing fax protocols flows over a
@@ -2522,7 +2528,7 @@
           <c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c><c>&nbsp;</c>
 
         </texttable>
-        <t>NOTE: As per section 9.1 of
+        <t>NOTE: As per section 9 of
          <xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/>,
          there exists no publicly available specification that
          defines procedures for multiplexing/demultiplexing MRSP flows over
@@ -3730,7 +3736,7 @@ a=pcfg:4 m=5 pt=5:101
           <c>isup_usi&nbsp;</c><c>CAUTION&nbsp;</c>
           <c>uiLayer1_Prot&nbsp;</c><c>CAUTION&nbsp;</c>
           <c>chain&nbsp;</c><c>CAUTION&nbsp;</c>
-          <c>floorctrl&nbsp;</c><c>IDENTICAL&nbsp;</c>
+          <c>floorctrl&nbsp;</c><c>TBD&nbsp;</c>
           <c>confid&nbsp;</c><c>NORMAL&nbsp;</c>
           <c>userid&nbsp;</c><c>NORMAL&nbsp;</c>
           <c>floorid&nbsp;</c><c>NORMAL&nbsp;</c>
@@ -4096,6 +4102,13 @@ a=pcfg:4 m=5 pt=5:101
     </section>
     <section title="Change Log">
       <t>[RFC EDITOR NOTE: Please remove this section when publishing]</t>
+      <t>Changes draft-ietf-mmusic-sdp-mux-attributes-15
+          <list style="symbols">
+              <t>
+                Updated Mux category for floorctrl to TBD
+              </t>
+          </list>
+      </t>
       <t>Changes draft-ietf-mmusic-sdp-mux-attributes-14
           <list style="symbols">
               <t>
