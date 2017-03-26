@@ -54,6 +54,8 @@
 		SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-mmusic-mux-exclusive.xml">
 <!ENTITY I-D.ietf-mmusic-dtls-sdp
     SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-mmusic-dtls-sdp.xml">
+<!ENTITY I-D.ietf-rtcweb-security-arch
+    SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-rtcweb-security-arch.xml">    
 ]>
 <?xml-stylesheet type="text/xsl" href="rfc2629.xslt" ?>
 <?rfc toc="yes" ?>
@@ -316,7 +318,8 @@
         <t>It is assumed that for most of the examples, the support for
 			  <xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/> is
 				established apriori either out-of-band or as a consequence of
-				successful Offer/Answer negotiation between Alice and Bob, unless explicitly stated otherwise.</t>
+				successful Offer/Answer negotiation between Alice and Bob, 
+        unless explicitly stated otherwise.</t>
         <t>Call-flow diagrams that accompany the use-cases capture only the
         prominent aspects of the system behavior and intentionally is not
         detailed to improve readability.</t>
@@ -378,11 +381,6 @@
 				<t>The IP Address:Port combinations '192.168.1.7:51556' (host)
 				and '98.248.92.77:49203' (Server Reflexive) is typically used
 				for Bob.</t>
-				<t>SSRC cname 'cname:EocUG1f0fcg/yvY7' applies to Alice and
-				the cname 'cname:Q/NWs1ao1HmN4Xa5' corresponds to Bob.</t>
-				<t>The SSRCs values '12345', '56789' and '11111' till '66666'
-				usually represent Alice's RTP Streams and the values '54321',
-				'98765' and '77777' till '99999' represent Bob's RTP Streams. </t>
 			  <t>In the actual use the values that represent SSRCs, ICE
 				candidate foundations, WebRTC Mediastream and MediaStreamTrack
 				Ids shall be much larger and/or random than the ones shown
@@ -444,7 +442,7 @@ Alice                                Bob
               GduS3FSTktOd3dacEZ1eUZZbFRodHJIdGNiT19WV3o4QnZpTThKS25OdExWd1JxNUhMX2ZLTlRCNzFDYkoyWmh5W
               XU1UEdwWDhXcXJMWC1ybm5YSFY3RnhoTTh5OHdrLWd5cnRZazVnbFlZeUFrcTVqZklSXzRzWER5d19Qc1BWTW1aZ
               XltenVGV3BQTzVFWlJYR0ZpRjFET0o4Q0Q3Z3Zta2dUdlBXSWpkemtBIn0=</c>
-          <c>rtcweb-security</c>    
+          <c><xref target="I-D.ietf-rtcweb-security-arch"/></c>    
           <c>****** Audio m=line *********</c>
           <c>*****************************</c>
           <c>m=audio 54609 UDP/TLS/RTP/SAVPF 109 0 8</c>
@@ -481,8 +479,7 @@ Alice                                Bob
           <c><xref target="RFC4145"></xref> - Alice can perform DTLS before
           Answer arrives</c>
           <c>a=dtls-id:1</c>
-          <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref>Alice indicates she 
-          wants to setup a new DTLS association.</c>
+          <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref> - Alice can perform RTP/RTCP Muxing </c>
           <c>a=rtcp-rsize</c>
@@ -784,6 +781,8 @@ Alice                                       Bob
           <c>a=setup:active</c>
           <c><xref target="RFC4145"></xref> - Bob carries out DTLS Handshake in
           parallel</c>
+          <c>a=dtls-id:1</c>
+          <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref> - Bob can perform RTP/RTCP Muxing</c>
           <c>a=rtcp-rsize</c>
@@ -894,8 +893,8 @@ Alice                            Bob
           <c>a=setup:actpass</c>
           <c><xref target="RFC4145"></xref> - Alice can perform DTLS before
           Answer arrives</c>
-          <c>a=connection:new</c>
-          <c><xref target="RFC4145"></xref></c>
+          <c>a=dtls-id:1</c>
+          <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=ice-ufrag:074c6550</c>
           <c><xref target="RFC5245"></xref> - Session Level ICE parameter</c>
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
@@ -946,6 +945,8 @@ Alice                            Bob
           <c>a=setup:active</c>
           <c><xref target="RFC4145"></xref> - Bob carries out DTLS Handshake
           in parallel</c>
+          <c>a=dtls-id:1</c>
+          <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=ice-ufrag:c300d85b</c>
           <c><xref target="RFC5245"></xref> - Session Level ICE username frag</c>
           <c>a=ice-pwd:de4e99bd291c325921d5d47efbabd9a2</c>
@@ -1039,6 +1040,8 @@ Alice                            Bob
           <c>a=setup:actpass</c>
           <c><xref target="RFC4145"></xref> - Alice can perform DTLS before
           Answer arrives</c>
+          <c>a=dtls-id:1</c>
+          <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref> - Alice can perform RTP/RTCP
           Muxing</c>
@@ -1104,6 +1107,8 @@ Alice                            Bob
           <c>a=setup:active</c>
           <c><xref target="RFC4145"></xref> - Bob carries out DTLS Handshake
           in parallel</c>
+          <c>a=dtls-id:1</c>
+          <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref> - Bob can perform RTP/RTCP
           Muxing</c>
@@ -1203,6 +1208,8 @@ Alice                                              Bob
           <c>a=setup:actpass</c>
           <c><xref target="RFC4145"></xref> - Alice can perform DTLS before
           Answer arrives</c>
+          <c>a=dtls-id:1</c>
+          <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref> - Alice can perform RTP/RTCP
           Muxing</c>
@@ -1289,6 +1296,8 @@ Alice                                              Bob
           <c>a=setup:active</c>
           <c><xref target="RFC4145"></xref> - Bob carries out DTLS Handshake in
           parallel</c>
+          <c>a=dtls-id:1</c>
+          <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref> - Bob can perform RTP/RTCP Muxing
           on port 49203</c>
@@ -1406,6 +1415,8 @@ Alice                                                 Bob
           <c>a=setup:actpass</c>
           <c><xref target="RFC4145"></xref> - Alice can perform DTLS before
           Answer arrives</c>
+          <c>a=dtls-id:1</c>
+          <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
           <c>a=rtcp-rsize</c>
@@ -1491,6 +1502,8 @@ Alice                                                 Bob
           <c>a=setup:active</c>
           <c><xref target="RFC4145"></xref> - Bob carries out DTLS Handshake
           in parallel</c>
+          <c>a=dtls-id:1</c>
+          <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
 		  	  <c>a=rtcp-rsize</c>
@@ -1626,6 +1639,8 @@ Alice                                                 Bob
           <c>a=setup:actpass</c>
           <c><xref target="RFC4145"></xref> - Alice can perform DTLS before
           Answer arrives</c>
+          <c>a=dtls-id:1</c>
+          <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
           <c>a=rtcp-rsize</c>
@@ -1675,6 +1690,8 @@ Alice                                                 Bob
           <c>a=setup:actpass</c>
           <c><xref target="RFC4145"></xref> - Alice can perform DTLS before
           Answer arrives</c>
+          <c>a=dtls-id:2</c>
+          <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
           <c>a=rtcp-rsize</c>
@@ -1746,6 +1763,8 @@ Alice                                                 Bob
           <c>a=setup:active</c>
           <c><xref target="RFC4145"></xref> - Bob carries out DTLS Handshake
           in parallel</c>
+          <c>a=dtls-id:1</c>
+          <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
           <c>a=rtcp-rsize</c>
@@ -2085,6 +2104,8 @@ Alice                                       Bob
           <c><xref target="RFC5245"></xref> </c>
           <c>a=setup:actpass</c>
           <c><xref target="RFC4145"></xref></c>
+          <c>a=dtls-id:1</c>
+          <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
           <c>a=rtcp-rsize</c>
@@ -2138,8 +2159,6 @@ Alice                                       Bob
           <c><xref target="I-D.ietf-mmusic-sctp-sdp"></xref></c>
           <c>a=sendrecv</c>
           <c><xref target="RFC3264"></xref></c>
-          <c>a=connection:new</c>
-          <c><xref target="RFC4145"></xref></c>
         </texttable>
         <t><vspace blankLines='1'></vspace></t>
         <texttable anchor="table_avd-2way_2" title="5.2.8 SDP Answer">
@@ -2186,6 +2205,8 @@ Alice                                       Bob
           <c><xref target="RFC5245"></xref> </c>
           <c>a=setup:active</c>
           <c><xref target="RFC4145"></xref> </c>
+          <c>a=dtls-id:1</c>
+          <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref> </c>
           <c>a=rtcp-rsize</c>
@@ -2534,6 +2555,8 @@ Alice                                                 Bob
           <c>a=setup:actpass</c>
           <c><xref target="RFC4145"></xref> - Alice can perform DTLS before
           Answer arrives</c>
+          <c>a=dtls-id:1</c>
+          <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
           <c>a=rtcp-rsize</c>
@@ -2585,6 +2608,8 @@ Alice                                                 Bob
           <c>a=setup:actpass</c>
           <c><xref target="RFC4145"></xref> - Alice can perform DTLS before
           Answer arrives</c>
+          <c>a=dtls-id:2</c>
+          <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
           <c>a=rtcp-rsize</c>
@@ -2651,6 +2676,8 @@ Alice                                                 Bob
           <c>a=setup:active</c>
           <c><xref target="RFC4145"></xref> - Bob carries out DTLS Handshake
           in parallel</c>
+          <c>a=dtls-id:1</c>
+          <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=rtcp-rsize</c>
           <c><xref target="RFC5506"></xref></c>
           <c>a=rtcp-fb:109 nack</c>
@@ -2693,6 +2720,8 @@ Alice                                                 Bob
           <c>a=setup:active</c>
           <c><xref target="RFC4145"></xref> - Bob carries out DTLS Handshake
           in parallel</c>
+          <c>a=dtls-id:2</c>
+          <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=rtcp-rsize</c>
           <c><xref target="RFC5506"></xref></c>
           <c>a=rtcp-fb:120 nack</c>
@@ -2792,6 +2821,8 @@ Alice                                                 Bob
           <c><xref target="RFC5245"></xref> </c>
           <c>a=setup:actpass</c>
           <c><xref target="RFC4145"></xref></c>
+          <c>a=dtls-id:1</c>
+          <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
           <c>a=rtcp-rsize</c>
@@ -2843,8 +2874,6 @@ Alice                                                 Bob
           <c>a=sendrecv</c>
           <c><xref target="RFC3264"></xref></c>
           <c>a=setup:actpass</c>
-          <c><xref target="RFC4145"></xref></c>
-          <c>a=connection:new</c>
           <c><xref target="RFC4145"></xref></c>
           <c>a=ice-ufrag:89819013</c>
           <c><xref target="RFC5245"></xref></c>
@@ -2905,6 +2934,8 @@ Alice                                                 Bob
           <c><xref target="RFC5245"></xref> </c>
           <c>a=setup:active</c>
           <c><xref target="RFC4145"></xref> </c>
+          <c>a=dtls-id:1</c>
+          <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref> </c>
           <c>a=rtcp-rsize</c>
@@ -3059,6 +3090,8 @@ Alice                                                 Bob
           <c><xref target="RFC5245"></xref> </c>
           <c>a=setup:actpass</c>
           <c><xref target="RFC4145"></xref></c>
+          <c>a=dtls-id:1</c>
+          <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
           <c>a=rtcp-rsize</c>
@@ -3122,6 +3155,8 @@ Alice                                                 Bob
           <c><xref target="RFC5245"></xref> </c>
           <c>a=setup:active</c>
           <c><xref target="RFC4145"></xref> </c>
+          <c>a=dtls-id:1</c>
+          <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref> </c>
           <c>a=rtcp-rsize</c>
@@ -3185,6 +3220,8 @@ Alice                                                 Bob
           <c><xref target="RFC5245"></xref> </c>
           <c>a=setup:actpass</c>
           <c><xref target="RFC4145"></xref></c>
+          <c>a=dtls-id:1</c>
+          <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref>Alice want's to use the same DTLS association</c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
           <c>a=rtcp-rsize</c>
@@ -3270,6 +3307,8 @@ Alice                                                 Bob
           <c><xref target="RFC5245"></xref> </c>
           <c>a=setup:active</c>
           <c><xref target="RFC4145"></xref> </c>
+          <c>a=dtls-id:1</c>
+          <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref>Bob agrees to use the same DTLS association</c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref> </c>
           <c>a=rtcp-rsize</c>
@@ -3411,6 +3450,8 @@ Alice                                            Bob
           <c><xref target="RFC5245"></xref></c>
           <c>a=setup:actpass</c>
           <c><xref target="RFC4145"></xref></c>
+          <c>a=dtls-id:1</c>
+          <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
           <c>a=rtcp-rsize</c>
@@ -3555,6 +3596,8 @@ Alice                                            Bob
 					</c>
 					<c><xref target="RFC5245"></xref></c>
 					<c>a=setup:active</c>
+          <c>a=dtls-id:1</c>
+          <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c><xref target="RFC4145"></xref> </c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
@@ -3733,6 +3776,8 @@ Alice                                            Bob
           <c><xref target="RFC5245"></xref></c>
 					<c>a=setup:actpass</c>
           <c><xref target="RFC4145"></xref> </c>
+          <c>a=dtls-id:1</c>
+          <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
 					<c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
 					<c>a=rtcp-rsize</c>
@@ -3834,6 +3879,8 @@ Alice                                            Bob
           </c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=setup:active</c>
+          <c>a=dtls-id:1</c>
+          <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c><xref target="RFC4145"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
@@ -3971,6 +4018,8 @@ Alice                                                    Bob
           <c><xref target="RFC5245"></xref></c>
 					<c>a=setup:actpass</c>
           <c><xref target="RFC4145"></xref></c>
+          <c>a=dtls-id:1</c>
+          <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
 					<c>a=rtcp-rsize</c>
@@ -4075,6 +4124,8 @@ Alice                                                    Bob
           <c><xref target="RFC5245"></xref></c>
 					<c>a=setup:active</c>
 					<c><xref target="RFC4145"></xref></c>
+          <c>a=dtls-id:1</c>
+          <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
 					<c>a=rtcp-mux</c>
 					<c><xref target="RFC5761"></xref></c>
 					<c>a=rtcp-rsize</c>
@@ -4219,6 +4270,8 @@ Alice                                                    Bob
           <c><xref target="RFC5245"></xref></c>
 					<c>a=setup:actpass</c>
 					<c><xref target="RFC4145"></xref></c>
+          <c>a=dtls-id:1</c>
+          <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
 					<c>a=rtcp-mux</c>
 					<c><xref target="RFC5761"></xref></c>
 					<c>a=rtcp-rsize</c>
@@ -4330,6 +4383,8 @@ Alice                                                    Bob
           <c><xref target="RFC5245"></xref></c>
 					<c>a=setup:active</c>
           <c><xref target="RFC4145"></xref></c>
+          <c>a=dtls-id:1</c>
+          <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
 					<c>a=rtcp-rsize</c>
@@ -4462,6 +4517,8 @@ Alice                                                            Bob
           <c>a=setup:actpass</c>
           <c><xref target="RFC4145"></xref></c>
           <c>a=rtcp-mux</c>
+          <c>a=dtls-id:1</c>
+          <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c><xref target="RFC5761"></xref></c>
 					<c>a=rtcp-rsize</c>
 					<c><xref target="RFC5506"></xref></c>
@@ -4571,6 +4628,8 @@ Alice                                                            Bob
 					<c><xref target="RFC5245"></xref></c>
 					<c>a=setup:active</c>
           <c><xref target="RFC4145"></xref> </c>
+          <c>a=dtls-id:1</c>
+          <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
 					<c>a=rtcp-rsize</c>
@@ -4724,6 +4783,8 @@ Alice                                                            Bob
 					<c><xref target="RFC5245"></xref></c>
           <c>a=setup:actpass</c>
           <c><xref target="RFC4145"></xref></c>
+          <c>a=dtls-id:1</c>
+          <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
 					<c>a=rtcp-rsize</c>
@@ -4792,6 +4853,8 @@ Alice                                                            Bob
 					<c><xref target="RFC5245"></xref> </c>
           <c>a=setup:active</c>
 		      <c><xref target="RFC4145"></xref> </c>
+          <c>a=dtls-id:1</c>
+          <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref> - Bob can perform RTP/RTCP Muxing on port 49203</c>
 					<c>a=rtcp-rsize</c>
@@ -4896,6 +4959,8 @@ Alice                                    Mixer
           <c><xref target="RFC5245"></xref> </c>
           <c>a=setup:actpass</c>
           <c><xref target="RFC4145"></xref> </c>
+          <c>a=dtls-id:1</c>
+          <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref> </c>
 					<c>a=rtcp-rsize</c>
@@ -4965,6 +5030,8 @@ Alice                                    Mixer
 					<c><xref target="RFC5245"></xref> </c>
           <c>a=setup:active</c>
 		  		<c><xref target="RFC4145"></xref></c>
+          <c>a=dtls-id:1</c>
+          <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
 					<c>a=rtcp-rsize</c>
@@ -5087,6 +5154,8 @@ Alice                                                       Bob
           <c><xref target="RFC5245"></xref></c>
           <c>a=setup:actpass</c>
           <c><xref target="RFC4145"></xref> </c>
+          <c>a=dtls-id:1</c>
+          <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
 					<c>a=rtcp-rsize</c>
@@ -5577,6 +5646,7 @@ Alice                                                          Bob
       &I-D.ietf-payload-flexible-fec-scheme;
 			&I-D.ietf-mmusic-mux-exclusive;
       &I-D.ietf-mmusic-dtls-sdp;
+      &I-D.ietf-rtcweb-security-arch;
 
       <reference anchor="WebRTC">
         <front>
@@ -5595,22 +5665,25 @@ Alice                                                          Bob
       </references>
       <section title="Appendix" toc="default">
         <section title="JSEP SDP Attributes Checklist">
-          <t>Here here here </t>
+          <t>This section compiles a high-level checklist of required SDP attributes to be verified against
+          the examples defined in this specification. The goal here is to ensure that the examples are compliant
+          to the rules defined in sections 5 of the <xref target="I-D.ietf-rtcweb-jsep"></xref> specification.</t>
           <section title="Common Checklist">
             <t>
+              This subsection lists SDP attributes that mostly apply at the session level.
               <list style="symbols">
                 <t>v=0 MUST be the first SDP line</t>
                 <t>o= line MUST follow with values '-' for username, 64 bit value for session id and 
                   dummy values for 'netype', 'addrtype' and 'unicast-address' (such as IN IP4 0.0.0.0)</t>
                 <t>o= line MUST have the session version incremented in the cases of subsequent offers. </t>
-                <t>s= MUST be the thrid line with value '-'.</t>
+                <t>s= MUST be the third line with value '-'.</t>
                 <t>t= line follow with values for 'start-time' and 'stop-time' set to zeroes.</t>
               </list> 
             </t>
           </section>  
           <section title="RTP Media Description Checklist">
             <t>
-              Following set of checklists are applied to RTP audio and video media desctiptions.
+              Following set of checklist items apply to RTP audio and video media descriptions.
               <list style="symbols">  
                 <t>The media description's port value MUST either by set to dummy value of '9' or MUST use the
                 port from the default candidate, if available.</t>
@@ -5657,7 +5730,7 @@ Alice                                                          Bob
             </t>
           </section>
           <section title="DataChannel Media Description checklist">
-            <t> If a datachannel is needed, an 'application' type media descritpion MUST be included with
+            <t> If a datachannel is required, an 'application' type media descritpion MUST be included with
             the following properties:
             <list style="symbols">
               <t>Media description's proto value MUST be 'UDP/DTLS/SCTP' in the JSEP offers.</t>
