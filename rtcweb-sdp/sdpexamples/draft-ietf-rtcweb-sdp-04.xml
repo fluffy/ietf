@@ -442,15 +442,13 @@ Alice                                Bob
               GduS3FSTktOd3dacEZ1eUZZbFRodHJIdGNiT19WV3o4QnZpTThKS25OdExWd1JxNUhMX2ZLTlRCNzFDYkoyWmh5W
               XU1UEdwWDhXcXJMWC1ybm5YSFY3RnhoTTh5OHdrLWd5cnRZazVnbFlZeUFrcTVqZklSXzRzWER5d19Qc1BWTW1aZ
               XltenVGV3BQTzVFWlJYR0ZpRjFET0o4Q0Q3Z3Zta2dUdlBXSWpkemtBIn0=</c>
-          <c><xref target="I-D.ietf-rtcweb-security-arch"/></c>    
+          <c>Section 5.6 of <xref target="I-D.ietf-rtcweb-security-arch"/></c>    
           <c>****** Audio m=line *********</c>
           <c>*****************************</c>
           <c>m=audio 54609 UDP/TLS/RTP/SAVPF 109 0 8</c>
           <c><xref target="RFC4566"></xref></c>
           <c>c=IN IP4 24.23.204.141</c>
           <c><xref target="RFC4566"></xref></c>
-          <c>a=rtcp:60065 IN IP4 24.23.204.141</c>
-          <c><xref target="RFC3605"></xref></c>
           <c>a=mid:audio</c>
           <c><xref target="RFC5888"></xref></c>
           <c>a=msid:ma ta </c>
@@ -482,6 +480,8 @@ Alice                                Bob
           <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref> - Alice can perform RTP/RTCP Muxing </c>
+          <c>a=rtcp:60065 IN IP4 24.23.204.141</c>
+          <c><xref target="RFC3605"></xref></c>
           <c>a=rtcp-rsize</c>
           <c><xref target="RFC5506"></xref> - Alice intends to use reduced
           size RTCP for this session</c>
@@ -533,15 +533,13 @@ Alice                                Bob
             VG10VlQxaHVaRTlITFVJelQzWkdiM1F3WlZORU5sWlNOVWRoYjJ3eWMNCiAgICAgICAgICAgICAgR2R1
             UzNGU1RrdE9kM2RhY0VaMWVVWlpiRlJvZEhKSWRHTmlUMTlXVjNvNFFuWnBUVGhLUzI1T2RFeFdkMUp4
             TlVoTVgyWkxUbFJDTnpGRFlrb3lXbWg1VyINCn0=</c>
-          <c>rtcweb-security</c>  
+          <c>Section 5.6 of <xref target="I-D.ietf-rtcweb-security-arch"/></c>  
           <c>****** Audio m=line *********</c>
           <c>*****************************</c>
           <c>m=audio 49203 UDP/TLS/RTP/SAVPF 109 0 8</c>
           <c><xref target="RFC4566"></xref></c>
           <c>c=IN IP4 98.248.92.77</c>
           <c><xref target="RFC4566"></xref></c>
-          <c>a=rtcp:49203 IN IP4 98.248.92.77</c>
-          <c><xref target="RFC3605"></xref></c>
           <c>a=mid:audio</c>
           <c><xref target="RFC5888"></xref></c>
           <c>a=msid:ma ta </c>
@@ -634,6 +632,9 @@ Alice                                       Bob
           <c><xref target="RFC4566"></xref></c>
           <c>a=group:BUNDLE audio video</c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
+          <c>a=group:LS audio video</c>
+          <c><xref target="RFC5888"></xref>Alice wants to lip sync her audio 
+           and video sreams</c>
           <c>a=ice-options:trickle</c>
           <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** Audio m=line *********</c>
@@ -642,8 +643,6 @@ Alice                                       Bob
           <c><xref target="RFC4566"></xref></c>
           <c>c=IN IP4 24.23.204.141</c>
           <c><xref target="RFC4566"></xref></c>
-          <c>a=rtcp:54609 IN IP4 24.23.204.141</c>
-          <c><xref target="RFC3605"></xref></c>
           <c>a=mid:audio</c>
           <c><xref target="RFC5888"></xref></c>
           <c>a=msid:ma ta </c>
@@ -675,9 +674,10 @@ Alice                                       Bob
           <c>a=dtls-id:1</c>
           <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=rtcp-mux</c>
-          <c><xref target="RFC5761"></xref>
-          		- Alice can perform RTP/RTCP Muxing</c>
-		  		<c>a=rtcp-rsize</c>
+          <c><xref target="RFC5761"></xref> - Alice can perform RTP/RTCP Muxing</c>
+		  		<c>a=rtcp:54609 IN IP4 24.23.204.141</c>
+          <c><xref target="RFC3605"></xref></c>
+          <c>a=rtcp-rsize</c>
           <c><xref target="RFC5506"></xref> - Alice intends to use reduced
           size RTCP for this session</c>
           <c>a=rtcp-fb:109 nack</c>
@@ -748,6 +748,8 @@ Alice                                       Bob
           <c><xref target="RFC4566"></xref></c>
           <c>a=group:BUNDLE audio video</c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
+          <c>a=group:LS audio video</c>
+          <c><xref target="RFC5888"></xref>Bob agrees to do the same</c>
           <c>a=ice-options:trickle</c>
           <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** Audio m=line *********</c>
@@ -756,8 +758,6 @@ Alice                                       Bob
           <c><xref target="RFC4566"></xref></c>
           <c>c=IN IP4 98.248.92.77</c>
           <c><xref target="RFC4566"></xref></c>
-          <c>a=rtcp:49203 IN IP4 98.248.92.77</c>
-          <c><xref target="RFC3605"></xref></c>
           <c>a=mid:audio</c>
           <c><xref target="RFC5888"></xref></c>
           <c>a=msid:ma ta </c>
@@ -1015,8 +1015,6 @@ Alice                            Bob
           <c><xref target="RFC4566"></xref></c>
           <c>c=IN IP4 24.23.204.141</c>
           <c><xref target="RFC4566"></xref></c>
-          <c>a=rtcp:54609 IN IP4 24.23.204.141</c>
-          <c><xref target="RFC3605"></xref></c>
           <c>a=mid:audio</c>
           <c><xref target="RFC5888"></xref></c>
           <c>a=msid:ma ta </c>
@@ -1045,6 +1043,8 @@ Alice                            Bob
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref> - Alice can perform RTP/RTCP
           Muxing</c>
+          <c>a=rtcp:54609 IN IP4 24.23.204.141</c>
+          <c><xref target="RFC3605"></xref></c>
           <c>a=rtcp-rsize</c>
           <c><xref target="RFC5506"></xref></c>
           <c>a=rtcp-fb:109 nack</c>
@@ -1082,9 +1082,7 @@ Alice                            Bob
           <c><xref target="RFC4566"></xref></c>
           <c>c=IN IP4 98.248.92.77</c>
           <c><xref target="RFC4566"></xref></c>
-					<c>a=rtcp:49203 IN IP4 24.23.204.141</c>
-          <c><xref target="RFC3605"></xref></c>
-          <c>a=mid:audio</c>
+					<c>a=mid:audio</c>
           <c><xref target="RFC5888"></xref></c>
           <c>a=msid:ma ta </c>
           <c> Identifies RTCMediaStream ID (ma) and RTCMediaStreamTrack ID (ta) </c>
@@ -1179,8 +1177,6 @@ Alice                                              Bob
           <c><xref target="RFC4566"></xref></c>
           <c>c=IN IP4 24.23.204.141</c>
           <c><xref target="RFC4566"></xref></c>
-          <c>a=rtcp:54609 IN IP4 24.23.204.141</c>
-          <c><xref target="RFC3605"></xref></c>
           <c>a=mid:audio</c>
           <c><xref target="RFC5888"></xref></c>
           <c>a=msid:ma ta </c>
@@ -1213,6 +1209,8 @@ Alice                                              Bob
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref> - Alice can perform RTP/RTCP
           Muxing</c>
+          <c>a=rtcp:54609 IN IP4 24.23.204.141</c>
+          <c><xref target="RFC3605"></xref></c>
           <c>a=rtcp-rsize</c>
           <c><xref target="RFC5506"></xref></c>
           <c>a=rtcp-fb:109 nack</c>
@@ -1269,9 +1267,7 @@ Alice                                              Bob
           <c><xref target="RFC4566"></xref></c>
           <c>c=IN IP4 98.248.92.77</c>
           <c><xref target="RFC4566"></xref></c>
-					<c>a=rtcp:49203 IN IP4 24.23.204.141</c>
-          <c><xref target="RFC3605"></xref></c>
-          <c>a=mid:audio</c>
+					<c>a=mid:audio</c>
           <c><xref target="RFC5888"></xref></c>
           <c>a=msid:ma ta </c>
           <c> Identifies RTCMediaStream ID (ma) and RTCMediaStreamTrack ID
@@ -1383,6 +1379,8 @@ Alice                                                 Bob
           <c><xref target="RFC4566"></xref></c>
           <c>a=group:BUNDLE audio video</c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
+          <c>a=group:LS audio video</c>
+          <c><xref target="RFC5888"></xref></c>
           <c>a=ice-options:trickle</c>
           <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** Audio m=line *********</c>
@@ -1391,8 +1389,6 @@ Alice                                                 Bob
           <c><xref target="RFC4566"></xref></c>
           <c>c=IN IP4 24.23.204.141</c>
           <c><xref target="RFC4566"></xref></c>
-          <c>a=rtcp:54609 IN IP4 24.23.204.141</c>
-          <c><xref target="RFC3605"></xref></c>
           <c>a=mid:audio</c>
           <c><xref target="RFC5888"></xref></c>
           <c>a=msid:ma ta </c>
@@ -1419,6 +1415,8 @@ Alice                                                 Bob
           <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
+          <c>a=rtcp:54609 IN IP4 24.23.204.141</c>
+          <c><xref target="RFC3605"></xref></c>
           <c>a=rtcp-rsize</c>
           <c><xref target="RFC5506"></xref></c>
           <c>a=rtcp-fb:109 nack</c>
@@ -1470,6 +1468,8 @@ Alice                                                 Bob
           <c><xref target="RFC4566"></xref></c>
           <c>a=group:BUNDLE audio video</c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
+          <c>a=group:LS audio video</c>
+          <c><xref target="RFC5888"></xref></c>
           <c>a=ice-options:trickle</c>
           <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** Audio m=line *********</c>
@@ -1478,8 +1478,6 @@ Alice                                                 Bob
           <c><xref target="RFC4566"></xref></c>
           <c>c=IN IP4 98.248.92.77</c>
           <c><xref target="RFC4566"></xref></c>
-          <c>a=rtcp:49203 IN IP4 24.23.204.141</c>
-          <c><xref target="RFC3605"></xref></c>
           <c>a=mid:audio</c>
           <c><xref target="RFC5888"></xref></c>
           <c>a=msid:ma ta </c>
@@ -1605,6 +1603,8 @@ Alice                                                 Bob
           <c>a=group:BUNDLE audio video</c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref>
           Alice supports grouping of m=lines under BUNDLE semantics</c>
+          <c>a=group:LS audio video</c>
+          <c><xref target="RFC5888"></xref></c>
           <c>a=ice-options:trickle</c>
           <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** Audio m=line *********</c>
@@ -1613,9 +1613,6 @@ Alice                                                 Bob
           <c><xref target="RFC4566"></xref></c>
           <c>c=IN IP4 24.23.204.141</c>
           <c><xref target="RFC4566"></xref></c>
-          <c>a=rtcp:54610 IN IP4 24.23.204.141</c>
-          <c><xref target="RFC3605"/> - RTCP port different from
-				   RTP Port</c>
           <c>a=mid:audio</c>
           <c><xref target="RFC5888"></xref> Audio m=line part of BUNDLE group
           with a unique port number</c>
@@ -1643,6 +1640,9 @@ Alice                                                 Bob
           <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
+          <c>a=rtcp:54610 IN IP4 24.23.204.141</c>
+          <c><xref target="RFC3605"/> - RTCP port different from
+           RTP Port</c>
           <c>a=rtcp-rsize</c>
           <c><xref target="RFC5506"></xref></c>
           <c>a=rtcp-fb:109 nack</c>
@@ -1667,8 +1667,6 @@ Alice                                                 Bob
           <c><xref target="RFC4566"></xref></c>
           <c>c=IN IP4 24.23.204.141</c>
           <c><xref target="RFC4566"></xref></c>
-          <c>a=rtcp:62538 IN IP4 24.23.204.141</c>
-          <c><xref target="RFC3605"></xref></c>
           <c>a=mid:video</c>
           <c><xref target="RFC5888"></xref> Video m=line part of the
           Bundle group with a unique port number</c>
@@ -1694,6 +1692,8 @@ Alice                                                 Bob
           <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
+          <c>a=rtcp:62538 IN IP4 24.23.204.141</c>
+          <c><xref target="RFC3605"></xref></c>
           <c>a=rtcp-rsize</c>
           <c><xref target="RFC5506"></xref></c>
           <c>a=rtcp-fb:120 nack</c>
@@ -1730,7 +1730,9 @@ Alice                                                 Bob
           <c><xref target="RFC4566"></xref></c>
           <c>a=group:BUNDLE audio video</c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref>
-          Bob supports BUNDLE semantics.</c>
+            Bob supports BUNDLE semantics.</c>
+          <c>a=group:LS audio video</c>
+          <c><xref target="RFC5888"></xref></c>
           <c>a=ice-options:trickle</c>
           <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** Audio m=line *********</c>
@@ -1739,9 +1741,7 @@ Alice                                                 Bob
           <c><xref target="RFC4566"></xref></c>
           <c>c=IN IP4 98.248.92.77</c>
           <c><xref target="RFC4566"></xref></c>
-          <c>a=rtcp:49203 IN IP4 98.248.92.77</c>
-          <c><xref target="RFC3605"></xref></c>
-					<c>a=mid:audio</c>
+          <c>a=mid:audio</c>
 					<c><xref target="RFC5888"></xref> Audio m=line part of the BUNDLE group</c>
 					<c>a=msid:ma ta </c>
           <c> Identifies RTCMediaStream ID (ma) and RTCMediaStreamTrack ID (ta) </c>
@@ -2073,6 +2073,8 @@ Alice                                       Bob
           <c><xref target="RFC4566"></xref></c>
           <c>a=group:BUNDLE audio video data</c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref> </c>
+          <c>a=group:LS audio video</c>
+          <c><xref target="RFC5888"></xref></c>
           <c>a=ice-options:trickle</c>
           <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** Audio m=line *********</c>
@@ -2081,8 +2083,6 @@ Alice                                       Bob
           <c><xref target="RFC4566"></xref></c>
           <c>c=IN IP4 24.23.204.141</c>
           <c><xref target="RFC4566"></xref></c>
-          <c>a=rtcp:54609 IN IP4 24.23.204.141</c>
-          <c><xref target="RFC3605"></xref></c>
           <c>a=msid:ma ta </c>
           <c> Identifies RTCMediaStream ID (ma) and RTCMediaStreamTrack ID (ta) </c>
           <c>a=mid:audio</c>
@@ -2108,6 +2108,8 @@ Alice                                       Bob
           <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
+          <c>a=rtcp:54609 IN IP4 24.23.204.141</c>
+          <c><xref target="RFC3605"></xref></c>
           <c>a=rtcp-rsize</c>
           <c><xref target="RFC5506"></xref></c>
           <c>a=rtcp-fb:109 nack</c>
@@ -2174,6 +2176,8 @@ Alice                                       Bob
           <c><xref target="RFC4566"></xref></c>
           <c>a=group:BUNDLE audio video data</c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref> </c>
+          <c>a=group:LS audio video</c>
+          <c><xref target="RFC5888"></xref></c>
           <c>a=ice-options:trickle</c>
           <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** Audio m=line *********</c>
@@ -2182,8 +2186,6 @@ Alice                                       Bob
           <c><xref target="RFC4566"></xref></c>
           <c>c=IN IP4 98.248.92.77</c>
           <c><xref target="RFC4566"></xref></c>
-          <c>a=rtcp:49203 IN IP4 98.248.92.77</c>
-          <c><xref target="RFC3605"></xref></c>
           <c>a=msid:ma ta </c>
           <c> Identifies RTCMediaStream ID (ma) and RTCMediaStreamTrack ID (ta) </c>
           <c>a=mid:audio</c>
@@ -2521,6 +2523,8 @@ Alice                                                 Bob
           <c>a=group:BUNDLE audio video</c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref>
           Alice supports grouping of m=lines under BUNDLE semantics</c>
+          <c>a=group:LS audio video</c>
+          <c><xref target="RFC5888"></xref></c>
           <c>a=ice-options:trickle</c>
           <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** Audio m=line *********</c>
@@ -2529,9 +2533,6 @@ Alice                                                 Bob
           <c><xref target="RFC4566"></xref></c>
           <c>c=IN IP4 24.23.204.141</c>
           <c><xref target="RFC4566"></xref></c>
-          <c>a=rtcp:55232 IN IP4 24.23.204.141</c>
-          <c><xref target="RFC3605"/> - RTCP port different from
-					 RTP port</c>
           <c>a=mid:audio</c>
           <c><xref target="RFC5888"></xref> Audio m=line part of BUNDLE group
           with a unique port number</c>
@@ -2559,6 +2560,9 @@ Alice                                                 Bob
           <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
+          <c>a=rtcp:55232 IN IP4 24.23.204.141</c>
+          <c><xref target="RFC3605"/> - RTCP port different from
+           RTP port</c>
           <c>a=rtcp-rsize</c>
           <c><xref target="RFC5506"></xref></c>
           <c>a=rtcp-fb:109 nack</c>
@@ -2585,8 +2589,6 @@ Alice                                                 Bob
           <c><xref target="RFC4566"></xref></c>
           <c>c=IN IP4 24.23.204.141</c>
           <c><xref target="RFC4566"></xref></c>
-          <c>a=rtcp:60052 IN IP4 24.23.204.141</c>
-          <c><xref target="RFC3605"></xref></c>
           <c>a=mid:video</c>
           <c><xref target="RFC5888"></xref> Video m=line part of the
           BUNDLE group with a unique port number</c>
@@ -2612,6 +2614,8 @@ Alice                                                 Bob
           <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
+          <c>a=rtcp:60052 IN IP4 24.23.204.141</c>
+          <c><xref target="RFC3605"></xref></c>
           <c>a=rtcp-rsize</c>
           <c><xref target="RFC5506"></xref></c>
           <c>a=rtcp-fb:120 nack</c>
@@ -2646,6 +2650,8 @@ Alice                                                 Bob
           <c><xref target="RFC4566"></xref></c>
           <c>t=0 0</c>
           <c><xref target="RFC4566"></xref></c>
+          <c>a=group:LS audio video</c>
+          <c><xref target="RFC5888"></xref></c>
           <c>a=ice-options:trickle</c>
           <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** Audio m=line *********</c>
@@ -2654,8 +2660,8 @@ Alice                                                 Bob
           <c><xref target="RFC4566"></xref></c>
           <c>c=IN IP4 98.248.92.77</c>
           <c><xref target="RFC4566"></xref></c>
-          <c>a=rtcp:60065 IN IP4 98.248.92.77</c>
-          <c><xref target="RFC3605"></xref></c>
+          <c>a=mid:audio</c>
+          <c><xref target="RFC5888"></xref></c>
           <c>a=msid:ma ta </c>
           <c>Identifies RTCMediaStream ID (ma) and RTCMediaStreamTrack ID (ta) </c>
           <c>a=sendrecv</c>
@@ -2678,6 +2684,8 @@ Alice                                                 Bob
           in parallel</c>
           <c>a=dtls-id:1</c>
           <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
+          <c>a=rtcp-mux</c>
+          <c><xref target="RFC5761"></xref></c>
           <c>a=rtcp-rsize</c>
           <c><xref target="RFC5506"></xref></c>
           <c>a=rtcp-fb:109 nack</c>
@@ -2700,8 +2708,8 @@ Alice                                                 Bob
           <c><xref target="RFC4566"></xref></c>
           <c>c=IN IP4 98.248.92.77</c>
           <c><xref target="RFC4566"></xref> </c>
-          <c>a=rtcp:56507 IN IP4 98.248.92.77</c>
-          <c><xref target="RFC3605"></xref></c>
+          <c>a=mid:video</c>
+          <c><xref target="RFC5888"></xref></c>
           <c>a=msid:ma tb </c>
           <c>Identifies RTCMediaStream ID (ma) and RTCMediaStreamTrack ID (tb) </c>
           <c>a=sendrecv</c>
@@ -2722,6 +2730,8 @@ Alice                                                 Bob
           in parallel</c>
           <c>a=dtls-id:2</c>
           <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
+          <c>a=rtcp-mux</c>
+          <c><xref target="RFC5761"></xref></c>
           <c>a=rtcp-rsize</c>
           <c><xref target="RFC5506"></xref></c>
           <c>a=rtcp-fb:120 nack</c>
@@ -2790,6 +2800,8 @@ Alice                                                 Bob
           <c>a=group:BUNDLE audio video</c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref>
           Alice wants to BUNDLE only audio and video media.</c>
+          <c>a=group:LS audio video</c>
+          <c><xref target="RFC5888"></xref></c>
           <c>a=ice-options:trickle</c>
           <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** Audio m=line *********</c>
@@ -2798,8 +2810,6 @@ Alice                                                 Bob
           <c><xref target="RFC4566"></xref></c>
           <c>c=IN IP4 24.23.204.141</c>
           <c><xref target="RFC4566"></xref></c>
-          <c>a=rtcp:54609 IN IP4 24.23.204.141</c>
-          <c><xref target="RFC3605"></xref></c>
           <c>a=mid:audio</c>
           <c><xref target="RFC5888"></xref></c>
           <c>a=msid:ma ta </c>
@@ -2825,6 +2835,8 @@ Alice                                                 Bob
           <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
+          <c>a=rtcp:54609 IN IP4 24.23.204.141</c>
+          <c><xref target="RFC3605"></xref></c>
           <c>a=rtcp-rsize</c>
           <c><xref target="RFC5506"></xref></c>
           <c>a=rtcp-fb:109 nack</c>
@@ -2903,6 +2915,8 @@ Alice                                                 Bob
           <c><xref target="RFC4566"></xref></c>
           <c>a=group:BUNDLE audio video</c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref> </c>
+          <c>a=group:LS audio video</c>
+          <c><xref target="RFC5888"></xref></c>
           <c>a=ice-options:trickle</c>
           <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** Audio m=line *********</c>
@@ -2911,8 +2925,6 @@ Alice                                                 Bob
           <c><xref target="RFC4566"></xref></c>
           <c>c=IN IP4 98.248.92.77</c>
           <c><xref target="RFC4566"></xref></c>
-          <c>a=rtcp:49203 IN IP4 98.248.92.77</c>
-          <c><xref target="RFC3605"></xref></c>
           <c>a=mid:audio</c>
           <c><xref target="RFC5888"></xref></c>
           <c>a=msid:ma ta </c>
@@ -3067,8 +3079,6 @@ Alice                                                 Bob
           <c><xref target="RFC4566"></xref></c>
           <c>c=IN IP4 24.23.204.141</c>
           <c><xref target="RFC4566"></xref></c>
-          <c>a=rtcp:54609 IN IP4 24.23.204.141</c>
-          <c><xref target="RFC3605"></xref></c>
           <c>a=mid:audio</c>
           <c><xref target="RFC5888"></xref></c>
           <c>a=msid:ma ta </c>
@@ -3094,6 +3104,8 @@ Alice                                                 Bob
           <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
+          <c>a=rtcp:54609 IN IP4 24.23.204.141</c>
+          <c><xref target="RFC3605"></xref></c>
           <c>a=rtcp-rsize</c>
           <c><xref target="RFC5506"></xref></c>
           <c>a=rtcp-fb:109 nack</c>
@@ -3132,8 +3144,6 @@ Alice                                                 Bob
           <c><xref target="RFC4566"></xref></c>
           <c>c=IN IP4 98.248.92.77</c>
           <c><xref target="RFC4566"></xref></c>
-          <c>a=rtcp:49203 IN IP4 98.248.92.77</c>
-          <c><xref target="RFC3605"></xref></c>
           <c>a=mid:audio</c>
           <c><xref target="RFC5888"></xref></c>
           <c>a=msid:ma ta </c>
@@ -3189,6 +3199,8 @@ Alice                                                 Bob
           <c><xref target="RFC4566"></xref></c>
           <c>a=group:BUNDLE audio video</c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
+          <c>a=group:LS audio video</c>
+          <c><xref target="RFC5888"></xref></c>
           <c>a=ice-options:trickle</c>
           <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** Audio m=line *********</c>
@@ -3197,8 +3209,6 @@ Alice                                                 Bob
           <c><xref target="RFC4566"></xref></c>
           <c>c=IN IP4 24.23.204.141</c>
           <c><xref target="RFC4566"></xref></c>
-          <c>a=rtcp:54609 IN IP4 24.23.204.141</c>
-          <c><xref target="RFC3605"></xref></c>
           <c>a=mid:audio</c>
           <c><xref target="RFC5888"></xref></c>
           <c>a=msid:ma ta </c>
@@ -3276,6 +3286,8 @@ Alice                                                 Bob
           <c><xref target="RFC4566"></xref></c>
           <c>a=group:BUNDLE audio video</c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref> </c>
+          <c>a=group:LS audio video</c>
+          <c><xref target="RFC5888"></xref></c>
           <c>a=ice-options:trickle</c>
           <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** Audio m=line *********</c>
@@ -3284,8 +3296,6 @@ Alice                                                 Bob
           <c><xref target="RFC4566"></xref></c>
           <c>c=IN IP4 98.248.92.77</c>
           <c><xref target="RFC4566"></xref></c>
-          <c>a=rtcp:49203 IN IP4 98.248.92.77</c>
-          <c><xref target="RFC3605"></xref></c>
           <c>a=mid:audio</c>
           <c><xref target="RFC5888"></xref></c>
           <c>a=msid:ma ta </c>
@@ -3419,6 +3429,8 @@ Alice                                            Bob
           <c>a=group:BUNDLE m0 m1 m2</c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref>
           Alice supports grouping of m=lines under BUNDLE semantics</c>
+          <c>a=group:LS m0 m1</c>
+          <c><xref target="RFC5888"></xref></c>
           <c>a=ice-options:trickle</c>
           <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** Audio m=line *********</c>
@@ -3427,8 +3439,6 @@ Alice                                            Bob
           <c><xref target="RFC4566"></xref></c>
           <c>c=IN IP4 24.23.204.141</c>
           <c><xref target="RFC4566"></xref></c>
-          <c>a=rtcp:54609 IN IP4 24.23.204.141</c>
-          <c><xref target="RFC3605"></xref></c>
           <c>a=mid:m0</c>
           <c><xref target="RFC5888"></xref></c>
           <c>a=msid:ma ta </c>
@@ -3454,6 +3464,8 @@ Alice                                            Bob
           <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
+          <c>a=rtcp:54609 IN IP4 24.23.204.141</c>
+          <c><xref target="RFC3605"></xref></c>
           <c>a=rtcp-rsize</c>
           <c><xref target="RFC5506"></xref></c>
           <c>a=rtcp-fb:109 nack</c>
@@ -3563,7 +3575,9 @@ Alice                                            Bob
           <c><xref target="RFC4566"></xref></c>
           <c>a=group:BUNDLE m0 m1 m2</c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref>
-          Alice supports grouping of m=lines under BUNDLE semantics</c>
+            Alice supports grouping of m=lines under BUNDLE semantics</c>
+          <c>a=group:LS m0 m1</c>
+          <c><xref target="RFC5888"></xref></c>
           <c>a=ice-options:trickle</c>
           <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** Audio m=line *********</c>
@@ -3572,8 +3586,6 @@ Alice                                            Bob
           <c><xref target="RFC4566"></xref></c>
           <c>c=IN IP4 98.248.92.77</c>
           <c><xref target="RFC4566"></xref></c>
-          <c>a=rtcp:49203 IN IP4 98.248.92.77</c>
-          <c><xref target="RFC3605"></xref></c>
           <c>a=mid:m0</c>
           <c><xref target="RFC5888"></xref></c>
           <c>a=msid:ma ta </c>
@@ -3744,6 +3756,8 @@ Alice                                            Bob
           <c>a=group:BUNDLE m0 m1 </c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref>
           Alice supports grouping of m=lines under BUNDLE semantics</c>
+          <c>a=group:LS m0 m1</c>
+          <c><xref target="RFC5888"></xref></c>
           <c>a=ice-options:trickle</c>
           <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** Audio m=line *********</c>
@@ -3752,8 +3766,6 @@ Alice                                            Bob
           <c><xref target="RFC4566"></xref></c>
           <c>c=IN IP4 24.23.204.141</c>
           <c><xref target="RFC4566"></xref></c>
-					<c>a=rtcp:54609 IN IP4 24.23.204.141</c>
-          <c><xref target="RFC3605"></xref></c>
 					<c>a=mid:m0</c>
           <c><xref target="RFC5888"></xref> Audio m=line part of BUNDLE group
             with a unique port number</c>
@@ -3780,6 +3792,8 @@ Alice                                            Bob
           <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
 					<c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
+          <c>a=rtcp:54609 IN IP4 24.23.204.141</c>
+          <c><xref target="RFC3605"></xref></c>
 					<c>a=rtcp-rsize</c>
           <c><xref target="RFC5506"></xref></c>
 					<c>a=rtcp-fb:109 nack</c>
@@ -3849,6 +3863,8 @@ Alice                                            Bob
           <c><xref target="RFC4566"></xref></c>
           <c>a=group:BUNDLE m0 m1 </c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
+          <c>a=group:LS m0 m1</c>
+          <c><xref target="RFC5888"></xref></c>
           <c>a=ice-options:trickle</c>
           <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** Audio m=line *********</c>
@@ -3857,8 +3873,6 @@ Alice                                            Bob
           <c><xref target="RFC4566"></xref></c>
           <c>c=IN IP4 98.248.92.77</c>
           <c><xref target="RFC4566"></xref></c>
-					<c>a=rtcp:49203 IN IP4 98.248.92.77</c>
-					<c><xref target="RFC3605"></xref></c>
 					<c>a=mid:m0</c>
           <c><xref target="RFC5888"></xref></c>
 					<c>a=msid:ma ta </c>
@@ -3986,6 +4000,8 @@ Alice                                                    Bob
           <c>a=group:BUNDLE m0 m1 </c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref>
           Alice supports grouping of m=lines under BUNDLE semantics</c>
+          <c>a=group:LS m0 m1</c>
+          <c><xref target="RFC5888"></xref></c>
           <c>a=ice-options:trickle</c>
           <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** Audio m=line *********</c>
@@ -3994,8 +4010,6 @@ Alice                                                    Bob
           <c><xref target="RFC4566"></xref></c>
           <c>c=IN IP4 24.23.204.141</c>
           <c><xref target="RFC4566"></xref></c>
-					<c>a=rtcp:54609 IN IP4 24.23.204.141</c>
-					<c><xref target="RFC3605"></xref></c>
 					<c>a=mid:m0</c>
 					<c><xref target="RFC5888"></xref> Audio m=line part of BUNDLE group
 					 with a unique port number</c>
@@ -4022,6 +4036,8 @@ Alice                                                    Bob
           <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
+          <c>a=rtcp:54609 IN IP4 24.23.204.141</c>
+          <c><xref target="RFC3605"></xref></c>
 					<c>a=rtcp-rsize</c>
           <c><xref target="RFC5506"></xref></c>
 					<c>a=rtcp-fb:109 nack</c>
@@ -4093,6 +4109,8 @@ Alice                                                    Bob
           <c>a=group:BUNDLE m0 m1 </c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref>
           Bob supports grouping of m=lines under BUNDLE semantics</c>
+          <c>a=group:LS m0 m1</c>
+          <c><xref target="RFC5888"></xref></c>
           <c>a=ice-options:trickle</c>
           <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** Audio m=line *********</c>
@@ -4101,8 +4119,6 @@ Alice                                                    Bob
           <c><xref target="RFC4566"></xref></c>
           <c>c=IN IP4 98.248.92.77</c>
           <c><xref target="RFC4566"></xref></c>
-					<c>a=rtcp:49203 IN IP4 98.248.92.77</c>
-					<c><xref target="RFC3605"></xref></c>
 					<c>a=mid:m0</c>
 					<c><xref target="RFC5888"></xref></c>
 					<c>a=msid:ma ta </c>
@@ -4239,6 +4255,8 @@ Alice                                                    Bob
           <c>a=group:BUNDLE m0 m1 </c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref>
           Alice supports grouping of m=lines under BUNDLE semantics</c>
+          <c>a=group:LS m0 m1</c>
+          <c><xref target="RFC5888"></xref></c>
           <c>a=ice-options:trickle</c>
           <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** Audio m=line *********</c>
@@ -4247,8 +4265,6 @@ Alice                                                    Bob
           <c><xref target="RFC4566"></xref></c>
           <c>c=IN IP4 24.23.204.141</c>
           <c><xref target="RFC4566"></xref></c>
-					<c>a=rtcp:54609 IN IP4 24.23.204.141</c>
-					<c><xref target="RFC3605"></xref></c>
 					<c>a=mid:m0</c>
           <c><xref target="RFC5888"></xref></c>
 					<c>a=msid:ma ta </c>
@@ -4274,6 +4290,8 @@ Alice                                                    Bob
           <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
 					<c>a=rtcp-mux</c>
 					<c><xref target="RFC5761"></xref></c>
+          <c>a=rtcp:54609 IN IP4 24.23.204.141</c>
+          <c><xref target="RFC3605"></xref></c>
 					<c>a=rtcp-rsize</c>
 					<c><xref target="RFC5506"></xref></c>
 					<c>a=rtcp-fb:109 nack</c>
@@ -4352,6 +4370,8 @@ Alice                                                    Bob
           <c>a=group:BUNDLE m0 m1 </c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref>
           Bob supports grouping of m=lines under BUNDLE semantics</c>
+          <c>a=group:LS m0 m1</c>
+          <c><xref target="RFC5888"></xref></c>
           <c>a=ice-options:trickle</c>
           <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** Audio m=line *********</c>
@@ -4360,8 +4380,6 @@ Alice                                                    Bob
           <c><xref target="RFC4566"></xref></c>
           <c>c=IN IP4 98.248.92.77</c>
           <c><xref target="RFC4566"></xref></c>
-					<c>a=rtcp:49203 IN IP4 98.248.92.77</c>
-					<c><xref target="RFC3605"></xref></c>
 					<c>a=mid:m0</c>
           <c><xref target="RFC5888"></xref></c>
 					<c>a=msid:ma ta </c>
@@ -4485,6 +4503,8 @@ Alice                                                            Bob
           <c>a=group:BUNDLE m0 m1 </c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref>
            Alice supports grouping of m=lines under BUNDLE semantics</c>
+           <c>a=group:LS m0 m1</c>
+          <c><xref target="RFC5888"></xref></c>
           <c>a=ice-options:trickle</c>
           <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** Audio m=line *********</c>
@@ -4493,8 +4513,6 @@ Alice                                                            Bob
           <c><xref target="RFC4566"></xref></c>
           <c>c=IN IP4 24.23.204.141</c>
           <c><xref target="RFC4566"></xref></c>
-					<c>a=rtcp:54609 IN IP4 24.23.204.141</c>
-					<c><xref target="RFC3605"></xref></c>
 					<c>a=mid:m0</c>
 					<c><xref target="RFC5888"></xref></c>
 					<c>a=msid:ma ta </c>
@@ -4517,9 +4535,10 @@ Alice                                                            Bob
           <c>a=setup:actpass</c>
           <c><xref target="RFC4145"></xref></c>
           <c>a=rtcp-mux</c>
+          <c><xref target="RFC5761"></xref></c>
+          <c>a=rtcp:54609 IN IP4 24.23.204.141</c>
           <c>a=dtls-id:1</c>
           <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
-          <c><xref target="RFC5761"></xref></c>
 					<c>a=rtcp-rsize</c>
 					<c><xref target="RFC5506"></xref></c>
 					<c>a=rtcp-fb:109 nack</c>
@@ -4596,6 +4615,8 @@ Alice                                                            Bob
           <c><xref target="RFC4566"></xref></c>
           <c>a=group:BUNDLE m0 m1 </c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/></c>
+          <c>a=group:LS m0 m1</c>
+          <c><xref target="RFC5888"></xref></c>
           <c>a=ice-options:trickle</c>
           <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** Audio m=line *********</c>
@@ -4604,8 +4625,6 @@ Alice                                                            Bob
           <c><xref target="RFC4566"></xref></c>
           <c>c=IN IP4 98.248.92.77</c>
           <c><xref target="RFC4566"></xref></c>
-					<c>a=rtcp:49203 IN IP4 98.248.92.77</c>
-					<c><xref target="RFC3605"></xref></c>
 					<c>a=mid:m0</c>
 					<c><xref target="RFC5888"></xref> Audio m=line part of BUNDLE group
 					with a unique port number</c>
@@ -4756,8 +4775,6 @@ Alice                                                            Bob
           <c><xref target="RFC4566"></xref></c>
           <c>c=IN IP4 24.23.204.141</c>
 					<c><xref target="RFC4566"></xref></c>
-					<c>a=rtcp:54609 IN IP4 24.23.204.141</c>
-					<c><xref target="RFC3605"></xref></c>
 					<c>a=mid:audio</c>
           <c><xref target="RFC5888"></xref></c>
           <c>a=msid:ma ta </c>
@@ -4787,6 +4804,8 @@ Alice                                                            Bob
           <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
+          <c>a=rtcp:54609 IN IP4 24.23.204.141</c>
+          <c><xref target="RFC3605"></xref></c>
 					<c>a=rtcp-rsize</c>
 					<c><xref target="RFC5506"></xref></c>
 					<c>a=rtcp-fb:* nack</c>
@@ -4825,8 +4844,6 @@ Alice                                                            Bob
           <c><xref target="RFC4566"></xref></c>
           <c>c=IN IP4 98.248.92.77</c>
           <c><xref target="RFC4566"></xref></c>
-					<c>a=rtcp:49203 IN IP4 98.248.92.77</c>
-					<c><xref target="RFC3605"></xref></c>
 					<c>a=mid:audio</c>
           <c><xref target="RFC5888"></xref></c>
           <c>a=msid:ma ta </c>
@@ -4932,8 +4949,6 @@ Alice                                    Mixer
           <c><xref target="RFC4566"></xref></c>
           <c>c=IN IP4 24.23.204.141</c>
           <c><xref target="RFC4566"></xref></c>
-					<c>a=rtcp:54609 IN IP4 24.23.204.141</c>
-					<c><xref target="RFC3605"></xref></c>
 					<c>a=mid:audio</c>
           <c><xref target="RFC5888"></xref></c>
           <c>a=msid:ma ta </c>
@@ -4963,6 +4978,8 @@ Alice                                    Mixer
           <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref> </c>
+          <c>a=rtcp:54609 IN IP4 24.23.204.141</c>
+          <c><xref target="RFC3605"></xref></c>
 					<c>a=rtcp-rsize</c>
           <c><xref target="RFC5506"></xref></c>
 					<c>a=rtcp-fb:* nack</c>
@@ -5003,9 +5020,7 @@ Alice                                    Mixer
           <c><xref target="RFC4566"></xref></c>
           <c>c=IN IP4 98.248.92.77</c>
           <c><xref target="RFC4566"></xref></c>
-					<c>a=rtcp:49203 IN IP4 98.248.92.77</c>
-          <c><xref target="RFC3605"></xref></c>
-          <c>a=mid:audio</c>
+					<c>a=mid:audio</c>
           <c><xref target="RFC5888"></xref></c>
           <c>a=msid:ma ta </c>
           <c> Identifies RTCMediaStream ID (ma) and RTCMediaStreamTrack ID (ta) </c>
@@ -5120,6 +5135,8 @@ Alice                                                       Bob
           <c>a=group:BUNDLE m0 m1 m2</c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref>
           Alice supports grouping of m=lines under BUNDLE semantics</c>
+          <c>a=group:LS m0 m1</c>
+          <c><xref target="RFC5888"></xref></c>
           <c>a=ice-options:trickle</c>
           <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** Audio m=line *********</c>
@@ -5128,8 +5145,6 @@ Alice                                                       Bob
           <c><xref target="RFC4566"></xref></c>
           <c>c=IN IP4 24.23.204.141</c>
           <c><xref target="RFC4566"></xref></c>
-          <c>a=rtcp:64678 IN IP4 24.23.204.141</c>
-          <c><xref target="RFC3605"></xref></c>
           <c>a=mid:m0</c>
           <c><xref target="RFC5888"></xref> Audio m=line part of BUNDLE group
           with a unique port number</c>
@@ -5158,6 +5173,8 @@ Alice                                                       Bob
           <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
+          <c>a=rtcp:64678 IN IP4 24.23.204.141</c>
+          <c><xref target="RFC3605"></xref></c>
 					<c>a=rtcp-rsize</c>
           <c><xref target="RFC5506"></xref></c>
 					<c>a=extmap:1 urn:ietf:params:rtp-hdrext:ssrc-audio-level</c>
@@ -5510,9 +5527,22 @@ Alice                                                          Bob
     </section>
     <section title="Change Log">
       <t>[RFC EDITOR NOTE: Please remove this section when publishing]</t>
+      <t>Changes from draft-ietf-rtcweb-sdp-02 to draft-ietf-rtcweb-sdp-04
+          <list style="symbols">
+              <t> Alignment with JSEP-19.</t>
+              <t> Added a=identity example.</t>
+              <t> Added a=dtls-id, a=group:LS in the examples.</t>
+              <t> Added Appendix section to capture list of checklists for 
+                  the attributes.</t>
+              <t> Removed SSRC lines to match JSEP-19.</t>
+              <t> Closed open issues on a=fingerprint, a=rtcp and a=rtcp-mux-only
+                  from ietf96 to reflect JSEP-19.</t>    
+              <t> Simplied Inter-op example</t>
+         </list>
+      </t>
       <t>Changes from draft-ietf-rtcweb-sdp-02
           <list style="symbols">
-	   <t> Version increment to avoid expiry</t>
+	           <t> Version increment to avoid expiry</t>
          </list>
       </t>
       <t>Changes from draft-ietf-rtcweb-sdp-01
@@ -5667,7 +5697,7 @@ Alice                                                          Bob
         <section title="JSEP SDP Attributes Checklist">
           <t>This section compiles a high-level checklist of required SDP attributes to be verified against
           the examples defined in this specification. The goal here is to ensure that the examples are compliant
-          to the rules defined in sections 5 of the <xref target="I-D.ietf-rtcweb-jsep"></xref> specification.</t>
+          to the rules defined in section 5 of the <xref target="I-D.ietf-rtcweb-jsep"></xref> specification.</t>
           <section title="Common Checklist">
             <t>
               This subsection lists SDP attributes that mostly apply at the session level.
@@ -5678,6 +5708,8 @@ Alice                                                          Bob
                 <t>o= line MUST have the session version incremented in the cases of subsequent offers. </t>
                 <t>s= MUST be the third line with value '-'.</t>
                 <t>t= line follow with values for 'start-time' and 'stop-time' set to zeroes.</t>
+                <t>a=identity line MUST be included at the session level if WEBRTC Identity is being used. </t>
+                <t>a=ice-options:trickle MUST be present at the session level in all offers and answers when supported.</t>
               </list> 
             </t>
           </section>  
@@ -5693,24 +5725,22 @@ Alice                                                          Bob
                 <t>c= line MUST be the first line in a media description. A dummy value of 'IN IP 0.0.0.0' 
                   is set if there are no candidates gathered or its value MUST match the default 
                   candidate.</t>
-                <t>a=group:BUNDLE line with all the 'mid' identifiers part of BUNDLE is included.</t>
-                <t>a=ice-options:trickle is included at session level in all offers and answers when supported.</t>
-                <t>a=identity line MUST be included if WEBRTC Identity is used. </t>
                 <t>a=mid attribute MUST be in included in every media description and MUST be unique across all 
                 the media descritpions.</t>
                 <t>One of a=sendrecv/a=sendonly/a=recvonly/a=inactive SDP direction attrbutes MUST be present.</t>
                 <t>a=rtpmap and a=fmtp attributes per primary, retransmission and forward error correction 
                   media format MUST be included.</t>
                 <t>a=rtcp-fb lines for each supported feedback machanism MUST be included when using RTP with feedback </t>
-                <t>a=imagaattr can be optionally present for video media descriptions.</t>
-                <t>a=msid line MUST be incldued for all the media senders identifying the MediaStreamTrack 
-                  (i.e when a=sendonly/a=sendrecv is present).</t>
+                <t>a=imageattr can be optionally present for video media descriptions.</t>
+                <t>a=msid line MUST be included for all the media senders identifying the MediaStreamTrack 
+                  (i.e when a=sendonly/a=sendrecv attribute is present).</t>
                 <t>a=extmap line identifying the BUNDLE header extension MUST be present.</t>
                 <t>a=extmap lines for other supported RTP header extensions MUST be included. </t>
                 <t>a=rid line 'per encoding' with the direction of 'send' MUST be included when multiple encoding 
                   restrictions are specified per payload type.</t>
                 <t>a=simulcast line MUST be present if there exists more than one 'a=rid' lines for the media senders. </t>
-                <t>a=bundle-only MUST be present for media descriptions are impacted by various bundle policies. </t> 
+                <t>a=bundle-only attribute MUST be present for media descriptions that are impacted by various 
+                  bundle policies (such as max-bundle/balanced) </t> 
                 <t>For media descriptions that aren't "a=bundle-only" and that have unique address, following attributes
                   MUST be present:
                   <list style="symbols">
@@ -5724,8 +5754,9 @@ Alice                                                          Bob
                     <t>a=rtcp-rsize</t>
                   </list>
                 </t>
+                <t>a=group:BUNDLE line with all the 'mid' identifiers part of BUNDLE is included at the session level.</t>
                 <t>a=group:LS session level attribute MUST be included wth 'mid' identifiers that are part of the lip 
-                  sync group.</t>  
+                  same sync group.</t>  
             </list>
             </t>
           </section>
