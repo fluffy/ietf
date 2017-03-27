@@ -931,7 +931,7 @@ Alice                            Bob
           <c>*****************************</c>
           <c>m=application 49203 UDP/DTLS/SCTP webrtc-datachannel</c>
           <c><xref target="I-D.ietf-mmusic-sctp-sdp"></xref> </c>
-          <c>c=IN IP4 98.248.92.771</c>
+          <c>c=IN IP4 98.248.92.77</c>
           <c><xref target="RFC4566"></xref></c>
           <c>a=mid:data</c>
           <c><xref target="RFC5888"></xref></c>
@@ -2252,7 +2252,7 @@ Alice                                       Bob
           <c>*****************************</c>
           <c>m=application 49203 UDP/DTLS/SCTP webrtc-datachannel</c>
           <c><xref target="I-D.ietf-mmusic-sctp-sdp"></xref> </c>
-          <c>c=IN IP4 98.248.92.771</c>
+          <c>c=IN IP4 98.248.92.77</c>
           <c><xref target="RFC4566"></xref></c>
           <c>a=mid:data</c>
           <c><xref target="RFC5888"></xref></c>
@@ -2429,7 +2429,7 @@ Alice->Bob: Two-way Opus Audio and VP8 Video
           <c><xref target="RFC4566"></xref> </c>
           <c>a=msid:ma tb </c>
           <c> Identifies RTCMediaStream ID (ma) and RTCMediaStreamTrack ID (tb) </c>
-          <c>c=IN IP4 98.248.92.771</c>
+          <c>c=IN IP4 <t>a=ice-options:trickle is included at session level in all offers and answers when supported.</t></c>
           <c><xref target="RFC4566"></xref></c>
           <c>a=rtpmap:99 H264/90000</c>
           <c><xref target="RFC3984"></xref></c>
@@ -2966,7 +2966,7 @@ Alice                                                 Bob
           <c>*****************************</c>
           <c>m=video 49203 UDP/TLS/RTP/SAVPF 120</c>
           <c><xref target="RFC4566"></xref> </c>
-          <c>c=IN IP4 98.248.92.771</c>
+          <c>c=IN IP4 98.248.92.77</c>
           <c><xref target="RFC4566"></xref></c>
           <c>a=mid:video</c>
           <c><xref target="RFC5888"></xref></c>
@@ -3189,7 +3189,7 @@ Alice                                                 Bob
         <texttable anchor="table_a_only_3" title="5.2.11 SDP Updated Offer">
           <ttcol align='left'>Updated Offer SDP Contents </ttcol>
           <ttcol align='left'>RFC#/Notes</ttcol>
-          <c>v=1</c>
+          <c>v=0</c>
           <c><xref target="RFC4566"> Version number incremented</xref></c>
           <c>o=- 20518 1 IN IP4 0.0.0.0</c>
           <c><xref target="RFC4566"></xref> </c>
@@ -3276,7 +3276,7 @@ Alice                                                 Bob
         <texttable anchor="table_a_only_4" title="5.2.11 SDP Updated Answer">
           <ttcol align='left'>Updated Answer SDP Contents </ttcol>
           <ttcol align='left'>RFC#/Notes</ttcol>
-          <c>v=1</c>
+          <c>v=0</c>
           <c><xref target="RFC4566"></xref> Version number incremented</c>
           <c>o=-  16833 1 IN IP4 0.0.0.0</c>
           <c><xref target="RFC4566"></xref> - Session Origin Information</c>
@@ -3608,9 +3608,9 @@ Alice                                            Bob
 					</c>
 					<c><xref target="RFC5245"></xref></c>
 					<c>a=setup:active</c>
+          <c><xref target="RFC4145"></xref> </c>
           <c>a=dtls-id:1</c>
           <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
-          <c><xref target="RFC4145"></xref> </c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
 					<c>a=rtcp-rsize</c>
@@ -3893,9 +3893,9 @@ Alice                                            Bob
           </c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=setup:active</c>
+          <c><xref target="RFC4145"></xref></c>
           <c>a=dtls-id:1</c>
           <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
-          <c><xref target="RFC4145"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
 					<c>a=rtcp-rsize</c>
@@ -4537,11 +4537,12 @@ Alice                                                            Bob
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
           <c>a=rtcp:54609 IN IP4 24.23.204.141</c>
+          <c><xref target="RFC3605"></xref></c>
           <c>a=dtls-id:1</c>
           <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
 					<c>a=rtcp-rsize</c>
 					<c><xref target="RFC5506"></xref></c>
-					<c>a=rtcp-fb:109 nack</c>
+          <c>a=rtcp-fb:109 nack</c>
           <c><xref target="RFC5104"></xref> </c>
 					<c>a=extmap:1 urn:ietf:params:rtp-hdrext:ssrc-audio-level</c>
           <c><xref target="RFC6464"></xref></c>
@@ -5211,13 +5212,7 @@ Alice                                                       Bob
           <c><xref target="RFC6236"></xref></c>
           <c>a=fmtp:98 max-fr=30</c>
           <c><xref target="RFC4566"></xref></c>
-					<c>a=setup:actpass</c>
-          <c><xref target="RFC4145"></xref></c>
-          <c>a=rtcp-mux</c>
-          <c><xref target="RFC5761"></xref></c>
-          <c>a=rtcp-rsize</c>
-          <c><xref target="RFC5506"></xref></c>
-          <c>a=rtcp-fb:* nack</c>
+					<c>a=rtcp-fb:* nack</c>
           <c><xref target="RFC5104"></xref></c>
           <c>a=rtcp-fb:* nack pli</c>
           <c><xref target="RFC5104"></xref></c>
@@ -5245,11 +5240,7 @@ Alice                                                       Bob
           <c><xref target="RFC3984"></xref></c>
           <c>a=fmtp:101 profile-level-id=4d0028;packetization-mode=1;max-fr=30 </c>
           <c><xref target="RFC3984"></xref>Camera-2,Encoding-1 Resolution</c>
-					<c>a=rtcp-mux</c>
-          <c><xref target="RFC5761"></xref></c>
-          <c>a=rtcp-rsize</c>
-          <c><xref target="RFC5506"></xref></c>
-          <c>a=rtcp-fb:* nack</c>
+					<c>a=rtcp-fb:* nack</c>
           <c><xref target="RFC5104"></xref></c>
           <c>a=rtcp-fb:* nack pli</c>
           <c><xref target="RFC5104"></xref></c>
@@ -5326,11 +5317,7 @@ Alice                                                       Bob
       </section>
        <section anchor="sec-2way-webrtc-voip"
         title="Legacy Interop with RTP/AVP profile">
-				<t>
-     	  In this section, we attempt to provide session descriptions showcasing 
-         inter-operability between a WebRTC end-point and a Legacy VOIP end-point. 
-        </t>
-        <t>
+			  <t>
           In the scenario desribed below, Alice is a legacy end-point which sends
           <xref target="RFC3264"/> Offer with RTP/AVP based audio and video 
           descriptions along with DTLS fingerprint and RTCP feedback information.
@@ -5464,15 +5451,6 @@ Alice                                                          Bob
           <c><xref target="RFC4566"></xref></c>
           <c>t=0 0</c>
           <c><xref target="RFC4566"></xref></c>
-          <c>a=ice-ufrag:c300d85b</c>
-          <c><xref target="RFC5245"></xref></c>
-          <c>a=ice-pwd:de4e99bd291c325921d5d47efbabd9a2</c>
-          <c><xref target="RFC5245"></xref></c>
-          <c>a=fingerprint:sha-256
-             BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
-             :19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04
-          </c>
-          <c><xref target="RFC5245"></xref></c>
           <c>****** Audio m=line *********</c>
           <c>*****************************</c>
           <c>m=audio 49203 RTP/AVP 109</c>
@@ -5485,6 +5463,17 @@ Alice                                                          Bob
           <c><!--<xref target="draft-spittka-payload-rtp-opus"></xref>--></c>
           <c>a=sendrecv</c>
           <c><xref target="RFC3264"></xref></c>
+          <c>a=ice-ufrag:c300d85b</c>
+          <c><xref target="RFC5245"></xref></c>
+          <c>a=ice-pwd:de4e99bd291c325921d5d47efbabd9a2</c>
+          <c><xref target="RFC5245"></xref></c>
+          <c>a=fingerprint:sha-256
+             BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
+             :19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04
+          </c>
+          <c><xref target="RFC5245"></xref></c>
+          <c>a=rtcp-mux</c>
+          <c><xref target="RFC5761"></xref></c>
           <c>a=candidate:0 1 UDP 2113667327 192.168.1.7 49203 typ host</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=candidate:1 1 UDP 1694302207 98.248.92.77 49203 typ srflx raddr 192.168.1.7 rport 49203</c>
@@ -5493,16 +5482,29 @@ Alice                                                          Bob
           <c><xref target="RFC5245"></xref></c>
           <c>a=candidate:1 2 UDP 1694302206 98.248.92.77 60065 typ srflx raddr 192.168.1.7 rport 60065</c>
           <c><xref target="RFC5245"></xref></c>
+          <c>a=rtcp-fb:109 nack</c>
+          <c><xref target="RFC5104"></xref></c>
           <c>****** Video m=line *********</c>
           <c>*****************************</c>
           <c>m=video  63130 RTP/SAVP 120</c>
           <c><xref target="RFC4566"></xref> Bob accepts RTP/AVP based video stram </c>
-          <c>c=IN IP4 98.248.92.771</c>
+          <c>c=IN IP4 98.248.92.77</c>
           <c><xref target="RFC4566"></xref></c>
           <c>a=rtpmap:120 VP8/90000</c>
           <c><xref target="I-D.ietf-payload-vp8"></xref></c>
           <c>a=sendrecv</c>
           <c><xref target="RFC3264"></xref></c>
+          <c>a=ice-ufrag:e39091na</c>
+          <c><xref target="RFC5245"></xref></c>
+          <c>a=ice-pwd:dbc325921d5dd29e4e99147efbabd9a2</c>
+          <c><xref target="RFC5245"></xref></c>
+          <c>a=fingerprint:sha-256
+             BB:0A9:0E:05:E9:26:33:E8:70:88:A25:2F:70:9F:04:
+             :19:E2:1C:3B:4B:9F:81:5:2F:70:9F:04::F4:A5:A8:D8:
+          </c>
+          <c><xref target="RFC5245"></xref></c>
+          <c>a=rtcp-mux</c>
+          <c><xref target="RFC5761"></xref></c>
           <c>a=candidate:0 1 UDP 2113667327 192.168.1.7 63130 typ host</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=candidate:1 1 UDP 1694302207 98.248.92.77 63130 typ srflx raddr 192.168.1.7 rport 63130</c>
@@ -5511,6 +5513,10 @@ Alice                                                          Bob
           <c><xref target="RFC5245"></xref></c>
           <c>a=candidate:1 2 UDP 1694302206 98.248.92.77 56607 typ srflx raddr 192.168.1.7 rport 56607</c>
           <c><xref target="RFC5245"></xref></c>
+          <c>a=rtcp-fb:120 nack pli</c>
+          <c><xref target="RFC5104"></xref></c>
+          <c>a=rtcp-fb:120 ccm fir</c>
+          <c><xref target="RFC5104"></xref></c>
         </texttable>
         <t><vspace blankLines='1'></vspace></t>
       </section>
@@ -5704,10 +5710,10 @@ Alice                                                          Bob
               <list style="symbols">
                 <t>v=0 MUST be the first SDP line</t>
                 <t>o= line MUST follow with values '-' for username, 64 bit value for session id and 
-                  dummy values for 'netype', 'addrtype' and 'unicast-address' (such as IN IP4 0.0.0.0)</t>
+                  dummy values for 'nettype', 'addrtype' and 'unicast-address' (such as IN IP4 0.0.0.0)</t>
                 <t>o= line MUST have the session version incremented in the cases of subsequent offers. </t>
                 <t>s= MUST be the third line with value '-'.</t>
-                <t>t= line follow with values for 'start-time' and 'stop-time' set to zeroes.</t>
+                <t>t= line MUST follow with values for 'start-time' and 'stop-time' set to zeroes.</t>
                 <t>a=identity line MUST be included at the session level if WEBRTC Identity is being used. </t>
                 <t>a=ice-options:trickle MUST be present at the session level in all offers and answers when supported.</t>
               </list> 
@@ -5717,27 +5723,26 @@ Alice                                                          Bob
             <t>
               Following set of checklist items apply to RTP audio and video media descriptions.
               <list style="symbols">  
-                <t>The media description's port value MUST either by set to dummy value of '9' or MUST use the
+                <t>The media description's port value MUST either be set to dummy value of '9' or MUST use the
                 port from the default candidate, if available.</t>
                 <t>The media description's proto value MUST be 'UDP/TLS/RTP/SAVPF' for JSEP offers.</t>
                 <t>JSEP answerer MUST support any combination of RTP/[S]AVP[F] for interoperability
-                  scenarios as long as the media description includes a=fingerprint attribute.</t>
+                  scenarios as defined in section 5 of <xref target="I-D.ietf-rtcweb-jsep"/></t>
                 <t>c= line MUST be the first line in a media description. A dummy value of 'IN IP 0.0.0.0' 
                   is set if there are no candidates gathered or its value MUST match the default 
                   candidate.</t>
-                <t>a=mid attribute MUST be in included in every media description and MUST be unique across all 
-                the media descritpions.</t>
-                <t>One of a=sendrecv/a=sendonly/a=recvonly/a=inactive SDP direction attrbutes MUST be present.</t>
+                <t>a=mid attribute MUST be in included.</t>
+                <t>One of a=sendrecv/a=sendonly/a=recvonly/a=inactive SDP direction attributes MUST be present.</t>
                 <t>a=rtpmap and a=fmtp attributes per primary, retransmission and forward error correction 
                   media format MUST be included.</t>
-                <t>a=rtcp-fb lines for each supported feedback machanism MUST be included when using RTP with feedback </t>
+                <t>a=rtcp-fb lines for each supported feedback mechanism MUST be included when using RTP with feedback </t>
                 <t>a=imageattr can be optionally present for video media descriptions.</t>
                 <t>a=msid line MUST be included for all the media senders identifying the MediaStreamTrack 
                   (i.e when a=sendonly/a=sendrecv attribute is present).</t>
                 <t>a=extmap line identifying the BUNDLE header extension MUST be present.</t>
                 <t>a=extmap lines for other supported RTP header extensions MUST be included. </t>
-                <t>a=rid line 'per encoding' with the direction of 'send' MUST be included when multiple encoding 
-                  restrictions are specified per payload type.</t>
+                <t>a=rid line 'per encoding' with the direction of 'send' MUST be included when further
+                  constraining the media format or multiple encodings per media format is needed.</t>
                 <t>a=simulcast line MUST be present if there exists more than one 'a=rid' lines for the media senders. </t>
                 <t>a=bundle-only attribute MUST be present for media descriptions that are impacted by various 
                   bundle policies (such as max-bundle/balanced) </t> 
@@ -5761,7 +5766,7 @@ Alice                                                          Bob
             </t>
           </section>
           <section title="DataChannel Media Description checklist">
-            <t> If a datachannel is required, an 'application' type media descritpion MUST be included with
+            <t> If a datachannel is required, an 'application' type media description MUST be included with
             the following properties:
             <list style="symbols">
               <t>Media description's proto value MUST be 'UDP/DTLS/SCTP' in the JSEP offers.</t>
