@@ -381,6 +381,8 @@
 				candidate foundations, WebRTC Mediastream and MediaStreamTrack
 				Ids shall be much larger and/or random than the ones shown
 				in the examples.</t>
+        <t>SDP attributes in the examples closely follow the 
+        checklist defined in section <xref target="checklist"/>.</t>
        </list>
       </t>
       </section>
@@ -5927,21 +5929,20 @@ Alice                                                       Bob
       </reference>
       </references>
       <section title="Appendix" toc="default">
-        <section title="JSEP SDP Attributes Checklist">
-          <t>This section compiles a high-level checklist of required SDP attributes to be verified against
+        <section title="JSEP SDP Attributes Checklist" anchor="checklist">
+          <t>This section compiles a high-level checklist of the required SDP attributes to be verified against
           the examples defined in this specification. The goal here is to ensure that the examples are compliant
           to the rules defined in section 5 of the <xref target="I-D.ietf-rtcweb-jsep"></xref> specification.</t>
           <section title="Common Checklist">
             <t>
               This subsection lists SDP attributes that mostly apply at the session level.
               <list style="symbols">
-                <t>v=0 MUST be the first SDP line</t>
-                <t>o= line MUST follow with values '-' for username, 64 bit value for session id and 
-                  dummy values for 'nettype', 'addrtype' and 'unicast-address' (such as IN IP4 0.0.0.0)</t>
+                <t>v=0 MUST be the first SDP line.</t>
+                <t>o= line MUST follow with values '-' for username, 64 bit value for session id and dummy values for 'nettype', 'addrtype' and 'unicast-address' (for example: IN IP4 0.0.0.0).</t>
                 <t>o= line MUST have the session version incremented in the cases of subsequent offers. </t>
-                <t>s= MUST be the third line with value '-'.</t>
-                <t>t= line MUST follow with values for 'start-time' and 'stop-time' set to zeroes.</t>
-                <t>a=identity line MUST be included at the session level if WEBRTC Identity is being used. </t>
+                <t>s= MUST be the third line with the value of '-'.</t>
+                <t>t= line MUST follow with the values for 'start-time' and 'stop-time' set to zeroes.</t>
+                <t>a=identity line MUST be included at the session level if WEBRTC Identity mechanism is being used. </t>
                 <t>a=ice-options:trickle MUST be present at the session level in all offers and answers when supported.</t>
               </list> 
             </t>
@@ -5953,28 +5954,20 @@ Alice                                                       Bob
                 <t>The media description's port value MUST either be set to dummy value of '9' or MUST use the
                 port from the default candidate, if available.</t>
                 <t>The media description's proto value MUST be 'UDP/TLS/RTP/SAVPF' for JSEP offers.</t>
-                <t>JSEP answerer MUST support any combination of "RTP/[S]AVP[F]" for interoperability
-                  scenarios as defined in section 5 of <xref target="I-D.ietf-rtcweb-jsep"/></t>
-                <t>c= line MUST be the first line in a media description. A dummy value of 'IN IP 0.0.0.0' 
-                  is set if there are no candidates gathered or its value MUST match the default 
-                  candidate.</t>
+                <t>JSEP answerer MUST support any combination of "RTP/[S]AVP[F]" for interoperability scenarios as defined in section 5 of <xref target="I-D.ietf-rtcweb-jsep"/></t>
+                <t>c= line MUST be the first line in a media description. A dummy value of 'IN IP 0.0.0.0' is set if there are no candidates gathered or its value MUST match the default candidate.</t>
                 <t>a=mid attribute MUST be in included.</t>
                 <t>One of a=sendrecv/a=sendonly/a=recvonly/a=inactive SDP direction attributes MUST be present.</t>
-                <t>a=rtpmap and a=fmtp attributes per primary, retransmission and forward error correction 
-                  media format MUST be included.</t>
+                <t>a=rtpmap and a=fmtp attributes per primary, retransmission and forward error correction media format MUST be included.</t>
                 <t>a=rtcp-fb lines for each supported feedback mechanism MUST be included when using RTP with feedback </t>
                 <t>a=imageattr can be optionally present for video media descriptions.</t>
-                <t>a=msid line MUST be included for all the media senders identifying the MediaStreamTrack 
-                  (i.e when a=sendonly/a=sendrecv attribute is present).</t>
+                <t>a=msid line MUST be included for all the media senders identifying the MediaStreamTrack (i.e when a=sendonly/a=sendrecv attribute is present).</t>
                 <t>a=extmap line identifying the BUNDLE header extension MUST be present.</t>
                 <t>a=extmap lines for other supported RTP header extensions MUST be included. </t>
-                <t>a=rid line 'per encoding' with the direction of 'send' MUST be included when further
-                  constraining the media format or multiple encodings per media format is needed.</t>
+                <t>a=rid line 'per encoding' with the direction of 'send' MUST be included when further constraining the media format or multiple encodings per media format is needed.</t>
                 <t>a=simulcast line MUST be present if there exists more than one 'a=rid' lines for the media senders. </t>
-                <t>a=bundle-only attribute MUST be present for media descriptions that are impacted by various 
-                  bundle policies (such as max-bundle/balanced) </t> 
-                <t>For media descriptions that aren't "a=bundle-only" and that have unique address, following attributes
-                  MUST be present:
+                <t>a=bundle-only attribute MUST be present for media descriptions that are impacted by various bundle policies (such as max-bundle/balanced) </t> 
+                <t>For media descriptions that aren't "a=bundle-only" and that have unique address, following attributes MUST be present:
                   <list style="symbols">
                     <t>a=ice-ufrag and a=ice-pwd</t>
                     <t>a=fingerprint</t>
@@ -5986,19 +5979,16 @@ Alice                                                       Bob
                     <t>a=rtcp-rsize</t>
                   </list>
                 </t>
-                <t>a=group:BUNDLE line with all the 'mid' identifiers part of BUNDLE is included at the session level.</t>
-                <t>a=group:LS session level attribute MUST be included wth 'mid' identifiers that are part of the lip 
-                  same sync group.</t>  
+                <t>a=group:BUNDLE line with all the 'mid' identifiers part of the BUNDLE group is included at the session level.</t>
+                <t>a=group:LS session level attribute MUST be included wth the 'mid' identifiers that are part of the lip same sync group.</t>  
             </list>
             </t>
           </section>
           <section title="DataChannel Media Description checklist">
-            <t> If a datachannel is required, an 'application' type media description MUST be included with
-            the following properties:
+            <t> If a datachannel is required, an 'application' type media description MUST be included with the following properties:
             <list style="symbols">
               <t>Media description's proto value MUST be 'UDP/DTLS/SCTP' in the JSEP offers.</t>
-              <t>An JSEP answerer MUST support reception of 'UDP/DTLS/SCTP'/'TCP/DTLS/SCTP'/'DTLS/SCTP' for
-              backward compatibility reasons. </t> 
+              <t>An JSEP answerer MUST support reception of 'UDP/DTLS/SCTP'/'TCP/DTLS/SCTP'/'DTLS/SCTP' for backward compatibility reasons. </t> 
               <t>A value of 'webrtc-datachannel' MUST be used for the media description 'fmt' value. </t>
               <t>a=mid line MUST be present.</t>
               <t>a=sctp-port with SCTP port number MUST be included.</t>
