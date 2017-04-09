@@ -620,7 +620,7 @@ Alice                                       Bob
         
         <section anchor="sec.2way.av.ipv4" 
           title="IPv4 audio/video session">
-          <t>This section shows IPb4 only Offer/Answer exchange.</t>
+          <t>This section shows IPv4 only Offer/Answer exchange.</t>
           <texttable anchor="t_2way-av_1" title="5.2.2.1 SDP Offer">
             <ttcol align='left'>Offer SDP Contents </ttcol>
             <ttcol align='left'>RFC#/Notes</ttcol>
