@@ -48,6 +48,8 @@
 		SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-rtcweb-data-channel.xml">
 <!ENTITY I-D.ietf-payload-flexible-fec-scheme
     SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-payload-flexible-fec-scheme.xml">
+<!ENTITY I-D.ietf-mmusic-mux-exclusive
+    SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-mmusic-mux-exclusive.xml">
 <!ENTITY I-D.ietf-mmusic-dtls-sdp
     SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-mmusic-dtls-sdp.xml">
 <!ENTITY I-D.ietf-rtcweb-security-arch
@@ -112,7 +114,7 @@
       </address>
     </author>
 
-    <date day="8" month="April" year="2017"/>
+    <date day="9" month="April" year="2017"/>
 
     <area>RAI</area>
 
@@ -131,7 +133,7 @@
 
   <middle>
     <section title="Introduction">
-      <t>Javascript Session Exchange Protocol(JSEP) 
+      <t>Javascript Session Establishment Protocol(JSEP) 
         <xref target="I-D.ietf-rtcweb-jsep"></xref> specifies a generic protocol 
         needed to generate <xref target="RFC3264"></xref> Offers and Answers 
         negotiated between the <xref target="WebRTC"></xref> peers for setting up, 
@@ -276,12 +278,11 @@
     <t>With in the context of WebRTC, the Offer/Answer model defines the
     state-machinery for WebRTC peers to negotiate session descriptions between
     them during the initial setup stages as well as for eventual session updates.
-    Javascript Session Establishment Protocol specification
-    <xref target="I-D.ietf-rtcweb-jsep"></xref> for WebRTC provides the mechanism for
-    generating <xref target="RFC3264"></xref> SDP Offers and Answers in order
-    for both sides of the session to agree upon details such as list of media
-    formats to be sent/received, bandwidth information, crypto parameters,
-    transport parameters, for example.</t>
+    JSEP specification <xref target="I-D.ietf-rtcweb-jsep"></xref> for WebRTC 
+    provides the mechanism for generating <xref target="RFC3264"></xref> 
+    SDP Offers and Answers in order for both sides of the session to agree 
+    upon the details such as the list of media formats to be sent/received, 
+    bandwidth information, crypto parameters, transport parameters, for example.</t>
     </section>
 
     <section title="WebRTC Session Description Examples">
@@ -617,10 +618,9 @@ Alice                                       Bob
 
 ]]></artwork>
         </figure>
-        
-        <section anchor="sec.2way.av.ipv4" 
-          title="IPv4 audio/video session">
-          <t>This section shows IPv4 only Offer/Answer exchange.</t>
+        <t><vspace blankLines='1'></vspace></t>
+        <section anchor="sec.2way.av.ipv4" title="IPv4 audio/video session">
+          <t>This section shows the IPv4 only Offer/Answer exchange.</t>
           <texttable anchor="t_2way-av_1" title="5.2.2.1 SDP Offer">
             <ttcol align='left'>Offer SDP Contents </ttcol>
             <ttcol align='left'>RFC#/Notes</ttcol>
@@ -677,8 +677,8 @@ Alice                                       Bob
             <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
             <c>a=rtcp-mux</c>
             <c><xref target="RFC5761"></xref> - Alice can perform RTP/RTCP Muxing</c>
-  		  		<c>a=rtcp:54609 IN IP4 203.0.113.141</c>
-            <c><xref target="RFC3605"></xref></c>
+  		  		<c>a=rtcp-mux-only</c>
+            <c><xref target="I-D.ietf-mmusic-mux-exclusive"></xref></c>
             <c>a=rtcp-rsize</c>
             <c><xref target="RFC5506"></xref> - Alice intends to use reduced
             size RTCP for this session</c>
@@ -787,6 +787,8 @@ Alice                                       Bob
             <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
             <c>a=rtcp-mux</c>
             <c><xref target="RFC5761"></xref> - Bob can perform RTP/RTCP Muxing</c>
+            <c>a=rtcp-mux-only</c>
+            <c><xref target="I-D.ietf-mmusic-mux-exclusive"></xref></c>
             <c>a=rtcp-rsize</c>
             <c><xref target="RFC5506"></xref> - Bob intends to use reduced
             size RTCP for this session</c>
@@ -833,8 +835,7 @@ Alice                                       Bob
           </texttable>
           <t><vspace blankLines='1'></vspace></t>
       	</section>
-        <section anchor="sec.2way.av.dual" 
-          title="Dual Stack audio/video session">
+        <section anchor="sec.2way.av.dual" title="Dual Stack audio/video session">
           <t>This section captures offer/answer exchange when Alice and Bob support both
             IPv4 and IPv6 host addresses.</t>
           <texttable anchor="t_2way-av_dual" title="5.2.2.2 SDP Offer">
@@ -893,8 +894,8 @@ Alice                                       Bob
             <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
             <c>a=rtcp-mux</c>
             <c><xref target="RFC5761"></xref> - Alice can perform RTP/RTCP Muxing</c>
-            <c>a=rtcp:54609 IN IP4 203.0.113.141</c>
-            <c><xref target="RFC3605"></xref></c>
+            <c>a=rtcp-mux-only</c>
+            <c><xref target="I-D.ietf-mmusic-mux-exclusive"></xref></c>
             <c>a=rtcp-rsize</c>
             <c><xref target="RFC5506"></xref> - Alice intends to use reduced
             size RTCP for this session</c>
@@ -1003,6 +1004,8 @@ Alice                                       Bob
             <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
             <c>a=rtcp-mux</c>
             <c><xref target="RFC5761"></xref> - Bob can perform RTP/RTCP Muxing</c>
+            <c>a=rtcp-mux-only</c>
+            <c><xref target="I-D.ietf-mmusic-mux-exclusive"></xref></c>
             <c>a=rtcp-rsize</c>
             <c><xref target="RFC5506"></xref> - Bob intends to use reduced
             size RTCP for this session</c>
@@ -1051,9 +1054,9 @@ Alice                                       Bob
       </section>
       	<section
         	title="Data Only Session">
-        	<t>This scenario illustrates SDP negotiated to setup a data-only
-            session based on SCTP Data Channel, thus enabling use-cases such
-            as file-transfer for example.</t>
+        	<t>This scenario illustrates the SDP negotiated to setup a data-only
+            session based on the SCTP Data Channel, thus enabling use-cases such
+            as file-transfer, real-time game control for example.</t>
         	<figure>
           <artwork alt="Successful-Data Only Session">
 <![CDATA[
@@ -1261,8 +1264,8 @@ Alice                            Bob
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref> - Alice can perform RTP/RTCP
           Muxing</c>
-          <c>a=rtcp:54609 IN IP4 203.0.113.141</c>
-          <c><xref target="RFC3605"></xref></c>
+          <c>a=rtcp-mux-only</c>
+          <c><xref target="I-D.ietf-mmusic-mux-exclusive"></xref></c>
           <c>a=rtcp-rsize</c>
           <c><xref target="RFC5506"></xref></c>
           <c>a=rtcp-fb:109 nack</c>
@@ -1328,6 +1331,8 @@ Alice                            Bob
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref> - Bob can perform RTP/RTCP
           Muxing</c>
+          <c>a=rtcp-mux-only</c>
+          <c><xref target="I-D.ietf-mmusic-mux-exclusive"></xref></c>
           <c>a=rtcp-rsize</c>
           <c><xref target="RFC5506"></xref></c>
           <c>a=extmap:1 urn:ietf:params:rtp-hdrext:ssrc-audio-level</c>
@@ -1427,8 +1432,8 @@ Alice                                              Bob
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref> - Alice can perform RTP/RTCP
           Muxing</c>
-          <c>a=rtcp:54609 IN IP4 203.0.113.141</c>
-          <c><xref target="RFC3605"></xref></c>
+          <c>a=rtcp-mux-only</c>
+          <c><xref target="I-D.ietf-mmusic-mux-exclusive"></xref></c>
           <c>a=rtcp-rsize</c>
           <c><xref target="RFC5506"></xref></c>
           <c>a=rtcp-fb:109 nack</c>
@@ -1515,6 +1520,8 @@ Alice                                              Bob
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref> - Bob can perform RTP/RTCP Muxing
           on port 49203</c>
+          <c>a=rtcp-mux-only</c>
+          <c><xref target="I-D.ietf-mmusic-mux-exclusive"></xref></c>
           <c>a=rtcp-rsize</c>
           <c><xref target="RFC5506"></xref> - Alice intends to use reduced size
           RTCP for this session</c>
@@ -1633,8 +1640,8 @@ Alice                                                 Bob
           <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
-          <c>a=rtcp:54609 IN IP4 203.0.113.141</c>
-          <c><xref target="RFC3605"></xref></c>
+          <c>a=rtcp-mux-only</c>
+          <c><xref target="I-D.ietf-mmusic-mux-exclusive"></xref></c>
           <c>a=rtcp-rsize</c>
           <c><xref target="RFC5506"></xref></c>
           <c>a=rtcp-fb:109 nack</c>
@@ -1722,8 +1729,8 @@ Alice                                                 Bob
           <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
-		  	  <c>a=rtcp-rsize</c>
-          <c><xref target="RFC5506"></xref></c>
+          <c>a=rtcp-mux-only</c>
+          <c><xref target="I-D.ietf-mmusic-mux-exclusive"></xref></c>
           <c>a=rtcp-fb:109 nack</c>
           <c><xref target="RFC5104"></xref></c>
           <c>a=extmap:1 urn:ietf:params:rtp-hdrext:ssrc-audio-level</c>
@@ -2326,8 +2333,8 @@ Alice                                       Bob
           <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
-          <c>a=rtcp:54609 IN IP4 203.0.113.141</c>
-          <c><xref target="RFC3605"></xref></c>
+          <c>a=rtcp-mux-only</c>
+          <c><xref target="I-D.ietf-mmusic-mux-exclusive"></xref></c>
           <c>a=rtcp-rsize</c>
           <c><xref target="RFC5506"></xref></c>
           <c>a=rtcp-fb:109 nack</c>
@@ -2429,6 +2436,8 @@ Alice                                       Bob
           <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref> </c>
+          <c>a=rtcp-mux-only</c>
+          <c><xref target="I-D.ietf-mmusic-mux-exclusive"></xref></c>
           <c>a=rtcp-rsize</c>
           <c><xref target="RFC5506"></xref></c>
           <c>a=rtcp-fb:109 nack</c>
@@ -3053,8 +3062,8 @@ Alice                                                 Bob
           <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
-          <c>a=rtcp:54609 IN IP4 203.0.113.141</c>
-          <c><xref target="RFC3605"></xref></c>
+          <c>a=rtcp-mux-only</c>
+          <c><xref target="I-D.ietf-mmusic-mux-exclusive"></xref></c>
           <c>a=rtcp-rsize</c>
           <c><xref target="RFC5506"></xref></c>
           <c>a=rtcp-fb:109 nack</c>
@@ -3168,6 +3177,8 @@ Alice                                                 Bob
           <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref> </c>
+          <c>a=rtcp-mux-only</c>
+          <c><xref target="I-D.ietf-mmusic-mux-exclusive"></xref></c>
           <c>a=rtcp-rsize</c>
           <c><xref target="RFC5506"></xref></c>
           <c>a=rtcp-fb:109 nack</c>
@@ -3322,8 +3333,8 @@ Alice                                                 Bob
           <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
-          <c>a=rtcp:54609 IN IP4 203.0.113.141</c>
-          <c><xref target="RFC3605"></xref></c>
+          <c>a=rtcp-mux-only</c>
+          <c><xref target="I-D.ietf-mmusic-mux-exclusive"></xref></c>
           <c>a=rtcp-rsize</c>
           <c><xref target="RFC5506"></xref></c>
           <c>a=rtcp-fb:109 nack</c>
@@ -3387,6 +3398,8 @@ Alice                                                 Bob
           <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref> </c>
+          <c>a=rtcp-mux-only</c>
+          <c><xref target="I-D.ietf-mmusic-mux-exclusive"></xref></c>
           <c>a=rtcp-rsize</c>
           <c><xref target="RFC5506"></xref></c>
           <c>a=rtcp-fb:109 nack</c>
@@ -3452,6 +3465,8 @@ Alice                                                 Bob
           <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref>Alice want's to use the same DTLS association</c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
+          <c>a=rtcp-mux-only</c>
+          <c><xref target="I-D.ietf-mmusic-mux-exclusive"></xref></c>
           <c>a=rtcp-rsize</c>
           <c><xref target="RFC5506"></xref></c>
           <c>a=rtcp-fb:109 nack</c>
@@ -3539,6 +3554,8 @@ Alice                                                 Bob
           <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref> - Bob agrees to use the same DTLS association</c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref> </c>
+          <c>a=rtcp-mux-only</c>
+          <c><xref target="I-D.ietf-mmusic-mux-exclusive"></xref></c>
           <c>a=rtcp-rsize</c>
           <c><xref target="RFC5506"></xref></c>
           <c>a=rtcp-fb:109 nack</c>
@@ -3682,8 +3699,6 @@ Alice                                            Bob
           <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
-          <c>a=rtcp:54609 IN IP4 203.0.113.141</c>
-          <c><xref target="RFC3605"></xref></c>
           <c>a=rtcp-rsize</c>
           <c><xref target="RFC5506"></xref></c>
           <c>a=rtcp-fb:109 nack</c>
@@ -4010,9 +4025,7 @@ Alice                                            Bob
           <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
 					<c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
-          <c>a=rtcp:54609 IN IP4 203.0.113.141</c>
-          <c><xref target="RFC3605"></xref></c>
-					<c>a=rtcp-rsize</c>
+          <c>a=rtcp-rsize</c>
           <c><xref target="RFC5506"></xref></c>
 					<c>a=rtcp-fb:109 nack</c>
           <c><xref target="RFC5104"></xref> </c>
@@ -4254,9 +4267,7 @@ Alice                                                    Bob
           <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
-          <c>a=rtcp:54609 IN IP4 203.0.113.141</c>
-          <c><xref target="RFC3605"></xref></c>
-					<c>a=rtcp-rsize</c>
+          <c>a=rtcp-rsize</c>
           <c><xref target="RFC5506"></xref></c>
 					<c>a=rtcp-fb:109 nack</c>
           <c><xref target="RFC5104"></xref> </c>
@@ -4508,9 +4519,7 @@ Alice                                                    Bob
           <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
 					<c>a=rtcp-mux</c>
 					<c><xref target="RFC5761"></xref></c>
-          <c>a=rtcp:54609 IN IP4 203.0.113.141</c>
-          <c><xref target="RFC3605"></xref></c>
-					<c>a=rtcp-rsize</c>
+          <c>a=rtcp-rsize</c>
 					<c><xref target="RFC5506"></xref></c>
 					<c>a=rtcp-fb:109 nack</c>
           <c><xref target="RFC5104"></xref> </c>
@@ -4754,8 +4763,6 @@ Alice                                                            Bob
           <c><xref target="RFC4145"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
-          <c>a=rtcp:54609 IN IP4 203.0.113.141</c>
-          <c><xref target="RFC3605"></xref></c>
           <c>a=dtls-id:1</c>
           <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
 					<c>a=rtcp-rsize</c>
@@ -5023,9 +5030,7 @@ Alice                                                            Bob
           <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
-          <c>a=rtcp:54609 IN IP4 203.0.113.141</c>
-          <c><xref target="RFC3605"></xref></c>
-					<c>a=rtcp-rsize</c>
+          <c>a=rtcp-rsize</c>
 					<c><xref target="RFC5506"></xref></c>
 					<c>a=rtcp-fb:* nack</c>
           <c><xref target="RFC5104"></xref></c>
@@ -5197,9 +5202,7 @@ Alice                                    Mixer
           <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref> </c>
-          <c>a=rtcp:54609 IN IP4 203.0.113.141</c>
-          <c><xref target="RFC3605"></xref></c>
-					<c>a=rtcp-rsize</c>
+          <c>a=rtcp-rsize</c>
           <c><xref target="RFC5506"></xref></c>
 					<c>a=rtcp-fb:* nack</c>
           <c><xref target="RFC5104"></xref> </c>
@@ -5617,6 +5620,8 @@ Alice                                                       Bob
           <c><xref target="RFC3264"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref>Alice still includes RTP/RTCP Mux support</c>
+          <c>a=rtcp:64678 IN IP4 203.0.113.141</c>
+          <c><xref target="RFC3605"></xref></c>
           <c>a=candidate:0 1 UDP  2113667327 192.0.2.4 54732 typ host</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=candidate:1 1 UDP  694302207 203.0.113.141 54732 typ srflx raddr 192.0.2.4 rport 54732</c>
@@ -5644,6 +5649,8 @@ Alice                                                       Bob
           <c><xref target="RFC3264"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref>Alice intends to perform RTP/RTCP Mux</c>
+          <c>a=rtcp:54721 IN IP4 203.0.113.141</c>
+          <c><xref target="RFC3605"></xref></c>
           <c>a=candidate:0 1 UDP  2113667327 192.0.2.4 62445 typ host</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=candidate:1 1 UDP  1694302207 203.0.113.141 62537 typ srflx raddr 192.0.2.4 rport 62445</c>
@@ -5696,10 +5703,6 @@ Alice                                                       Bob
           <c><xref target="RFC5245"></xref></c>
           <c>a=candidate:1 1 UDP 1694302207 203.0.113.77 49203 typ srflx raddr 198.51.100.7 rport 49203</c>
           <c><xref target="RFC5245"></xref></c>
-          <c>a=candidate:0 2 UDP 2113667326 198.51.100.7 60065 typ host</c>
-          <c><xref target="RFC5245"></xref></c>
-          <c>a=candidate:1 2 UDP 1694302206 203.0.113.77 60065 typ srflx raddr 198.51.100.7 rport 60065</c>
-          <c><xref target="RFC5245"></xref></c>
           <c>a=rtcp-fb:109 nack</c>
           <c><xref target="RFC5104"></xref></c>
           <c>****** Video m=line *********</c>
@@ -5726,10 +5729,6 @@ Alice                                                       Bob
           <c>a=candidate:0 1 UDP 2113667327 198.51.100.7 63130 typ host</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=candidate:1 1 UDP 1694302207 203.0.113.77 63130 typ srflx raddr 198.51.100.7 rport 63130</c>
-          <c><xref target="RFC5245"></xref></c>
-          <c>a=candidate:0 2 UDP 2113667326 198.51.100.7 56607 typ host</c>
-          <c><xref target="RFC5245"></xref></c>
-          <c>a=candidate:1 2 UDP 1694302206 203.0.113.77 56607 typ srflx raddr 198.51.100.7 rport 56607</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=rtcp-fb:120 nack pli</c>
           <c><xref target="RFC5104"></xref></c>
@@ -5762,8 +5761,10 @@ Alice                                                       Bob
       <t>[RFC EDITOR NOTE: Please remove this section when publishing]</t>
       <t>Changes from draft-ietf-rtcweb-sdp-04
           <list style="symbols">
-              <t>Add IPv6 Example</t>
-              <t>Fix Idnits </t>
+              <t>Add IPv6 Example.</t>
+              <t>Add a=rtcp-mux-only and fix a=rtcp in examples.</t>
+              <t>Fix Idnits.</t>
+              <t>Add Security Considerations section.</t>
          </list>
       </t>
       <t>Changes from draft-ietf-rtcweb-sdp-02 to draft-ietf-rtcweb-sdp-04
@@ -5909,6 +5910,7 @@ Alice                                                       Bob
       &I-D.ietf-mmusic-sctp-sdp;
       &I-D.ietf-rtcweb-data-channel;
       &I-D.ietf-payload-flexible-fec-scheme;
+      &I-D.ietf-mmusic-mux-exclusive;
       &I-D.ietf-mmusic-dtls-sdp;
       &I-D.ietf-rtcweb-security-arch;
       &I-D.ietf-rtcweb-security;
