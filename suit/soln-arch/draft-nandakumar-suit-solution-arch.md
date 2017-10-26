@@ -76,7 +76,7 @@ implementations.
 # Device Considerations
 
 This draft targets devices that have a boot loader that run in less
-threat 100K bytes of flash and less than 23 K bytes of RAM.
+threat 100K bytes of flash and less than 32K bytes of RAM.
 
 There are certain types of devices that delete the firmware image
 except for the boot-loader before proceeding with the upgrade.
@@ -290,6 +290,15 @@ The response would be a JSON result of the manifest file. Similarly, the
 end-point supporting CBOR parsing can request for the CBOR version of the 
 mannifest.
 
+## Validation Procedures
+
+The downloaded manifest and firmware is validated before being used:
+
+* Manifest file signature is validated for source and integrity verification. If encrypted, the manifest is decrypted before proceeding as defined in “Manifest” procedures.
+
+* On successful validation of the manifest, the device verifies the commit hashes
+for component(s) of the firmware downloaded against the ones provided in the 
+"firmwareCryptoInfo" section of the manifest. 
 
 ### Firmware Download
 
@@ -299,19 +308,6 @@ Above example shows use of HTTP as the communication protocol to talk to the
 firmware server. If the end-point is capable of doing COAP or other
 protocols, a similar process as above can be applied to retrieve the manifest
 and the firmware from a well-known place on the local server
-
-
-## Validation Procedures
-
-<TODO - move this section to above Firmware download ??? >
-
-The downloaded manifest and firmware is validated before being used:
-
-* Manifest file signature is validated for source and integrity verification. If encrypted, the manifest is decrypted before proceeding as defined in “Manifest” procedures.
-
-* On successful validation of the manifest, the device verifies the commit hashes
-for component of the firmware downloaded against the ones provided in the 
-"firmwareCryptoIndo" section of the manifest. 
 
 
 
