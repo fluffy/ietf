@@ -1,8 +1,8 @@
 %%%
-    title = "Solution Architecture - Secure Firmware Upgrade (SEFU)"
-    abbrev = "SEFU"
+    title = "Solution Architecture - Secure Firmware Upgrade (SecFU)"
+    abbrev = "SecFU"
     category = "std"
-    docName = "draft-nandakumar-suit-solution-arch"
+    docName = "draft-nandakumar-suit-secfu-solution-arch"
     ipr = "trust200902"
 
     [pi]
@@ -297,7 +297,7 @@ and the firmware from a well-known place on the local server
 <TODO - move this section to above Firmware download ??? >
 
 
-The downloaded manifest and firmware is validated before being used.
+The downloaded manifest and firmware is validated before being used:
 
 * Manifest file signature is validated for source and integrity verification. If encrypted, the manifest is decrypted before proceeding as defined in “Manifest” procedures.
 
