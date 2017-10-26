@@ -47,6 +47,7 @@ that works over Internet.
 
 {mainmatter}
 
+
 # Introduction
 
 Internet of Things (IOT) represents a plethora of devices that come in
@@ -71,6 +72,7 @@ NOT", "MAY", and "OPTIONAL" are to be interpreted as described in RFC
 2119 [@!RFC2119] and indicate requirement levels for compliant
 implementations.
 
+
 # Device Considerations
 
 This draft targets devices that have a boot loader that run in less
@@ -81,6 +83,7 @@ except for the boot-loader before proceeding with the upgrade.
 Alternatively, the scenarios where the devices are large enough to
 completely downloade a new firmware image before updating, the solution
 should be naturally applicable.
+
 
 # Solution Overview
 
@@ -130,6 +133,7 @@ update on a IoT device.
 
 Following several sub-sections define various components
 that makes up the proposed solution architecture
+
 
 ## Manifest
 
@@ -196,6 +200,7 @@ the mandatory attributes as explained below
    pick one based on its implementation. The firmware download protocol 
    identifies the right format supported by the IoT device.
 
+
 ## Manifest Security 
 
   The Manifest file MUST be cryptographically signed by the private key of the
@@ -215,6 +220,7 @@ the mandatory attributes as explained below
   ~~~
   signed_manifest := hash-sigs(manifest.json, private-key)
   ~~~
+
 
 ## Manifest Optional Extensions
 
@@ -252,15 +258,18 @@ http://_firmware.cisco.com/.wellknown/firmware/cisco.com/c7960/manifest.json
 
 If either of the procedures doesn’t work, the IoT device is either unusable or might end up running an old version of the firmware.
 
+
 ## Firmware Download protocol
 
 One can envision two possibilities while downloading the firmware:
 
 * Scenarios where the IoT device downloads firmware directly. This is done 
-in order to minimize number of connections.
+in order to minimize number of connections. <TODO - not clear to me
+how this works. What is the format for the signature, where does it go>
 
 * Scenarios where a manifest is retrieved and followed by downloading the
 actual firmware image.
+
 
 ### Manifest Download
 
@@ -281,10 +290,10 @@ The response would be a JSON result of the manifest file. Similarly, the
 end-point supporting CBOR parsing can request for the CBOR version of the 
 mannifest.
 
+
 ### Firmware Download
 
 Once the manifest is downloaded and validated, the device proceeds to download the firmware image from the location identified in the firmware manifest. There might be situations where a firmware image is split into multiple files to imply a functional division of the components. This type of firmware can be used because devices that are very low in memory and thus loading the complete image might not be possible. The manifest file may contain the information to indicate the same.
-
 
 Above example shows use of HTTP as the communication protocol to talk to the 
 firmware server. If the end-point is capable of doing COAP or other
@@ -295,7 +304,6 @@ and the firmware from a well-known place on the local server
 ## Validation Procedures
 
 <TODO - move this section to above Firmware download ??? >
-
 
 The downloaded manifest and firmware is validated before being used:
 
@@ -315,6 +323,7 @@ TODO
 # Security Considerations 
 
 TODO - Talk about roaming IoT Device
+
 
 # Acknowledgements 
 
