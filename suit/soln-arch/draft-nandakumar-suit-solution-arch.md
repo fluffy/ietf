@@ -278,12 +278,12 @@ appropriate to the IoT device, for example.
 
 On performing the "Firmware Server Discovery", if a local server is chosen, 
 the device forms a query URL by constructing an endpoint at
-".well-known/manifest/<manufacture>/<model-no>/manifest.json"
+".well-known/manifest/\<manufacture\>/\<model-no\>/manifest.json"
 
-Then a HTTPS GET request is sent to that URL. For example
+Then a HTTP GET request is sent to that URL. For example
 
 ~~~
-https://_firmware.example.com/.wellknown/manifest/cisco.com/c7960/manifest.json
+http://_firmware.example.com/.wellknown/manifest/cisco.com/c7960/manifest.json
 ~~~
 
 The response would be a JSON result of the manifest file. Similarly, the
