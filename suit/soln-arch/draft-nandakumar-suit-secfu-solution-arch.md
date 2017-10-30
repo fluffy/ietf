@@ -87,7 +87,7 @@ should be naturally applicable to both.
 
 # Solution Overview
 
-The <TODO add ref> draft-requirements-00 captures various requirements that drives 
+draft-nandakumar-suit-sefu-requirements captures various requirements that drives 
 the solution defined in this specification.
 
 Below is a high-level solution flow for a successful firmware
