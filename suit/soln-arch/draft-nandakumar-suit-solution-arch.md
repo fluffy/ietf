@@ -41,7 +41,7 @@
 
 This specification defines a solution architecture for performing
 secure firmware upgrade for Internet of Things (IOT). The ulterior
-motive is to have a framework that is simple, secure and that uses 
+motive is to have a framework that is simple, secure, and that uses 
 most common formats and standards in the industry and 
 that works over Internet.
 
@@ -51,16 +51,16 @@ that works over Internet.
 # Introduction
 
 Internet of Things (IOT) represents a plethora of devices that come in
-varying flavors of constrained sizes, computing power and operating 
-considerations. These devices either need minimal or no manangement for their operation. 
+varying flavors of constrained sizes, computing power, and operating 
+considerations. These devices usually need minimal or no manangement for their operation. 
 
-Vulnerabilities with IOT devices have raised serious concerns.  There
+Vulnerabilities within IOT devices have raised serious concerns.  There
 needs to be
 a way to install or update the firmware on these devices
 in an automated and secure fashion. A common challenge with the 
 existing firmware update mechanism is they do not work in an automated
-way in many environments where IoT devices are deployed. Hence, there 
-is a need to define an firmware update solution that is light weight, 
+manner in many environments where IoT devices are deployed. Hence, there 
+is a need to define a firmware update solution that is light weight, 
 secure, can operate in variety of deployment environments, and 
 is built on well established standards. 
 
@@ -76,13 +76,13 @@ implementations.
 # Device Considerations
 
 This draft targets devices that have a boot loader that run in less
-threat 100K bytes of flash and less than 32K bytes of RAM.
+than 100K bytes of flash and less than 32K bytes of RAM.
 
-There are certain types of devices that delete the firmware image
-except for the boot-loader before proceeding with the upgrade.
-Alternatively, the scenarios where the devices are large enough to
-completely downloade a new firmware image before updating, the solution
-should be naturally applicable.
+There are certain types of devices that delete the firmware image,
+except for the boot-loader, before proceeding with the upgrade.
+Alternatively, many devices have sufficient storage to
+completely downloade a new firmware image before updating. This solution
+should be naturally applicable to both.
 
 
 # Solution Overview
@@ -110,7 +110,7 @@ update on a IoT device.
         Download signed        Download signed
         manifest from           manifest from
         local server           manufacturer's 
-        well-known URL         per-configured URL
+        well-known URL         pre-configured URL
                  |                 |
                  |                 |
                 Validate manifest via
@@ -137,10 +137,10 @@ that makes up the proposed solution architecture
 
 ## Manifest
 
-A firmware manifest serves as cryptographic representation 
+A firmware manifest serves as information representation 
 for metadata about the firmware. A manifest file identies
 information about the actual firmware image, its location,
-applicable device(s) and so on. It is cryptographically signed
+applicable device(s), and so on. It is cryptographically signed
 by the provider (usually the manufacturer) of the firmware.
 
 
@@ -215,7 +215,7 @@ the mandatory attributes as explained below
   
   If CBOR is used for describing the manifest, COSE is recommended for signing.
 
- Optionally , the proposed solution also recommends hash based signatures (hash-sigs) to sign the manifest.
+ Optionally, the proposed solution also recommends hash based signatures (hash-sigs) to sign the manifest.
 
   ~~~
   signed_manifest := hash-sigs(manifest.json, private-key)
@@ -233,7 +233,7 @@ the mandatory attributes as explained below
 ## Firmware Server Discovery
 
 When it is time for an IoT device to perform a firmware upgrade, the device performs couple of steps to decide the location to download the needed firmware.
-A device might need to download the new firmware when it is either booting for the first time after deployment or there is a need to upgrade to a newer upgraded firmware available. 
+A device might need to download the new firmware when it is either booting for the first time after deployment or there is a need to upgrade to a newer firmware. 
  
 The server discovery procedure starts with the boot-loader attempting to access a server that is local to the domain in which the device operates. The URL to look for a local server is automatically generated using the DHCP domain name.
 
@@ -264,8 +264,11 @@ If either of the procedures doesn’t work, the IoT device is either unusable or
 One can envision two possibilities while downloading the firmware:
 
 * Scenarios where the IoT device downloads firmware directly. This is done 
-in order to minimize number of connections. <TODO - not clear to me
-how this works. What is the format for the signature, where does it go>
+in order to minimize number of connections. In this scenario, the firmware image
+must have a digital signature included within the downloaded firmware. The exact
+placement of this digital signature (prepended, appended, etc) is up to the
+device manufacturer, but it MUST provided source and integrity guarantees on the
+entirety of the firmware image and must be verified by the device prior to upgrade.
 
 * Scenarios where a manifest is retrieved and followed by downloading the
 actual firmware image.
@@ -302,7 +305,7 @@ for component(s) of the firmware downloaded against the ones provided in the
 
 ### Firmware Download
 
-Once the manifest is downloaded and validated, the device proceeds to download the firmware image from the location identified in the firmware manifest. There might be situations where a firmware image is split into multiple files to imply a functional division of the components. This type of firmware can be used because devices that are very low in memory and thus loading the complete image might not be possible. The manifest file may contain the information to indicate the same.
+Once the manifest is downloaded and validated, the device proceeds to download the firmware image from the location identified in the firmware manifest. There might be situations where a firmware image is split into multiple files to imply a functional division of the components. This type of firmware can be used by devices that are memory constrained and thus loading the complete image might not be possible. The manifest file may contain the information to indicate the same.
 
 Above example shows use of HTTP as the communication protocol to talk to the 
 firmware server. If the end-point is capable of doing COAP or other
