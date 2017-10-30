@@ -288,10 +288,11 @@ for component(s) of the firmware downloaded against the ones provided in the
 ### Manifest Download
 
 Firmware download protocol enables choosing the approach 
-appropriate to the IoT device, for example.
+appropriate to the IoT device for downloading the manifest file.
 
-On performing the "Firmware Server Discovery", if a local server is chosen, 
-the device forms a query URL by constructing an endpoint at
+For example, on performing the "Firmware Server Discovery", 
+if a local server is chosen, the device forms a query URL by 
+constructing an endpoint at 
 ".well-known/manifest/\<manufacturer\>/\<model-no\>/manifest.json"
 
 Then a HTTP GET request is sent to that URL. For example
