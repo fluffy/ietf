@@ -104,7 +104,7 @@ about firmwares from different providers
 firmware where that mechanism includes the ability for a local cache.
 
 1. The proposed solution should allow flexibility to choose the underlying transport 
-protocol as defined by the deployment scenarios. The WG should define a MTI set of protocols that firmware serves need to implement and clients can choose which one to use
+protocol as defined by the deployment scenarios. The WG should define a MTI set of protocols that firmware servers need to implement and clients can choose which one to use
  
 1. The proposed solution must require a device to validate signatures on the manifest
 and firmware image(s)
