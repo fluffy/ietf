@@ -250,7 +250,7 @@ settings, for example), the aforementioned approach might be the only way for th
 However, if the local server cannot be reached or not deployed (say
 home environments), the device proceeds to download the manifest and
 firmware from the firmware server URL pre-configured in the
-boot-loaded by the manufacturer of the device. For example
+boot-loader by the manufacturer of the device. For example
 
 ~~~
 http://_firmware.cisco.com/.wellknown/firmware/cisco.com/c7960/manifest.json
@@ -274,6 +274,17 @@ entirety of the firmware image and must be verified by the device prior to upgra
 actual firmware image.
 
 
+### Validation Procedures
+
+The downloaded manifest and firmware is validated before being used:
+
+* Manifest file signature is validated for source and integrity verification. If encrypted, 
+the manifest is decrypted before proceeding with the firmware download.
+
+* On successful validation of the manifest, the device verifies the commit hashes
+for component(s) of the firmware downloaded against the ones provided in the 
+"firmwareCryptoInfo" section of the manifest. 
+
 ### Manifest Download
 
 Firmware download protocol enables choosing the approach 
@@ -281,7 +292,7 @@ appropriate to the IoT device, for example.
 
 On performing the "Firmware Server Discovery", if a local server is chosen, 
 the device forms a query URL by constructing an endpoint at
-".well-known/manifest/\<manufacture\>/\<model-no\>/manifest.json"
+".well-known/manifest/\<manufacturer\>/\<model-no\>/manifest.json"
 
 Then a HTTP GET request is sent to that URL. For example
 
@@ -292,16 +303,6 @@ http://_firmware.example.com/.wellknown/manifest/cisco.com/c7960/manifest.json
 The response would be a JSON result of the manifest file. Similarly, the
 end-point supporting CBOR parsing can request for the CBOR version of the 
 mannifest.
-
-## Validation Procedures
-
-The downloaded manifest and firmware is validated before being used:
-
-* Manifest file signature is validated for source and integrity verification. If encrypted, the manifest is decrypted before proceeding as defined in “Manifest” procedures.
-
-* On successful validation of the manifest, the device verifies the commit hashes
-for component(s) of the firmware downloaded against the ones provided in the 
-"firmwareCryptoInfo" section of the manifest. 
 
 ### Firmware Download
 
