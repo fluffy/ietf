@@ -6,7 +6,7 @@ kramdown-rfc2629 ?= kramdown-rfc2629
 #  mmark (https://github.com/miekg/mmark)
 mmark ?= mmark
 
-DRAFT = draft-nandakumar-suit-solution-arch
+DRAFT = draft-nandakumar-suit-secfu-solution-arch
 VERSION = 00
 
 .PHONY: all clean diff
