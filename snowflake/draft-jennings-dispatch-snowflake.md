@@ -47,6 +47,8 @@ the agents, the need for symmetric connection setup, for example
 has rendered the protocol inflexible for innovation and increasingly 
 difficult to apply and debug in a dynamic network and application contexts.
 
+Like ICE, the both sides collect an set of addressed that may work for communications. Howevrer, instead of both sides trying to syncronize connectingivty checkecks, the sending side acts as a slate and sends whatever STUN packets the receiving side tells it to send and the time it is told. The receiving sides can run whatever algorithm and timing it wants to find a path that works. The sender and receiver roles revers for media in the opositinte direction. 
+
 
 # Terminology
 
