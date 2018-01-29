@@ -18,6 +18,13 @@
       [author.address]
       email = "fluffy@iii.ca"
 
+    [[author]]
+    initials = "S."
+    surname = "Nandakumar"
+    fullname = "Suhas Nandakumar"
+    organization = "Cisco"
+      [author.address]
+      email = "snandaku@cisco.com"
 
 %%%
 
@@ -40,14 +47,24 @@ asymmetric connecitivity establishment.
 ICE was designed over a decade and certain assumptions about the
 network topology, timing considerations, application complexity 
 have drastically changed since then. Newer additions/clarifications 
-to ICE in ICEBis and Trickle ICE have indeed help improve its performance 
-and the way the connectivity checks are performed. However enforcing
-stringent global pacing requirements, coupled timing dependencis between
-the agents, the need for symmetric connection setup, for example
-has rendered the protocol inflexible for innovation and increasingly 
-difficult to apply and debug in a dynamic network and application contexts.
+to ICE in  [@I-D.ietf-ice-rfc5245bis] and Trickle ICE [@I-D.ietf-ice-trickle] 
+have indeed help improve its performance and the way the connectivity checks 
+are performed. However enforcing stringent global pacing requirements, 
+coupled timing dependencis between the ICE agents, the need for symmetric 
+connection setup, for example has rendered the protocol inflexible for 
+innovation and increasingly difficult to apply and debug in a dynamic 
+network and evolving application contexts.
 
-Like ICE, the both sides collect an set of addressed that may work for communications. Howevrer, instead of both sides trying to syncronize connectingivty checkecks, the sending side acts as a slate and sends whatever STUN packets the receiving side tells it to send and the time it is told. The receiving sides can run whatever algorithm and timing it wants to find a path that works. The sender and receiver roles revers for media in the opositinte direction. 
+This specification defines Snowflake where, like in ICE, both sides gather a
+set of address candidates that may work for communication. Howevver, instead of 
+both sides trying to synchronize connectivity checks in time-coupled fashion, 
+the sending side acts as a slave and sends STUN packets wherever the receiving
+side tells it to and when it is told to do so. The receiving sides is free to choose 
+whatever algorithm and timing it wants to find a path that works. 
+The sender and receiver roles is reversed for media flow in the opposite direction. 
+
+The current version of the draft builds on its original instantiation submitted in
+year 2015 as https://datatracker.ietf.org/doc/draft-jennings-mmusic-ice-fix/
 
 
 # Terminology
