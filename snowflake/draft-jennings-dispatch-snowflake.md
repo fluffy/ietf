@@ -55,13 +55,13 @@ connection setup, for example has rendered the protocol inflexible for
 innovation and increasingly difficult to apply and debug in a dynamic 
 network and evolving application contexts.
 
-This specification defines Snowflake where, like in ICE, both sides gather a
+This specification defines Snowflake, where like in ICE, both sides gather a
 set of address candidates that may work for communication. Howevver, instead of 
 both sides trying to synchronize connectivity checks in time-coupled fashion, 
 the sending side acts as a slave and sends STUN packets wherever the receiving
 side tells it to and when it is told to do so. The receiving sides is free to choose 
-whatever algorithm and timing it wants to find a path that works. 
-The sender and receiver roles is reversed for media flow in the opposite direction. 
+whatever algorithm and timing it wants to find a path that works. The sender and 
+receiver roles are reversed for media flow in the opposite direction. 
 
 The current version of the draft builds on its original instantiation submitted in
 year 2015 as https://datatracker.ietf.org/doc/draft-jennings-mmusic-ice-fix/
@@ -130,9 +130,14 @@ working
 A typical Snowflake operating model has the following components
 
 - Sender Agent: Software agent interested in sending data stream(s) 
-to a remote receiver.
+to a remote receiver. 
 
-- Receiver Agent: Software agent capable of receiving data stream(s)
+- Receiver Agent: Software agent capable of receiving data stream(s).
+An Snowflak Receiver Agent can be 
+
+- Snowflake Agent: An Snowflake Agent implementation is
+expected to have a STUN Client implementation at the minimum for
+gathering candidates and performing connectivity checks.
 
 - Signaling Server: Publicly reachable Server in the cloud accessible 
 by both the Sender and the receiver agents. Acts as backchannel/message 
@@ -142,38 +147,69 @@ bus for carrying signals between the Snowflake agents
 transport address of an agent behind NAT
 
 - TURN Server/Media Router: Recommended component acting as media relay 
-between the agents. A TURN Server can also act as backchannel in some
-deploylements.
+between the agents. A TURN Server can also act as backchannel in certain 
+instantiations.
 
+- BackChannel: A dedicated channel used by the agents to convey Snowflake
+messages. Can be a Signaling Server/Turn Server that can be reached 
+publicly by the agents.
  
 ## Protocol Workings
 
-To begin there exists a dedicated backchannel either in the form of a 
-Signaling Server or a TURN Server that a Receiver Agent uses to invoke 
-operations on the Sender Agent to trigger test for connectivity or 
-perform updates for the same as the session progresses.
-Frow now on, the term backchannel will be used irrespective of its 
-physical instantiation in this document.
-
 The basic principle here is, each side (Receiver Agent) is responsible 
-for discovering a viable path for it's incoming media and the 
-other end (Sender Agent) sends media to the location indicated by
-the Sender Agent. This deviates from ICE by negating the need for
-agent's role (controlled vs controlling) and nomination procedures 
-(aggressive vs passive).
+for discovering a viable path for it's incoming media. It does so by 
+indicating the addresses for the Sender to verify the connectivity.
+Once a viable path is established, the Sender Agent continues to
+transmit the media. This processs deviates from ICE by negating the need 
+for agent's role (controlled vs controlling), nomination procedures 
+(aggressive vs passive) and tightly coupled symmetric checklists 
+validation.
 
-The protocol starts by Receiver Agent gathering the candidates defined
-by its local policies. The candidate along with additional 
-attributes (priority, type for example) are the exchaged by invoking 
-an appropriate operation on the Sender Agent via the backchannel.
 
-On the sender agent, the candidates thus obtained are used by the
-STUN client to carry out connectivity checks towards the receiver.
-This opens up local pinholes and are further maintained by the 
-sender for the duration of the session. The Sender Agent then tells
-the far end using the backchannel to send it a STUN ping from a
+As a precursor to connectivity establishment,  the protocol 
+assumes that there exists a dedicated backchannel that a Receiver Agent 
+uses to invoke operations on the Sender Agent to trigger test for 
+connectivity or perform updates for the same as the session progresses.
+
+The protocol starts with the Sender Agent conveying its intention to 
+send media via the backchannel to the Receiver agent. The Sender can
+provide additional details on type of media, its quality requirements 
+as part of its "Media Send Intention" message.
+
+On receiving the Sender's media send intention message, the 
+Receiver Agent gathering the candidates defined by its local policies or
+previous knowledge of connectivity checks. The candidate(s) along with 
+additional attributes (priority, type for example) are then exchanged by 
+invoking an appropriate operation (Connectivity Check) on the Sender Agent. 
+An message of type "Test Candidates" is sent with encapsualted 
+candidate information. This is equivalent to the way the ICE candidates 
+are trickled in the Trickle ICE via a signaling server.
+
+
+On the Sender Agent, the candidates thus obtained (in the Test Candidates message) 
+are used by the STUN client implementation to carry out connectivity checks 
+towards the receiver. The connectivity checks are performed along the media 
+path as its done today. This opens up the required local pinholes as needed and 
+are further maintained by the Sender for the duration of the session. 
+
+The Sender Agent then requests the Receiver Agent to send it a "STUN Ping" 
+message from a given address (source of connectivity check) to a specific
+candidate provided in the "Test Candidates" message. This is done via 
+sending "STUN Ping Request" message by populating the aforementioned 
+information. Eventually, the Receiver Agent follows up with a "STUN Ping"
+message 
+do 
+"STUN Ping Request" from a
 given location to one of a specific candidates.  If this works, it
 knows it has a viable path.
+
+
+Failure in connectivity checks (timeouts/icmp errors) are reported via 
+"Test Candidate Result" message to the Receiver Agent. 
+
+
+
+
 
 The above set of procedures are continously performed during the 
 lifetime of the session as and when either side determines there
@@ -188,13 +224,17 @@ sender perform consent procedures via  the backchannel as well.
 This will ensure reliable consent verification in the case 
 STUN messages are lost.
 
-
-It is also highly RECOMMENDED the the agents support multiplexing
-various datastreams wherever possible to improve connectivity times
-and success probabilities
+Below picture captures one instance of protocol exchange where
+the Receiver Agent indicates the Sender Agent to carry out the
+connectivity checks. One can envision mulitple executions of
+the protocol as and when receiver has updated his knowledge
+of addresses or priorities or bandwidth availability.
 
 ~~~
-        Sender       BackChannel     Receiver
+           Snowflake Information Flow Model 
+        ---------------------------------------
+
+       Sender Agent   BackChannel  Receiver Agent
           |              |              |
           |              |              |
           |              |              |
@@ -230,9 +270,8 @@ and success probabilities
           |<-------------|              |
           |              |              |
           |              |              |
-          |(8) Found a viable path      |
+          |(8) Found a viable path, transmit media
           |.............................|
-          |              |              |
           |              |              |
 ~~~
 ## Advantages
