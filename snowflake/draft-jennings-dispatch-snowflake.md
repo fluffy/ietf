@@ -142,8 +142,8 @@ bus for carrying signals between the Snowflake agents
 transport address of an agent behind NAT
 
 - TURN Server/Media Router: Recommended component acting as media relay 
-between the agents. It is recommended to act as backchannel/message bus 
-similar to the Signaling Server.
+between the agents. A TURN Server can also act as backchannel in some
+deploylements.
 
  
 ## Protocol Workings
@@ -170,7 +170,7 @@ an appropriate operation on the Sender Agent via the backchannel.
 On the sender agent, the candidates thus obtained are used by the
 STUN client to carry out connectivity checks towards the receiver.
 This opens up local pinholes and are further maintained by the 
-sender for the duration of the session.  The Sender Agent then tells
+sender for the duration of the session. The Sender Agent then tells
 the far end using the backchannel to send it a STUN ping from a
 given location to one of a specific candidates.  If this works, it
 knows it has a viable path.
@@ -194,11 +194,47 @@ various datastreams wherever possible to improve connectivity times
 and success probabilities
 
 ~~~
-
-Picture goes here
-
+        Sender       BackChannel     Receiver
+          |              |              |
+          |              |              |
+          |              |              |
+          |(1) connect to backchannel   |
+          |.............................|
+          |              |              |
+          |              |              |
+          |(2) Media Send Intention (via backchannel)
+          |---------------------------->|
+          |              |              |
+          |              |              |
+          |              |              |Gather candidate address(es)
+          |              |              |
+          |              |              |
+          |              |              |
+          |              |(3) Test Candidate(s) [address,priority..]
+          |              |<-------------|
+          |              |              |
+          |              |              |
+          |(4) Test Candidate(s) [address,priority..]
+          |<-------------|              |
+          |              |              |
+          |              |              |
+          |(5) STUN connectivity check  |
+          |---------------------------->|
+          |              |              |
+          |              |              |
+          |              |(6) STUN Check Confirm (transactionId)
+          |              |<-------------|
+          |              |              |
+          |              |              |
+          |(7) STUN Check Confirm (transactionId)
+          |<-------------|              |
+          |              |              |
+          |              |              |
+          |(8) Found a viable path      |
+          |.............................|
+          |              |              |
+          |              |              |
 ~~~
-
 ## Advantages
 
 ###  Diagnostics
