@@ -204,12 +204,12 @@ response to STUN connectivity response was lost in transmission.
 The Sender does this by sending a "Stun Ping Request" 
 message and populates the aforementioned information. To reciprocate, 
 the Receiver Agent follows up with a "Stun Ping" message populated
-with the results for which STUN Connectiviy checks was received successfully. 
+with the results for which STUN Connectivity checks was received successfully. 
 If a successful response were received from either of the flows, there is a 
 viable path for the Sender to transmit the media.
 
 
-The above set of procedures can be  continously performed during the 
+The above set of procedures can be  continuously performed during the 
 lifetime of the session as and when the Receiver Agent determines a 
 better candidate for receiving the media. Such a decision 
 is totally defined by the local policies and can be performed 
@@ -226,7 +226,7 @@ status.
 
 Below picture captures one instance of protocol exchange where
 the Receiver Agent indicates the Sender Agent to carry out the
-connectivity checks. One can envision mulitple executions of
+connectivity checks. One can envision multiple executions of
 the protocol as and when receiver has updated its knowledge
 of addresses or priorities or bandwidth availability.
 
@@ -304,8 +304,10 @@ of addresses or priorities or bandwidth availability.
           |              |              |
 
 Notes:
-  Steps 6 - 9 is optional and media path based connectivity check might suffice.
-  Steps 11 - 14 can happen exclusively on media path and backchannel may be used for reliability
+  Steps 6 - 9 is optional and media path based connectivity check 
+  might suffice.
+  Steps 11 - 14 can happen exclusively on media path and backchannel 
+  may be used for reliability
 
 ~~~
 
