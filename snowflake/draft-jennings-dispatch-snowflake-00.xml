@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE rfc SYSTEM 'rfc2629.dtd' []>
+<rfc ipr="trust200902" category="std" docName="draft-jennings-dispatch-snowflake">
+<?rfc toc="yes"?>
+<?rfc symrefs="yes"?>
+<?rfc sortrefs="yes"?>
+<?rfc compact="yes"?>
+<?rfc subcompact="no"?>
+<?rfc private=""?>
+<?rfc topblock="yes"?>
+<?rfc comments="no"?>
+<front>
+<title abbrev="snowflake">Snowflake - A Lighweight, Asymmetric, Flexible, Receiver Driven Connectivity Establishment</title>
+
+<author initials="C." surname="Jennings" fullname="Cullen Jennings">
+<organization>Cisco</organization>
+<address>
+<postal>
+<street></street>
+<city></city>
+<code></code>
+<country></country>
+<region></region>
+</postal>
+<phone></phone>
+<email>fluffy@iii.ca</email>
+<uri></uri>
+</address>
+</author>
+<author initials="S." surname="Nandakumar" fullname="Suhas Nandakumar">
+<organization>Cisco</organization>
+<address>
+<postal>
+<street></street>
+<city></city>
+<code></code>
+<country></country>
+<region></region>
+</postal>
+<phone></phone>
+<email>snandaku@cisco.com</email>
+<uri></uri>
+</address>
+</author>
+<date year="2018" month="January" day="29"/>
+
+<area>Internet</area>
+<workgroup></workgroup>
+
+
+<abstract>
+<t>Interactive Connectivity Establishment (ICE) (RFC5245)
+defines protocol machinery for 2 peers to discover each
+other and establish connectivity in order to send and receive
+Media Streams.
+</t>
+<t>This draft raises some issues inherent in the assumptions with
+ICE and proposes a lightweight receiver driven protocol for
+asymmetric connecitivity establishment.
+</t>
+</abstract>
+
+
+</front>
+
+<middle>
+
+<section anchor="introduction" title="Introduction">
+<t>ICE was designed over a decade and certain assumptions about the
+network topology, timing considerations, application complexity
+have drastically changed since then. Newer additions/clarifications
+to ICE in  <xref target="I-D.ietf-ice-rfc5245bis"/> and Trickle ICE <xref target="I-D.ietf-ice-trickle"/>
+have indeed help improve its performance and the way the connectivity checks
+are performed. However enforcing stringent global pacing requirements,
+coupled timing dependencis between the ICE agents, the need for symmetric
+connection setup, for example has rendered the protocol inflexible for
+innovation and increasingly difficult to apply and debug in a dynamic
+network and evolving application contexts.
+</t>
+<t>This specification defines Snowflake, where like in ICE, both sides gather a
+set of address candidates that may work for communication. Howevver, instead of
+both sides trying to synchronize connectivity checks in time-coupled fashion,
+the sending side acts as a slave and sends STUN packets wherever the receiving
+side tells it to and when it is told to do so. The receiving sides is free to choose
+whatever algorithm and timing it wants to find a path that works. The sender and
+receiver roles are reversed for media flow in the opposite direction.
+</t>
+<t>The current version of the draft builds on its original instantiation submitted in
+year 2015 as <eref target="https://datatracker.ietf.org/doc/draft-jennings-mmusic-ice-fix/"/>
+</t>
+</section>
+
+<section anchor="terminology" title="Terminology">
+<t>In this document, the key words &quot;MUST&quot;, &quot;MUST NOT&quot;, &quot;SHOULD&quot;, &quot;SHOULD
+NOT&quot;, &quot;MAY&quot;, and &quot;OPTIONAL&quot; are to be interpreted as described in RFC
+2119 <xref target="RFC2119"/> and indicate requirement levels for compliant
+implementations.
+</t>
+</section>
+
+<section anchor="problem-statement" title="Problem Statement">
+<t>ICE was developed roughly ten years ago and several things have been
+learned that could be improved:
+</t>
+<t>
+<list style="numbers">
+<t>It is spectacularly difficult to debug and analyze failures or
+successes in ICE or develop good automated tests. Many
+implementations have had significant bugs for long periods of time.
+This is further complicated by the timing dependency as explained
+next.</t>
+<t>It is timing dependent.  It relies on both sides to to do
+something (candidate pairing, validation) at roughly the same time
+and that ability to do this goes down with the number of interfaces
+and candidates being handled.  Mobile interfaces, dual stack agents
+make this situation worse.</t>
+<t>Differences in interpretation and implementation of the protocol
+with respect to aggressive vs normal nomination may hinder rapid
+convergence or end up in agents choosing suboptimal routes.</t>
+<t>It does not discover asymmetric routes. For example UDP leaving
+a device may work just fine even thought UDP coming into that
+device does not work at all.</t>
+<t>May deployments consider using a TURN/Media Router in their topology
+today in order to support fast session start or ensuring reliable
+connection (although with small latency overhead).
+At the time ICE was designed it was not understood if this would be too
+expensive or not so ICE works without TURN but better with it.</t>
+<t>The asymmetric nature of the controlling / controlled roles has caused
+many interoperability problems and bugs. Also Role conflicts might
+lead to degrade connection setup depending on which side gets the
+the controlling role.</t>
+<t>Priorities are complicated in dual stack world and ICE is brittle
+to changes in this part of the algorithm. Although there are advises
+in dual-stack-fairness specification that might help here.</t>
+</list>
+</t>
+</section>
+
+<section anchor="snowflake-for-connectivity-establishment" title="Snowflake for connectivity establishment">
+<t>Snowflake is a light weight, asymmetric, flexible
+and receiver controlled protocol for end points to establish
+connectivity between them.
+</t>
+<t>Following various subsections go in further details of its
+working
+</t>
+
+<section anchor="system-components" title="System Components">
+<t>A typical Snowflake operating model has the following components
+</t>
+<t>
+<list style="symbols">
+<t>Sender Agent: Software agent interested in sending data stream(s)
+to a remote receiver.</t>
+<t>Receiver Agent: Software agent capable of receiving data stream(s).
+An Snowflak Receiver Agent can be</t>
+<t>Snowflake Agent: An Snowflake Agent implementation is
+expected to have a STUN Client implementation at the minimum for
+gathering candidates and performing connectivity checks.</t>
+<t>Signaling Server: Publicly reachable Server in the cloud accessible
+by both the Sender and the receiver agents. Acts as backchannel/message
+bus for carrying signals between the Snowflake agents</t>
+<t>STUN Server: Optional component for determining the public facing
+transport address of an agent behind NAT</t>
+<t>TURN Server/Media Router: Recommended component acting as media relay
+between the agents. A TURN Server can also act as backchannel in certain
+instantiations.</t>
+<t>BackChannel: A dedicated channel used by the agents to convey Snowflake
+messages. Can be a Signaling Server/Turn Server that can be reached
+publicly by the agents.</t>
+</list>
+</t>
+</section>
+
+<section anchor="protocol-workings" title="Protocol Workings">
+<t>The basic principle here is, each side (Receiver Agent) is responsible
+for discovering a viable path for it's incoming media. It does so by
+indicating the addresses for the Sender to verify the connectivity.
+Once a viable path is established, the Sender Agent continues to
+transmit the media. This processs deviates from ICE by negating the need
+for agent's role (controlled vs controlling), nomination procedures
+(aggressive vs passive) and tightly coupled symmetric checklists
+validation.
+</t>
+<t>As a precursor to connectivity establishment,  the protocol
+assumes that there exists a dedicated backchannel that a Receiver Agent
+uses to invoke operations on the Sender Agent to trigger test for
+connectivity or perform updates for the same as the session progresses.
+</t>
+<t>The protocol starts with the Sender Agent conveying its intention to
+send media via the backchannel to the Receiver agent. The Sender can
+provide additional details on type of media, its quality requirements
+as part of its &quot;Media Send Intention&quot; message.
+</t>
+<t>On receiving the Sender's media send intention message, the
+Receiver Agent gathering the candidates defined by its local policies or
+previous knowledge of connectivity checks. The candidate(s) along with
+additional attributes (priority, type for example) are then exchanged by
+invoking an appropriate operation (Connectivity Check) on the Sender Agent.
+An message of type &quot;Test Candidates&quot; is sent with encapsualted
+candidate information. This is equivalent to the way the ICE candidates
+are trickled in the Trickle ICE via a signaling server.
+</t>
+<t>On the Sender Agent, the candidates thus obtained (in the Test Candidates message)
+are used by the STUN client implementation to carry out connectivity checks
+towards the receiver. The connectivity checks are performed along the media
+path as its done today. This opens up the required local pinholes as needed and
+are further maintained by the Sender for the duration of the session.
+</t>
+<t>The Sender Agent then requests the Receiver Agent to send it a &quot;STUN Ping&quot;
+message from a given address (source of connectivity check) to a specific
+candidate provided in the &quot;Test Candidates&quot; message. This is done via
+sending &quot;STUN Ping Request&quot; message by populating the aforementioned
+information. Eventually, the Receiver Agent follows up with a &quot;STUN Ping&quot;
+message
+do
+&quot;STUN Ping Request&quot; from a
+given location to one of a specific candidates.  If this works, it
+knows it has a viable path.
+</t>
+<t>Failure in connectivity checks (timeouts/icmp errors) are reported via
+&quot;Test Candidate Result&quot; message to the Receiver Agent.
+</t>
+<t>The above set of procedures are continously performed during the
+lifetime of the session as and when either side determines there
+is a better candidate for receiving the media. Such a decision
+is totally defined by the local policies and can be performed
+independently of the other side.
+</t>
+<t>Also to ensure receiver's consent for sending the media, the
+sender should follow the procedures in XXXX_consent_freshness
+to get the consent and it is also RECOMMENDED that the
+sender perform consent procedures via  the backchannel as well.
+This will ensure reliable consent verification in the case
+STUN messages are lost.
+</t>
+<t>Below picture captures one instance of protocol exchange where
+the Receiver Agent indicates the Sender Agent to carry out the
+connectivity checks. One can envision mulitple executions of
+the protocol as and when receiver has updated his knowledge
+of addresses or priorities or bandwidth availability.
+</t>
+
+<figure align="center"><artwork align="center">
+           Snowflake Information Flow Model 
+        ---------------------------------------
+
+       Sender Agent   BackChannel  Receiver Agent
+          |              |              |
+          |              |              |
+          |              |              |
+          |(1) connect to backchannel   |
+          |.............................|
+          |              |              |
+          |              |              |
+          |(2) Media Send Intention (via backchannel)
+          |----------------------------&gt;|
+          |              |              |
+          |              |              |
+          |              |              |Gather candidate address(es)
+          |              |              |
+          |              |              |
+          |              |              |
+          |              |(3) Test Candidate(s) [address,priority..]
+          |              |&lt;-------------|
+          |              |              |
+          |              |              |
+          |(4) Test Candidate(s) [address,priority..]
+          |&lt;-------------|              |
+          |              |              |
+          |              |              |
+          |(5) STUN connectivity check  |
+          |----------------------------&gt;|
+          |              |              |
+          |              |              |
+          |              |(6) STUN Check Confirm (transactionId)
+          |              |&lt;-------------|
+          |              |              |
+          |              |              |
+          |(7) STUN Check Confirm (transactionId)
+          |&lt;-------------|              |
+          |              |              |
+          |              |              |
+          |(8) Found a viable path, transmit media
+          |.............................|
+          |              |              |
+</artwork></figure>
+</section>
+
+<section anchor="advantages" title="Advantages">
+
+<section anchor="diagnostics" title="Diagnostics">
+<t>This makes it very easy to see which outbound connection were sent
+from side A to open a pin hole, then when side A asked B to send a
+test PING and if B received that.  It becomes easier to set up a
+client with an automated test jig that tests all the combinations and
+makes sure they work as you only need to test receiving capability
+and sender capability independently.
+</t>
+</section>
+
+<section anchor="timing" title="Timing">
+<t>This more or less removes the timing complexity by allowing both
+sides to be responsible for their own timing.  If it turns out that
+we can pace things much faster than 50ms then this allows us to
+take advantage of that without both sides upgrading at the same time.
+<vspace/>
+If we end up with a lot more candidates due to v6, mobile etc, this removes
+the issue we have today where a path might have worked but the two sides
+did not find it due to timing issues.
+</t>
+</section>
+
+<section anchor="asymmetric-media" title="Asymmetric Media">
+<t>This allows media to be sent in one direction over a path that does
+not work in the reverse direction.
+</t>
+</section>
+
+<section anchor="fast-start" title="Fast Start">
+<t>Given there exists a dedicated backchannel, this protocol can speed
+up the media flow by using TURN server for the backchannel. Once
+either agents learn more about the candidates, each can update the
+other side to ensure a better low latency path is used for media.
+</t>
+</section>
+
+<section anchor="innovation-and-experimentation" title="Innovation and Experimentation">
+<t>TODO
+</t>
+</section>
+
+<section anchor="backwards-compatibility" title="Backwards Compatibility">
+<t>At IETF 92 I thought it would be possible to design a backwards
+compatibly solution that did roughly this.  That might be possible if
+all the major implementations fully implemented the current ICE spec
+but many of them do not.  Even worse, they implement different parts.
+My proposal here is more or less make an ICE2.  ICE2 advertises the
+same candidates as ICE but also adds some SDP signaling to indicate
+the device supports ICE and ICE2.
+</t>
+<t>In the short term we would need device such as web browsers would be
+requires to support ICE and the ICE2 extensions here but in the
+future we could move to devices that only did ICE2.
+</t>
+<t>The main mechanisms between ICE and ICE2 are largely the same but the
+way paths are chosen and used is somewhat different.
+</t>
+</section>
+</section>
+</section>
+
+<section anchor="iana-consideration" title="IANA Consideration">
+<t>TODO
+</t>
+</section>
+
+<section anchor="security-considerations" title="Security Considerations">
+<t>TODO
+</t>
+</section>
+
+<section anchor="acknowledgements" title="Acknowledgements">
+<t>TODO
+</t>
+</section>
+
+</middle>
+<back>
+<references title="Normative References">
+<?rfc include="http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml"?>
+</references>
+<references title="Informative References">
+<?rfc include="http://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-ice-rfc5245bis.xml"?>
+<?rfc include="http://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-ice-trickle.xml"?>
+</references>
+
+</back>
+</rfc>

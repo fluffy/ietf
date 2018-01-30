@@ -186,33 +186,31 @@ candidate information. This is equivalent to the way the ICE candidates
 are trickled in the Trickle ICE via a signaling server.
 
 
-On the Sender Agent, the candidates thus obtained (in the Test Candidates message) 
-are used by the STUN client implementation to carry out connectivity checks 
-towards the receiver. The connectivity checks are performed along the media 
-path as its done today. This opens up the required local pinholes as needed and 
+On the Sender Agent, the candidates thus obtained 
+(i,e in the Test Candidates message) is used by the STUN client 
+implementation to carry out connectivity checks towards the receiver. 
+The connectivity checks are performed along the media path as its done 
+ICE. This opens up the required local pinholes as needed and 
 are further maintained by the Sender for the duration of the session. 
 
-The Sender Agent then requests the Receiver Agent to send it a "STUN Ping" 
+The Sender Agent also requests the Receiver Agent to send it a "STUN Ping" 
 message from a given address (source of connectivity check) to a specific
-candidate provided in the "Test Candidates" message. This is done via 
-sending "STUN Ping Request" message by populating the aforementioned 
-information. Eventually, the Receiver Agent follows up with a "STUN Ping"
-message 
-do 
-"STUN Ping Request" from a
-given location to one of a specific candidates.  If this works, it
-knows it has a viable path.
+candidate provided in the "Test Candidates" message. This is done for 
+Sender Agent verify to connectivity status results over the backchannel. 
+This mechanism is beneficial especially for one-sided media scenarios where 
+the Receiver Agent can't send the STUN response to the sender or if the
+response to STUN connectivity response was lost in transmission.
 
-
-Failure in connectivity checks (timeouts/icmp errors) are reported via 
-"Test Candidate Result" message to the Receiver Agent. 
-
-
-
+The Sender requests the does this by sending "Stun Ping Request" 
+message and populates the aforementioned information. To reciprocate, 
+the Receiver Agent follows up with a "Stun Ping" message 
+for all the paths for which STUN Connectiviy check was received successfully. 
+If a successful response was received from either of the flows, there is a 
+viable path for the Sender to transmit the media.
 
 
 The above set of procedures are continously performed during the 
-lifetime of the session as and when either side determines there
+lifetime of the session as and whe the Receiver Agent determines there
 is a better candidate for receiving the media. Such a decision 
 is totally defined by the local policies and can be performed 
 independently of the other side.
@@ -220,9 +218,10 @@ independently of the other side.
 Also to ensure receiver's consent for sending the media, the 
 sender should follow the procedures in XXXX_consent_freshness 
 to get the consent and it is also RECOMMENDED that the 
-sender perform consent procedures via  the backchannel as well.
-This will ensure reliable consent verification in the case 
-STUN messages are lost.
+sender perform consent procedures via  the backchannel as well by 
+requesting the Receiver Agent to send the "Stun Ping" message 
+providing the candidate information. It does so by sending the 
+"Stun Ping Request" message for which consent is asked for. 
 
 Below picture captures one instance of protocol exchange where
 the Receiver Agent indicates the Sender Agent to carry out the
