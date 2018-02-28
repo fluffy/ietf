@@ -44,15 +44,16 @@ asymmetric connecitivity establishment.
 
 # Introduction
 
-ICE was designed over a decade and certain assumptions about the
+ICE was designed over a decade ago and certain assumptions about the
 network topology, timing considerations, application complexity 
 have drastically changed since then. Newer additions/clarifications 
 to ICE in  [@I-D.ietf-ice-rfc5245bis] and Trickle ICE [@I-D.ietf-ice-trickle] 
 have indeed help improve its performance and the way the connectivity checks 
 are performed. 
 
-However, enforcing stringent global pacing requirements, 
-coupled timing dependencies between the ICE agents, the need for symmetric 
+However, enforcing stringent global pacing requirements coupled with
+brute force connectivity checks, tightly coupled timing dependencies 
+between the ICE agents, the need for symmetric 
 connection setup, for example, has rendered the protocol inflexible for 
 innovation and increasingly difficult to apply and debug in a dynamic 
 network and evolving application contexts.
@@ -101,7 +102,7 @@ convergence or may end up in agents choosing suboptimal routes.
 
 4. It does not discover asymmetric routes. For example UDP leaving
 a device may work just fine even though UDP coming into that 
-device does not work at all.
+device may not work at all.
 
 5. Many deployments consider using a TURN/Media Router in their topology 
 today in order to support fast session start or ensuring reliable
@@ -116,7 +117,7 @@ the controlling role.
 
 7. Priorities are complicated in dual stack world and ICE is brittle
 to changes in this part of the algorithm. Although there are advises 
-in dual-stack-fairness specification that might help here.
+in [@I-D.ietf-ice-dualstack-fairness] specification that might help here.
 
 
 # Snowflake for connectivity establishment
@@ -126,7 +127,7 @@ and receiver controlled protocol for end points to establish
 connectivity between them. 
 
 The following subsections go into further details of its
-working
+working.
 
 ## System Components 
 A typical Snowflake operating model has the following components
@@ -138,11 +139,12 @@ to a remote receiver.
 
 - Snowflake Agent: A software agent that is
 expected to have a STUN Client implementation at the minimum for
-gathering candidates and performing connectivity checks.
+gathering candidates and performing connectivity checks. Sender/Receiver
+agents are Snowflake agents as well.
 
-- Signaling Server: Publicly reachable Server in the cloud accessible 
+- CallAgent/Backchannel: Publicly reachable Server in the cloud accessible 
 by both the Sender and the receiver agents, acts as backchannel/message 
-bus for carrying signals between the Snowflake agents.
+bus for carrying signals between the Snowflake agents. 
 
 - STUN Server: Optional component for determining the public facing 
 transport address of an agent behind NAT.
@@ -150,10 +152,6 @@ transport address of an agent behind NAT.
 - TURN Server/Media Router: Recommended component acting as media relay 
 between the agents. A TURN Server can also act as backchannel in certain 
 instantiations.
-
-- BackChannel: A dedicated channel used by the agents to convey Snowflake
-messages, can be a Signaling Server/Turn Server that can be reached 
-publicly by the agents.
  
 ## Protocol Workings
 
@@ -166,63 +164,58 @@ for agent's role (controlled vs controlling), nomination procedures
 (aggressive vs passive) and tightly coupled symmetric checklists 
 validation.
 
-
-As a precursor to connectivity establishment,  the protocol 
-assumes that there exists a dedicated backchannel that a Receiver Agent 
-uses to invoke operations on the Sender Agent to trigger test for 
-connectivity or perform updates for the same as the session progresses.
+As a precursor to connectivity establishment, the protocol 
+assumes that there exists a dedicated backchannel that the
+agents can use to exchange protocol control messages.
 
 The protocol starts with the Sender Agent conveying its intention to 
-send media via the backchannel to the Receiver agent. The Sender can
-provide additional details on type of media, its quality information, 
-as part of its "Media Send Intention" message.
-
-On receiving the Sender's media send intention message, the 
-Receiver Agent gathers the candidates defined by its local policies or
-previous knowledge of connectivity checks. The candidate(s) along with 
-additional attributes (priority, type for example) are then exchanged by 
-invoking an appropriate operation on the Sender Agent. 
-An message of type "Test Candidates" is sent with encapsualted 
-candidate information. This is equivalent to the way the ICE candidates 
-are trickled in the Trickle ICE via a signaling server.
+send media via the backchannel to the Receiver agent. The Sender does
+so by sending a "PlaceCall" control message and populates the same 
+with the ICE candidates gathered so far. 
 
 
-On the Sender Agent, the candidates thus obtained 
-(i,e in the Test Candidates message) is used by the STUN client 
-implementation to carry out the connectivity checks towards the receiver. 
-The connectivity checks are performed along the media path as its done 
-with ICE today. This opens up the required local pinholes and 
+On receiving the sender's intention to send media (via the backchannel),
+the Receiver Agent proceeds with gathering the candidates defined by 
+its local policies or previous knowledge of connectivity checks. The
+Receiver Agent then directs the Sender Agent to carryout STUN 
+connectivity checks by sending the "DoPing" control message via the 
+backchannel. This message is populated with the candidate pair
+that the receiver wants the sender to verify the reachability. 
+
+The Receiver Agent may sends multiple "DoPing" messages to the 
+Sender Agent per candidate pair to be tested for connectvity, as 
+deemed necessary. The order, the timing and the number of candidate pairs 
+to be tested are totally under the control of the Receiver Agent's specific 
+implementation.
+
+On receiving the "DoPing" message with the candidate pair to be tested, 
+the Sender Agent carries out STUN ping checks on that
+candidate pair. It does so by sending the STUN Binding Request message 
+towards the receiver over the media path (as its done 
+with ICE today). This opens up the required local pinholes and 
 are further maintained by the Sender for the duration of the session. 
 
-The Sender Agent also requests the Receiver Agent to send it a "STUN Ping" 
-message from a given address (source of connectivity check) to a specific
-candidate provided in the "Test Candidates" message. This is done so that
-Sender Agent can verify the connectivity status results over the backchannel. 
-This mechanism is beneficial especially for one-sided media scenarios where 
-the Receiver Agent can't send the STUN response to the sender or if the
-response to STUN connectivity response was lost in transmission. 
-The Sender does this by sending a "Stun Ping Request" 
-message and populates the aforementioned information. To reciprocate, 
-the Receiver Agent follows up with a "Stun Ping" message populated
-with the results for which STUN Connectivity checks was received successfully. 
-If a successful response were received from either of the flows, there is a 
-viable path for the Sender to transmit the media.
+On receiving the STUN Ping from the Sender Agent, the Receiver Agent 
+does the following two things:
 
+1. It responds to the connectivity check on the media path by sending
+a STUN Binding Response.
+2. It also sends a "Got Ping" control message with the details from the
+STUN Binding Response over the backchannel to the Sender Agent.
+This is done so that the Sender Agent can verify the connectivity status results 
+over the backchannel as well. This mechanism is beneficial especially for 
+one-sided media scenarios where the Receiver Agent can't send the STUN response 
+to the sender or if the response to STUN connectivity response was lost 
+in transmission. 
 
-The above set of procedures can be  continuously performed during the 
-lifetime of the session as and when the Receiver Agent determines a 
-better candidate for receiving the media. Such a decision 
+If a successful STUN Ping response was received (either via the media path or the 
+backchannel), there is a viable path for the Sender to transmit the media.
+
+The above set of procedures can be continuously performed during the 
+lifetime of the session as and when the Receiver Agent determines 
+better candidates for receiving the media. Such a decision 
 is totally defined by the local policies and can be performed 
 independently of the other side.
-
-Also to ensure Receiver Agent's consent for receiving the media, the 
-sender should follow the procedures in [@RFC7675] 
-to get the consent. It is also RECOMMENDED that the consent
-be verified over the backchannel as well. In order to do so, the Sender
-Agent sends "STUN Ping Request" message with the candidate
-information for which consent needs to be obtained. In response,
-the Receiver Agent sends "STUN Ping" message indicating the consent
-status.
 
 Below picture captures one instance of protocol exchange where
 the Receiver Agent indicates the Sender Agent to carry out the
@@ -231,84 +224,61 @@ the protocol as and when receiver has updated its knowledge
 of addresses or priorities or bandwidth availability.
 
 ~~~
-           Snowflake Information Flow Model 
-        ---------------------------------------
+           Snowflake Information Flow (One-way Media) 
+        ---------------------------------------------
 
-       Sender Agent   BackChannel  Receiver Agent
-          |              |              |
-          |              |              |
-          |              |              |
-          |(1) connect to backchannel   |
-          |.............................|
-          |              |              |
-          |              |              |
-          |(2) Media Send Intention (via backchannel)
-          |---------------------------->|
-          |              |              |
-          |              |              |
-          |              |              |Gather candidate address(es)
-          |              |              |
-          |              |              |
-          |              |              |
-          |              |(3) Test Candidate(s) [address,priority..]
-          |              |<-------------|
-          |              |              |
-          |              |              |
-          |(4) Test Candidate(s) [address,priority..]
-          |<-------------|              |
-          |              |              |
-          |              |              |
-          |(5) STUN connectivity check over media path
-          |.............................|
-          |              |              |
-          |              |              |
-          |(6) STUN Ping Request (candidates checked)
-          |------------->|              |
-          |              |              |
-          |              |              |
-          |              |(7) STUN Ping Request (candidates checked)
-          |              |------------->|
-          |              |              |
-          |              |              |
-          |              |(8) STUN Ping (connectivity results)
-          |              |<-------------|
-          |              |              |
-          |              |              |
-          |(9) STUN Ping (connectivity results)
-          |<-------------|              |
-          |              |              |
-          |              |              |
-          |(10) Found a viable path, ask for consent
-          |.............................|
-          |              |              |
-          |              |              |
-          |(11) STUN Ping Request (candidate consent)
-          |------------->|              |
-          |              |              |
-          |              |              |
-          |(12) STUN Ping Request (candidate consent)
-          |<-------------|              |
-          |              |              |
-          |              |              |
-          |              |(13) STUN Ping (consent result)
-          |              |<-------------|
-          |              |              |
-          |              |              |
-          |(14) STUN Ping (consent result)
-          |<-------------|              |
-          |              |              |
-          |              |              |
-          |(15)  Consent Appproved for Sending Media
-          |.............................|
-          |              |              |
-          |              |              |
-
-Notes:
-  Steps 6 - 9 is optional and media path based connectivity check 
-  might suffice.
-  Steps 11 - 14 can happen exclusively on media path and backchannel 
-  may be used for reliability
-
+          Sender Agent        CallAgent(backchannel)       Receiver Agent
+          |                        |                        |
+          |                        |                        |
+          |                        |                        |
+          |(1) connect to backchannel                       |
+          |.................................................|
+          |                        |                        |
+          |                        |                        |
+          |Gather Sender Candidates|                        |
+          |                        |                        |
+          |                        |                        |
+          |                        |                        |
+          |(2) PlaceCall [Sender Candidates]                |
+          |----------------------->|                        |
+          |                        |                        |
+          |                        |                        |
+          |                        |(3) PlaceCall [Sender Candidates]
+          |                        |----------------------->|
+          |                        |                        |
+          |                        |                        |
+          |                        |                        |Gather Receiver Candidates
+          |                        |                        |
+          |                        |                        |
+          |                        |                        |
+          |                        |(4) DoPing [Candidate Pair]
+          |                        |<-----------------------|
+          |                        |                        |
+          |                        |                        |
+          |(5) DoPing [Candidate Pair]                      |
+          |<-----------------------|                        |
+          |                        |                        |
+          |                        |                        |
+          |(6) STUN Ping (over media path)                  |
+          |------------------------------------------------>|
+          |                        |                        |
+          |                        |                        |
+          |                        |(7) GotPing (STUN Ping Response)
+          |                        |<-----------------------|
+          |                        |                        |
+          |                        |                        |
+          |(8) GotPing (STUN Ping Respnse)                  |
+          |<-----------------------|                        |
+          |                        |                        |
+          |                        |                        |Repeat Steps 4-8 as needed
+          |                        |                        |for other candidate pairs
+          |                        |                        |
+          |                        |                        |
+          |                        |                        |
+          |(9) Found a viable path for sending media        |
+          |.................................................|
+          |                        |                        |
+          |                        |                        |
 ~~~
 
 ## Advantages of Snowflake
