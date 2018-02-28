@@ -86,7 +86,7 @@
 <?rfc rfcedstyle="no" ?>
 <?rfc tocdepth="4"?>
 
-<rfc category="std" docName="draft-ietf-mmusic-sdp-mux-attributes-16"
+<rfc category="std" docName="draft-ietf-mmusic-sdp-mux-attributes-17"
      ipr="trust200902">
   <front>
     <title abbrev="SDP Attribute Multiplexing">A Framework for SDP Attributes
@@ -112,7 +112,7 @@
       </address>
     </author>
 
-    <date day="19" month="December" year="2016"/>
+    <date day="28" month="February" year="2018"/>
 
     <area>MMUSIC</area>
 
@@ -304,6 +304,11 @@
            ]]></artwork>
          </figure>
         <t>&nbsp;</t>
+       <t>Note: Eventhough IDENTICAL attributes must be repeated across all media 
+       descriptions under multiplexing, they might not always be explicitly encoded across 
+       all media descriptions. <xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/> 
+       defines rules for when attributes and their values are implicitly applied to media 
+       description.</t> 
       </section>
       <section title="Category: SUM">
         <t>The attributes in the SUM category can be set as they are
@@ -4102,6 +4107,14 @@ a=pcfg:4 m=5 pt=5:101
     </section>
     <section title="Change Log">
       <t>[RFC EDITOR NOTE: Please remove this section when publishing]</t>
+      <t>Changes draft-ietf-mmusic-sdp-mux-attributes-16
+          <list style="symbols">
+              <t>
+                Added a clarification note on when to encode IDENTICAL attributes
+                as suggested by Christer.
+              </t>
+          </list>
+      </t>
       <t>Changes draft-ietf-mmusic-sdp-mux-attributes-15
           <list style="symbols">
               <t>
