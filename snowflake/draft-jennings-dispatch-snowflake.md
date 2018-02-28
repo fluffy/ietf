@@ -183,7 +183,7 @@ backchannel. This message is populated with the candidate pair
 that the receiver wants the sender to verify the reachability. 
 
 The Receiver Agent may sends multiple "DoPing" messages to the 
-Sender Agent per candidate pair to be tested for connectvity, as 
+Sender Agent per candidate pair to be tested for connectivity, as 
 deemed necessary. The order, the timing and the number of candidate pairs 
 to be tested are totally under the control of the Receiver Agent's specific 
 implementation.
