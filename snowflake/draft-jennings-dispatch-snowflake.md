@@ -2,7 +2,7 @@
     title = "Snowflake - A Lighweight, Asymmetric, Flexible, Receiver Driven Connectivity Establishment"
     abbrev = "snowflake"
     category = "std"
-    docName = "draft-jennings-dispatch-snowflake"
+    docName = "draft-jennings-dispatch-snowflake-01"
     ipr = "trust200902"
 
     [pi]
@@ -37,7 +37,7 @@ Media Streams.
 
 This draft raises some issues inherent in the assumptions with 
 ICE and proposes a lightweight receiver driven protocol for 
-asymmetric connecitivity establishment.
+asymmetric connectivity establishment.
 
 {mainmatter}
 
@@ -159,7 +159,7 @@ The basic principle here is, each side (Receiver Agent) is responsible
 for discovering a viable path for it's incoming media. It does so by 
 indicating the addresses for the Sender to verify the connectivity.
 Once a viable path is established, the Sender Agent continues to
-transmit the media. This processs deviates from ICE by negating the need 
+transmit the media. This process deviates from ICE by negating the need 
 for agent's role (controlled vs controlling), nomination procedures 
 (aggressive vs passive) and tightly coupled symmetric checklists 
 validation.
@@ -169,7 +169,7 @@ assumes that there exists a dedicated backchannel that the
 agents can use to exchange protocol control messages.
 
 The protocol starts with the Sender Agent conveying its intention to 
-send media via the backchannel to the Receiver agent. The Sender does
+send media via the backchannel to the Receiver agent. The sender does
 so by sending a "PlaceCall" control message and populates the same 
 with the ICE candidates gathered so far. 
 
@@ -178,38 +178,43 @@ On receiving the sender's intention to send media (via the backchannel),
 the Receiver Agent proceeds with gathering the candidates defined by 
 its local policies or previous knowledge of connectivity checks. The
 Receiver Agent then directs the Sender Agent to carryout STUN 
-connectivity checks by sending the "DoPing" control message via the 
-backchannel. This message is populated with the candidate pair
-that the receiver wants the sender to verify the reachability. 
+connectivity checks towards the receiver by sending the "DoPing" 
+control message via the backchannel. This message is populated 
+with the candidate pair that the receiver wants the sender to 
+verify the reachability. 
 
 The Receiver Agent may sends multiple "DoPing" messages to the 
-Sender Agent per candidate pair to be tested for connectivity, as 
-deemed necessary. The order, the timing and the number of candidate pairs 
-to be tested are totally under the control of the Receiver Agent's specific 
-implementation.
+Sender Agent, sending "DoPing" message per candidate pair 
+to be tested for connectivity, as deemed necessary. 
+The order, the timing and the number of candidate pairs to be tested 
+are fully controlled by the Receiver Agent's implementation.
 
-On receiving the "DoPing" message with the candidate pair to be tested, 
-the Sender Agent carries out STUN ping checks on that
+On receiving the "DoPing" message with the candidate pair 
+to be tested, the Sender Agent carries out STUN ping checks on that
 candidate pair. It does so by sending the STUN Binding Request message 
 towards the receiver over the media path (as its done 
 with ICE today). This opens up the required local pinholes and 
 are further maintained by the Sender for the duration of the session. 
+The Sender Agent also ensures that the frequency and the timing of 
+these checks respect the congestion control requirements for the 
+underlying transport.
 
 On receiving the STUN Ping from the Sender Agent, the Receiver Agent 
 does the following two things:
 
 1. It responds to the connectivity check on the media path by sending
 a STUN Binding Response.
-2. It also sends a "Got Ping" control message with the details from the
+2. It also sends a "GotPing" control message with the details from the
 STUN Binding Response over the backchannel to the Sender Agent.
 This is done so that the Sender Agent can verify the connectivity status results 
-over the backchannel as well. This mechanism is beneficial especially for 
+over the backchannel as well. This mechanism is especially beneficial for 
 one-sided media scenarios where the Receiver Agent can't send the STUN response 
 to the sender or if the response to STUN connectivity response was lost 
 in transmission. 
 
-If a successful STUN Ping response was received (either via the media path or the 
-backchannel), there is a viable path for the Sender to transmit the media.
+If a successful STUN Ping response was received (either via the 
+media path or the backchannel), there is a viable path for the Sender 
+to transmit the media.
 
 The above set of procedures can be continuously performed during the 
 lifetime of the session as and when the Receiver Agent determines 
@@ -260,7 +265,7 @@ of addresses or priorities or bandwidth availability.
           |                        |                        |
           |                        |                        |
           |(6) STUN Ping (over media path)                  |
-          |------------------------------------------------>|
+          |<----------------------------------------------->|
           |                        |                        |
           |                        |                        |
           |                        |(7) GotPing (STUN Ping Response)
