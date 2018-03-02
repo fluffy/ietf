@@ -3594,7 +3594,7 @@ Alice                                            Bob
           <c><xref target="RFC5104"></xref></c>
           <c>a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:mid</c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
-          <c>a=extmap:3 a=extmap:3 urn:ietf:params:rtp-hdrext:sdes:rtp-stream-id</c>
+          <c>a=extmap:3 urn:ietf:params:rtp-hdrext:sdes:rtp-stream-id</c>
           <c><xref target="I-D.ietf-avtext-rid"></xref></c>
           <c>a=rid:1 send pt=98;max-width=1280;max-height=720;</c>
 					<c><xref target="I-D.ietf-mmusic-rid"></xref>
@@ -3636,7 +3636,7 @@ Alice                                            Bob
           <c><xref target="RFC5104"></xref></c>
           <c>a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:mid</c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
-          <c>a=extmap:3 a=extmap:3 urn:ietf:params:rtp-hdrext:sdes:rtp-stream-id</c>
+          <c>a=extmap:3 urn:ietf:params:rtp-hdrext:sdes:rtp-stream-id</c>
           <c><xref target="I-D.ietf-avtext-rid"></xref></c>
 					<c>a=rid:3 send pt=101;max-width=1280;max-height=720;</c>
           <c><xref target="I-D.ietf-mmusic-rid"></xref>
@@ -3737,7 +3737,7 @@ Alice                                            Bob
 					<c><xref target="RFC5104"></xref></c>
 					<c>a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:mid</c>
 					<c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
-          <c>a=extmap:3 a=extmap:3 urn:ietf:params:rtp-hdrext:sdes:rtp-stream-id</c>
+          <c>a=extmap:3 urn:ietf:params:rtp-hdrext:sdes:rtp-stream-id</c>
           <c><xref target="I-D.ietf-avtext-rid"></xref></c>
 					<c>a=rid:1 recv pt=98;max-width=1280;max-height=720;</c>
           <c><xref target="I-D.ietf-mmusic-rid"></xref>
@@ -3777,7 +3777,7 @@ Alice                                            Bob
           <c><xref target="RFC5104"></xref></c>
           <c>a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:mid</c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
-          <c>a=extmap:3 a=extmap:3 urn:ietf:params:rtp-hdrext:sdes:rtp-stream-id</c>
+          <c>a=extmap:3 urn:ietf:params:rtp-hdrext:sdes:rtp-stream-id</c>
           <c><xref target="I-D.ietf-avtext-rid"></xref></c>
 					<c>a=rid:3 recv pt=101;max-width=1280;max-height=720;</c>
           <c><xref target="I-D.ietf-mmusic-rid"></xref>
@@ -4154,7 +4154,7 @@ Alice                                                    Bob
           <c><xref target="RFC5104"></xref></c>
 					<c>a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:mid</c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
-          <c>a=extmap:3 a=extmap:3 urn:ietf:params:rtp-hdrext:sdes:rtp-stream-id</c>
+          <c>a=extmap:3 urn:ietf:params:rtp-hdrext:sdes:rtp-stream-id</c>
           <c><xref target="I-D.ietf-avtext-rid"></xref></c>
 					<c>a=rid:1 send pt=98;max-fs=921600;max-fr=30;</c>
           <c><xref target="I-D.ietf-mmusic-rid"></xref></c>
@@ -4256,7 +4256,7 @@ Alice                                                    Bob
           <c><xref target="RFC5104"></xref></c>
 					<c>a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:mid</c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
-          <c>a=extmap:3 a=extmap:3 urn:ietf:params:rtp-hdrext:sdes:rtp-stream-id</c>
+          <c>a=extmap:3 urn:ietf:params:rtp-hdrext:sdes:rtp-stream-id</c>
           <c><xref target="I-D.ietf-avtext-rid"></xref></c>
 					<c>a=rid:1 recv pt=98;max-fs=921600;max-fr=30;</c>
           <c><xref target="I-D.ietf-mmusic-rid"></xref></c>
@@ -4410,7 +4410,7 @@ Alice                                                    Bob
           <c><xref target="RFC5104"></xref></c>
           <c>a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:mid</c>
 					<c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
-          <c>a=extmap:3 a=extmap:3 urn:ietf:params:rtp-hdrext:sdes:rtp-stream-id</c>
+          <c>a=extmap:3 urn:ietf:params:rtp-hdrext:sdes:rtp-stream-id</c>
           <c><xref target="I-D.ietf-avtext-rid"></xref></c>
           <c>a=rid:1 send pt=98;</c>
           <c><xref target="I-D.ietf-mmusic-rid"></xref>
@@ -4505,7 +4505,7 @@ Alice                                                    Bob
           <c><xref target="RFC4588"></xref></c>
 					<c>a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:mid</c>
 					<c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
-          <c>a=extmap:3 a=extmap:3 urn:ietf:params:rtp-hdrext:sdes:rtp-stream-id</c>
+          <c>a=extmap:3 urn:ietf:params:rtp-hdrext:sdes:rtp-stream-id</c>
           <c><xref target="I-D.ietf-avtext-rid"></xref></c>
 					<c>a=rid:1 recv pt=98;</c>
           <c><xref target="I-D.ietf-mmusic-rid"></xref></c>
@@ -4654,7 +4654,7 @@ Alice                                                            Bob
 					<c><xref target="RFC5104"></xref></c>
 					<c>a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:mid</c>
 					<c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
-          <c>a=extmap:3 a=extmap:3 urn:ietf:params:rtp-hdrext:sdes:rtp-stream-id</c>
+          <c>a=extmap:3 urn:ietf:params:rtp-hdrext:sdes:rtp-stream-id</c>
           <c><xref target="I-D.ietf-avtext-rid"></xref></c>
 					<c>a=rid:1 send pt=98;</c>
 					<c><xref target="I-D.ietf-mmusic-rid"></xref>
@@ -4762,7 +4762,7 @@ Alice                                                            Bob
           <c><xref target="RFC5104"></xref></c>
 					<c>a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:mid</c>
 					<c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
-          <c>a=extmap:3 a=extmap:3 urn:ietf:params:rtp-hdrext:sdes:rtp-stream-id</c>
+          <c>a=extmap:3 urn:ietf:params:rtp-hdrext:sdes:rtp-stream-id</c>
           <c><xref target="I-D.ietf-avtext-rid"></xref></c>
 					<c>a=rid:1 recv pt=98;</c>
           <c><xref target="I-D.ietf-mmusic-rid"></xref></c>
