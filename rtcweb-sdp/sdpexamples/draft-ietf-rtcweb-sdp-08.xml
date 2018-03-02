@@ -70,7 +70,7 @@
 <?rfc colonspace="yes" ?>
 <?rfc rfcedstyle="no" ?>
 <?rfc tocdepth="4"?>
-<rfc category="info" docName="draft-ietf-rtcweb-sdp-08"
+<rfc category="info" docName="draft-ietf-rtcweb-sdp-09"
      ipr="trust200902">
   <front>
     <title abbrev="SDP4WebRTC">Annotated Example SDP for WebRTC</title>
@@ -117,7 +117,7 @@
       </address>
     </author>
 
-    <date day="25" month="October" year="2017"/>
+    <date day="2" month="March" year="2018"/>
 
     <area>RAI</area>
 
@@ -684,10 +684,12 @@ Alice                                       Bob
             <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
             <c>****** Video m=line *********</c>
             <c>*****************************</c>
-  		      <c>m=video 54609 UDP/TLS/RTP/SAVPF 99 120</c>
+  		      <c>m=video 0 UDP/TLS/RTP/SAVPF 99 120</c>
             <c><xref target="RFC4566"></xref> </c>
             <c>c=IN IP4 203.0.113.141</c>
             <c><xref target="RFC4566"></xref></c>
+            <c>a=bundle-only</c>
+					  <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/> </c>
             <c>a=mid:video</c>
             <c><xref target="RFC5888"></xref></c>
             <c>a=msid:ma tb </c>
@@ -788,10 +790,12 @@ Alice                                       Bob
             <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
             <c>****** Video m=line *********</c>
             <c>*****************************</c>
-            <c>m=video 49203 UDP/TLS/RTP/SAVPF 99</c>
+            <c>m=video 0 UDP/TLS/RTP/SAVPF 99</c>
             <c><xref target="RFC4566"></xref> </c>
             <c>c=IN IP4 203.0.113.77</c>
             <c><xref target="RFC4566"></xref></c>
+            <c>a=bundle-only</c>
+					  <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/> </c>
             <c>a=mid:video</c>
             <c><xref target="RFC5888"></xref></c>
             <c>a=msid:ma tb </c>
@@ -890,10 +894,12 @@ Alice                                       Bob
             <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
             <c>****** Video m=line *********</c>
             <c>*****************************</c>
-            <c>m=video 54609 UDP/TLS/RTP/SAVPF 99 120</c>
+            <c>m=video 0 UDP/TLS/RTP/SAVPF 99 120</c>
             <c><xref target="RFC4566"></xref> </c>
             <c>c=IN IP4 203.0.113.141</c>
             <c><xref target="RFC4566"></xref></c>
+            <c>a=bundle-only</c>
+					  <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/> </c>
             <c>a=mid:video</c>
             <c><xref target="RFC5888"></xref></c>
             <c>a=msid:ma tb </c>
@@ -993,10 +999,12 @@ Alice                                       Bob
             <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
             <c>****** Video m=line *********</c>
             <c>*****************************</c>
-            <c>m=video 49203 UDP/TLS/RTP/SAVPF 99</c>
+            <c>m=video 0 UDP/TLS/RTP/SAVPF 99</c>
             <c><xref target="RFC4566"></xref> </c>
             <c>c=IN IP4 203.0.113.77</c>
             <c><xref target="RFC4566"></xref></c>
+            <c>a=bundle-only</c>
+					  <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/> </c>
             <c>a=mid:video</c>
             <c><xref target="RFC5888"></xref></c>
             <c>a=msid:ma tb </c>
@@ -1397,10 +1405,12 @@ Alice                                              Bob
           <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** DTMF m=line *********</c>
           <c>*****************************</c>
-          <c>m=audio 54609 UDP/TLS/RTP/SAVPF 126</c>
+          <c>m=audio 0 UDP/TLS/RTP/SAVPF 126</c>
           <c><xref target="RFC4566"></xref></c>
           <c>c=IN IP4 203.0.113.141</c>
           <c><xref target="RFC4566"></xref></c>
+          <c>a=bundle-only</c>
+					<c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/> </c>
           <c>a=mid:dtmf</c>
           <c><xref target="RFC5888"></xref></c>
           <c>a=msid:ma tb </c>
@@ -1476,10 +1486,12 @@ Alice                                              Bob
           <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** DTMF m=line *********</c>
           <c>*****************************</c>
-          <c>m=audio 49203 UDP/TLS/RTP/SAVPF 126</c>
+          <c>m=audio 0 UDP/TLS/RTP/SAVPF 126</c>
           <c><xref target="RFC4566"></xref></c>
           <c>c=IN IP4 203.0.113.77</c>
           <c><xref target="RFC4566"></xref></c>
+          <c>a=bundle-only</c>
+					<c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/> </c>
 					<c>a=mid:dtmf</c>
           <c><xref target="RFC5888"></xref></c>
           <c>a=msid:ma tb </c>
@@ -1588,10 +1600,12 @@ Alice                                                 Bob
           <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** Video m=line *********</c>
           <c>*****************************</c>
-          <c>m=video 54609 UDP/TLS/RTP/SAVPF 120</c>
+          <c>m=video 0 UDP/TLS/RTP/SAVPF 120</c>
           <c><xref target="RFC4566"></xref> </c>
           <c>c=IN IP4 203.0.113.141</c>
           <c><xref target="RFC4566"></xref></c>
+          <c>a=bundle-only</c>
+					<c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/> </c>
           <c>a=mid:video</c>
           <c><xref target="RFC5888"></xref></c>
           <c>a=msid:ma tb </c>
@@ -1669,10 +1683,12 @@ Alice                                                 Bob
           <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** Video m=line *********</c>
           <c>*****************************</c>
-          <c>m=video 49203 UDP/TLS/RTP/SAVPF 120</c>
+          <c>m=video 0 UDP/TLS/RTP/SAVPF 120</c>
           <c><xref target="RFC4566"></xref> </c>
           <c>c=IN IP4 203.0.113.77</c>
           <c><xref target="RFC4566"></xref></c>
+          <c>a=bundle-only</c>
+					<c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/> </c>
           <c>a=mid:video</c>
           <c><xref target="RFC5888"></xref></c>
           <c>a=msid:ma tb </c>
@@ -1917,10 +1933,12 @@ Alice                                                 Bob
           <c><xref target="RFC5245"></xref></c>
           <c>****** Video m=line *********</c>
           <c>*****************************</c>
-          <c>m=video 49203 UDP/TLS/RTP/SAVPF 120</c>
+          <c>m=video 0 UDP/TLS/RTP/SAVPF 120</c>
           <c><xref target="RFC4566"></xref> </c>
           <c>c=IN IP4 203.0.113.77</c>
           <c><xref target="RFC4566"></xref></c>
+          <c>a=bundle-only</c>
+					<c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/> </c>
           <c>a=mid:video</c>
           <c><xref target="RFC5888"></xref> Video m=line part of the
           BUNDLE group with the port from audio line repeated </c>
@@ -2257,10 +2275,12 @@ Alice                                       Bob
 					<c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
 					<c>****** Video m=line *********</c>
           <c>*****************************</c>
-          <c>m=video 54609 UDP/TLS/RTP/SAVPF 120</c>
+          <c>m=video 0 UDP/TLS/RTP/SAVPF 120</c>
           <c><xref target="RFC4566"></xref> </c>
           <c>c=IN IP4 203.0.113.141</c>
           <c><xref target="RFC4566"></xref></c>
+          <c>a=bundle-only</c>
+					<c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/> </c>
           <c>a=mid:video</c>
           <c><xref target="RFC5888"></xref></c>
           <c>a=msid:ma tb </c>
@@ -2279,10 +2299,12 @@ Alice                                       Bob
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>****** Application m=line *********</c>
           <c>*****************************</c>
-          <c>m=application 54609 UDP/DTLS/SCTP webrtc-datachannel</c>
+          <c>m=application 0 UDP/DTLS/SCTP webrtc-datachannel</c>
           <c><xref target="I-D.ietf-rtcweb-data-channel"></xref> </c>
           <c>c=IN IP4 203.0.113.141</c>
           <c><xref target="RFC4566"></xref></c>
+          <c>a=bundle-only</c>
+					<c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/> </c>
           <c>a=mid:data</c>
           <c><xref target="RFC5888"></xref></c>
           <c>a=sctp-port:5000</c>
@@ -2355,10 +2377,12 @@ Alice                                       Bob
 					<c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
 					<c>****** Video m=line *********</c>
           <c>*****************************</c>
-          <c>m=video 49203 UDP/TLS/RTP/SAVPF 120</c>
+          <c>m=video 0 UDP/TLS/RTP/SAVPF 120</c>
           <c><xref target="RFC4566"></xref> </c>
           <c>c=IN IP4 203.0.113.77</c>
           <c><xref target="RFC4566"></xref></c>
+          <c>a=bundle-only</c>
+					<c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/> </c>
           <c>a=mid:video</c>
           <c><xref target="RFC5888"></xref></c>
           <c>a=msid:ma tb </c>
@@ -2377,10 +2401,12 @@ Alice                                       Bob
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>****** Application m=line *********</c>
           <c>*****************************</c>
-          <c>m=application 49203 UDP/DTLS/SCTP webrtc-datachannel</c>
+          <c>m=application 0 UDP/DTLS/SCTP webrtc-datachannel</c>
           <c><xref target="I-D.ietf-mmusic-sctp-sdp"></xref> </c>
           <c>c=IN IP4 203.0.113.77</c>
           <c><xref target="RFC4566"></xref></c>
+          <c>a=bundle-only</c>
+					<c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/> </c>
           <c>a=mid:data</c>
           <c><xref target="RFC5888"></xref></c>
           <c>a=sctp-port:5000</c>
@@ -2956,10 +2982,12 @@ Alice                                                 Bob
 					<c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** Video m=line *********</c>
           <c>*****************************</c>
-          <c>m=video 54609 UDP/TLS/RTP/SAVPF 120</c>
+          <c>m=video 0 UDP/TLS/RTP/SAVPF 120</c>
           <c><xref target="RFC4566"></xref> </c>
           <c>c=IN IP4 203.0.113.141</c>
           <c><xref target="RFC4566"></xref></c>
+          <c>a=bundle-only</c>
+					<c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/> </c>
           <c>a=mid:video</c>
           <c><xref target="RFC5888"></xref></c>
           <c>a=msid:ma tb </c>
@@ -3065,10 +3093,12 @@ Alice                                                 Bob
 					<c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
 					<c>****** Video m=line *********</c>
           <c>*****************************</c>
-          <c>m=video 49203 UDP/TLS/RTP/SAVPF 120</c>
+          <c>m=video 0 UDP/TLS/RTP/SAVPF 120</c>
           <c><xref target="RFC4566"></xref> </c>
           <c>c=IN IP4 203.0.113.77</c>
           <c><xref target="RFC4566"></xref></c>
+          <c>a=bundle-only</c>
+					<c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/> </c>
           <c>a=mid:video</c>
           <c><xref target="RFC5888"></xref></c>
           <c>a=msid:ma tb </c>
@@ -3342,10 +3372,12 @@ Alice                                                 Bob
 					<c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** Video m=line *********</c>
           <c>*****************************</c>
-          <c>m=video 54609 UDP/TLS/RTP/SAVPF 120</c>
+          <c>m=video 0 UDP/TLS/RTP/SAVPF 120</c>
           <c><xref target="RFC4566"></xref> </c>
           <c>c=IN IP4 203.0.113.141</c>
           <c><xref target="RFC4566"></xref></c>
+          <c>a=bundle-only</c>
+					<c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/> </c>
           <c>a=mid:video</c>
           <c><xref target="RFC5888"></xref></c>
           <c>a=msid:ma tb </c>
@@ -3427,10 +3459,12 @@ Alice                                                 Bob
 					<c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** Video m=line *********</c>
           <c>*****************************</c>
-          <c>m=video 49203 UDP/TLS/RTP/SAVPF 120</c>
+          <c>m=video 0 UDP/TLS/RTP/SAVPF 120</c>
           <c><xref target="RFC4566"></xref> </c>
           <c>c=IN IP4 203.0.113.77</c>
           <c><xref target="RFC4566"></xref></c>
+          <c>a=bundle-only</c>
+					<c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/> </c>
           <c>a=mid:video</c>
           <c><xref target="RFC5888"></xref></c>
           <c>a=msid:ma tb </c>
@@ -3711,10 +3745,12 @@ Alice                                            Bob
 					<c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** Video-1 m=line *********</c>
           <c>*****************************</c>
-          <c>m=video 49203 UDP/TLS/RTP/SAVPF 98 100</c>
-          <c>BUNDLE accepted with port repeated from the audio port </c>
+          <c>m=video 0 UDP/TLS/RTP/SAVPF 98 100</c>
+          <c>BUNDLE accepted </c>
           <c>c=IN IP4 203.0.113.77</c>
           <c><xref target="RFC4566"></xref></c>
+          <c>a=bundle-only</c>
+					<c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/> </c>
 					<c>a=mid:m1</c>
 					<c><xref target="RFC5888"></xref> Video m=line part of BUNDLE group</c>
 					<c>a=msid:ma tb </c>
@@ -3751,8 +3787,8 @@ Alice                                            Bob
           paused state of stream with 'rid' value 2.</c>
           <c>****** Video-2 m=line *********</c>
           <c>*****************************</c>
-          <c>m=video 49203 UDP/TLS/RTP/SAVPF 101 102</c>
-          <c> BUNDLE accepted with port repeated from the audio port </c>
+          <c>m=video 0 UDP/TLS/RTP/SAVPF 101 102</c>
+          <c> BUNDLE accepted</c>
           <c>c=IN IP4 203.0.113.77</c>
           <c><xref target="RFC4566"></xref></c>
 					<c>a=mid:m2</c>
@@ -3992,10 +4028,12 @@ Alice                                            Bob
 					<c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** Video m=line *********</c>
           <c>*****************************</c>
-          <c>m=video 49203 UDP/TLS/RTP/SAVPF 96 100</c>
-          <c> BUNDLE accepted Bundle address same as audio m=line.</c>
+          <c>m=video 0 UDP/TLS/RTP/SAVPF 96 100</c>
+          <c> BUNDLE accepted.</c>
           <c>c=IN IP4 203.0.113.77</c>
           <c><xref target="RFC4566"></xref></c>
+          <c>a=bundle-only</c>
+					<c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/> </c>
 					<c>a=mid:m1</c>
           <c><xref target="RFC5888"></xref> Video m=line part of BUNDLE group</c>
 					<c>a=msid:ma tb </c>
@@ -4230,8 +4268,8 @@ Alice                                                    Bob
 					<c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** Video m=line *********</c>
           <c>*****************************</c>
-          <c>m=video 49203 UDP/TLS/RTP/SAVPF 98 100 101 103</c>
-          <c>BUNDLE accepted with Bundle address identical to audio m-line</c>
+          <c>m=video 0 UDP/TLS/RTP/SAVPF 98 100 101 103</c>
+          <c>BUNDLE accepted</c>
           <c>c=IN IP4 203.0.113.77</c>
           <c><xref target="RFC4566"></xref></c>
 					<c>a=mid:m1</c>
@@ -4485,10 +4523,12 @@ Alice                                                    Bob
 					<c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** Video m=line *********</c>
           <c>*****************************</c>
-          <c>m=video 49203 UDP/TLS/RTP/SAVPF 98 101 </c>
-          <c>BUNDLE accepted with Bundle address identical to audio m-line</c>
+          <c>m=video 0 UDP/TLS/RTP/SAVPF 98 101 </c>
+          <c>BUNDLE accepted</c>
           <c>c=IN IP4 203.0.113.77</c>
           <c><xref target="RFC4566"></xref></c>
+          <c>a=bundle-only</c>
+					<c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/> </c>
 					<c>a=mid:m1</c>
 					<c><xref target="RFC5888"></xref></c>
 					<c>a=msid:ma tb </c>
@@ -4728,10 +4768,12 @@ Alice                                                            Bob
 					<c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** Video m=line *********</c>
           <c>*****************************</c>
-          <c>m=video 49203 UDP/TLS/RTP/SAVPF 98 100 101 103</c>
-          <c>BUNDLE accepted with Bundle Address identical to audio m=line.</c>
+          <c>m=video 0 UDP/TLS/RTP/SAVPF 98 100 101 103</c>
+          <c>BUNDLE accepted.</c>
           <c>c=IN IP4 203.0.113.77</c>
           <c><xref target="RFC4566"></xref></c>
+          <c>a=bundle-only</c>
+					<c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/> </c>
 					<c>a=mid:m1</c>
 					<c><xref target="RFC5888"></xref> Video m=line part of BUNDLE group</c>
 					<c>a=msid:ma tb </c>
