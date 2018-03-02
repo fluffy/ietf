@@ -1850,7 +1850,7 @@ Alice                                                 Bob
           <c>a=candidate:1 1 UDP  1685987071 203.0.113.141 62537 typ srflx
           raddr 192.0.2.4 rport 61886</c>
           <c><xref target="RFC5245"/> - RTP Server Reflexive candidate</c>
-					<c>a=candidate:0 2 2122194687 192.0.2.4 61888 typ host</c>
+					<c>a=candidate:0 2 UDP 2122194687 192.0.2.4 61888 typ host</c>
 					<c><xref target="RFC5245"/> - RTCP host candidate</c>
 					<c>a=candidate:1 2 UDP 1685987071 203.0.113.141 62538 typ srflx
           raddr 192.0.2.4 rport 61888</c>
@@ -2748,7 +2748,7 @@ Alice                                                 Bob
 					<c>a=candidate:1 1 UDP  1685987071 203.0.113.141 54332 typ srflx
 					raddr 192.0.2.4 rport 71775</c>
 					<c><xref target="RFC5245"></xref></c>
-					<c>a=candidate:0 2 2122194687 192.0.2.4 71776 typ host</c>
+					<c>a=candidate:0 2 UDP 2122194687 192.0.2.4 71776 typ host</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=candidate:1 2 UDP 1685987071 203.0.113.141 60052 typ srflx
           raddr 192.0.2.4 rport 71776</c>
@@ -5469,7 +5469,7 @@ Alice                                                       Bob
           <c><xref target="RFC5245"></xref></c>
           <c>a=candidate:1 1 UDP  1694302207 203.0.113.141 62537 typ srflx raddr 192.0.2.4 rport 62445</c>
           <c><xref target="RFC5245"></xref></c>
-          <c>a=candidate:0 2 2113667326 192.0.2.4 54721 typ host</c>
+          <c>a=candidate:0 2 UDP 2113667326 192.0.2.4 54721 typ host</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=candidate:1 2 UDP 1694302206 203.0.113.141 54721 typ srflx raddr 192.0.2.4 rport 54721</c>
           <c><xref target="RFC5245"></xref></c>
