@@ -474,10 +474,7 @@ Alice                                Bob
           <c><xref target="RFC5245"></xref> - ICE user fragment</c>
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
           <c><xref target="RFC5245"></xref> - ICE password</c>
-          <c>a=fingerprint:sha-256
-              19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04
-              :BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
-          </c>
+          <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2</c>
           <c><xref target="RFC5245"></xref> - DTLS Fingerprint for SRTP</c>
           <c>a=setup:actpass</c>
           <c><xref target="RFC5763"></xref> - Alice can act as DTLS client or server</c>
@@ -560,10 +557,7 @@ Alice                                Bob
           <c><xref target="RFC5245"></xref> - ICE user fragment</c>
           <c>a=ice-pwd:1747d1ee3474a28a397a4c3f3af08a068</c>
           <c><xref target="RFC5245"></xref> - ICE password parameter</c>
-          <c>a=fingerprint:sha-256
-						6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35
-            :DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
-          </c>
+          <c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08</c>
           <c><xref target="RFC5245"></xref> - DTLS Fingerprint for SRTP</c>
           <c>a=setup:active</c>
           <c><xref target="RFC5763"></xref> - Bob is the DTLS client</c>
@@ -664,10 +658,7 @@ Alice                                       Bob
             <c><xref target="RFC5245"></xref> - ICE user fragment</c>
             <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
             <c><xref target="RFC5245"></xref> - ICE password parameter</c>
-            <c>a=fingerprint:sha-256
-               19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:
-               BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
-            </c>
+            <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2</c>
             <c><xref target="RFC5245"></xref> - DTLS Fingerprint for SRTP</c>
             <c>a=setup:actpass</c>
             <c><xref target="RFC5763"></xref> - Alice can act as DTLS client or server</c>
@@ -770,10 +761,7 @@ Alice                                       Bob
             <c><xref target="RFC5245"></xref> -  ICE username frag</c>
             <c>a=ice-pwd:de4e99bd291c325921d5d47efbabd9a2</c>
             <c><xref target="RFC5245"></xref> - ICE password</c>
-            <c>a=fingerprint:sha-256
-  						6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35
-              :DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
-            </c>
+            <c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08</c>
             <c><xref target="RFC5245"></xref> - DTLS Fingerprint for SRTP</c>
             <c>a=setup:active</c>
             <c><xref target="RFC5763"></xref> - Bob is the DTLS client</c>
@@ -876,10 +864,7 @@ Alice                                       Bob
             <c><xref target="RFC5245"></xref> - ICE user fragment</c>
             <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
             <c><xref target="RFC5245"></xref> - ICE password parameter</c>
-            <c>a=fingerprint:sha-256
-               19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:
-               BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
-            </c>
+            <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2</c>
             <c><xref target="RFC5245"></xref> - DTLS Fingerprint for SRTP</c>
             <c>a=setup:actpass</c>
             <c><xref target="RFC5763"></xref> - Alice can act as DTLS client or server</c>
@@ -982,10 +967,7 @@ Alice                                       Bob
             <c><xref target="RFC5245"></xref> -  ICE username frag</c>
             <c>a=ice-pwd:de4e99bd291c325921d5d47efbabd9a2</c>
             <c><xref target="RFC5245"></xref> - ICE password</c>
-            <c>a=fingerprint:sha-256
-              6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35
-              :DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
-            </c>
+            <c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08</c>
             <c><xref target="RFC5245"></xref> - DTLS Fingerprint for SRTP</c>
             <c>a=setup:active</c>
             <c><xref target="RFC5763"></xref> - Bob is the DTLS client</c>
@@ -1108,10 +1090,7 @@ Alice                            Bob
           <c><xref target="RFC5245"></xref> - Session Level ICE parameter</c>
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
           <c><xref target="RFC5245"></xref> - Session Level ICE parameter</c>
-          <c>a=fingerprint:sha-256
-             19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04
-             :BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
-		  	  </c>
+          <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2</c>
           <c><xref target="RFC5245"></xref> - Session DTLS Fingerprint for
           SRTP</c>
           <c>a=candidate:0 1 UDP 2113667327 192.0.2.4 61665 typ host</c>
@@ -1159,10 +1138,7 @@ Alice                            Bob
           <c><xref target="RFC5245"></xref> - Session Level ICE username frag</c>
           <c>a=ice-pwd:de4e99bd291c325921d5d47efbabd9a2</c>
           <c><xref target="RFC5245"></xref> - Session Level ICE password</c>
-          <c>a=fingerprint:sha-256
-						6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35
-            :DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
-		  	  </c>
+          <c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08</c>
           <c><xref target="RFC5245"></xref> - Session DTLS Fingerprint for
           SRTP</c>
           <c>a=candidate:0 1 UDP 2113667327 198.51.100.7 51556 typ host</c>
@@ -1238,10 +1214,7 @@ Alice                            Bob
           <c><xref target="RFC5245"></xref> -  ICE user fragment </c>
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
           <c><xref target="RFC5245"></xref> -  ICE password</c>
-          <c>a=fingerprint:sha-256
-             19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04
-             :BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
-		  	  </c>
+          <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2</c>
           <c><xref target="RFC5245"></xref> - DTLS Fingerprint for SRTP</c>
           <c>a=setup:actpass</c>
           <c><xref target="RFC5763"></xref> - Alice can act as DTLS client or server</c>
@@ -1301,10 +1274,7 @@ Alice                            Bob
           <c><xref target="RFC5245"></xref> - ICE username frag</c>
           <c>a=ice-pwd:de4e99bd291c325921d5d47efbabd9a2</c>
           <c><xref target="RFC5245"></xref> - ICE password</c>
-          <c>a=fingerprint:sha-256
-						6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35
-            :DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
-          </c>
+          <c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08</c>
           <c><xref target="RFC5245"></xref> - DTLS Fingerprint for SRTP</c>
           <c>a=setup:active</c>
           <c><xref target="RFC5763"></xref> - Bob is the DTLS client</c>
@@ -1401,10 +1371,7 @@ Alice                                              Bob
           <c><xref target="RFC5245"></xref> -  ICE user fragment</c>
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
           <c><xref target="RFC5245"></xref> - ICE password parameter</c>
-          <c>a=fingerprint:sha-256
-             19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04
-             :BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
-          </c>
+          <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2</c>
           <c><xref target="RFC5245"></xref> - DTLS Fingerprint for SRTP</c>
           <c>a=setup:actpass</c>
           <c><xref target="RFC5763"></xref> - Alice can act as DTLS client or server</c>
@@ -1482,10 +1449,7 @@ Alice                                              Bob
           <c><xref target="RFC5245"></xref> -  ICE username frag</c>
           <c>a=ice-pwd:de4e99bd291c325921d5d47efbabd9a2</c>
           <c><xref target="RFC5245"></xref> -  ICE password</c>
-          <c>a=fingerprint:sha-256
-						6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35
-            :DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
-          </c>
+          <c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08</c>
           <c><xref target="RFC5245"></xref> -  Fingerprint for SRTP</c>
           <c>a=setup:active</c>
           <c><xref target="RFC5763"></xref> - Bob is the DTLS client</c>
@@ -1602,10 +1566,7 @@ Alice                                                 Bob
           <c><xref target="RFC5245"></xref></c>
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
           <c><xref target="RFC5245"></xref></c>
-          <c>a=fingerprint:sha-256
-             19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04
-             :BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
-		  	  </c>
+          <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=setup:actpass</c>
           <c><xref target="RFC5763"></xref> - Alice can act as DTLS client or server</c>
@@ -1688,10 +1649,7 @@ Alice                                                 Bob
           <c><xref target="RFC5245"></xref></c>
           <c>a=ice-pwd:de4e99bd291c325921d5d47efbabd9a2</c>
           <c><xref target="RFC5245"></xref></c>
-          <c>a=fingerprint:sha-256
-						6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35
-            :DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
-		  	  </c>
+          <c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=setup:active</c>
           <c><xref target="RFC5763"></xref> - Bob is the DTLS client</c>
@@ -1821,10 +1779,7 @@ Alice                                                 Bob
           <c><xref target="RFC5245"></xref></c>
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
           <c><xref target="RFC5245"></xref></c>
-          <c>a=fingerprint:sha-256
-             19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04
-             :BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
-          </c>
+          <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=setup:actpass</c>
           <c><xref target="RFC5763"></xref> - Alice can act as DTLS client or server</c>
@@ -1870,10 +1825,7 @@ Alice                                                 Bob
           <c><xref target="RFC5245"></xref></c>
           <c>a=ice-pwd:74af08a068a28a397a4c3f31747d1ee34</c>
           <c><xref target="RFC5245"></xref></c>
-          <c>a=fingerprint:sha-256
-             19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04
-             :BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
-           </c>
+          <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=setup:actpass</c>
           <c><xref target="RFC5763"></xref> - Alice can act as DTLS client or server</c>
@@ -1944,10 +1896,7 @@ Alice                                                 Bob
           <c><xref target="RFC5245"></xref></c>
           <c>a=ice-pwd:de4e99bd291c325921d5d47efbabd9a2</c>
           <c><xref target="RFC5245"></xref></c>
-          <c>a=fingerprint:sha-256
-						6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35
-            :DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
-          </c>
+          <c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=setup:active</c>
           <c><xref target="RFC5763"></xref> - Bob is the DTLS client</c>
@@ -2283,10 +2232,7 @@ Alice                                       Bob
           <c><xref target="RFC5245"></xref></c>
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
           <c><xref target="RFC5245"></xref></c>
-          <c>a=fingerprint:sha-256
-             19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04
-             :BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
-		      </c>
+          <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2</c>
           <c><xref target="RFC5245"></xref> </c>
           <c>a=setup:actpass</c>
           <c><xref target="RFC5763"></xref></c>
@@ -2384,10 +2330,7 @@ Alice                                       Bob
           <c><xref target="RFC5245"></xref> </c>
           <c>a=ice-pwd:de4e99bd291c325921d5d47efbabd9a2</c>
           <c><xref target="RFC5245"></xref> </c>
-          <c>a=fingerprint:sha-256
-			      6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35
-            :DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
-          </c>
+          <c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08</c>
           <c><xref target="RFC5245"></xref> </c>
           <c>a=setup:active</c>
           <c><xref target="RFC5763"></xref> </c>
@@ -2732,10 +2675,7 @@ Alice                                                 Bob
           <c><xref target="RFC5245"></xref></c>
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
           <c><xref target="RFC5245"></xref></c>
-          <c>a=fingerprint:sha-256
-             19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04
-             :BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
-          </c>
+          <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=setup:actpass</c>
           <c><xref target="RFC5763"></xref> - Alice can act as DTLS client or server</c>
@@ -2783,10 +2723,7 @@ Alice                                                 Bob
           <c><xref target="RFC5245"></xref></c>
           <c>a=ice-pwd:ee3474af08a068a28a397a4c3f31747d1</c>
           <c><xref target="RFC5245"></xref></c>
-          <c>a=fingerprint:sha-256
-             19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04
-             :BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
-          </c>
+          <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=setup:actpass</c>
           <c><xref target="RFC5763"></xref> - Alice can act as DTLS client or server</c>
@@ -2856,10 +2793,7 @@ Alice                                                 Bob
           <c><xref target="RFC5245"></xref></c>
           <c>a=ice-pwd:de4e99bd291c325921d5d47efbabd9a2</c>
           <c><xref target="RFC5245"></xref></c>
-          <c>a=fingerprint:sha-256
-						6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35
-            :DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
-          </c>
+          <c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=setup:active</c>
           <c><xref target="RFC5763"></xref> - Bob is the DTLS client</c>
@@ -2999,9 +2933,7 @@ Alice                                                 Bob
           <c><xref target="RFC5245"></xref></c>
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
           <c><xref target="RFC5245"></xref></c>
-          <c>a=fingerprint:sha-256
-             19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04
-             :BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
+          <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
           </c>
           <c><xref target="RFC5245"></xref> </c>
           <c>a=setup:actpass</c>
@@ -3064,9 +2996,7 @@ Alice                                                 Bob
           <c><xref target="RFC5245"></xref></c>
           <c>a=ice-pwd:1747d1ee3474af08a068a28a397a4c3f3</c>
           <c><xref target="RFC5245"></xref></c>
-					<c>a=fingerprint:sha-256
-              29:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:
-              BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
+					<c>a=fingerprint:sha-256 29:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
           </c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=candidate:0 1 UDP  2113667327 192.0.2.4 10000 typ host</c>
@@ -3112,9 +3042,7 @@ Alice                                                 Bob
           <c><xref target="RFC5245"></xref> </c>
           <c>a=ice-pwd:de4e99bd291c325921d5d47efbabd9a2</c>
           <c><xref target="RFC5245"></xref> </c>
-          <c>a=fingerprint:sha-256
-						6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35
-            :DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
+          <c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
           </c>
           <c><xref target="RFC5245"></xref> </c>
           <c>a=setup:active</c>
@@ -3177,9 +3105,7 @@ Alice                                                 Bob
           <c><xref target="RFC5245"></xref></c>
           <c>a=ice-pwd:921d5d47efbabd9a2de4e99bd291c325</c>
           <c><xref target="RFC5245"></xref> </c>
-					<c>a=fingerprint:sha-256
-						  7B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:
-              DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
+					<c>a=fingerprint:sha-256 7B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
           </c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=candidate:0 1 UDP 2113667327 198.51.100.7 20000 typ host</c>
@@ -3266,9 +3192,7 @@ Alice                                                 Bob
           <c><xref target="RFC5245"></xref></c>
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
           <c><xref target="RFC5245"></xref></c>
-          <c>a=fingerprint:sha-256
-             19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04
-             :BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
+          <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
           </c>
           <c><xref target="RFC5245"></xref> </c>
           <c>a=setup:actpass</c>
@@ -3329,9 +3253,7 @@ Alice                                                 Bob
           <c><xref target="RFC5245"></xref> </c>
           <c>a=ice-pwd:de4e99bd291c325921d5d47efbabd9a2</c>
           <c><xref target="RFC5245"></xref> </c>
-          <c>a=fingerprint:sha-256
-						6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35
-            :DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
+          <c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
           </c>
           <c><xref target="RFC5245"></xref> </c>
           <c>a=setup:active</c>
@@ -3394,9 +3316,7 @@ Alice                                                 Bob
           <c><xref target="RFC5245"></xref></c>
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
           <c><xref target="RFC5245"></xref></c>
-          <c>a=fingerprint:sha-256
-             19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04
-             :BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
+          <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
           </c>
           <c><xref target="RFC5245"></xref> </c>
           <c>a=setup:actpass</c>
@@ -3481,9 +3401,7 @@ Alice                                                 Bob
           <c><xref target="RFC5245"></xref> </c>
           <c>a=ice-pwd:de4e99bd291c325921d5d47efbabd9a2</c>
           <c><xref target="RFC5245"></xref> </c>
-          <c>a=fingerprint:sha-256
-						6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35
-            :DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
+          <c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
           </c>
           <c><xref target="RFC5245"></xref> </c>
           <c>a=setup:active</c>
@@ -3624,9 +3542,7 @@ Alice                                            Bob
           <c><xref target="RFC5245"></xref></c>
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
           <c><xref target="RFC5245"></xref></c>
-          <c>a=fingerprint:sha-256
-             19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04
-             :BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
+          <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
           </c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=setup:actpass</c>
@@ -3771,9 +3687,7 @@ Alice                                            Bob
 					<c><xref target="RFC5245"></xref></c>
 					<c>a=ice-pwd:de4e99bd291c325921d5d47efbabd9a2</c>
 					<c><xref target="RFC5245"></xref></c>
-					<c>a=fingerprint:sha-256
-						6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35
-						:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
+					<c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
 					</c>
 					<c><xref target="RFC5245"></xref></c>
 					<c>a=setup:active</c>
@@ -3954,9 +3868,7 @@ Alice                                            Bob
           <c><xref target="RFC5245"></xref></c>
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
           <c><xref target="RFC5245"></xref></c>
-          <c>a=fingerprint:sha-256
-             19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04
-             :BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
+          <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
           </c>
           <c><xref target="RFC5245"></xref></c>
 					<c>a=setup:actpass</c>
@@ -4056,9 +3968,7 @@ Alice                                            Bob
           <c><xref target="RFC5245"></xref></c>
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
           <c><xref target="RFC5245"></xref></c>
-          <c>a=fingerprint:sha-256
-							6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35
-            	:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
+          <c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
           </c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=setup:active</c>
@@ -4192,9 +4102,7 @@ Alice                                                    Bob
           <c><xref target="RFC5245"></xref></c>
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
           <c><xref target="RFC5245"></xref></c>
-          <c>a=fingerprint:sha-256
-             19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04
-             :BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
+          <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
 		  	  </c>
           <c><xref target="RFC5245"></xref></c>
 					<c>a=setup:actpass</c>
@@ -4298,9 +4206,7 @@ Alice                                                    Bob
           <c><xref target="RFC5245"></xref></c>
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
           <c><xref target="RFC5245"></xref></c>
-          <c>a=fingerprint:sha-256
-						6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35
-            :DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
+          <c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
 		  	  </c>
           <c><xref target="RFC5245"></xref></c>
 					<c>a=setup:active</c>
@@ -4444,9 +4350,7 @@ Alice                                                    Bob
           <c><xref target="RFC5245"></xref></c>
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
           <c><xref target="RFC5245"></xref></c>
-          <c>a=fingerprint:sha-256
-             19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04
-             :BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
+          <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
 		  	  </c>
           <c><xref target="RFC5245"></xref></c>
 					<c>a=setup:actpass</c>
@@ -4557,9 +4461,7 @@ Alice                                                    Bob
           <c><xref target="RFC5245"></xref></c>
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
           <c><xref target="RFC5245"></xref></c>
-          <c>a=fingerprint:sha-256
-						6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35
-            :DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
+          <c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
 		  		</c>
           <c><xref target="RFC5245"></xref></c>
 					<c>a=setup:active</c>
@@ -4692,9 +4594,7 @@ Alice                                                            Bob
           <c><xref target="RFC5245"></xref></c>
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
           <c><xref target="RFC5245"></xref></c>
-          <c>a=fingerprint:sha-256
-             19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04
-             :BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
+          <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
           </c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=setup:actpass</c>
@@ -4804,9 +4704,7 @@ Alice                                                            Bob
 					<c><xref target="RFC5245"></xref></c>
 					<c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
 					<c><xref target="RFC5245"></xref></c>
-					<c>a=fingerprint:sha-256
-					  6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35
-						:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
+					<c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
 					</c>
 					<c><xref target="RFC5245"></xref></c>
 					<c>a=setup:active</c>
@@ -4957,9 +4855,7 @@ Alice                                                            Bob
           <c><xref target="RFC5245"></xref> </c>
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
           <c><xref target="RFC5245"></xref></c>
-          <c>a=fingerprint:sha-256
-             19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04
-             :BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
+          <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
 		  	 	</c>
 					<c><xref target="RFC5245"></xref></c>
           <c>a=setup:actpass</c>
@@ -5025,9 +4921,7 @@ Alice                                                            Bob
 					<c><xref target="RFC5245"></xref> </c>
 					<c>a=ice-pwd:de4e99bd291c325921d5d47efbabd9a2</c>
 					<c><xref target="RFC5245"></xref> </c>
-					<c>a=fingerprint:sha-256
-						6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35
-						:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
+					<c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
 					</c>
 					<c><xref target="RFC5245"></xref> </c>
           <c>a=setup:active</c>
@@ -5129,9 +5023,7 @@ Alice                                    Mixer
           <c><xref target="RFC5245"></xref> </c>
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
           <c><xref target="RFC5245"></xref> </c>
-          <c>a=fingerprint:sha-256
-             19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04
-             :BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
+          <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
 		  	  </c>
           <c><xref target="RFC5245"></xref> </c>
           <c>a=setup:actpass</c>
@@ -5198,9 +5090,7 @@ Alice                                    Mixer
 					<c><xref target="RFC5245"></xref> </c>
 					<c>a=ice-pwd:de4e99bd291c325921d5d47efbabd9a2</c>
 					<c><xref target="RFC5245"></xref> </c>
-					<c>a=fingerprint:sha-256
-						6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35
-						:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
+					<c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
 					</c>
 					<c><xref target="RFC5245"></xref> </c>
           <c>a=setup:active</c>
@@ -5320,9 +5210,7 @@ Alice                                                       Bob
           <c><xref target="RFC5245"></xref></c>
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
           <c><xref target="RFC5245"></xref></c>
-          <c>a=fingerprint:sha-256
-             19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04
-             :BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
+          <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
           </c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=setup:actpass</c>
@@ -5436,9 +5324,7 @@ Alice                                                       Bob
           <c><xref target="RFC5245"></xref></c>
           <c>a=ice-pwd:de4e99bd291c325921d5d47efbabd9a2</c>
           <c><xref target="RFC5245"></xref></c>
-          <c>a=fingerprint:sha-256
-						6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35
-            :DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
+          <c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
 		  		</c>
           <c><xref target="RFC5245"></xref></c>
 					<c>a=setup:active</c>
@@ -5541,9 +5427,7 @@ Alice                                                       Bob
           <c><xref target="RFC4566"></xref>Alice includes RTP/AVP audio stream description</c>
           <c>c=IN IP4 203.0.113.141</c>
           <c><xref target="RFC4566"></xref></c>
-          <c>a=fingerprint:sha-256
-             19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04
-             :BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
+          <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
 		      </c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=rtpmap:109 opus/48000</c>
@@ -5570,9 +5454,7 @@ Alice                                                       Bob
           <c><xref target="RFC4566"></xref>Alice includes RTP/AVP video stream description </c>
           <c>c=IN IP4 203.0.113.141</c>
           <c><xref target="RFC4566"></xref></c>
-          <c>a=fingerprint:sha-256
-            DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
-            :6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35
+          <c>a=fingerprint:sha-256 DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08:6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35
 		      </c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=rtpmap:120 VP8/90000</c>
@@ -5624,9 +5506,7 @@ Alice                                                       Bob
           <c><xref target="RFC5245"></xref></c>
           <c>a=ice-pwd:de4e99bd291c325921d5d47efbabd9a2</c>
           <c><xref target="RFC5245"></xref></c>
-          <c>a=fingerprint:sha-256
-             BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
-             :19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04
+          <c>a=fingerprint:sha-256 BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2:19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04
           </c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=rtcp-mux</c>
@@ -5649,9 +5529,7 @@ Alice                                                       Bob
           <c><xref target="RFC5245"></xref></c>
           <c>a=ice-pwd:dbc325921d5dd29e4e99147efbabd9a2</c>
           <c><xref target="RFC5245"></xref></c>
-          <c>a=fingerprint:sha-256
-             BB:0A9:0E:05:E9:26:33:E8:70:88:A25:2F:70:9F:04:
-             :19:E2:1C:3B:4B:9F:81:5:2F:70:9F:04::F4:A5:A8:D8:
+          <c>a=fingerprint:sha-256 BB:0A9:0E:05:E9:26:33:E8:70:88:A25:2F:70:9F:04:19:E2:1C:3B:4B:9F:81:5:2F:70:9F:04::F4:A5:A8:D8:
           </c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=rtcp-mux</c>
