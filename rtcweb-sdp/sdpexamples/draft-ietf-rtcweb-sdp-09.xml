@@ -386,9 +386,11 @@
 				candidate foundations, WebRTC Mediastream, MediaStreamTrack
 				Ids values shall be much larger and/or random than the 
         ones shown in the examples.</t>
-        <t>tls-id values 89J2LRATQ3ULA24G9AHWVR31VJWSLB68 and UKA29UQLTF69OJW4WNPNUO2Y0GF1FJOZ 
+        <t>tls-id attribute values 89J2LRATQ3ULA24G9AHWVR31VJWSLB68 and UKA29UQLTF69OJW4WNPNUO2Y0GF1FJOZ 
         are used for Alice. The values CJ6FF9ZZMJW7MDRJIR7XVIQM48GE1G31 and 
         9AIFS8AQ009IXF5D6QQUJ7P8BXPEZJ8G are used for Bob.</t>
+        <t>identity attribute values are split across multiple lines to enhance readability, thus
+        any line breaks and indentations in the value must be ignored.</t>
         <t>SDP attributes in the examples closely follow the 
         checklist defined in section <xref target="checklist"/>.</t>
        </list>
@@ -438,16 +440,16 @@ Alice                                Bob
           <c>a=ice-options:trickle</c>
           <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>a=identity:eyJpZHAiOnsiZG9tYWluIjoibmlpZi5odSIsInByb3RvY29sIjoiaWRwLmh0bWwifSwiYXNzZXJ0a
-              W9uIjoiZXlKaGJHY2lPaUpTVXpJMU5pSXNJblI1Y0NJNklrcFhVeUo5LmV5SmpiMjUwWlc1MGN5STZleUptYVc1b
-              lpYSndjbWx1ZENJNlczc2lZV3huYjNKcGRHaHRJam9pYzJoaExUSTFOaUlzSW1ScFoyVnpkQ0k2SWprek9rTXdPa
-              kl6T2pKR09rRXlPakF3T2pBd09qQkVPalV4T2tGRE9rUXlPalUwT2pZMU9rWTBPak5DT2pkRU9qa3lPa1JET2pnN
-              E9qTXpPalV4T2pJek9qUXdPamN5T2preE9qZ3pPalZDT2pBeE9qSkdPalV3T2pjNE9qTkdJbjFkZlN3aWFXUmxib  
-              lJwZEhraU9pSnRhWE5wUUc1cGFXWXVhSFVpZlEuSTVQdGhKNFFDT05TOFVXd25OOUh3MEdaTDl3d0RBVGRrTWtFW
-              llmdlNVTTJ6Umd5R09WSGgzRmpnc2FPZklkRnFsNUx6azBFbndVOTNQOUlCQ0xZOWtia3V1c0V1S25YRGVNLTNIN
-              WFmdTJvZl9CTlZjUnB3MmdBdlNBbVR6SlltcEpqMFEtdmV0TmtVT1huZE9HLUIzT3ZGb3QwZVNENlZSNUdhb2wyc
-              GduS3FSTktOd3dacEZ1eUZZbFRodHJIdGNiT19WV3o4QnZpTThKS25OdExWd1JxNUhMX2ZLTlRCNzFDYkoyWmh5W
-              XU1UEdwWDhXcXJMWC1ybm5YSFY3RnhoTTh5OHdrLWd5cnRZazVnbFlZeUFrcTVqZklSXzRzWER5d19Qc1BWTW1aZ
-              XltenVGV3BQTzVFWlJYR0ZpRjFET0o4Q0Q3Z3Zta2dUdlBXSWpkemtBIn0=</c>
+W9uIjoiZXlKaGJHY2lPaUpTVXpJMU5pSXNJblI1Y0NJNklrcFhVeUo5LmV5SmpiMjUwWlc1MGN5STZleUptYVc1b
+lpYSndjbWx1ZENJNlczc2lZV3huYjNKcGRHaHRJam9pYzJoaExUSTFOaUlzSW1ScFoyVnpkQ0k2SWprek9rTXdPa
+kl6T2pKR09rRXlPakF3T2pBd09qQkVPalV4T2tGRE9rUXlPalUwT2pZMU9rWTBPak5DT2pkRU9qa3lPa1JET2pnN
+E9qTXpPalV4T2pJek9qUXdPamN5T2preE9qZ3pPalZDT2pBeE9qSkdPalV3T2pjNE9qTkdJbjFkZlN3aWFXUmxib  
+lJwZEhraU9pSnRhWE5wUUc1cGFXWXVhSFVpZlEuSTVQdGhKNFFDT05TOFVXd25OOUh3MEdaTDl3d0RBVGRrTWtFW
+llmdlNVTTJ6Umd5R09WSGgzRmpnc2FPZklkRnFsNUx6azBFbndVOTNQOUlCQ0xZOWtia3V1c0V1S25YRGVNLTNIN
+WFmdTJvZl9CTlZjUnB3MmdBdlNBbVR6SlltcEpqMFEtdmV0TmtVT1huZE9HLUIzT3ZGb3QwZVNENlZSNUdhb2wyc
+GduS3FSTktOd3dacEZ1eUZZbFRodHJIdGNiT19WV3o4QnZpTThKS25OdExWd1JxNUhMX2ZLTlRCNzFDYkoyWmh5W
+XU1UEdwWDhXcXJMWC1ybm5YSFY3RnhoTTh5OHdrLWd5cnRZazVnbFlZeUFrcTVqZklSXzRzWER5d19Qc1BWTW1aZ
+XltenVGV3BQTzVFWlJYR0ZpRjFET0o4Q0Q3Z3Zta2dUdlBXSWpkemtBIn0=</c>
           <c>Section 5.6 of <xref target="I-D.ietf-rtcweb-security-arch"/></c>    
           <c>****** Audio m=line *********</c>
           <c>*****************************</c>
@@ -524,14 +526,14 @@ Alice                                Bob
           <c>a=ice-options:trickle</c>
           <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>a=identity:ew0KICAiaWRwIjp7DQogICAgImRvbWFpbiI6ICJjaXNjb3NwYXJrLmNvbSIsDQogICAg
-            InByb3RvY29sIjogImRlZmF1bHQiDQogIH0sDQogICJhc3NlcnRpb24iOiAibEp3WkVocmFVOXBTblJo
-            V0U1d1VVYzFjR0ZYV1hWaFNGVnBabEV1U1RWUWRHaEtORkZEVDA1VE9GVlhkMjVPT1VoM01FZGFURGwz
-            ZDBSQlZHUnJUV3RGVw0KICAgICAgICAgICAgICBsbG1kbE5WVFRKNlVtZDVSMDlXU0dnelJtcG5jMkZQ
-            Wmtsa1JuRnNOVXg2YXpCRmJuZFZPVE5RT1VsQ1EweFpPV3RpYTNWMWMwVjFTMjVZUkdWTkxUTklODQog
-            ICAgICAgICAgICAgIFdGbWRUSnZabDlDVGxaalVuQjNNbWRCZGxOQmJWUjZTbGx0Y0VwcU1GRXRkbVYw
-            VG10VlQxaHVaRTlITFVJelQzWkdiM1F3WlZORU5sWlNOVWRoYjJ3eWMNCiAgICAgICAgICAgICAgR2R1
-            UzNGU1RrdE9kM2RhY0VaMWVVWlpiRlJvZEhKSWRHTmlUMTlXVjNvNFFuWnBUVGhLUzI1T2RFeFdkMUp4
-            TlVoTVgyWkxUbFJDTnpGRFlrb3lXbWg1VyINCn0=</c>
+InByb3RvY29sIjogImRlZmF1bHQiDQogIH0sDQogICJhc3NlcnRpb24iOiAibEp3WkVocmFVOXBTblJo
+V0U1d1VVYzFjR0ZYV1hWaFNGVnBabEV1U1RWUWRHaEtORkZEVDA1VE9GVlhkMjVPT1VoM01FZGFURGwz
+ZDBSQlZHUnJUV3RGVw0KICAgICAgICAgICAgICBsbG1kbE5WVFRKNlVtZDVSMDlXU0dnelJtcG5jMkZQ
+Wmtsa1JuRnNOVXg2YXpCRmJuZFZPVE5RT1VsQ1EweFpPV3RpYTNWMWMwVjFTMjVZUkdWTkxUTklODQog
+ICAgICAgICAgICAgIFdGbWRUSnZabDlDVGxaalVuQjNNbWRCZGxOQmJWUjZTbGx0Y0VwcU1GRXRkbVYw
+VG10VlQxaHVaRTlITFVJelQzWkdiM1F3WlZORU5sWlNOVWRoYjJ3eWMNCiAgICAgICAgICAgICAgR2R1
+UzNGU1RrdE9kM2RhY0VaMWVVWlpiRlJvZEhKSWRHTmlUMTlXVjNvNFFuWnBUVGhLUzI1T2RFeFdkMUp4
+TlVoTVgyWkxUbFJDTnpGRFlrb3lXbWg1VyINCn0=</c>
           <c>Section 5.6 of <xref target="I-D.ietf-rtcweb-security-arch"/></c>  
           <c>****** Audio m=line *********</c>
           <c>*****************************</c>
