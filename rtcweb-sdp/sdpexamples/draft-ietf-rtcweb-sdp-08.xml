@@ -3791,6 +3791,8 @@ Alice                                            Bob
           <c> BUNDLE accepted</c>
           <c>c=IN IP4 203.0.113.77</c>
           <c><xref target="RFC4566"></xref></c>
+          <c>a=bundle-only</c>
+					<c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/> </c>
 					<c>a=mid:m2</c>
           <c><xref target="RFC5888"></xref> Video m=line part of BUNDLE group</c>
           <c>a=msid:ma tc </c>
@@ -4272,6 +4274,8 @@ Alice                                                    Bob
           <c>BUNDLE accepted</c>
           <c>c=IN IP4 203.0.113.77</c>
           <c><xref target="RFC4566"></xref></c>
+          <c>a=bundle-only</c>
+					<c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"/> </c>
 					<c>a=mid:m1</c>
 					<c><xref target="RFC5888"></xref> Video m=line part of BUNDLE group</c>
 					<c>a=msid:ma tb </c>
