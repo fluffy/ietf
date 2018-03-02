@@ -5320,7 +5320,7 @@ Alice                                                       Bob
           <c><xref target="RFC7587"></xref></c>
           <c>a=maxptime:120</c>
           <c><xref target="RFC4566"/></c>
-					<c>a=ice-ufrag:ufrag:c300d85b</c>
+					<c>a=ice-ufrag:c300d85b</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=ice-pwd:de4e99bd291c325921d5d47efbabd9a2</c>
           <c><xref target="RFC5245"></xref></c>
