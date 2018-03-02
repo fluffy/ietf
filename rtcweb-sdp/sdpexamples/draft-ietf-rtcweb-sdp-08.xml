@@ -3596,10 +3596,10 @@ Alice                                            Bob
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=extmap:3 urn:ietf:params:rtp-hdrext:sdes:rtp-stream-id</c>
           <c><xref target="I-D.ietf-avtext-rid"></xref></c>
-          <c>a=rid:1 send pt=98;max-width=1280;max-height=720;</c>
+          <c>a=rid:1 send pt=98;max-width=1280;max-height=720</c>
 					<c><xref target="I-D.ietf-mmusic-rid"></xref>
           1:1 rid mapping to payload type and specify resolution constraints</c>
-          <c>a=rid:2 send pt=100;max-width=640;max-height=480;</c>
+          <c>a=rid:2 send pt=100;max-width=640;max-height=480</c>
           <c><xref target="I-D.ietf-mmusic-rid"></xref>
           1:1 rid mapping to payload type and specify resolution constraints</c>
           <c>a=simulcast:send 1;~2</c>
@@ -3638,10 +3638,10 @@ Alice                                            Bob
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=extmap:3 urn:ietf:params:rtp-hdrext:sdes:rtp-stream-id</c>
           <c><xref target="I-D.ietf-avtext-rid"></xref></c>
-					<c>a=rid:3 send pt=101;max-width=1280;max-height=720;</c>
+					<c>a=rid:3 send pt=101;max-width=1280;max-height=720</c>
           <c><xref target="I-D.ietf-mmusic-rid"></xref>
           1:1 rid mapping to payload type and specify resolution constraints</c>
-          <c>a=rid:4 send pt=102;max-width=640;max-height=360;</c>
+          <c>a=rid:4 send pt=102;max-width=640;max-height=360</c>
           <c><xref target="I-D.ietf-mmusic-rid"></xref>
           1:1 rid mapping to payload type and specify resolution constraints</c>
           <c>a=simulcast:send 3;4</c>
@@ -3739,10 +3739,10 @@ Alice                                            Bob
 					<c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=extmap:3 urn:ietf:params:rtp-hdrext:sdes:rtp-stream-id</c>
           <c><xref target="I-D.ietf-avtext-rid"></xref></c>
-					<c>a=rid:1 recv pt=98;max-width=1280;max-height=720;</c>
+					<c>a=rid:1 recv pt=98;max-width=1280;max-height=720</c>
           <c><xref target="I-D.ietf-mmusic-rid"></xref>
           Bob accepts the offered payload format constraints</c>
-          <c>a=rid:2 recv pt=100;max-width=640;max-height=480;</c>
+          <c>a=rid:2 recv pt=100;max-width=640;max-height=480</c>
           <c><xref target="I-D.ietf-mmusic-rid"></xref>
           Bob accepts the offered payload format constraints</c>
           <c>a=simulcast:recv 1;2</c>
@@ -3779,10 +3779,10 @@ Alice                                            Bob
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=extmap:3 urn:ietf:params:rtp-hdrext:sdes:rtp-stream-id</c>
           <c><xref target="I-D.ietf-avtext-rid"></xref></c>
-					<c>a=rid:3 recv pt=101;max-width=1280;max-height=720;</c>
+					<c>a=rid:3 recv pt=101;max-width=1280;max-height=720</c>
           <c><xref target="I-D.ietf-mmusic-rid"></xref>
           Bob accepts the offered payload format constraints</c>
-          <c>a=rid:4 recv pt=102;max-width=640;max-height=360;</c>
+          <c>a=rid:4 recv pt=102;max-width=640;max-height=360</c>
           <c><xref target="I-D.ietf-mmusic-rid"></xref>
           Bob accepts the offered payload format constraints</c>
           <c>a=simulcast:recv 3;4</c>
@@ -4156,11 +4156,11 @@ Alice                                                    Bob
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=extmap:3 urn:ietf:params:rtp-hdrext:sdes:rtp-stream-id</c>
           <c><xref target="I-D.ietf-avtext-rid"></xref></c>
-					<c>a=rid:1 send pt=98;max-fs=921600;max-fr=30;</c>
+					<c>a=rid:1 send pt=98;max-fs=921600;max-fr=30</c>
           <c><xref target="I-D.ietf-mmusic-rid"></xref></c>
-          <c>a=rid:2 send pt=98;max-fs=614400;max-fr=15;</c>
+          <c>a=rid:2 send pt=98;max-fs=614400;max-fr=15</c>
           <c><xref target="I-D.ietf-mmusic-rid"></xref></c>
-          <c>a=rid:3 send pt=98;max-fs=230400;max-fr=30;</c>
+          <c>a=rid:3 send pt=98;max-fs=230400;max-fr=30</c>
           <c><xref target="I-D.ietf-mmusic-rid"></xref></c>
           <c>a=simulcast:send 1;2;3 </c>
           <c><xref target="I-D.ietf-mmusic-sdp-simulcast"></xref>
@@ -4258,11 +4258,11 @@ Alice                                                    Bob
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=extmap:3 urn:ietf:params:rtp-hdrext:sdes:rtp-stream-id</c>
           <c><xref target="I-D.ietf-avtext-rid"></xref></c>
-					<c>a=rid:1 recv pt=98;max-fs=921600;max-fr=30;</c>
+					<c>a=rid:1 recv pt=98;max-fs=921600;max-fr=30</c>
           <c><xref target="I-D.ietf-mmusic-rid"></xref></c>
-          <c>a=rid:2 recv pt=98;max-fs=614400;max-fr=15;</c>
+          <c>a=rid:2 recv pt=98;max-fs=614400;max-fr=15</c>
           <c><xref target="I-D.ietf-mmusic-rid"></xref></c>
-          <c>a=rid:3 recv pt=98;max-fs=230400;max-fr=30;</c>
+          <c>a=rid:3 recv pt=98;max-fs=230400;max-fr=30</c>
           <c><xref target="I-D.ietf-mmusic-rid"></xref></c>
           <c>a=simulcast:recv 1;2;3 </c>
           <c><xref target="I-D.ietf-mmusic-sdp-simulcast"></xref>
@@ -4412,10 +4412,10 @@ Alice                                                    Bob
 					<c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=extmap:3 urn:ietf:params:rtp-hdrext:sdes:rtp-stream-id</c>
           <c><xref target="I-D.ietf-avtext-rid"></xref></c>
-          <c>a=rid:1 send pt=98;</c>
+          <c>a=rid:1 send pt=98</c>
           <c><xref target="I-D.ietf-mmusic-rid"></xref>
           1:1 mapping between the PT and the 'rid' identifier</c>
-          <c>a=rid:2 send pt=100;</c>
+          <c>a=rid:2 send pt=100</c>
           <c><xref target="I-D.ietf-mmusic-rid"></xref>
           1:1 mapping between the PT and the 'rid' identifier</c>
           <c>a=simulcast:send 1;2 </c>
@@ -4507,7 +4507,7 @@ Alice                                                    Bob
 					<c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=extmap:3 urn:ietf:params:rtp-hdrext:sdes:rtp-stream-id</c>
           <c><xref target="I-D.ietf-avtext-rid"></xref></c>
-					<c>a=rid:1 recv pt=98;</c>
+					<c>a=rid:1 recv pt=98</c>
           <c><xref target="I-D.ietf-mmusic-rid"></xref></c>
           <c>a=simulcast:recv 1 </c>
           <c><xref target="I-D.ietf-mmusic-sdp-simulcast"/>
@@ -4656,10 +4656,10 @@ Alice                                                            Bob
 					<c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=extmap:3 urn:ietf:params:rtp-hdrext:sdes:rtp-stream-id</c>
           <c><xref target="I-D.ietf-avtext-rid"></xref></c>
-					<c>a=rid:1 send pt=98;</c>
+					<c>a=rid:1 send pt=98</c>
 					<c><xref target="I-D.ietf-mmusic-rid"></xref>
 					1:1 mapping between the PT and the 'rid' identifier</c>
-					<c>a=rid:2 send pt=100;</c>
+					<c>a=rid:2 send pt=100</c>
 					<c><xref target="I-D.ietf-mmusic-rid"></xref>
 					1:1 mapping between the PT and the 'rid' identifier</c>
 					<c>a=simulcast:send 1;2 </c>
@@ -4764,9 +4764,9 @@ Alice                                                            Bob
 					<c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=extmap:3 urn:ietf:params:rtp-hdrext:sdes:rtp-stream-id</c>
           <c><xref target="I-D.ietf-avtext-rid"></xref></c>
-					<c>a=rid:1 recv pt=98;</c>
+					<c>a=rid:1 recv pt=98</c>
           <c><xref target="I-D.ietf-mmusic-rid"></xref></c>
-          <c>a=rid:2 recv pt=100;</c>
+          <c>a=rid:2 recv pt=100</c>
           <c><xref target="I-D.ietf-mmusic-rid"></xref></c>
           <c>a=simulcast:recv 1;2 </c>
           <c><xref target="I-D.ietf-mmusic-sdp-simulcast"/></c>
