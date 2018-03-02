@@ -5529,7 +5529,7 @@ Alice                                                       Bob
           <c><xref target="RFC5245"></xref></c>
           <c>a=ice-pwd:dbc325921d5dd29e4e99147efbabd9a2</c>
           <c><xref target="RFC5245"></xref></c>
-          <c>a=fingerprint:sha-256 BB:0A9:0E:05:E9:26:33:E8:70:88:A25:2F:70:9F:04:19:E2:1C:3B:4B:9F:81:5:2F:70:9F:04::F4:A5:A8:D8:
+          <c>a=fingerprint:sha-256 BB:0A:0E:05:E9:26:33:E8:70:88:A2:2F:70:9F:04:19:E2:1C:3B:4B:9F:81:56:2F:70:9F:04:F4:A5:A8:D8
           </c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=rtcp-mux</c>
