@@ -340,8 +340,12 @@
              Any SDP line that is indented (compared to the initial line in the
              SDP block) is a continuation of the preceding line. The line
              break and indent are to be interpreted as a single space
-             character.
-             </t>
+             character. The following SDP attributes are affected by this 
+             formatting:
+               <list>
+                <t>a=identity</t>
+               </list>
+            </t>
             <t>
              Excepting the above two conventions, line endings are to be
              interpreted as &lt;CR>&lt;LF> pairs (that is, an ASCII 13 followed
