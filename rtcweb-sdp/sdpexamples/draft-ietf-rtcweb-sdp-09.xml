@@ -3022,6 +3022,8 @@ Alice                                                 Bob
           <c><xref target="RFC3264"></xref></c>
           <c>a=setup:actpass</c>
           <c><xref target="RFC5763"></xref></c>
+          <c>a=tls-id:UKA29UQLTF69OJW4WNPNUO2Y0GF1FJOZ</c>
+          <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=ice-ufrag:89819013</c>
           <c><xref target="RFC5245"></xref></c>
           <c>a=ice-pwd:1747d1ee3474af08a068a28a397a4c3f3</c>
@@ -3131,6 +3133,8 @@ Alice                                                 Bob
           <c><xref target="I-D.ietf-mmusic-sctp-sdp"></xref></c>
           <c>a=setup:active</c>
           <c><xref target="RFC5763"></xref></c>
+          <c>a=tls-id:9AIFS8AQ009IXF5D6QQUJ7P8BXPEZJ8G</c>
+          <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=sendrecv</c>
           <c><xref target="RFC3264"></xref></c>
           <c>a=ice-ufrag:991Ca2a5e</c>
@@ -5600,7 +5604,8 @@ Alice                                                       Bob
     </section>
     <section title="Security Considerations">
       <t>The IETF has published separate documents 
-        <xref target="I-D.ietf-rtcweb-security-arch"/> <xref target="I-D.ietf-rtcweb-security"/> describing the security architecture for WebRTC as a whole.</t>
+        <xref target="I-D.ietf-rtcweb-security-arch"/> <xref target="I-D.ietf-rtcweb-security"/> 
+        describing the security architecture for WebRTC as a whole.</t>
       <t>In addition, since the SDP offer and answer messages can contain 
         private information about addresses and sessions to be established 
         between parties, if this information needs to be kept private, 
@@ -5610,14 +5615,19 @@ Alice                                                       Bob
     <section title="Acknowledgments">
       <t>
         We would like to thank Justin Uberti, Chris Flo, Paul Kyzivat, Nils Ohlmeier for their
-        detailed review and inputs.
+        detailed review and inputs. Thanks to Adam Roach for providing syntax validation script 
+        to help highlight syntax and formatting errors.
       </t>
     </section>
     <section title="Change Log">
       <t>[RFC EDITOR NOTE: Please remove this section when publishing]</t>
       <t>Changes from draft-ietf-rtcweb-sdp-08
           <list style="symbols">
-              <t>Adam's Review: Use random tls-id values.</t>
+              <t>Fixed formatting and syntax issues pointed out by Adam Roach's 
+              validator script. List of issues are here: 
+              https://github.com/fluffy/ietf/issues?q=is%3Aissue+is%3Aclosed</t>
+              <t>Align examples to match latest bundle specification as pointed
+              by Christer Holmberg</t>
          </list>
       </t>
       <t>Changes from draft-ietf-rtcweb-sdp-07
