@@ -70,7 +70,7 @@
 <?rfc colonspace="yes" ?>
 <?rfc rfcedstyle="no" ?>
 <?rfc tocdepth="4"?>
-<rfc category="info" docName="draft-ietf-rtcweb-sdp-09"
+<rfc category="info" docName="draft-ietf-rtcweb-sdp-10"
      ipr="trust200902">
   <front>
     <title abbrev="SDP4WebRTC">Annotated Example SDP for WebRTC</title>
@@ -117,7 +117,7 @@
       </address>
     </author>
 
-    <date day="2" month="March" year="2018"/>
+    <date day="30" month="June" year="2018"/>
 
     <area>RAI</area>
 
@@ -4950,7 +4950,7 @@ Alice                                                            Bob
           <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** Audio m=line *********</c>
           <c>*****************************</c>
-          <c>m=audio 49203 UDP/TLS/RTP/SAVPF 109 0 98</c>
+          <c>m=audio 49203 UDP/TLS/RTP/SAVPF 109 0 8</c>
           <c><xref target="RFC4566"></xref></c>
           <c>c=IN IP4 203.0.113.77</c>
           <c><xref target="RFC4566"></xref></c>
@@ -4965,7 +4965,7 @@ Alice                                                            Bob
           only Opus Codec</c>
           <c>a=rtpmap:0 PCMU/8000</c>
           <c><xref target="RFC3551"></xref> PCMU Audio Codec</c>
-          <c>a=rtpmap:0 PCMA/8000</c>
+          <c>a=rtpmap:8 PCMA/8000</c>
           <c><xref target="RFC3551"></xref> PCMA Audio Codec</c>
 					<c>a=maxptime:120</c>
 					<c><xref target="RFC4566"/></c>
@@ -5067,7 +5067,7 @@ Alice                                    Mixer
           <c><xref target="RFC7587"></xref></c>
           <c>a=rtpmap:0 PCMU/8000</c>
           <c><xref target="RFC3551"></xref> PCMU Audio Codec</c>
-          <c>a=rtpmap:0 PCMA/8000</c>
+          <c>a=rtpmap:8 PCMA/8000</c>
           <c><xref target="RFC3551"></xref> PCMA Audio Codec</c>
 					<c>a=maxptime:120</c>
 					<c><xref target="RFC4566"/></c>
@@ -5120,7 +5120,7 @@ Alice                                    Mixer
           <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** Audio m=line *********</c>
           <c>*****************************</c>
-          <c>m=audio 49203 UDP/TLS/RTP/SAVPF 109 0 98</c>
+          <c>m=audio 49203 UDP/TLS/RTP/SAVPF 109 0 8</c>
           <c><xref target="RFC4566"></xref></c>
           <c>c=IN IP4 203.0.113.77</c>
           <c><xref target="RFC4566"></xref></c>
@@ -5134,7 +5134,7 @@ Alice                                    Mixer
           <c><xref target="RFC7587"></xref></c>
           <c>a=rtpmap:0 PCMU/8000</c>
           <c><xref target="RFC3551"></xref> PCMU Audio Codec</c>
-          <c>a=rtpmap:0 PCMA/8000</c>
+          <c>a=rtpmap:8 PCMA/8000</c>
           <c><xref target="RFC3551"></xref> PCMA Audio Codec</c>
 					<c>a=maxptime:120</c>
 					<c><xref target="RFC4566"/></c>
@@ -5179,13 +5179,13 @@ Alice                                    Mixer
          <list style="symbols">
          	<t>Offer from Alice describes 2 cameras via 2 video m=lines with
          	 both marked as bundle-only.</t>
-             <t> Since Bob doesnot recognize either the BUNDLE mechanism or
-             the bundle-only attribute, he accepts only the audio stream
-             from Alice.</t>
+           <t> Bob doesn't recognize BUNDLE mechanism and since Alice 
+           has marked both the video m=lines with port 0, Bob accepts 
+           just the audio stream from Alice.</t>
           </list>
         </t>
 				<t>NOTE: Since Alice is unaware of Bob's support for BUNDLE
-				framework, Alice ensures to include separate RTP/RTCP ports and
+				framework, Alice includes separate RTP/RTCP ports and
 			  candidate information.</t>
     <figure>
           <artwork alt="2-Way Legacy Interop">
@@ -5198,7 +5198,7 @@ Alice                                                       Bob
 |       Alice is a multistream capable WebRTC end-point     |
 |          & Bob is behind a legacy VOIP system             |
 |                                                           |
-|Offer(Audio:Opus Video:2 VP8,2 H2.64 Streams) with         |
+|Offer(Audio:Opus Video:2 VP8,2 H.264 Streams) with         |
 |          bundle-only                                      |
 |---------------------------------------------------------->|
 |     Alice marks both the video streams as bundle-only     |
@@ -5291,7 +5291,7 @@ Alice                                                       Bob
 					<c><xref target="RFC5245"></xref></c>
           <c>****** Video-1 m=line *********</c>
           <c>*****************************</c>
-          <c>m=video 0 UDP/TLS/RTP/SAVPF 98 100</c>
+          <c>m=video 0 UDP/TLS/RTP/SAVPF 98</c>
           <c>bundle-only video line with port number set to zero  </c>
           <c>c=IN IP4 203.0.113.141</c>
           <c><xref target="RFC4566"></xref></c>
@@ -5411,12 +5411,12 @@ Alice                                                       Bob
        <section anchor="sec-2way-webrtc-voip"
         title="Legacy Interop with RTP/AVP profile">
 			  <t>
-          In the scenario desribed below, Alice is a legacy end-point which sends
+          In the scenario described below, Alice is a legacy end-point which sends
           <xref target="RFC3264"/> Offer with RTP/AVP based audio and video 
           descriptions along with DTLS fingerprint and RTCP feedback information.
         </t>
         <t>
-         On the other hand, Bob being a WebRTC end-point follows the procedures in 
+         On the other hand, Bob being a WebRTC end-point follows procedures in 
          section 5.1.2 of <xref target="I-D.ietf-rtcweb-jsep"/> and accepts the 
          Alice's offer for DTLS-SRTP based session with RTCP feedback. 
         </t>     
@@ -5451,7 +5451,7 @@ Alice                                                       Bob
 |                                                            |
 |             Two way Opus Audio, H.264 Video                |
 |............................................................|
-|       Session also suports RTP/RTCP Mux, RTCP Feedback     |
+|       Session also supports RTP/RTCP Mux, RTCP Feedback    |
 |                                                            |
 
 ]]></artwork>
@@ -5569,7 +5569,7 @@ Alice                                                       Bob
           <c><xref target="RFC5245"></xref></c>
           <c>****** Video m=line *********</c>
           <c>*****************************</c>
-          <c>m=video  63130 RTP/SAVP 120</c>
+          <c>m=video 63130 RTP/AVP 120</c>
           <c><xref target="RFC4566"></xref> Bob accepts RTP/AVP based video stram </c>
           <c>c=IN IP4 203.0.113.77</c>
           <c><xref target="RFC4566"></xref></c>
@@ -5614,13 +5614,17 @@ Alice                                                       Bob
     </section>  
     <section title="Acknowledgments">
       <t>
-        We would like to thank Justin Uberti, Chris Flo, Paul Kyzivat, Nils Ohlmeier for their
-        detailed review and inputs. Thanks to Adam Roach for providing syntax validation script 
-        to help highlight syntax and formatting errors.
+        We would like to thank Justin Uberti, Chris Flo, Paul Kyzivat, Nils Ohlmeier, Flemming Andreason, for their detailed review and inputs. Thanks to Adam Roach for providing 
+        syntax validation script to help highlight syntax and formatting errors.
       </t>
     </section>
     <section title="Change Log">
       <t>[RFC EDITOR NOTE: Please remove this section when publishing]</t>
+      <t>Changes from draft-ietf-rtcweb-sdp-09
+          <list style="symbols">
+              <t>Review feedback incorporated from Flemming Andreason in Section 5.4</t>
+         </list>
+      </t>
       <t>Changes from draft-ietf-rtcweb-sdp-08
           <list style="symbols">
               <t>Fixed formatting and syntax issues pointed out by Adam Roach's 
