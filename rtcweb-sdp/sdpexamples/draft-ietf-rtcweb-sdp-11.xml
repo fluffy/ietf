@@ -62,6 +62,8 @@
     SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-rtcweb-security.xml">
  <!ENTITY I-D.ietf-avtext-rid
     SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-avtext-rid.xml"> 
+ <!ENTITY I-D.ietf-mmusic-ice-sip-sdp
+    SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-mmusic-ice-sip-sdp.xml">   
 ]>
 <?xml-stylesheet type="text/xsl" href="rfc2629.xslt" ?>
 <?rfc toc="yes" ?>
@@ -482,11 +484,11 @@ XltenVGV3BQTzVFWlJYR0ZpRjFET0o4Q0Q3Z3Zta2dUdlBXSWpkemtBIn0=</c>
           <c>a=maxptime:120</c>
           <c><xref target="RFC4566"/></c>
           <c>a=ice-ufrag:074c6550</c>
-          <c><xref target="RFC5245"></xref> - ICE user fragment</c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - ICE user fragment</c>
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
-          <c><xref target="RFC5245"></xref> - ICE password</c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - ICE password</c>
           <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2</c>
-          <c><xref target="RFC5245"></xref> - DTLS Fingerprint for SRTP</c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - DTLS Fingerprint for SRTP</c>
           <c>a=setup:actpass</c>
           <c><xref target="RFC5763"></xref> - Alice can act as DTLS client or server</c>
           <c>a=tls-id:89J2LRATQ3ULA24G9AHWVR31VJWSLB68</c>
@@ -504,16 +506,16 @@ XltenVGV3BQTzVFWlJYR0ZpRjFET0o4Q0Q3Z3Zta2dUdlBXSWpkemtBIn0=</c>
           <c>a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:mid</c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=candidate:0 1 UDP 2122194687 192.0.2.4 61665 typ host</c>
-          <c><xref target="RFC5245"></xref> - RTP Host Candidate</c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - RTP Host Candidate</c>
           <c>a=candidate:1 1 UDP 1685987071 203.0.113.141 54609 typ srflx
           raddr 192.0.2.4 rport 61665</c>
-          <c><xref target="RFC5245"></xref> - RTP Server Reflexive
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - RTP Server Reflexive
           ICE Candidate</c>
 					<c>a=candidate:0 2 UDP 2122194687 192.0.2.4 61667 typ host</c>
-          <c><xref target="RFC5245"></xref> - RTCP Host Candidate</c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - RTCP Host Candidate</c>
           <c>a=candidate:1 2 UDP 1685987071 203.0.113.141 60065 typ srflx
           raddr 192.0.2.4 rport 61667</c>
-          <c><xref target="RFC5245"></xref> - RTCP Server Reflexive
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - RTCP Server Reflexive
           ICE Candidate</c>
           <c>a=end-of-candidates</c>
           <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
@@ -567,11 +569,11 @@ TlVoTVgyWkxUbFJDTnpGRFlrb3lXbWg1VyINCn0=</c>
           <c>a=maxptime:120</c>
           <c><xref target="RFC4566"/></c>
           <c>a=ice-ufrag:05067423</c>
-          <c><xref target="RFC5245"></xref> - ICE user fragment</c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - ICE user fragment</c>
           <c>a=ice-pwd:1747d1ee3474a28a397a4c3f3af08a068</c>
-          <c><xref target="RFC5245"></xref> - ICE password parameter</c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - ICE password parameter</c>
           <c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08</c>
-          <c><xref target="RFC5245"></xref> - DTLS Fingerprint for SRTP</c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - DTLS Fingerprint for SRTP</c>
           <c>a=setup:active</c>
           <c><xref target="RFC5763"></xref> - Bob is the DTLS client</c>
           <c>a=tls-id:CJ6FF9ZZMJW7MDRJIR7XVIQM48GE1G31</c>
@@ -588,10 +590,10 @@ TlVoTVgyWkxUbFJDTnpGRFlrb3lXbWg1VyINCn0=</c>
           <c>a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:mid</c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=candidate:0 1 UDP 2122194687 198.51.100.7 51556 typ host</c>
-          <c><xref target="RFC5245"></xref> - RTP/RTCP Host ICE Candidate</c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - RTP/RTCP Host ICE Candidate</c>
           <c>a=candidate:1 1 UDP 1685987071 203.0.113.77 49203 typ srflx
           raddr 198.51.100.7 rport 51556</c>
-          <c><xref target="RFC5245"></xref>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref>
        		- RTP/RTCP Server Reflexive ICE Candidate</c>
           <c>a=end-of-candidates</c>
           <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
@@ -668,11 +670,11 @@ Alice                                       Bob
             <c>a=maxptime:120</c>
             <c> <xref target="RFC4566"/> </c>
             <c>a=ice-ufrag:074c6550</c>
-            <c><xref target="RFC5245"></xref> - ICE user fragment</c>
+            <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - ICE user fragment</c>
             <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
-            <c><xref target="RFC5245"></xref> - ICE password parameter</c>
+            <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - ICE password parameter</c>
             <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2</c>
-            <c><xref target="RFC5245"></xref> - DTLS Fingerprint for SRTP</c>
+            <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - DTLS Fingerprint for SRTP</c>
             <c>a=setup:actpass</c>
             <c><xref target="RFC5763"></xref> - Alice can act as DTLS client or server</c>
             <c>a=tls-id:89J2LRATQ3ULA24G9AHWVR31VJWSLB68</c>
@@ -689,10 +691,10 @@ Alice                                       Bob
             <c>a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:mid</c>
             <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
             <c>a=candidate:0 1 UDP 2122194687 192.0.2.4 61665 typ host</c>
-            <c><xref target="RFC5245"></xref> - RTP/RTCP Host Candidate</c>
+            <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - RTP/RTCP Host Candidate</c>
             <c>a=candidate:1 1 UDP 1685987071 203.0.113.141 54609 typ srflx
             raddr 192.0.2.4 rport 61665</c>
-            <c><xref target="RFC5245"></xref> - RTP/RTCP Server Reflexive ICE Candidate</c>
+            <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - RTP/RTCP Server Reflexive ICE Candidate</c>
             <c>a=end-of-candidates</c>
             <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
             <c>****** Video m=line *********</c>
@@ -773,11 +775,11 @@ Alice                                       Bob
             <c>a=maxptime:120</c>
             <c><xref target="RFC4566"/></c>
             <c>a=ice-ufrag:c300d85b</c>
-            <c><xref target="RFC5245"></xref> -  ICE username frag</c>
+            <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> -  ICE username frag</c>
             <c>a=ice-pwd:de4e99bd291c325921d5d47efbabd9a2</c>
-            <c><xref target="RFC5245"></xref> - ICE password</c>
+            <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - ICE password</c>
             <c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08</c>
-            <c><xref target="RFC5245"></xref> - DTLS Fingerprint for SRTP</c>
+            <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - DTLS Fingerprint for SRTP</c>
             <c>a=setup:active</c>
             <c><xref target="RFC5763"></xref> - Bob is the DTLS client</c>
             <c>a=tls-id:CJ6FF9ZZMJW7MDRJIR7XVIQM48GE1G31</c>
@@ -794,10 +796,10 @@ Alice                                       Bob
             <c>a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:mid</c>
             <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
             <c>a=candidate:0 1 UDP 3618095783 198.51.100.7 49203 typ host</c>
-            <c><xref target="RFC5245"></xref> - RTP/RTCP Host ICE Candidate</c>
+            <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - RTP/RTCP Host ICE Candidate</c>
             <c>a=candidate:1 1 UDP 565689203 203.0.113.77 49203 typ srflx
             raddr 198.51.100.7 rport 51556</c>
-            <c><xref target="RFC5245"></xref> - RTP/RTCP Server Reflexive ICE
+            <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - RTP/RTCP Server Reflexive ICE
             Candidate</c>
             <c>a=end-of-candidates</c>
             <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
@@ -878,11 +880,11 @@ Alice                                       Bob
             <c>a=maxptime:120</c>
             <c> <xref target="RFC4566"/> </c>
             <c>a=ice-ufrag:074c6550</c>
-            <c><xref target="RFC5245"></xref> - ICE user fragment</c>
+            <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - ICE user fragment</c>
             <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
-            <c><xref target="RFC5245"></xref> - ICE password parameter</c>
+            <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - ICE password parameter</c>
             <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2</c>
-            <c><xref target="RFC5245"></xref> - DTLS Fingerprint for SRTP</c>
+            <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - DTLS Fingerprint for SRTP</c>
             <c>a=setup:actpass</c>
             <c><xref target="RFC5763"></xref> - Alice can act as DTLS client or server</c>
             <c>a=tls-id:89J2LRATQ3ULA24G9AHWVR31VJWSLB68</c>
@@ -899,10 +901,10 @@ Alice                                       Bob
             <c>a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:mid</c>
             <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
             <c>a=candidate:0 1 UDP 2122194687 192.0.2.4 61665 typ host</c>
-            <c><xref target="RFC5245"></xref> - RTP/RTCP Host Candidate</c>
+            <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - RTP/RTCP Host Candidate</c>
             <c>a=candidate:0 1 UDP 2122194687 
               2001:DB8:8101:3a55:4858:a2a9:22ff:99b9 61665 typ host</c>
-            <c><xref target="RFC5245"></xref> - RTP/RTCP IPv6 Host Candidate</c>
+            <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - RTP/RTCP IPv6 Host Candidate</c>
             <c>a=end-of-candidates</c>
             <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
             <c>****** Video m=line *********</c>
@@ -983,11 +985,11 @@ Alice                                       Bob
             <c>a=maxptime:120</c>
             <c><xref target="RFC4566"/></c>
             <c>a=ice-ufrag:c300d85b</c>
-            <c><xref target="RFC5245"></xref> -  ICE username frag</c>
+            <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> -  ICE username frag</c>
             <c>a=ice-pwd:de4e99bd291c325921d5d47efbabd9a2</c>
-            <c><xref target="RFC5245"></xref> - ICE password</c>
+            <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - ICE password</c>
             <c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08</c>
-            <c><xref target="RFC5245"></xref> - DTLS Fingerprint for SRTP</c>
+            <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - DTLS Fingerprint for SRTP</c>
             <c>a=setup:active</c>
             <c><xref target="RFC5763"></xref> - Bob is the DTLS client</c>
             <c>a=tls-id:CJ6FF9ZZMJW7MDRJIR7XVIQM48GE1G31</c>
@@ -1004,10 +1006,10 @@ Alice                                       Bob
             <c>a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:mid</c>
             <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
             <c>a=candidate:0 1 UDP 3618095783 198.51.100.7 49203 typ host</c>
-            <c><xref target="RFC5245"></xref> - RTP/RTCP Host ICE Candidate</c>
+            <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - RTP/RTCP Host ICE Candidate</c>
             <c>a=candidate:0 1 UDP 3618095783 
               2001:DB8:30c:1266:5916:3779:22f6:77f7 49203 typ host</c>
-            <c><xref target="RFC5245"></xref> - RTP/RTCP IPv6 Host ICE Candidate</c>
+            <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - RTP/RTCP IPv6 Host ICE Candidate</c>
             <c>a=end-of-candidates</c>
             <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
             <c>****** Video m=line *********</c>
@@ -1108,17 +1110,17 @@ Alice                            Bob
           <c>a=tls-id:89J2LRATQ3ULA24G9AHWVR31VJWSLB68</c>
           <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=ice-ufrag:074c6550</c>
-          <c><xref target="RFC5245"></xref> - Session Level ICE parameter</c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - Session Level ICE parameter</c>
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
-          <c><xref target="RFC5245"></xref> - Session Level ICE parameter</c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - Session Level ICE parameter</c>
           <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2</c>
-          <c><xref target="RFC5245"></xref> - Session DTLS Fingerprint for
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - Session DTLS Fingerprint for
           SRTP</c>
           <c>a=candidate:0 1 UDP 2113667327 192.0.2.4 61665 typ host</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=candidate:1 1 UDP 1694302207 203.0.113.141 54609 typ srflx
           raddr 192.0.2.4 rport 61665</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=end-of-candidates</c>
           <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
         </texttable>
@@ -1156,17 +1158,17 @@ Alice                            Bob
           <c>a=tls-id:CJ6FF9ZZMJW7MDRJIR7XVIQM48GE1G31</c>
           <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=ice-ufrag:c300d85b</c>
-          <c><xref target="RFC5245"></xref> - Session Level ICE username frag</c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - Session Level ICE username frag</c>
           <c>a=ice-pwd:de4e99bd291c325921d5d47efbabd9a2</c>
-          <c><xref target="RFC5245"></xref> - Session Level ICE password</c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - Session Level ICE password</c>
           <c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08</c>
-          <c><xref target="RFC5245"></xref> - Session DTLS Fingerprint for
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - Session DTLS Fingerprint for
           SRTP</c>
           <c>a=candidate:0 1 UDP 2113667327 198.51.100.7 51556 typ host</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=candidate:1 1 UDP 1694302207 203.0.113.77 49203 typ srflx raddr
           198.51.100.7 rport 51556</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=end-of-candidates</c>
           <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
         </texttable>
@@ -1232,11 +1234,11 @@ Alice                            Bob
 					<c>a=maxptime:120</c>
 					<c><xref target="RFC4566"/></c>
 					<c>a=ice-ufrag:074c6550</c>
-          <c><xref target="RFC5245"></xref> -  ICE user fragment </c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> -  ICE user fragment </c>
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
-          <c><xref target="RFC5245"></xref> -  ICE password</c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> -  ICE password</c>
           <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2</c>
-          <c><xref target="RFC5245"></xref> - DTLS Fingerprint for SRTP</c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - DTLS Fingerprint for SRTP</c>
           <c>a=setup:actpass</c>
           <c><xref target="RFC5763"></xref> - Alice can act as DTLS client or server</c>
           <c>a=tls-id:89J2LRATQ3ULA24G9AHWVR31VJWSLB68</c>
@@ -1253,10 +1255,10 @@ Alice                            Bob
           <c>a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:mid</c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=candidate:0 1 UDP 2113667327 192.0.2.4 61665 typ host</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=candidate:1 1 UDP 1685987071 203.0.113.141 54609 typ srflx
           raddr 192.0.2.4 rport 61665</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=end-of-candidates</c>
           <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
         </texttable>
@@ -1292,11 +1294,11 @@ Alice                            Bob
           <c>a=maxptime:120</c>
           <c><xref target="RFC4566"></xref></c>
           <c>a=ice-ufrag:c300d85b</c>
-          <c><xref target="RFC5245"></xref> - ICE username frag</c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - ICE username frag</c>
           <c>a=ice-pwd:de4e99bd291c325921d5d47efbabd9a2</c>
-          <c><xref target="RFC5245"></xref> - ICE password</c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - ICE password</c>
           <c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08</c>
-          <c><xref target="RFC5245"></xref> - DTLS Fingerprint for SRTP</c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - DTLS Fingerprint for SRTP</c>
           <c>a=setup:active</c>
           <c><xref target="RFC5763"></xref> - Bob is the DTLS client</c>
           <c>a=tls-id:CJ6FF9ZZMJW7MDRJIR7XVIQM48GE1G31</c>
@@ -1313,10 +1315,10 @@ Alice                            Bob
           <c>a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:mid</c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
 					<c>a=candidate:0 1 UDP 2113667327 198.51.100.7 51556 typ host</c>
-          <c><xref target="RFC5245"/> - Host candidate</c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"/> - Host candidate</c>
           <c>a=candidate:1 1 UDP 1685987071 203.0.113.141 49203 typ srflx
           raddr 198.51.100.7 rport 51556</c>
-          <c><xref target="RFC5245"/> -  Server Reflexive candidate</c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"/> -  Server Reflexive candidate</c>
           <c>a=end-of-candidates</c>
 					<c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
         </texttable>
@@ -1389,11 +1391,11 @@ Alice                                              Bob
           <c>a=maxptime:120</c>
           <c><xref target="RFC4566"/></c>
           <c>a=ice-ufrag:074c6550</c>
-          <c><xref target="RFC5245"></xref> -  ICE user fragment</c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> -  ICE user fragment</c>
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
-          <c><xref target="RFC5245"></xref> - ICE password parameter</c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - ICE password parameter</c>
           <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2</c>
-          <c><xref target="RFC5245"></xref> - DTLS Fingerprint for SRTP</c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - DTLS Fingerprint for SRTP</c>
           <c>a=setup:actpass</c>
           <c><xref target="RFC5763"></xref> - Alice can act as DTLS client or server</c>
           <c>a=tls-id:89J2LRATQ3ULA24G9AHWVR31VJWSLB68</c>
@@ -1410,10 +1412,10 @@ Alice                                              Bob
           <c>a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:mid</c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=candidate:0 1 UDP 2122194687 192.0.2.4 61665 typ host</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=candidate:1 1 UDP 1685987071 203.0.113.141 54609 typ srflx
           raddr 192.0.2.4 rport 61665</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=end-of-candidates</c>
           <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** DTMF m=line *********</c>
@@ -1469,11 +1471,11 @@ Alice                                              Bob
           <c>a=maxptime:120</c>
           <c><xref target="RFC4566"/></c>
           <c>a=ice-ufrag:c300d85b</c>
-          <c><xref target="RFC5245"></xref> -  ICE username frag</c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> -  ICE username frag</c>
           <c>a=ice-pwd:de4e99bd291c325921d5d47efbabd9a2</c>
-          <c><xref target="RFC5245"></xref> -  ICE password</c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> -  ICE password</c>
           <c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08</c>
-          <c><xref target="RFC5245"></xref> -  Fingerprint for SRTP</c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> -  Fingerprint for SRTP</c>
           <c>a=setup:active</c>
           <c><xref target="RFC5763"></xref> - Bob is the DTLS client</c>
           <c>a=tls-id:CJ6FF9ZZMJW7MDRJIR7XVIQM48GE1G31</c>
@@ -1491,10 +1493,10 @@ Alice                                              Bob
           <c>a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:mid</c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=candidate:0 1 UDP 2122194687 198.51.100.7 51556 typ host</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=candidate:1 1 UDP 1685987071 203.0.113.77 49203 typ srflx
           raddr 198.51.100.7 rport 51556</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=end-of-candidates</c>
           <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** DTMF m=line *********</c>
@@ -1588,11 +1590,11 @@ Alice                                                 Bob
           <c>a=maxptime:120</c>
           <c><xref target="RFC4566"/></c>
           <c>a=ice-ufrag:074c6550</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=setup:actpass</c>
           <c><xref target="RFC5763"></xref> - Alice can act as DTLS client or server</c>
           <c>a=tls-id:89J2LRATQ3ULA24G9AHWVR31VJWSLB68</c>
@@ -1608,7 +1610,7 @@ Alice                                                 Bob
           <c>a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:mid</c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=candidate:0 1 UDP 2122194687 203.0.113.141 54609 typ host</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=end-of-candidates</c>
           <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** Video m=line *********</c>
@@ -1673,11 +1675,11 @@ Alice                                                 Bob
           <c>a=maxptime:120</c>
           <c><xref target="RFC4566"/></c>
           <c>a=ice-ufrag:c300d85b</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=ice-pwd:de4e99bd291c325921d5d47efbabd9a2</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=setup:active</c>
           <c><xref target="RFC5763"></xref> - Bob is the DTLS client</c>
           <c>a=tls-id:CJ6FF9ZZMJW7MDRJIR7XVIQM48GE1G31</c>
@@ -1691,7 +1693,7 @@ Alice                                                 Bob
           <c>a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:mid</c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=candidate:0 1 UDP 2113667327 203.0.113.77 49203 typ host</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=end-of-candidates</c>
           <c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** Video m=line *********</c>
@@ -1805,11 +1807,11 @@ Alice                                                 Bob
           <c>a=maxptime:120</c>
           <c><xref target="RFC4566"/></c>
           <c>a=ice-ufrag:074c6550</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=setup:actpass</c>
           <c><xref target="RFC5763"></xref> - Alice can act as DTLS client or server</c>
           <c>a=tls-id:89J2LRATQ3ULA24G9AHWVR31VJWSLB68</c>
@@ -1826,15 +1828,15 @@ Alice                                                 Bob
           <c>a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:mid</c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=candidate:0 1 UDP 2122194687 192.0.2.4 61665 typ host</c>
-          <c><xref target="RFC5245"/> - RTP host candidate</c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"/> - RTP host candidate</c>
 					<c>a=candidate:1 1 UDP 1685987071 203.0.113.141 54609 typ srflx
 					raddr 192.0.2.4 rport 61665</c>
-					<c><xref target="RFC5245"/> - RTP Server Reflexive candidate</c>
+					<c><xref target="I-D.ietf-mmusic-ice-sip-sdp"/> - RTP Server Reflexive candidate</c>
 					<c>a=candidate:0 2 UDP 2122194687 192.0.2.4 61666 typ host</c>
-          <c><xref target="RFC5245"/> - RTCP host candidate</c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"/> - RTCP host candidate</c>
           <c>a=candidate:1 2 UDP 1685987071 203.0.113.141 54610 typ srflx
           raddr 192.0.2.4 rport 61666</c>
-          <c><xref target="RFC5245"/> - RTCP Server Reflexive candidate</c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"/> - RTCP Server Reflexive candidate</c>
           <c>****** Video m=line *********</c>
           <c>*****************************</c>
           <c>m=video 62537 UDP/TLS/RTP/SAVPF 120</c>
@@ -1851,11 +1853,11 @@ Alice                                                 Bob
           <c>a=rtpmap:120 VP8/90000</c>
           <c><xref target="RFC7741"></xref></c>
           <c>a=ice-ufrag:6550074c</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=ice-pwd:74af08a068a28a397a4c3f31747d1ee34</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=setup:actpass</c>
           <c><xref target="RFC5763"></xref> - Alice can act as DTLS client or server</c>
           <c>a=tls-id:UKA29UQLTF69OJW4WNPNUO2Y0GF1FJOZ</c>
@@ -1875,15 +1877,15 @@ Alice                                                 Bob
           <c>a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:mid</c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=candidate:0 1 UDP 2122194687 192.0.2.4 61886 typ host</c>
-          <c><xref target="RFC5245"/> - RTP Host candidate</c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"/> - RTP Host candidate</c>
           <c>a=candidate:1 1 UDP 1685987071 203.0.113.141 62537 typ srflx
           raddr 192.0.2.4 rport 61886</c>
-          <c><xref target="RFC5245"/> - RTP Server Reflexive candidate</c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"/> - RTP Server Reflexive candidate</c>
 					<c>a=candidate:0 2 UDP 2122194687 192.0.2.4 61888 typ host</c>
-					<c><xref target="RFC5245"/> - RTCP host candidate</c>
+					<c><xref target="I-D.ietf-mmusic-ice-sip-sdp"/> - RTCP host candidate</c>
 					<c>a=candidate:1 2 UDP 1685987071 203.0.113.141 62538 typ srflx
           raddr 192.0.2.4 rport 61888</c>
-          <c><xref target="RFC5245"/> - RTCP Server Reflexive candidate</c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"/> - RTCP Server Reflexive candidate</c>
         </texttable>
         <t><vspace blankLines='1'></vspace></t>
         <texttable anchor="table_2waybundle_2"
@@ -1922,11 +1924,11 @@ Alice                                                 Bob
           <c>a=maxptime:120</c>
           <c><xref target="RFC4566"/></c>
           <c>a=ice-ufrag:c300d85b</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=ice-pwd:de4e99bd291c325921d5d47efbabd9a2</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=setup:active</c>
           <c><xref target="RFC5763"></xref> - Bob is the DTLS client</c>
           <c>a=tls-id:CJ6FF9ZZMJW7MDRJIR7XVIQM48GE1G31</c>
@@ -1940,10 +1942,10 @@ Alice                                                 Bob
           <c>a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:mid</c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=candidate:0 1 UDP 2122194687 198.51.100.7 49203 typ host</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=candidate:1 1 UDP 1685987071 203.0.113.77 51556 typ srflx
           raddr 198.51.100.7 rport 49203</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>****** Video m=line *********</c>
           <c>*****************************</c>
           <c>m=video 0 UDP/TLS/RTP/SAVPF 120</c>
@@ -2034,19 +2036,19 @@ Alice <-> Bob: 2Way Call with Audio and Video Multiplexed
           <c>a=ssrc:11111 cname:Q/NWs1ao1HmN4Xa5</c>
           <c><xref target="RFC5576"></xref></c>
           <c>a=ice-ufrag:074c6550</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=fingerprint:sha-1 99:41:49:83:4a:97:0e:1f:ef:6d:f7:c9:c7:70:9d:1f:66:79:a8:07</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=candidate:0 1 UDP  2113667327 192.0.2.4 10000 typ host</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=candidate:1 1 UDP  694302207 203.0.113.141 10000 typ srflx raddr 192.0.2.4 rport 10000</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=candidate:0 2 UDP 2113667326 192.0.2.4 64678 typ host</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=candidate:1 2 UDP  1694302206 203.0.113.141 64678 typ srflx raddr 192.0.2.4 rport 64678</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=rtcp-fb:109 nack</c>
           <c><xref target="RFC5104"></xref></c>
           <c>a=rtcp-rsize</c>
@@ -2070,19 +2072,19 @@ Alice <-> Bob: 2Way Call with Audio and Video Multiplexed
           <c>a=ssrc:22222 cname:Q/1HmN4Xa5NWs1ao</c>
           <c><xref target="RFC5576"></xref></c>
           <c>a=ice-ufrag:074c6550</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=fingerprint:sha-1 99:41:49:83:4a:97:0e:1f:ef:6d:f7:c9:c7:70:9d:1f:66:79:a8:07</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=candidate:0 1 UDP  2113667327 192.0.2.4 10000 typ host</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=candidate:1 1 UDP  694302207 203.0.113.141 10000 typ srflx raddr 192.0.2.4 rport 10000</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=candidate:0 2 2113667326 192.0.2.4 64678 typ host</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=candidate:1 2 UDP 1694302206 203.0.113.141 64678 typ srflx raddr 192.0.2.4 rport 64678</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=rtcp-fb:120 nack</c>
           <c><xref target="RFC5104"></xref> </c>
           <c>a=rtcp-fb:120 nack pli</c>
@@ -2129,19 +2131,19 @@ Alice <-> Bob: 2Way Call with Audio and Video Multiplexed
           <c>a=ssrc:33333 cname:EocUG1f0fcg/yvY7</c>
           <c><xref target="RFC5576"></xref></c>
           <c>a=ice-ufrag:c300d85b</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=ice-pwd:de4e99bd291c325921d5d47efbabd9a2</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=fingerprint:sha-1 99:41:49:83:4a:97:0e:1f:ef:6d:f7:c9:c7:70:9d:1f:66:79:a8:07</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=candidate:0 1 UDP 2113667327 198.51.100.7 20000 typ host</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=candidate:1 1 UDP 1694302207 203.0.113.77 20000 typ srflx raddr 198.51.100.7 rport 20000</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=candidate:0 2 UDP 2113667326 198.51.100.7 60065 typ host</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=candidate:1 2 UDP 1694302206 203.0.113.77 60065 typ srflx raddr 198.51.100.7 rport 60065</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=rtcp-fb:109 nack</c>
           <c><xref target="RFC5104"></xref></c>
           <c>a=rtcp-rsize</c>
@@ -2166,19 +2168,19 @@ Alice <-> Bob: 2Way Call with Audio and Video Multiplexed
           <c>a=ssrc:44444 cname:Q/NWs1ao1HmN4Xa5/yvY7</c>
           <c><xref target="RFC5576"></xref></c>
           <c>a=ice-ufrag:c300d85b</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=ice-pwd:de4e99bd291c325921d5d47efbabd9a2</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=fingerprint:sha-1 99:41:49:83:4a:97:0e:1f:ef:6d:f7:c9:c7:70:9d:1f:66:79:a8:07</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=candidate:0 1 UDP 2113667327 198.51.100.7 20000 typ host</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=candidate:1 1 UDP 1694302207 203.0.113.77 20000 typ srflx raddr 198.51.100.7 rport 20000</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=candidate:0 2 UDP 2113667326 198.51.100.7 60065 typ host</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=candidate:1 2 UDP 1694302206 203.0.113.77 60065 typ srflx raddr 198.51.100.7 rport 60065</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=rtcp-fb:120 nack</c>
           <c><xref target="RFC5104"></xref> </c>
           <c>a=rtcp-fb:120 nack pli</c>
@@ -2260,11 +2262,11 @@ Alice                                       Bob
           <c>a=maxptime:120</c>
           <c><xref target="RFC4566"/></c>
           <c>a=ice-ufrag:074c6550</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2</c>
-          <c><xref target="RFC5245"></xref> </c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
           <c>a=setup:actpass</c>
           <c><xref target="RFC5763"></xref></c>
           <c>a=tls-id:89J2LRATQ3ULA24G9AHWVR31VJWSLB68</c>
@@ -2280,10 +2282,10 @@ Alice                                       Bob
           <c>a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:mid</c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=candidate:0 1 UDP 2122194687 192.0.2.4 61665 typ host</c>
-          <c><xref target="RFC5245"></xref> </c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
           <c>a=candidate:1 1 UDP 1685987071 203.0.113.141 54609 typ srflx
           raddr 192.0.2.4 rport 61665</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
 					<c>a=end-of-candidates</c>
 					<c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
 					<c>****** Video m=line *********</c>
@@ -2362,11 +2364,11 @@ Alice                                       Bob
           <c>a=maxptime:120</c>
           <c><xref target="RFC4566"/></c>
           <c>a=ice-ufrag:c300d85b</c>
-          <c><xref target="RFC5245"></xref> </c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
           <c>a=ice-pwd:de4e99bd291c325921d5d47efbabd9a2</c>
-          <c><xref target="RFC5245"></xref> </c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
           <c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08</c>
-          <c><xref target="RFC5245"></xref> </c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
           <c>a=setup:active</c>
           <c><xref target="RFC5763"></xref> </c>
           <c>a=tls-id:CJ6FF9ZZMJW7MDRJIR7XVIQM48GE1G31</c>
@@ -2382,10 +2384,10 @@ Alice                                       Bob
           <c>a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:mid</c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=candidate:0 1 UDP 2122194687 198.51.100.7 51556 typ host</c>
-          <c><xref target="RFC5245"></xref> </c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
           <c>a=candidate:1 1 UDP 1685987071 203.0.113.77 49203 typ srflx
 					raddr 198.51.100.7 rport 51556</c>
-          <c><xref target="RFC5245"></xref> </c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
 					<c>a=end-of-candidates</c>
 					<c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
 					<c>****** Video m=line *********</c>
@@ -2472,11 +2474,11 @@ Alice->Bob: Two-way Opus Audio and VP8 Video
           <c>t=0 0</c>
           <c><xref target="RFC4566"></xref></c>
           <c>a=ice-ufrag:074c6550</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=fingerprint:sha-1 99:41:49:83:4a:97:0e:1f:ef:6d:f7:c9:c7:70:9d:1f:66:79:a8:07</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=rtcp-rsize</c>
           <c><xref target="RFC5506"></xref></c>
           <c>m=audio 54609 UDP/TLS/RTP/SAVPF 0 109 98</c>
@@ -2498,13 +2500,13 @@ Alice->Bob: Two-way Opus Audio and VP8 Video
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
           <c>a=candidate:0 1 UDP  2113667327 192.0.2.4 54609 typ host</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=candidate:1 1 UDP  694302207 203.0.113.141 54609 typ srflx raddr 192.0.2.4 rport 54609</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=candidate:0 2 UDP 2113667326 192.0.2.4 64678 typ host</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=candidate:1 2 UDP  1694302206 203.0.113.141 64678 typ srflx raddr 192.0.2.4 rport 64678</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=rtcp-fb:109 nack</c>
           <c><xref target="RFC5104"></xref></c>
           <c>m=video  62537 UDP/TLS/RTP/SAVPF 99 120</c>
@@ -2524,13 +2526,13 @@ Alice->Bob: Two-way Opus Audio and VP8 Video
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
           <c>a=candidate:0 1 UDP  2113667327 192.0.2.4 62537 typ host</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=candidate:1 1 UDP  1694302207 203.0.113.141 62537 typ srflx raddr 192.0.2.4 rport 62537</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=candidate:0 2 2113667326 192.0.2.4 54721 typ host</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=candidate:1 2 UDP 1694302206 203.0.113.141 54721 typ srflx raddr 192.0.2.4 rport 54721</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=rtcp-fb:99 nack pli</c>
           <c><xref target="RFC5104"></xref></c>
           <c>a=rtcp-fb:99 ccm fir</c>
@@ -2563,11 +2565,11 @@ Alice->Bob: Two-way Opus Audio and VP8 Video
           <c>t=0 0</c>
           <c><xref target="RFC4566"></xref></c>
           <c>a=ice-ufrag:c300d85b</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=ice-pwd:de4e99bd291c325921d5d47efbabd9a2</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=fingerprint:sha-1 99:41:49:83:4a:97:0e:1f:ef:6d:f7:c9:c7:70:9d:1f:66:79:a8:07</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=rtcp-rsize</c>
           <c><xref target="RFC5506"></xref></c>
           <c>m=audio 49203 UDP/TLS/RTP/SAVPF 109</c>
@@ -2584,13 +2586,13 @@ Alice->Bob: Two-way Opus Audio and VP8 Video
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
           <c>a=candidate:0 1 UDP 2113667327 198.51.100.7 49203 typ host</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=candidate:1 1 UDP 1694302207 203.0.113.77 49203 typ srflx raddr 198.51.100.7 rport 49203</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=candidate:0 2 UDP 2113667326 198.51.100.7 60065 typ host</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=candidate:1 2 UDP 1694302206 203.0.113.77 60065 typ srflx raddr 198.51.100.7 rport 60065</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>m=video  63130 UDP/TLS/RTP/SAVPF 99</c>
           <c><xref target="RFC4566"></xref> </c>
           <c>a=msid:ma tb </c>
@@ -2606,13 +2608,13 @@ Alice->Bob: Two-way Opus Audio and VP8 Video
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
           <c>a=candidate:0 1 UDP 2113667327 198.51.100.7 63130 typ host</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=candidate:1 1 UDP 1694302207 203.0.113.77 63130 typ srflx raddr 198.51.100.7 rport 63130</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=candidate:0 2 UDP 2113667326 198.51.100.7 56607 typ host</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=candidate:1 2 UDP 1694302206 203.0.113.77 56607 typ srflx raddr 198.51.100.7 rport 56607</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=rtcp-fb:99 nack pli</c>
           <c><xref target="RFC5104"></xref></c>
           <c>a=rtcp-fb:99 ccm fir</c>
@@ -2711,11 +2713,11 @@ Alice                                                 Bob
           <c>a=maxptime:120</c>
           <c><xref target="RFC4566"/></c>
           <c>a=ice-ufrag:074c6550</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=setup:actpass</c>
           <c><xref target="RFC5763"></xref> - Alice can act as DTLS client or server</c>
           <c>a=tls-id:89J2LRATQ3ULA24G9AHWVR31VJWSLB68</c>
@@ -2732,15 +2734,15 @@ Alice                                                 Bob
           <c>a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:mid</c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=candidate:0 1 UDP 2122194687 192.0.2.4 61665 typ host</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=candidate:1 1 UDP 1685987071 203.0.113.141 54609 typ srflx
           raddr 192.0.2.4 rport 61665</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
 					<c>a=candidate:0 2 UDP 2122194687 192.0.2.4 61666 typ host</c>
-					<c><xref target="RFC5245"></xref></c>
+					<c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
 					<c>a=candidate:1 2 UDP 1685987071 203.0.113.141 55232 typ srflx
           raddr 192.0.2.4 rport 61666</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
 					<c>a=end-of-candidates</c>
 					<c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** Video m=line *********</c>
@@ -2759,11 +2761,11 @@ Alice                                                 Bob
           <c>a=rtpmap:120 VP8/90000</c>
           <c><xref target="RFC7741"></xref></c>
           <c>a=ice-ufrag:7872093</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=ice-pwd:ee3474af08a068a28a397a4c3f31747d1</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=setup:actpass</c>
           <c><xref target="RFC5763"></xref> - Alice can act as DTLS client or server</c>
           <c>a=tls-id:UKA29UQLTF69OJW4WNPNUO2Y0GF1FJOZ</c>
@@ -2783,15 +2785,15 @@ Alice                                                 Bob
           <c>a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:mid</c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=candidate:0 1 UDP 2122194687 192.0.2.4 71775 typ host</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
 					<c>a=candidate:1 1 UDP 1685987071 203.0.113.141 54332 typ srflx
 					raddr 192.0.2.4 rport 71775</c>
-					<c><xref target="RFC5245"></xref></c>
+					<c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
 					<c>a=candidate:0 2 UDP 2122194687 192.0.2.4 71776 typ host</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=candidate:1 2 UDP 1685987071 203.0.113.141 60052 typ srflx
           raddr 192.0.2.4 rport 71776</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=end-of-candidates</c>
 					<c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
         </texttable>
@@ -2829,11 +2831,11 @@ Alice                                                 Bob
           <c>a=maxptime:120</c>
           <c><xref target="RFC4566"/></c>
           <c>a=ice-ufrag:c300d85b</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=ice-pwd:de4e99bd291c325921d5d47efbabd9a2</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=setup:active</c>
           <c><xref target="RFC5763"></xref> - Bob is the DTLS client</c>
           <c>a=tls-id:CJ6FF9ZZMJW7MDRJIR7XVIQM48GE1G31</c>
@@ -2845,15 +2847,15 @@ Alice                                                 Bob
           <c>a=extmap:1 urn:ietf:params:rtp-hdrext:ssrc-audio-level</c>
           <c><xref target="RFC6464"></xref></c>
 					<c>a=candidate:0 1 UDP 2122194687 198.51.100.7 51556 typ host</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
 					<c>a=candidate:1 1 UDP 1685987071 203.0.113.77 53214 typ srflx
 					raddr 198.51.100.7 rport 51556</c>
-					<c><xref target="RFC5245"></xref></c>
+					<c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
 					<c>a=candidate:0 2 UDP 2122194687 198.51.100.7 51558 typ host</c>
-					<c><xref target="RFC5245"></xref></c>
+					<c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
 					<c>a=candidate:1 2 UDP 1685987071 203.0.113.77 60065 typ srflx
           raddr 198.51.100.7 rport 51558</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>****** Video m=line *********</c>
           <c>*****************************</c>
           <c>m=video 58679 UDP/TLS/RTP/SAVPF 120</c>
@@ -2869,14 +2871,14 @@ Alice                                                 Bob
           <c>a=rtpmap:120 VP8/90000</c>
           <c><xref target="RFC7741"></xref></c>
           <c>a=ice-ufrag:85bC300</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=ice-pwd:325921d5d47efbabd9a2de4e99bd291c</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=fingerprint:sha-256
 						6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35
             :DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
           </c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=setup:active</c>
           <c><xref target="RFC5763"></xref> - Bob is the DTLS client</c>
           <c>a=tls-id:9AIFS8AQ009IXF5D6QQUJ7P8BXPEZJ8G</c>
@@ -2892,10 +2894,10 @@ Alice                                                 Bob
           <c>a=rtcp-fb:120 ccm fir</c>
           <c><xref target="RFC5104"></xref></c>
           <c>a=candidate:0 1 UDP 2122194687 198.51.100.7 61556 typ host</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
 					<c>a=candidate:1 1 UDP 1685987071 203.0.113.77 58679 typ srflx
 					raddr 198.51.100.7 rport 61556</c>
-					<c><xref target="RFC5245"></xref></c>
+					<c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
 					<c>a=end-of-candidates</c>
 					<c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
         </texttable>
@@ -2969,12 +2971,12 @@ Alice                                                 Bob
           <c>a=maxptime:120</c>
           <c><xref target="RFC4566"/></c>
           <c>a=ice-ufrag:074c6550</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
           </c>
-          <c><xref target="RFC5245"></xref> </c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
           <c>a=setup:actpass</c>
           <c><xref target="RFC5763"></xref></c>
           <c>a=tls-id:89J2LRATQ3ULA24G9AHWVR31VJWSLB68</c>
@@ -2990,7 +2992,7 @@ Alice                                                 Bob
           <c>a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:mid</c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=candidate:0 1 UDP 2113667327 192.0.2.4 54609 typ host</c>
-          <c><xref target="RFC5245"></xref> </c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
 					<c>a=end-of-candidates</c>
 					<c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** Video m=line *********</c>
@@ -3036,14 +3038,14 @@ Alice                                                 Bob
           <c>a=tls-id:UKA29UQLTF69OJW4WNPNUO2Y0GF1FJOZ</c>
           <c><xref target="I-D.ietf-mmusic-dtls-sdp"></xref></c>
           <c>a=ice-ufrag:89819013</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=ice-pwd:1747d1ee3474af08a068a28a397a4c3f3</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
 					<c>a=fingerprint:sha-256 29:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
           </c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=candidate:0 1 UDP 2113667327 192.0.2.4 10000 typ host</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
 					<c>a=end-of-candidates</c>
 					<c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
          </texttable>
@@ -3082,12 +3084,12 @@ Alice                                                 Bob
           <c>a=maxptime:120</c>
           <c><xref target="RFC4566"/></c>
           <c>a=ice-ufrag:c300d85b</c>
-          <c><xref target="RFC5245"></xref> </c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
           <c>a=ice-pwd:de4e99bd291c325921d5d47efbabd9a2</c>
-          <c><xref target="RFC5245"></xref> </c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
           <c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
           </c>
-          <c><xref target="RFC5245"></xref> </c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
           <c>a=setup:active</c>
           <c><xref target="RFC5763"></xref> </c>
           <c>a=tls-id:CJ6FF9ZZMJW7MDRJIR7XVIQM48GE1G31</c>
@@ -3103,7 +3105,7 @@ Alice                                                 Bob
            <c>a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:mid</c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=candidate:0 1 UDP 2113667327 198.51.100.7 49203 typ host</c>
-          <c><xref target="RFC5245"></xref> </c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
 					<c>a=end-of-candidates</c>
 					<c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
 					<c>****** Video m=line *********</c>
@@ -3149,14 +3151,14 @@ Alice                                                 Bob
           <c>a=sendrecv</c>
           <c><xref target="RFC3264"></xref></c>
           <c>a=ice-ufrag:991Ca2a5e</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=ice-pwd:921d5d47efbabd9a2de4e99bd291c325</c>
-          <c><xref target="RFC5245"></xref> </c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
 					<c>a=fingerprint:sha-256 7B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
           </c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=candidate:0 1 UDP 2113667327 198.51.100.7 20000 typ host</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
 					<c>a=end-of-candidates</c>
 					<c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
         </texttable>
@@ -3236,12 +3238,12 @@ Alice                                                 Bob
           <c>a=maxptime:120</c>
           <c><xref target="RFC4566"/></c>
           <c>a=ice-ufrag:074c6550</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
           </c>
-          <c><xref target="RFC5245"></xref> </c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
           <c>a=setup:actpass</c>
           <c><xref target="RFC5763"></xref></c>
           <c>a=tls-id:89J2LRATQ3ULA24G9AHWVR31VJWSLB68</c>
@@ -3257,10 +3259,10 @@ Alice                                                 Bob
           <c>a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:mid</c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=candidate:0 1 UDP 2113667327 192.0.2.4 61665 typ host</c>
-          <c><xref target="RFC5245"></xref> </c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
 					<c>a=candidate:1 1 UDP 694302207 203.0.113.141 54609 typ srflx
 					raddr 192.0.2.4 rport 61665</c>
-					<c><xref target="RFC5245"></xref></c>
+					<c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
 					<c>a=end-of-candidates</c>
 					<c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
         </texttable>
@@ -3297,12 +3299,12 @@ Alice                                                 Bob
           <c>a=maxptime:120</c>
           <c><xref target="RFC4566"/></c>
           <c>a=ice-ufrag:c300d85b</c>
-          <c><xref target="RFC5245"></xref> </c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
           <c>a=ice-pwd:de4e99bd291c325921d5d47efbabd9a2</c>
-          <c><xref target="RFC5245"></xref> </c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
           <c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
           </c>
-          <c><xref target="RFC5245"></xref> </c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
           <c>a=setup:active</c>
           <c><xref target="RFC5763"></xref> </c>
           <c>a=tls-id:CJ6FF9ZZMJW7MDRJIR7XVIQM48GE1G31</c>
@@ -3318,10 +3320,10 @@ Alice                                                 Bob
           <c>a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:mid</c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=candidate:0 1 UDP 2113667327 198.51.100.7 51556 typ host</c>
-          <c><xref target="RFC5245"></xref> </c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
           <c>a=candidate:1 1 UDP 1694302207 203.0.113.77 49203 typ srflx
           raddr 198.51.100.7 rport 51556</c>
-          <c><xref target="RFC5245"></xref> </c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
 					<c>a=end-of-candidates</c>
 					<c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
         </texttable>
@@ -3360,12 +3362,12 @@ Alice                                                 Bob
           <c>a=maxptime:120</c>
           <c><xref target="RFC4566"/></c>
           <c>a=ice-ufrag:074c6550</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
           </c>
-          <c><xref target="RFC5245"></xref> </c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
           <c>a=setup:actpass</c>
           <c><xref target="RFC5763"></xref></c>
           <c>a=tls-id:89J2LRATQ3ULA24G9AHWVR31VJWSLB68</c>
@@ -3381,10 +3383,10 @@ Alice                                                 Bob
           <c>a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:mid</c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=candidate:0 1 UDP 2113667327 192.0.2.4 61665 typ host</c>
-          <c><xref target="RFC5245"></xref> </c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
           <c>a=candidate:1 1 UDP 694302207 203.0.113.141 54609 typ srflx
           raddr 192.0.2.4 rport 61665</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
 					<c>a=end-of-candidates</c>
 					<c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** Video m=line *********</c>
@@ -3447,12 +3449,12 @@ Alice                                                 Bob
           <c>a=maxptime:120</c>
           <c><xref target="RFC4566"/></c>
           <c>a=ice-ufrag:c300d85b</c>
-          <c><xref target="RFC5245"></xref> </c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
           <c>a=ice-pwd:de4e99bd291c325921d5d47efbabd9a2</c>
-          <c><xref target="RFC5245"></xref> </c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
           <c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
           </c>
-          <c><xref target="RFC5245"></xref> </c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
           <c>a=setup:active</c>
           <c><xref target="RFC5763"></xref> </c>
           <c>a=tls-id:CJ6FF9ZZMJW7MDRJIR7XVIQM48GE1G31</c>
@@ -3468,10 +3470,10 @@ Alice                                                 Bob
           <c>a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:mid</c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=candidate:0 1 UDP 2113667327 198.51.100.7 51556 typ host</c>
-          <c><xref target="RFC5245"></xref> </c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
           <c>a=candidate:1 1 UDP 1694302207 203.0.113.77 49203 typ srflx
           raddr 198.51.100.7 rport 51556</c>
-          <c><xref target="RFC5245"></xref> </c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
 					<c>a=end-of-candidates</c>
 					<c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** Video m=line *********</c>
@@ -3593,12 +3595,12 @@ Alice                                            Bob
           <c>a=maxptime:120</c>
           <c><xref target="RFC4566"/></c>
           <c>a=ice-ufrag:074c6550</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
           </c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=setup:actpass</c>
           <c><xref target="RFC5763"></xref></c>
           <c>a=tls-id:89J2LRATQ3ULA24G9AHWVR31VJWSLB68</c>
@@ -3612,10 +3614,10 @@ Alice                                            Bob
           <c>a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:mid</c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=candidate:0 1 UDP 2113667327 192.0.2.4 61665 typ host</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=candidate:1 1 UDP 694302207 203.0.113.141 54609 typ srflx
           raddr 192.0.2.4 rport 61665</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
 					<c>a=end-of-candidates</c>
 					<c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
 					<c>****** Video-1 m=line *********</c>
@@ -3738,12 +3740,12 @@ Alice                                            Bob
           <c>a=maxptime:120</c>
           <c><xref target="RFC4566"/></c>
 					<c>a=ice-ufrag:c300d85b</c>
-					<c><xref target="RFC5245"></xref></c>
+					<c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
 					<c>a=ice-pwd:de4e99bd291c325921d5d47efbabd9a2</c>
-					<c><xref target="RFC5245"></xref></c>
+					<c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
 					<c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
 					</c>
-					<c><xref target="RFC5245"></xref></c>
+					<c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
 					<c>a=setup:active</c>
           <c><xref target="RFC5763"></xref> </c>
           <c>a=tls-id:CJ6FF9ZZMJW7MDRJIR7XVIQM48GE1G31</c>
@@ -3757,10 +3759,10 @@ Alice                                            Bob
 					<c>a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:mid</c>
 					<c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
 					<c>a=candidate:0 1 UDP 2113667327 198.51.100.7 61665 typ host</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=candidate:1 1 UDP 694302207 203.0.113.77 49203 typ srflx
           raddr 198.51.100.7 rport 61665</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
 					<c>a=end-of-candidates</c>
 					<c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** Video-1 m=line *********</c>
@@ -3921,12 +3923,12 @@ Alice                                            Bob
 					<c>a=maxptime:120</c>
           <c><xref target="RFC4566"/></c>
 					<c>a=ice-ufrag:074c6550</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
           </c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
 					<c>a=setup:actpass</c>
           <c><xref target="RFC5763"></xref> </c>
           <c>a=tls-id:89J2LRATQ3ULA24G9AHWVR31VJWSLB68</c>
@@ -3940,10 +3942,10 @@ Alice                                            Bob
 					<c>a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:mid</c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
 					<c>a=candidate:0 1 UDP 2113667327 192.0.2.4 61665 typ host</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=candidate:1 1 UDP 694302207 203.0.113.141 54609 typ srflx
           raddr 192.0.2.4 rport 61665</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
 					<c>a=end-of-candidates</c>
 					<c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
 					<c>****** Video m=line *********</c>
@@ -4013,12 +4015,12 @@ Alice                                            Bob
 					<c>a=maxptime:120</c>
 					<c><xref target="RFC4566"/></c>
 					<c>a=ice-ufrag:074c6550</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
           </c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=setup:active</c>
           <c><xref target="RFC5763"></xref></c>
           <c>a=tls-id:CJ6FF9ZZMJW7MDRJIR7XVIQM48GE1G31</c>
@@ -4032,10 +4034,10 @@ Alice                                            Bob
 					<c>a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:mid</c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
     			<c>a=candidate:0 1 UDP 2113667326 198.51.100.7 51556 typ host</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=candidate:1 1 UDP 1694302206 203.0.113.77 49203 typ srflx
           raddr 198.51.100.7 rport 51556</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
 					<c>a=end-of-candidates</c>
 					<c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** Video m=line *********</c>
@@ -4141,12 +4143,12 @@ Alice                                                    Bob
 					<c>a=maxptime:120</c>
 					<c><xref target="RFC4566"/></c>
 					<c>a=ice-ufrag:074c6550</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
 		  	  </c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
 					<c>a=setup:actpass</c>
           <c><xref target="RFC5763"></xref></c>
           <c>a=tls-id:89J2LRATQ3ULA24G9AHWVR31VJWSLB68</c>
@@ -4160,10 +4162,10 @@ Alice                                                    Bob
 					<c>a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:mid</c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=candidate:0 1 UDP 2113667327 192.0.2.4 61665 typ host</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=candidate:1 1 UDP 694302207 203.0.113.141 54609 typ srflx
           raddr 192.0.2.4 rport 61665</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
 					<c>a=end-of-candidates</c>
 					<c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** Video m=line *********</c>
@@ -4247,12 +4249,12 @@ Alice                                                    Bob
 					<c>a=maxptime:120</c>
 					<c><xref target="RFC4566"/></c>
 					<c>a=ice-ufrag:074c6550</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
 		  	  </c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
 					<c>a=setup:active</c>
 					<c><xref target="RFC5763"></xref></c>
           <c>a=tls-id:CJ6FF9ZZMJW7MDRJIR7XVIQM48GE1G31</c>
@@ -4266,10 +4268,10 @@ Alice                                                    Bob
 					<c>a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:mid</c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=candidate:0 1 UDP 2113667326 198.51.100.7 51556 typ host</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=candidate:1 1 UDP 1694302206 203.0.113.77 49203 typ
           srflx raddr 198.51.100.7 rport 51556</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
 					<c>a=end-of-candidates</c>
 					<c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** Video m=line *********</c>
@@ -4395,12 +4397,12 @@ Alice                                                    Bob
 					<c>a=maxptime:120</c>
 					<c><xref target="RFC4566"/></c>
 					<c>a=ice-ufrag:074c6550</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
 		  	  </c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
 					<c>a=setup:actpass</c>
 					<c><xref target="RFC5763"></xref></c>
           <c>a=tls-id:89J2LRATQ3ULA24G9AHWVR31VJWSLB68</c>
@@ -4414,10 +4416,10 @@ Alice                                                    Bob
 					<c>a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:mid</c>
           <c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=candidate:0 1 UDP 2113667327 192.0.2.4 61665 typ host</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=candidate:1 1 UDP 694302207 203.0.113.141 54609 typ srflx
           raddr 192.0.2.4 rport 61665</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
 					<c>a=end-of-candidates</c>
 					<c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** Video m=line *********</c>
@@ -4508,12 +4510,12 @@ Alice                                                    Bob
           <c>a=maxptime:120</c>
           <c><xref target="RFC4566"/></c>
           <c>a=ice-ufrag:074c6550</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
 		  		</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
 					<c>a=setup:active</c>
           <c><xref target="RFC5763"></xref></c>
           <c>a=tls-id:CJ6FF9ZZMJW7MDRJIR7XVIQM48GE1G31</c>
@@ -4527,10 +4529,10 @@ Alice                                                    Bob
 					<c>a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:mid</c>
 					<c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
 					<c>a=candidate:0 1 UDP 2113667326 198.51.100.7 51556 typ host</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=candidate:1 1 UDP 1694302206 203.0.113.77 49203 typ srflx
           raddr 198.51.100.7 rport 51556</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
 					<c>a=end-of-candidates</c>
 					<c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** Video m=line *********</c>
@@ -4649,12 +4651,12 @@ Alice                                                            Bob
           <c>a=maxptime:120</c>
           <c><xref target="RFC4566"/></c>
 					<c>a=ice-ufrag:074c6550</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
           </c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=setup:actpass</c>
           <c><xref target="RFC5763"></xref></c>
           <c>a=rtcp-mux</c>
@@ -4668,10 +4670,10 @@ Alice                                                            Bob
 					<c>a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:mid</c>
 					<c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=candidate:0 1 UDP 2113667327 192.0.2.4 61665 typ host</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=candidate:1 1 UDP 694302207 203.0.113.141 54609 typ
           srflx raddr 192.0.2.4 rport 61665</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
 					<c>a=end-of-candidates</c>
 					<c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
 					<c>****** Video m=line *********</c>
@@ -4755,12 +4757,12 @@ Alice                                                            Bob
 					<c>a=maxptime:120</c>
 					<c><xref target="RFC4566"/></c>
 					<c>a=ice-ufrag:074c6550</c>
-					<c><xref target="RFC5245"></xref></c>
+					<c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
 					<c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
-					<c><xref target="RFC5245"></xref></c>
+					<c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
 					<c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
 					</c>
-					<c><xref target="RFC5245"></xref></c>
+					<c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
 					<c>a=setup:active</c>
           <c><xref target="RFC5763"></xref> </c>
           <c>a=tls-id:CJ6FF9ZZMJW7MDRJIR7XVIQM48GE1G31</c>
@@ -4774,10 +4776,10 @@ Alice                                                            Bob
 					<c>a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:mid</c>
 					<c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
 					<c>a=candidate:0 1 UDP 2113667326 198.51.100.7 51556 typ host</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=candidate:1 1 UDP 1694302206 203.0.113.77 49203 typ srflx
           raddr 198.51.100.7 rport 51556</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
 					<c>a=end-of-candidates</c>
 					<c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
           <c>****** Video m=line *********</c>
@@ -4904,12 +4906,12 @@ Alice                                                            Bob
           <c>a=maxptime:120</c>
           <c><xref target="RFC4566"/></c>
 					<c>a=ice-ufrag:074c6550</c>
-          <c><xref target="RFC5245"></xref> </c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
 		  	 	</c>
-					<c><xref target="RFC5245"></xref></c>
+					<c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=setup:actpass</c>
           <c><xref target="RFC5763"></xref></c>
           <c>a=tls-id:89J2LRATQ3ULA24G9AHWVR31VJWSLB68</c>
@@ -4925,10 +4927,10 @@ Alice                                                            Bob
 					<c>a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:mid</c>
 					<c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
 					<c>a=candidate:0 1 UDP 2113667327 192.0.2.4 61665 typ host</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=candidate:1 1 UDP 694302207 203.0.113.141 54609 typ srflx
           raddr 192.0.2.4 rport 61665</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
 					<c>a=end-of-candidates</c>
 					<c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
         </texttable>
@@ -4970,12 +4972,12 @@ Alice                                                            Bob
 					<c>a=maxptime:120</c>
 					<c><xref target="RFC4566"/></c>
 					<c>a=ice-ufrag:c300d85b</c>
-					<c><xref target="RFC5245"></xref> </c>
+					<c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
 					<c>a=ice-pwd:de4e99bd291c325921d5d47efbabd9a2</c>
-					<c><xref target="RFC5245"></xref> </c>
+					<c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
 					<c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
 					</c>
-					<c><xref target="RFC5245"></xref> </c>
+					<c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
           <c>a=setup:active</c>
 		      <c><xref target="RFC5763"></xref> </c>
           <c>a=tls-id:CJ6FF9ZZMJW7MDRJIR7XVIQM48GE1G31</c>
@@ -4991,10 +4993,10 @@ Alice                                                            Bob
 					<c>a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:mid</c>
 					<c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=candidate:0 1 UDP 2113667327 198.51.100.7 51556 typ host</c>
-					<c><xref target="RFC5245"></xref> </c>
+					<c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
 					<c>a=candidate:1 1 UDP 1694302207 203.0.113.77 49203 typ srflx
 					raddr 198.51.100.7 rport 51556</c>
-					<c><xref target="RFC5245"></xref> </c>
+					<c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
 					<c>a=end-of-candidates</c>
 					<c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
         </texttable>
@@ -5072,12 +5074,12 @@ Alice                                    Mixer
 					<c>a=maxptime:120</c>
 					<c><xref target="RFC4566"/></c>
 					<c>a=ice-ufrag:074c6550</c>
-          <c><xref target="RFC5245"></xref> </c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
-          <c><xref target="RFC5245"></xref> </c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
           <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
 		  	  </c>
-          <c><xref target="RFC5245"></xref> </c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
           <c>a=setup:actpass</c>
           <c><xref target="RFC5763"></xref> </c>
           <c>a=tls-id:89J2LRATQ3ULA24G9AHWVR31VJWSLB68</c>
@@ -5095,10 +5097,10 @@ Alice                                    Mixer
 					<c>a=extmap:3 urn:ietf:params:rtp-hdrext:sdes:mid</c>
 					<c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=candidate:0 1 UDP 2113667327 192.0.2.4 61665 typ host</c>
-          <c><xref target="RFC5245"></xref> </c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
           <c>a=candidate:1 1 UDP 694302207 203.0.113.141 54609 typ srflx
           raddr 192.0.2.4 rport 61665</c>
-          <c><xref target="RFC5245"></xref> </c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
 					<c>a=end-of-candidates</c>
 					<c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
         </texttable>
@@ -5139,12 +5141,12 @@ Alice                                    Mixer
 					<c>a=maxptime:120</c>
 					<c><xref target="RFC4566"/></c>
 					<c>a=ice-ufrag:c300d85b</c>
-					<c><xref target="RFC5245"></xref> </c>
+					<c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
 					<c>a=ice-pwd:de4e99bd291c325921d5d47efbabd9a2</c>
-					<c><xref target="RFC5245"></xref> </c>
+					<c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
 					<c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
 					</c>
-					<c><xref target="RFC5245"></xref> </c>
+					<c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
           <c>a=setup:active</c>
 		  		<c><xref target="RFC5763"></xref></c>
           <c>a=tls-id:CJ6FF9ZZMJW7MDRJIR7XVIQM48GE1G31</c>
@@ -5160,10 +5162,10 @@ Alice                                    Mixer
 					<c>a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:mid</c>
 					<c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
 					<c>a=candidate:0 1 UDP 2113667327 198.51.100.7 51556 typ host</c>
-          <c><xref target="RFC5245"></xref> </c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
           <c>a=candidate:1 1 UDP 1694302207 203.0.113.77 49203 typ srflx
           raddr 198.51.100.7 rport 51556</c>
-          <c><xref target="RFC5245"></xref> </c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
 					<c>a=end-of-candidates</c>
 					<c><xref target="I-D.ietf-mmusic-trickle-ice"></xref></c>
         </texttable>
@@ -5259,12 +5261,12 @@ Alice                                                       Bob
           <c>a=maxptime:120</c>
 					<c><xref target="RFC4566"/></c>
 					<c>a=ice-ufrag:074c6550</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
           </c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=setup:actpass</c>
           <c><xref target="RFC5763"></xref> </c>
           <c>a=tls-id:89J2LRATQ3ULA24G9AHWVR31VJWSLB68</c>
@@ -5280,15 +5282,15 @@ Alice                                                       Bob
 					<c>a=extmap:2 urn:ietf:params:rtp-hdrext:sdes:mid</c>
 					<c><xref target="I-D.ietf-mmusic-sdp-bundle-negotiation"></xref></c>
           <c>a=candidate:0 1 UDP 2113667327 192.0.2.4 61665 typ host</c>
-					<c><xref target="RFC5245"></xref></c>
+					<c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
 					<c>a=candidate:1 1 UDP 694302207 203.0.113.141 54609 typ srflx
 					raddr 192.0.2.4 rport 61665</c>
-					<c><xref target="RFC5245"></xref></c>
+					<c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
 					<c>a=candidate:0 1 UDP 2113667326 192.0.2.4 61667 typ host</c>
-					<c><xref target="RFC5245"></xref></c>
+					<c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
 					<c>a=candidate:1 1 UDP 1694302206 203.0.113.141 64678 typ srflx
 					raddr 192.0.2.4 rport 61667</c>
-					<c><xref target="RFC5245"></xref></c>
+					<c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>****** Video-1 m=line *********</c>
           <c>*****************************</c>
           <c>m=video 0 UDP/TLS/RTP/SAVPF 98</c>
@@ -5373,12 +5375,12 @@ Alice                                                       Bob
           <c>a=maxptime:120</c>
           <c><xref target="RFC4566"/></c>
 					<c>a=ice-ufrag:c300d85b</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=ice-pwd:de4e99bd291c325921d5d47efbabd9a2</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
 		  		</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
 					<c>a=setup:active</c>
 		      <c><xref target="RFC5763"></xref></c>
 					<c>a=rtcp-rsize</c>
@@ -5386,15 +5388,15 @@ Alice                                                       Bob
 					<c>a=extmap:1 urn:ietf:params:rtp-hdrext:ssrc-audio-level</c>
           <c><xref target="RFC6464"></xref></c>
 					<c>a=candidate:0 1 UDP 2113667327 198.51.100.7 51556 typ host</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=candidate:1 1 UDP 694302207 203.0.113.77 49203 typ srflx
           raddr 198.51.100.7 rport 51556</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=candidate:0 2 UDP 2113667326 198.51.100.7 51558 typ host</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=candidate:1 2 UDP 1694302206 203.0.113.77 60065 typ srflx
           raddr 198.51.100.7 rport 51558</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>****** Video m=line *********</c>
           <c>*****************************</c>
           <c>m=video 0 UDP/TLS/RTP/SAVPF 98 100</c>
@@ -5468,9 +5470,9 @@ Alice                                                       Bob
           <c>t=0 0</c>
           <c><xref target="RFC4566"></xref></c>
           <c>a=ice-ufrag:074c6550</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=rtcp-rsize</c>
           <c><xref target="RFC5506"></xref></c>
           <c>****** Audio m=line *********</c>
@@ -5481,7 +5483,7 @@ Alice                                                       Bob
           <c><xref target="RFC4566"></xref></c>
           <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
 		      </c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=rtpmap:109 opus/48000</c>
           <c><!--<xref target="draft-spittka-payload-rtp-opus"></xref>--></c>
           <c>a=ptime:20</c>
@@ -5493,13 +5495,13 @@ Alice                                                       Bob
           <c>a=rtcp:64678 IN IP4 203.0.113.141</c>
           <c><xref target="RFC3605"></xref></c>
           <c>a=candidate:0 1 UDP 2113667327 192.0.2.4 54732 typ host</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=candidate:1 1 UDP 694302207 203.0.113.141 54732 typ srflx raddr 192.0.2.4 rport 54732</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=candidate:0 2 UDP 2113667326 192.0.2.4 64678 typ host</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=candidate:1 2 UDP 1694302206 203.0.113.141 64678 typ srflx raddr 192.0.2.4 rport 64678</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>****** Video m=line *********</c>
           <c>*****************************</c>
           <c>m=video 62445 RTP/AVP 120</c>
@@ -5508,7 +5510,7 @@ Alice                                                       Bob
           <c><xref target="RFC4566"></xref></c>
           <c>a=fingerprint:sha-256 DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08:6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35
 		      </c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=rtpmap:120 VP8/90000</c>
           <c><xref target="RFC7741"></xref></c>
           <c>a=sendrecv</c>
@@ -5518,13 +5520,13 @@ Alice                                                       Bob
           <c>a=rtcp:54721 IN IP4 203.0.113.141</c>
           <c><xref target="RFC3605"></xref></c>
           <c>a=candidate:0 1 UDP 2113667327 192.0.2.4 62445 typ host</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=candidate:1 1 UDP 1694302207 203.0.113.141 62537 typ srflx raddr 192.0.2.4 rport 62445</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=candidate:0 2 UDP 2113667326 192.0.2.4 54721 typ host</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=candidate:1 2 UDP 1694302206 203.0.113.141 54721 typ srflx raddr 192.0.2.4 rport 54721</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=rtcp-fb:120 nack pli</c>
           <c><xref target="RFC4585"></xref> Alice indicates support for Picture loss Indication and NACK RTCP feedback</c>
           <c>a=rtcp-fb:120 ccm fir</c>
@@ -5555,18 +5557,18 @@ Alice                                                       Bob
           <c>a=sendrecv</c>
           <c><xref target="RFC3264"></xref></c>
           <c>a=ice-ufrag:c300d85b</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=ice-pwd:de4e99bd291c325921d5d47efbabd9a2</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=fingerprint:sha-256 BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2:19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04
           </c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
           <c>a=candidate:0 1 UDP 2113667327 198.51.100.7 49203 typ host</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=candidate:1 1 UDP 1694302207 203.0.113.77 49203 typ srflx raddr 198.51.100.7 rport 49203</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>****** Video m=line *********</c>
           <c>*****************************</c>
           <c>m=video 63130 RTP/AVP 120</c>
@@ -5578,18 +5580,18 @@ Alice                                                       Bob
           <c>a=sendrecv</c>
           <c><xref target="RFC3264"></xref></c>
           <c>a=ice-ufrag:e39091na</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=ice-pwd:dbc325921d5dd29e4e99147efbabd9a2</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=fingerprint:sha-256 BB:0A:0E:05:E9:26:33:E8:70:88:A2:2F:70:9F:04:19:E2:1C:3B:4B:9F:81:56:2F:70:9F:04:F4:A5:A8:D8
           </c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
           <c>a=candidate:0 1 UDP 2113667327 198.51.100.7 63130 typ host</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=candidate:1 1 UDP 1694302207 203.0.113.77 63130 typ srflx raddr 198.51.100.7 rport 63130</c>
-          <c><xref target="RFC5245"></xref></c>
+          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=rtcp-fb:120 nack pli</c>
           <c><xref target="RFC4585"></xref></c>
           <c>a=rtcp-fb:120 ccm fir</c>
@@ -5774,7 +5776,6 @@ Alice                                                       Bob
     	&RFC3264;
     	&RFC4566;
       &RFC2119;
-      &RFC5245;
       &RFC5506;
       &RFC3551;
       &RFC4796;
@@ -5802,6 +5803,7 @@ Alice                                                       Bob
       &I-D.ietf-mmusic-sdp-bundle-negotiation;
       &I-D.ietf-mmusic-sdp-simulcast;
       &I-D.ietf-mmusic-rid;
+      &I-D.ietf-mmusic-ice-sip-sdp;
       &I-D.ietf-rtcweb-jsep;
       &I-D.ietf-mmusic-trickle-ice;
       &I-D.ietf-mmusic-msid;
