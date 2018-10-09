@@ -33,6 +33,7 @@
 <!ENTITY RFC7656 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7656.xml">
 <!ENTITY RFC7741 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7741.xml">
 <!ENTITY RFC7826 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7826.xml">
+<!ENTITY RFC8122 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8122.xml">
 <!ENTITY RFC8445 SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.8445.xml">
 <!ENTITY I-D.ietf-mmusic-sdp-bundle-negotiation
 		SYSTEM "http://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-mmusic-sdp-bundle-negotiation.xml">
@@ -488,7 +489,7 @@ XltenVGV3BQTzVFWlJYR0ZpRjFET0o4Q0Q3Z3Zta2dUdlBXSWpkemtBIn0=</c>
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
           <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - ICE password</c>
           <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2</c>
-          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - DTLS Fingerprint for SRTP</c>
+          <c><xref target="RFC8122"></xref> - DTLS Fingerprint for SRTP</c>
           <c>a=setup:actpass</c>
           <c><xref target="RFC5763"></xref> - Alice can act as DTLS client or server</c>
           <c>a=tls-id:89J2LRATQ3ULA24G9AHWVR31VJWSLB68</c>
@@ -573,7 +574,7 @@ TlVoTVgyWkxUbFJDTnpGRFlrb3lXbWg1VyINCn0=</c>
           <c>a=ice-pwd:1747d1ee3474a28a397a4c3f3af08a068</c>
           <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - ICE password parameter</c>
           <c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08</c>
-          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - DTLS Fingerprint for SRTP</c>
+          <c><xref target="RFC8122"></xref> - DTLS Fingerprint for SRTP</c>
           <c>a=setup:active</c>
           <c><xref target="RFC5763"></xref> - Bob is the DTLS client</c>
           <c>a=tls-id:CJ6FF9ZZMJW7MDRJIR7XVIQM48GE1G31</c>
@@ -674,7 +675,7 @@ Alice                                       Bob
             <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
             <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - ICE password parameter</c>
             <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2</c>
-            <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - DTLS Fingerprint for SRTP</c>
+            <c><xref target="RFC8122"></xref> - DTLS Fingerprint for SRTP</c>
             <c>a=setup:actpass</c>
             <c><xref target="RFC5763"></xref> - Alice can act as DTLS client or server</c>
             <c>a=tls-id:89J2LRATQ3ULA24G9AHWVR31VJWSLB68</c>
@@ -779,7 +780,7 @@ Alice                                       Bob
             <c>a=ice-pwd:de4e99bd291c325921d5d47efbabd9a2</c>
             <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - ICE password</c>
             <c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08</c>
-            <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - DTLS Fingerprint for SRTP</c>
+            <c><xref target="RFC8122"></xref> - DTLS Fingerprint for SRTP</c>
             <c>a=setup:active</c>
             <c><xref target="RFC5763"></xref> - Bob is the DTLS client</c>
             <c>a=tls-id:CJ6FF9ZZMJW7MDRJIR7XVIQM48GE1G31</c>
@@ -884,7 +885,7 @@ Alice                                       Bob
             <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
             <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - ICE password parameter</c>
             <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2</c>
-            <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - DTLS Fingerprint for SRTP</c>
+            <c><xref target="RFC8122"></xref> - DTLS Fingerprint for SRTP</c>
             <c>a=setup:actpass</c>
             <c><xref target="RFC5763"></xref> - Alice can act as DTLS client or server</c>
             <c>a=tls-id:89J2LRATQ3ULA24G9AHWVR31VJWSLB68</c>
@@ -989,7 +990,7 @@ Alice                                       Bob
             <c>a=ice-pwd:de4e99bd291c325921d5d47efbabd9a2</c>
             <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - ICE password</c>
             <c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08</c>
-            <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - DTLS Fingerprint for SRTP</c>
+            <c><xref target="RFC8122"></xref> - DTLS Fingerprint for SRTP</c>
             <c>a=setup:active</c>
             <c><xref target="RFC5763"></xref> - Bob is the DTLS client</c>
             <c>a=tls-id:CJ6FF9ZZMJW7MDRJIR7XVIQM48GE1G31</c>
@@ -1114,7 +1115,7 @@ Alice                            Bob
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
           <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - Session Level ICE parameter</c>
           <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2</c>
-          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - Session DTLS Fingerprint for
+          <c><xref target="RFC8122"></xref> - Session DTLS Fingerprint for
           SRTP</c>
           <c>a=candidate:0 1 UDP 2113667327 192.0.2.4 61665 typ host</c>
           <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
@@ -1162,7 +1163,7 @@ Alice                            Bob
           <c>a=ice-pwd:de4e99bd291c325921d5d47efbabd9a2</c>
           <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - Session Level ICE password</c>
           <c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08</c>
-          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - Session DTLS Fingerprint for
+          <c><xref target="RFC8122"></xref> - Session DTLS Fingerprint for
           SRTP</c>
           <c>a=candidate:0 1 UDP 2113667327 198.51.100.7 51556 typ host</c>
           <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
@@ -1238,7 +1239,7 @@ Alice                            Bob
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
           <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> -  ICE password</c>
           <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2</c>
-          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - DTLS Fingerprint for SRTP</c>
+          <c><xref target="RFC8122"></xref> - DTLS Fingerprint for SRTP</c>
           <c>a=setup:actpass</c>
           <c><xref target="RFC5763"></xref> - Alice can act as DTLS client or server</c>
           <c>a=tls-id:89J2LRATQ3ULA24G9AHWVR31VJWSLB68</c>
@@ -1298,7 +1299,7 @@ Alice                            Bob
           <c>a=ice-pwd:de4e99bd291c325921d5d47efbabd9a2</c>
           <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - ICE password</c>
           <c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08</c>
-          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - DTLS Fingerprint for SRTP</c>
+          <c><xref target="RFC8122"></xref> - DTLS Fingerprint for SRTP</c>
           <c>a=setup:active</c>
           <c><xref target="RFC5763"></xref> - Bob is the DTLS client</c>
           <c>a=tls-id:CJ6FF9ZZMJW7MDRJIR7XVIQM48GE1G31</c>
@@ -1395,7 +1396,7 @@ Alice                                              Bob
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
           <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - ICE password parameter</c>
           <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2</c>
-          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> - DTLS Fingerprint for SRTP</c>
+          <c><xref target="RFC8122"></xref> - DTLS Fingerprint for SRTP</c>
           <c>a=setup:actpass</c>
           <c><xref target="RFC5763"></xref> - Alice can act as DTLS client or server</c>
           <c>a=tls-id:89J2LRATQ3ULA24G9AHWVR31VJWSLB68</c>
@@ -1475,7 +1476,7 @@ Alice                                              Bob
           <c>a=ice-pwd:de4e99bd291c325921d5d47efbabd9a2</c>
           <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> -  ICE password</c>
           <c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08</c>
-          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> -  Fingerprint for SRTP</c>
+          <c><xref target="RFC8122"></xref> -  Fingerprint for SRTP</c>
           <c>a=setup:active</c>
           <c><xref target="RFC5763"></xref> - Bob is the DTLS client</c>
           <c>a=tls-id:CJ6FF9ZZMJW7MDRJIR7XVIQM48GE1G31</c>
@@ -1594,7 +1595,7 @@ Alice                                                 Bob
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
           <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2</c>
-          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
+          <c><xref target="RFC8122"></xref></c>
           <c>a=setup:actpass</c>
           <c><xref target="RFC5763"></xref> - Alice can act as DTLS client or server</c>
           <c>a=tls-id:89J2LRATQ3ULA24G9AHWVR31VJWSLB68</c>
@@ -1679,7 +1680,7 @@ Alice                                                 Bob
           <c>a=ice-pwd:de4e99bd291c325921d5d47efbabd9a2</c>
           <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08</c>
-          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
+          <c><xref target="RFC8122"></xref></c>
           <c>a=setup:active</c>
           <c><xref target="RFC5763"></xref> - Bob is the DTLS client</c>
           <c>a=tls-id:CJ6FF9ZZMJW7MDRJIR7XVIQM48GE1G31</c>
@@ -1811,7 +1812,7 @@ Alice                                                 Bob
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
           <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2</c>
-          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
+          <c><xref target="RFC8122"></xref></c>
           <c>a=setup:actpass</c>
           <c><xref target="RFC5763"></xref> - Alice can act as DTLS client or server</c>
           <c>a=tls-id:89J2LRATQ3ULA24G9AHWVR31VJWSLB68</c>
@@ -1857,7 +1858,7 @@ Alice                                                 Bob
           <c>a=ice-pwd:74af08a068a28a397a4c3f31747d1ee34</c>
           <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2</c>
-          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
+          <c><xref target="RFC8122"></xref></c>
           <c>a=setup:actpass</c>
           <c><xref target="RFC5763"></xref> - Alice can act as DTLS client or server</c>
           <c>a=tls-id:UKA29UQLTF69OJW4WNPNUO2Y0GF1FJOZ</c>
@@ -1928,7 +1929,7 @@ Alice                                                 Bob
           <c>a=ice-pwd:de4e99bd291c325921d5d47efbabd9a2</c>
           <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08</c>
-          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
+          <c><xref target="RFC8122"></xref></c>
           <c>a=setup:active</c>
           <c><xref target="RFC5763"></xref> - Bob is the DTLS client</c>
           <c>a=tls-id:CJ6FF9ZZMJW7MDRJIR7XVIQM48GE1G31</c>
@@ -2266,7 +2267,7 @@ Alice                                       Bob
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
           <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2</c>
-          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
+          <c><xref target="RFC8122"></xref> </c>
           <c>a=setup:actpass</c>
           <c><xref target="RFC5763"></xref></c>
           <c>a=tls-id:89J2LRATQ3ULA24G9AHWVR31VJWSLB68</c>
@@ -2368,7 +2369,7 @@ Alice                                       Bob
           <c>a=ice-pwd:de4e99bd291c325921d5d47efbabd9a2</c>
           <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
           <c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08</c>
-          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
+          <c><xref target="RFC8122"></xref> </c>
           <c>a=setup:active</c>
           <c><xref target="RFC5763"></xref> </c>
           <c>a=tls-id:CJ6FF9ZZMJW7MDRJIR7XVIQM48GE1G31</c>
@@ -2717,7 +2718,7 @@ Alice                                                 Bob
           <c>a=ice-pwd:a28a397a4c3f31747d1ee3474af08a068</c>
           <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2</c>
-          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
+          <c><xref target="RFC8122"></xref></c>
           <c>a=setup:actpass</c>
           <c><xref target="RFC5763"></xref> - Alice can act as DTLS client or server</c>
           <c>a=tls-id:89J2LRATQ3ULA24G9AHWVR31VJWSLB68</c>
@@ -2765,7 +2766,7 @@ Alice                                                 Bob
           <c>a=ice-pwd:ee3474af08a068a28a397a4c3f31747d1</c>
           <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2</c>
-          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
+          <c><xref target="RFC8122"></xref></c>
           <c>a=setup:actpass</c>
           <c><xref target="RFC5763"></xref> - Alice can act as DTLS client or server</c>
           <c>a=tls-id:UKA29UQLTF69OJW4WNPNUO2Y0GF1FJOZ</c>
@@ -2835,7 +2836,7 @@ Alice                                                 Bob
           <c>a=ice-pwd:de4e99bd291c325921d5d47efbabd9a2</c>
           <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08</c>
-          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
+          <c><xref target="RFC8122"></xref></c>
           <c>a=setup:active</c>
           <c><xref target="RFC5763"></xref> - Bob is the DTLS client</c>
           <c>a=tls-id:CJ6FF9ZZMJW7MDRJIR7XVIQM48GE1G31</c>
@@ -2878,7 +2879,7 @@ Alice                                                 Bob
 						6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35
             :DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
           </c>
-          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
+          <c><xref target="RFC8122"></xref></c>
           <c>a=setup:active</c>
           <c><xref target="RFC5763"></xref> - Bob is the DTLS client</c>
           <c>a=tls-id:9AIFS8AQ009IXF5D6QQUJ7P8BXPEZJ8G</c>
@@ -2976,7 +2977,7 @@ Alice                                                 Bob
           <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
           </c>
-          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
+          <c><xref target="RFC8122"></xref> </c>
           <c>a=setup:actpass</c>
           <c><xref target="RFC5763"></xref></c>
           <c>a=tls-id:89J2LRATQ3ULA24G9AHWVR31VJWSLB68</c>
@@ -3043,7 +3044,7 @@ Alice                                                 Bob
           <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
 					<c>a=fingerprint:sha-256 29:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
           </c>
-          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
+          <c><xref target="RFC8122"></xref></c>
           <c>a=candidate:0 1 UDP 2113667327 192.0.2.4 10000 typ host</c>
           <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
 					<c>a=end-of-candidates</c>
@@ -3089,7 +3090,7 @@ Alice                                                 Bob
           <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
           <c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
           </c>
-          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
+          <c><xref target="RFC8122"></xref> </c>
           <c>a=setup:active</c>
           <c><xref target="RFC5763"></xref> </c>
           <c>a=tls-id:CJ6FF9ZZMJW7MDRJIR7XVIQM48GE1G31</c>
@@ -3156,7 +3157,7 @@ Alice                                                 Bob
           <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
 					<c>a=fingerprint:sha-256 7B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
           </c>
-          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
+          <c><xref target="RFC8122"></xref></c>
           <c>a=candidate:0 1 UDP 2113667327 198.51.100.7 20000 typ host</c>
           <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
 					<c>a=end-of-candidates</c>
@@ -3243,7 +3244,7 @@ Alice                                                 Bob
           <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
           </c>
-          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
+          <c><xref target="RFC8122"></xref> </c>
           <c>a=setup:actpass</c>
           <c><xref target="RFC5763"></xref></c>
           <c>a=tls-id:89J2LRATQ3ULA24G9AHWVR31VJWSLB68</c>
@@ -3304,7 +3305,7 @@ Alice                                                 Bob
           <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
           <c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
           </c>
-          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
+          <c><xref target="RFC8122"></xref> </c>
           <c>a=setup:active</c>
           <c><xref target="RFC5763"></xref> </c>
           <c>a=tls-id:CJ6FF9ZZMJW7MDRJIR7XVIQM48GE1G31</c>
@@ -3367,7 +3368,7 @@ Alice                                                 Bob
           <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
           </c>
-          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
+          <c><xref target="RFC8122"></xref> </c>
           <c>a=setup:actpass</c>
           <c><xref target="RFC5763"></xref></c>
           <c>a=tls-id:89J2LRATQ3ULA24G9AHWVR31VJWSLB68</c>
@@ -3454,7 +3455,7 @@ Alice                                                 Bob
           <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
           <c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
           </c>
-          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
+          <c><xref target="RFC8122"></xref> </c>
           <c>a=setup:active</c>
           <c><xref target="RFC5763"></xref> </c>
           <c>a=tls-id:CJ6FF9ZZMJW7MDRJIR7XVIQM48GE1G31</c>
@@ -3600,7 +3601,7 @@ Alice                                            Bob
           <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
           </c>
-          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
+          <c><xref target="RFC8122"></xref></c>
           <c>a=setup:actpass</c>
           <c><xref target="RFC5763"></xref></c>
           <c>a=tls-id:89J2LRATQ3ULA24G9AHWVR31VJWSLB68</c>
@@ -3745,7 +3746,7 @@ Alice                                            Bob
 					<c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
 					<c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
 					</c>
-					<c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
+					<c><xref target="RFC8122"></xref></c>
 					<c>a=setup:active</c>
           <c><xref target="RFC5763"></xref> </c>
           <c>a=tls-id:CJ6FF9ZZMJW7MDRJIR7XVIQM48GE1G31</c>
@@ -3928,7 +3929,7 @@ Alice                                            Bob
           <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
           </c>
-          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
+          <c><xref target="RFC8122"></xref></c>
 					<c>a=setup:actpass</c>
           <c><xref target="RFC5763"></xref> </c>
           <c>a=tls-id:89J2LRATQ3ULA24G9AHWVR31VJWSLB68</c>
@@ -4020,7 +4021,7 @@ Alice                                            Bob
           <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
           </c>
-          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
+          <c><xref target="RFC8122"></xref></c>
           <c>a=setup:active</c>
           <c><xref target="RFC5763"></xref></c>
           <c>a=tls-id:CJ6FF9ZZMJW7MDRJIR7XVIQM48GE1G31</c>
@@ -4148,7 +4149,7 @@ Alice                                                    Bob
           <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
 		  	  </c>
-          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
+          <c><xref target="RFC8122"></xref></c>
 					<c>a=setup:actpass</c>
           <c><xref target="RFC5763"></xref></c>
           <c>a=tls-id:89J2LRATQ3ULA24G9AHWVR31VJWSLB68</c>
@@ -4254,7 +4255,7 @@ Alice                                                    Bob
           <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
 		  	  </c>
-          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
+          <c><xref target="RFC8122"></xref></c>
 					<c>a=setup:active</c>
 					<c><xref target="RFC5763"></xref></c>
           <c>a=tls-id:CJ6FF9ZZMJW7MDRJIR7XVIQM48GE1G31</c>
@@ -4402,7 +4403,7 @@ Alice                                                    Bob
           <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
 		  	  </c>
-          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
+          <c><xref target="RFC8122"></xref></c>
 					<c>a=setup:actpass</c>
 					<c><xref target="RFC5763"></xref></c>
           <c>a=tls-id:89J2LRATQ3ULA24G9AHWVR31VJWSLB68</c>
@@ -4515,7 +4516,7 @@ Alice                                                    Bob
           <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
 		  		</c>
-          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
+          <c><xref target="RFC8122"></xref></c>
 					<c>a=setup:active</c>
           <c><xref target="RFC5763"></xref></c>
           <c>a=tls-id:CJ6FF9ZZMJW7MDRJIR7XVIQM48GE1G31</c>
@@ -4656,7 +4657,7 @@ Alice                                                            Bob
           <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
           </c>
-          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
+          <c><xref target="RFC8122"></xref></c>
           <c>a=setup:actpass</c>
           <c><xref target="RFC5763"></xref></c>
           <c>a=rtcp-mux</c>
@@ -4762,7 +4763,7 @@ Alice                                                            Bob
 					<c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
 					<c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
 					</c>
-					<c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
+					<c><xref target="RFC8122"></xref></c>
 					<c>a=setup:active</c>
           <c><xref target="RFC5763"></xref> </c>
           <c>a=tls-id:CJ6FF9ZZMJW7MDRJIR7XVIQM48GE1G31</c>
@@ -4911,7 +4912,7 @@ Alice                                                            Bob
           <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
 		  	 	</c>
-					<c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
+					<c><xref target="RFC8122"></xref></c>
           <c>a=setup:actpass</c>
           <c><xref target="RFC5763"></xref></c>
           <c>a=tls-id:89J2LRATQ3ULA24G9AHWVR31VJWSLB68</c>
@@ -4977,7 +4978,7 @@ Alice                                                            Bob
 					<c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
 					<c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
 					</c>
-					<c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
+					<c><xref target="RFC8122"></xref> </c>
           <c>a=setup:active</c>
 		      <c><xref target="RFC5763"></xref> </c>
           <c>a=tls-id:CJ6FF9ZZMJW7MDRJIR7XVIQM48GE1G31</c>
@@ -5079,7 +5080,7 @@ Alice                                    Mixer
           <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
           <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
 		  	  </c>
-          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
+          <c><xref target="RFC8122"></xref> </c>
           <c>a=setup:actpass</c>
           <c><xref target="RFC5763"></xref> </c>
           <c>a=tls-id:89J2LRATQ3ULA24G9AHWVR31VJWSLB68</c>
@@ -5146,7 +5147,7 @@ Alice                                    Mixer
 					<c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
 					<c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
 					</c>
-					<c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref> </c>
+					<c><xref target="RFC8122"></xref> </c>
           <c>a=setup:active</c>
 		  		<c><xref target="RFC5763"></xref></c>
           <c>a=tls-id:CJ6FF9ZZMJW7MDRJIR7XVIQM48GE1G31</c>
@@ -5266,7 +5267,7 @@ Alice                                                       Bob
           <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
           </c>
-          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
+          <c><xref target="RFC8122"></xref></c>
           <c>a=setup:actpass</c>
           <c><xref target="RFC5763"></xref> </c>
           <c>a=tls-id:89J2LRATQ3ULA24G9AHWVR31VJWSLB68</c>
@@ -5380,7 +5381,7 @@ Alice                                                       Bob
           <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=fingerprint:sha-256 6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35:DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08
 		  		</c>
-          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
+          <c><xref target="RFC8122"></xref></c>
 					<c>a=setup:active</c>
 		      <c><xref target="RFC5763"></xref></c>
 					<c>a=rtcp-rsize</c>
@@ -5483,7 +5484,7 @@ Alice                                                       Bob
           <c><xref target="RFC4566"></xref></c>
           <c>a=fingerprint:sha-256 19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04:BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2
 		      </c>
-          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
+          <c><xref target="RFC8122"></xref></c>
           <c>a=rtpmap:109 opus/48000</c>
           <c><!--<xref target="draft-spittka-payload-rtp-opus"></xref>--></c>
           <c>a=ptime:20</c>
@@ -5510,7 +5511,7 @@ Alice                                                       Bob
           <c><xref target="RFC4566"></xref></c>
           <c>a=fingerprint:sha-256 DC:B8:5F:64:1A:24:C2:43:F0:A1:58:D0:A1:2C:19:08:6B:8B:F0:65:5F:78:E2:51:3B:AC:6F:F3:3F:46:1B:35
 		      </c>
-          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
+          <c><xref target="RFC8122"></xref></c>
           <c>a=rtpmap:120 VP8/90000</c>
           <c><xref target="RFC7741"></xref></c>
           <c>a=sendrecv</c>
@@ -5562,7 +5563,7 @@ Alice                                                       Bob
           <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=fingerprint:sha-256 BB:05:2F:70:9F:04:A9:0E:05:E9:26:33:E8:70:88:A2:19:E2:1C:3B:4B:9F:81:E6:B8:5C:F4:A5:A8:D8:73:04
           </c>
-          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
+          <c><xref target="RFC8122"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
           <c>a=candidate:0 1 UDP 2113667327 198.51.100.7 49203 typ host</c>
@@ -5585,7 +5586,7 @@ Alice                                                       Bob
           <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
           <c>a=fingerprint:sha-256 BB:0A:0E:05:E9:26:33:E8:70:88:A2:2F:70:9F:04:19:E2:1C:3B:4B:9F:81:56:2F:70:9F:04:F4:A5:A8:D8
           </c>
-          <c><xref target="I-D.ietf-mmusic-ice-sip-sdp"></xref></c>
+          <c><xref target="RFC8122"></xref></c>
           <c>a=rtcp-mux</c>
           <c><xref target="RFC5761"></xref></c>
           <c>a=candidate:0 1 UDP 2113667327 198.51.100.7 63130 typ host</c>
@@ -5799,6 +5800,7 @@ Alice                                                       Bob
       &RFC7656;
       &RFC7741;
       &RFC7826;
+      &RFC8122;
       &RFC8445;
       &I-D.ietf-mmusic-sdp-bundle-negotiation;
       &I-D.ietf-mmusic-sdp-simulcast;
